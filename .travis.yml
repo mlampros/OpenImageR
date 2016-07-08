@@ -35,7 +35,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ln -sf `which gcc-4.9` ./bin/gcc; fi
 
 install:
-  - ./travis-tool.sh install_deps
+  - Rscript -e 'install.packages(c("devtools", "roxygen2", "testthat", "knitr", "rmarkdown", "grid", "Rcpp", "RcppArmadillo", "shiny", "jpeg", "png", "tiff", "utils", "covr"))'
   
 r:
   - oldrel
