@@ -19,6 +19,8 @@ before_install:
   - sudo apt-get install gfortran
   - sudo apt-get install libgfortran3
   - sudo apt-get install r-base-dev
+  - sudo apt-get install libarmadillo-dev
+  - sudo apt-get install libarmadillo2
 
 r_packages:
   - devtools
