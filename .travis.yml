@@ -15,7 +15,7 @@ compiler:
 after_success:
   - Rscript -e 'covr::codecov(line_exclusions = c("R/RcppExports.R", "src/RcppExports.cpp"), quiet = FALSE)'
   
-warnings_are_errors: false
+warnings_are_errors: true
 
 notifications:
   email:
