@@ -12,6 +12,14 @@ compiler:
   - gcc
   - clang
 
+install:
+  - Rscript -e 'install.packages(c("devtools","roxygen2","testthat", "Rcpp", "RcppArmadillo", "shiny", "jpeg", "png", "tiff", "utils", "covr"))'
+
+r:
+  - oldrel
+  - release
+  - devel
+
 after_success:
   - Rscript -e 'covr::codecov(line_exclusions = c("R/RcppExports.R", "src/RcppExports.cpp"), quiet = FALSE)'
   
