@@ -1,6 +1,7 @@
 language: r
-# warnings_are_errors: true
+warnings_are_errors: false
 sudo: required
+cache: packages
 
 env:
   global:
@@ -8,22 +9,29 @@ env:
     - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
 
 before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
+  - sudo apt-get install gfortran
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update
+  - sudo apt-get install -qq gcc-4.9 g++-4.9
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
 
-script:
-  - ./travis-tool.sh run_tests
+r_packages:
+  - devtools
+  - roxygen2
+  - testthat
+  - knitr
+  - rmarkdown
+  - Rcpp
+  - RcppArmadillo
+  - shiny
+  - jpeg
+  - png
+  - tiff
+  - covr
 
-install:
-  - ./travis-tool.sh install_aptget r-cran-runit
-  - ./travis-tool.sh install_r Rcpp RcppArmadillo devtools roxygen2 testthat knitr rmarkdown grid shiny jpeg png tiff utils covr
 
 after_success:
   - Rscript -e 'covr::codecov(line_exclusions = c("R/RcppExports.R", "src/RcppExports.cpp"), quiet = FALSE)'
-  
-after_failure:
-  - ./travis-tool.sh dump_logs
 
 notifications:
   email:
