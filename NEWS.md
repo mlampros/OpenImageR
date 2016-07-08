@@ -1,6 +1,3 @@
----
-output: html_document
----
 
 ## OpenImageR 1.0.0
 
