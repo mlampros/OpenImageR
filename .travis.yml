@@ -4,25 +4,30 @@ language: R
 sudo: required
 cache: packages
 
-
-before_install:                                                         # c++11
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update
-  - sudo apt-get install gcc-4.9
-  - sudo apt-get install g++-4.9
-
-
 os:
   - linux
   - osx
-
+  
 compiler:
   - gcc
   - clang
 
-install:
-  - Rscript -e 'install.packages(c("devtools", "roxygen2", "testthat", "knitr", "rmarkdown", "grid", "Rcpp", "RcppArmadillo", "shiny", "jpeg", "png", "tiff", "utils", "covr"))'
+before_install:                        #  c++11
+  # LINUX
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y;fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -qq update;fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -qq install gcc-4.8;fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -qq install g++-4.8;fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90;fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90;fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 90;fi
+  # MAC
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update;fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install gcc48;fi
 
+install:
+  - ./travis-tool.sh install_deps
+  
 r:
   - oldrel
   - release
