@@ -13,7 +13,7 @@ compiler:
   - clang
 
 install:
-  - Rscript -e 'install.packages(c("devtools","roxygen2","testthat", "Rcpp", "RcppArmadillo", "shiny", "jpeg", "png", "tiff", "utils", "covr"))'
+  - Rscript -e 'install.packages(c("devtools", "roxygen2", "testthat", "knitr", "rmarkdown", "grid", "Rcpp", "RcppArmadillo", "shiny", "jpeg", "png", "tiff", "utils", "covr"))'
 
 r:
   - oldrel
