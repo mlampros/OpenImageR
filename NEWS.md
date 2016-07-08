@@ -6,7 +6,7 @@ output: html_document
 
 ## OpenImageR 1.0.1
 
-I modified the Makevars files, so that OpenImageR can be error-free installed in,
+I modified the Makevars files, so that OpenImageR can be installed error-free in the following OS's,
 
 * r-devel-osx-x86_64-clang
 * r-patched-solaris-sparc
