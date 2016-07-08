@@ -22,10 +22,10 @@ before_install:
   - sudo apt-get install libarmadillo-dev
   - sudo apt-get install libarmadillo2
   - sudo apt-get install software-properties-common
-  - sudo add-apt-repository ppa:george-edison55/cmake-3.x -y -y -y -y -y
-  - sudo apt-get update
-  - sudo apt-get install cmake
-  - sudo apt-get upgrade -y -y -y -y -y
+  #- sudo add-apt-repository ppa:george-edison55/cmake-3.x -y -y -y -y -y
+  #- sudo apt-get update
+  #- sudo apt-get install cmake
+  #- sudo apt-get upgrade -y -y -y -y -y
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev
   - sudo apt-get install libblas-dev liblapack-dev
