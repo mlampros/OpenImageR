@@ -3,3 +3,21 @@
 language: R
 sudo: false
 cache: packages
+
+os:
+  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
+
+after_success:
+  - Rscript -e 'covr::codecov(line_exclusions = c("R/RcppExports.R", "src/RcppExports.cpp"), quiet = FALSE)'
+  
+warnings_are_errors: false
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
