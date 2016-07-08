@@ -12,16 +12,12 @@ compiler:
   - gcc
 
 before_install:
+  # LINUX
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ls /etc/apt/sources.list.d; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo rm /etc/apt/sources.list.d/google-chrome.list; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -qq gcc-4.9 g++-4.9; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9; fi
-  - gcc --version && g++ --version
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -qq bc rs jq samtools; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install cmake; fi
+  # MAC
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew tap homebrew/science; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install jq jansson coreutils md5sha1sum samtools rasqal gtk-doc bison raptor rasqal; brew link bison --force; fi
@@ -34,8 +30,21 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ln -sf `which g++-4.9` ./bin/g++; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ln -sf `which gcc-4.9` ./bin/gcc; fi
 
-install:
-  - Rscript -e 'install.packages(c("devtools", "roxygen2", "testthat", "knitr", "rmarkdown", "grid", "Rcpp", "RcppArmadillo", "shiny", "jpeg", "png", "tiff", "utils", "covr"))'
+r_packages:
+  - devtools
+  - roxygen2
+  - testthat
+  - knitr
+  - rmarkdown
+  - grid
+  - Rcpp
+  - RcppArmadillo
+  - shiny
+  - jpeg
+  - png
+  - tiff
+  - utils
+  - covr
   
 r:
   - oldrel
