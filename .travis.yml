@@ -8,7 +8,6 @@ env:
     - R_BUILD_ARGS="--no-build-vignettes --no-manual"
     - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
 
-
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get -qq update
