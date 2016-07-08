@@ -1,6 +1,4 @@
 
-## OpenImageR 1.0.0
-
 ## OpenImageR 1.0.1
 
 I modified the Makevars files, so that OpenImageR can be installed error-free in the following OS's,
@@ -9,5 +7,10 @@ I modified the Makevars files, so that OpenImageR can be installed error-free in
 * r-patched-solaris-sparc
 * r-patched-solaris-x86
 * r-oldrel-windows-ix86+x86_64
+
+
+## OpenImageR 1.0.0
+
+
 
 
