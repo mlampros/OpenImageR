@@ -4,7 +4,7 @@ language: R
 sudo: required
 cache: packages
 
-before_install:                                                         # copy-pasted from the ranger .travis.yml, as is the only package which requires c++11
+before_install:                                                         # c++11
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get -qq update
   - sudo apt-get -qq install gcc-4.8
