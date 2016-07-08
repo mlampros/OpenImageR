@@ -1,60 +1,29 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
-language: R
+language: r
+# warnings_are_errors: true
 sudo: required
-cache: packages
 
-os:
-  - linux
-  - osx
-  
-compiler:
-  - gcc
+env:
+  global:
+    - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+    - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
 
 before_install:
-  # LINUX
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -qq gcc-4.9 g++-4.9; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9; fi
-  # MAC
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew tap homebrew/science; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install jq jansson coreutils md5sha1sum samtools rasqal gtk-doc bison raptor rasqal; brew link bison --force; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:$PATH"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LD_LIBRARY_PATH=/usr/local/lib/; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CFLAGS="-I/usr/local/include/"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LIBRARY_PATH=$LD_LIBRARY_PATH; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then which g++-4.9 || (brew unlink gcc && brew install gcc49); fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir -p ./bin; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ln -sf `which g++-4.9` ./bin/g++; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ln -sf `which gcc-4.9` ./bin/gcc; fi
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - ./travis-tool.sh bootstrap
 
-r_packages:
-  - devtools
-  - roxygen2
-  - testthat
-  - knitr
-  - rmarkdown
-  - grid
-  - Rcpp
-  - RcppArmadillo
-  - shiny
-  - jpeg
-  - png
-  - tiff
-  - utils
-  - covr
-  
-r:
-  - oldrel
-  - release
-  - devel
+script:
+  - ./travis-tool.sh run_tests
+
+install:
+  - ./travis-tool.sh install_aptget r-cran-runit
+  - ./travis-tool.sh install_r Rcpp RcppArmadillo devtools roxygen2 testthat knitr rmarkdown grid shiny jpeg png tiff utils covr
 
 after_success:
   - Rscript -e 'covr::codecov(line_exclusions = c("R/RcppExports.R", "src/RcppExports.cpp"), quiet = FALSE)'
   
-warnings_are_errors: true
+after_failure:
+  - ./travis-tool.sh dump_logs
 
 notifications:
   email:
