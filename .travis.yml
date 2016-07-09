@@ -16,12 +16,11 @@ before_install:
   - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
   - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 90
-  - sudo apt-get install gfortran
   - sudo apt-get install libgfortran3
   - sudo apt-get install r-base-dev
   - sudo apt-get install libarmadillo-dev
   - sudo apt-get install libarmadillo2
-  - sudo apt-get install software-properties-common
+  #- sudo apt-get install software-properties-common
   #- sudo add-apt-repository ppa:george-edison55/cmake-3.x -y -y -y -y -y
   #- sudo apt-get update
   #- sudo apt-get install cmake
@@ -31,6 +30,9 @@ before_install:
   - sudo apt-get install libblas-dev liblapack-dev
   - sudo apt-get update
   - sudo apt-get install libarpack++2-dev
+  - sudo dpkg --purge gfortran
+  - sudo apt-get install gfortran
+  - sudo ln -s /usr/lib/x86_64-linux-gnu/libgfortran.so.3 /usr/lib/libgfortran.so
 
 r_packages:
   - devtools
