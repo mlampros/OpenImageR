@@ -25,6 +25,7 @@ build_script:
   - travis-tool.sh install_r png
   - travis-tool.sh install_r tiff
   - travis-tool.sh install_r covr
+  - travis-tool.sh install_r htmltools
   - travis-tool.sh install_deps
 
 test_script:
