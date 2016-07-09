@@ -30,7 +30,7 @@ before_install:
   - sudo apt-get install libblas-dev liblapack-dev
   - sudo apt-get update
   - sudo apt-get install libarpack++2-dev
-  - sudo dpkg --purge gfortran
+  #- sudo dpkg --purge gfortran
   - sudo apt-get install gfortran
   - sudo ln -s /usr/lib/x86_64-linux-gnu/libgfortran.so.3 /usr/lib/libgfortran.so
 
