@@ -30,7 +30,7 @@ std::string binary_to_hex(arma::mat x) {
     
     if (VEC(i) == 1) {
 
-      h += std::pow(2.0, static_cast<double>(mod(i,8)));     // static_cast so that pow(..) works
+      h += std::pow(2.0, static_cast<double>(mod(i,8)));     // static_cast, so that pow(..) works
     }
     
     if (mod(i,8) == 7) {
@@ -355,7 +355,9 @@ arma::mat dhash_string(arma::mat gray_image, int hash_size = 8, std::string resi
 // [[Rcpp::export]]
 arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1, std::string resize_method = "nearest") {
   
+  #ifdef _OPENMP
   omp_set_num_threads(threads);
+  #endif
   
   if (method > 3 || method < 1) Rcpp::stop("method should be 1,2 or 3");
   
@@ -373,7 +375,9 @@ arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size =
   
   arma::mat out(x.n_rows, tmp_cols_h, arma::fill::zeros);
   
+  #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
+  #endif
   for (int i = 0; i < x.n_rows; i++) {
     
     arma::mat tmp_mat = vec2mat(arma::conv_to< arma::rowvec >::from(x.row(i)), new_width, new_height);
@@ -402,7 +406,9 @@ arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size =
 // [[Rcpp::export]]
 arma::mat hash_image_cube(arma::cube x, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1, std::string resize_method = "nearest") {
   
+  #ifdef _OPENMP
   omp_set_num_threads(threads);
+  #endif
   
   if (method > 3 || method < 1) Rcpp::stop("method should be 1,2 or 3");
   
@@ -418,7 +424,9 @@ arma::mat hash_image_cube(arma::cube x, int hash_size = 8, int highfreq_factor =
   
   arma::mat out(x.n_slices, tmp_cols_h, arma::fill::zeros);
   
+  #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
+  #endif
   for (int i = 0; i < x.n_slices; i++) {
     
     if (method == 1) {
@@ -469,7 +477,9 @@ arma::cube list_2array_convert(Rcpp::List x) {
 // [[Rcpp::export]]
 std::vector<std::string> hash_image_hex(arma::mat x, int new_width, int new_height, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1, std::string resize_method = "nearest") {
   
+  #ifdef _OPENMP
   omp_set_num_threads(threads);
+  #endif
   
   if (method > 3 || method < 1) Rcpp::stop("method should be 1,2 or 3");
   
@@ -485,7 +495,9 @@ std::vector<std::string> hash_image_hex(arma::mat x, int new_width, int new_heig
   
   std::vector<std::string> out(x.n_rows);
   
+  #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
+  #endif
   for (int i = 0; i < x.n_rows; i++) {
     
     arma::mat tmp_out;
@@ -519,7 +531,9 @@ std::vector<std::string> hash_image_hex(arma::mat x, int new_width, int new_heig
 // [[Rcpp::export]]
 std::vector<std::string> hash_image_cube_hex(arma::cube x, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1, std::string resize_method = "nearest") {
   
+  #ifdef _OPENMP
   omp_set_num_threads(threads);
+  #endif
   
   if (method > 3 || method < 1) Rcpp::stop("method should be 1,2 or 3");
   
@@ -533,7 +547,9 @@ std::vector<std::string> hash_image_cube_hex(arma::cube x, int hash_size = 8, in
   
   std::vector<std::string> out(x.n_slices);
   
+  #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
+  #endif
   for (int i = 0; i < x.n_slices; i++) {
     
     arma::mat tmp_out;

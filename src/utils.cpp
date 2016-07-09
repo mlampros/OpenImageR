@@ -453,7 +453,9 @@ arma::uvec seq_rcpp_range(int start, int end) {
 // [[Rcpp::export]]
 arma::mat rotate_nearest_bilinear(arma::mat image, double angle, std::string method, std::string mode, int threads) {
   
+  #ifdef _OPENMP
   omp_set_num_threads(threads);
+  #endif
   
   int n = image.n_rows;
   int m = image.n_cols;
@@ -465,7 +467,9 @@ arma::mat rotate_nearest_bilinear(arma::mat image, double angle, std::string met
   
   double thet = angle * arma::datum::pi / 180.0;
   
+  #ifdef _OPENMP
   #pragma omp parallel for collapse(2)
+  #endif
   for (int t = 0; t < mm; t++) {
     
     for (int s = 0; s < nn; s++) {
@@ -866,8 +870,9 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
                                 double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0,
                                 
                                 double image_thresh = 0.0, int threads = 1) {
-  
+  #ifdef _OPENMP
   omp_set_num_threads(threads);
+  #endif
     
   arma::cube cube_out;
   
@@ -882,7 +887,9 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
   
   cube_out.set_size(tmp_rows, tmp_cols, image.n_slices);
   
+  #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
+  #endif
   for (int i = 0; i < image.n_slices; i++) {
     
     arma::mat tmp_mat;

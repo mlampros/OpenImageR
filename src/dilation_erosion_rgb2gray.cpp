@@ -15,7 +15,9 @@
 // [[Rcpp::export]]
 arma::mat diate_erode(arma::mat image, arma::rowvec Filter, int method = 1, int threads = 1) {
   
+  #ifdef _OPENMP
   omp_set_num_threads(threads);
+  #endif
   
   double replace_Val;
   
@@ -38,7 +40,9 @@ arma::mat diate_erode(arma::mat image, arma::rowvec Filter, int method = 1, int 
   
   arma::mat tmp_filt(image.n_rows, image.n_cols, arma::fill::zeros);
     
-  #pragma omp parallel for collapse(2)  
+  #ifdef _OPENMP  
+  #pragma omp parallel for collapse(2)
+  #endif
   for (int i = 0; i < image.n_rows; i++) {
     
     for (int j = 0; j < image.n_cols; j++) {

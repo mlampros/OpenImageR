@@ -1,10 +1,12 @@
 Package: OpenImageR
 Type: Package
 Title: An Image Processing Toolkit
-Version: 1.0.1
+Version: 1.0.2
 Imports: Rcpp (>= 0.12.5), shiny, jpeg, png, tiff, utils
-Date: 2016-07-08
+Date: 2016-07-09
 Authors@R: c( person("Lampros", "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre")), person("Sight", "Machine", role = "cph", comment = "findHOGFeatures function of the SimpleCV computer vision platform"), person("Johannes", "Buchner", role = "cph", comment = "average_hash, dhash and phash functions of the ImageHash python library") )
+BugReports: https://github.com/mlampros/OpenImageR/issues
+URL: https://github.com/mlampros/OpenImageR
 Description: Incorporates functions for image preprocessing, filtering and image recognition. The package takes advantage of 'RcppArmadillo' to speed up computationally intensive functions. The histogram of oriented gradients descriptor is a modification of the 'findHOGFeatures' function of the 'SimpleCV' computer vision platform and the average_hash(), dhash() and phash() functions are based on the 'ImageHash' python library.
 License: GPL-3
 Copyright: inst/COPYRIGHTS
