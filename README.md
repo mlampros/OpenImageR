@@ -36,4 +36,4 @@ devtools::install_github('mlampros/OpenImageR')
 Use the following link to report bugs,
 <br><br>
 
-*https://github.com/mlampros/OpenImageR/issues*
+[https://github.com/mlampros/OpenImageR/issues](https://github.com/mlampros/OpenImageR/issues)
