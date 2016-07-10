@@ -42,8 +42,8 @@ arma::rowvec hog_cpp(arma::mat image, int n_divs = 3, int n_bins = 6) {
   Ix = Ix.t();
   Iy = Iy.t();
   
-  int cellx = floor(width / n_divs);                                    // height of each cell(division)
-  int celly = floor(height / n_divs);                                   // width of each cell(division)
+  int cellx = width / n_divs;                                           // height of each cell(division)
+  int celly = height / n_divs;                                          // width of each cell(division)
   
   int img_area = height * width;                                        // Area of image
   
