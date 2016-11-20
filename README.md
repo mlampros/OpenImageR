@@ -1,5 +1,6 @@
 
 
+
 ## OpenImageR
 <br>
 
@@ -27,7 +28,7 @@ devtools::install_github('mlampros/OpenImageR')
 ```
 <br>
 
-Use the following link to report bugs,
+Use the following link to report bugs/issues,
 <br><br>
 
 [https://github.com/mlampros/OpenImageR/issues](https://github.com/mlampros/OpenImageR/issues)
