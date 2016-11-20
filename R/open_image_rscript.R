@@ -1091,9 +1091,14 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
   if (!rotate_method %in% c('nearest', 'bilinear')) stop("valid rotation methods are 'nearest', 'bilinear'")
   if (class(image) == 'array' && threads < 1) stop('the number of threads should be at least 1')
   if (class(image) == 'data.frame') image = as.matrix(image)
-  if (ncol(image) <= length(crop_height) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_height sequence should be less than or equal to the initial height of the image")
-  if (nrow(image) <= length(crop_width) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_width sequence should be less than or equal to the initial width of the image")
+  if (ncol(image) <= length(crop_height) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_height sequence should be less than the initial height of the image")
+  if (nrow(image) <= length(crop_width) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_width sequence should be less than the initial width of the image")
   flag_comps = 0
+  if (inherits(image, c('data.frame', 'matrix', 'array'))) {
+    flag_comps = dim(image)[1]}
+  if (class(image) == "list") {
+    flag_comps = dim(image[[1]])[1]
+  }
   if (!is.null(crop_width)) flag_comps = length(crop_width)
   if (resiz_width != 0) flag_comps = resiz_width
   if (zca_comps > flag_comps) stop(paste('zca_comps should be greater or equal to 1 and less than or equal to', flag_comps, sep = ' '))
