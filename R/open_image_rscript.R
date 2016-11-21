@@ -1095,9 +1095,9 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
   if (nrow(image) <= length(crop_width) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_width sequence should be less than the initial width of the image")
   flag_comps = 0
   if (inherits(image, c('data.frame', 'matrix', 'array'))) {
-    flag_comps = dim(image)[1]}
+    flag_comps = dim(image)[1] - 1}
   if (class(image) == "list") {
-    flag_comps = dim(image[[1]])[1]
+    flag_comps = dim(image[[1]])[1] - 1
   }
   if (!is.null(crop_width)) flag_comps = length(crop_width)
   if (resiz_width != 0) flag_comps = resiz_width
