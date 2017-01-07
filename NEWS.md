@@ -1,7 +1,7 @@
 
 ## OpenImageR 1.0.3
 
-I modified the error handling of the Augmentation function to correct an issue which occured due to the zca_comps parameter
+I modified the Augmentation function to correct an issue which occured due to the zca_comps parameter
 
 
 ## OpenImageR 1.0.2

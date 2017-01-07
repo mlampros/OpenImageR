@@ -26,7 +26,7 @@ std::string binary_to_hex(arma::mat x) {
   int h = 0;
   std::string s;
   
-  for (int i = 0; i < VEC.n_elem; i++) {
+  for (unsigned int i = 0; i < VEC.n_elem; i++) {
     
     if (VEC(i) == 1) {
 
@@ -73,16 +73,16 @@ int levenshtein_dist(std::string s, std::string t) {
   arma::rowvec v0(t.length() + 1);
   arma::rowvec v1(t.length() + 1);
   
-  for (int i = 0; i < v0.n_elem ; i++) {
+  for (unsigned int i = 0; i < v0.n_elem ; i++) {
     
     v0[i] = i;
   }
   
-  for (int i = 0; i < s.length(); i++) {
+  for (unsigned int i = 0; i < s.length(); i++) {
     
     v1[0] = i + 1;
     
-    for (int j = 0; j < t.length(); j++) {
+    for (unsigned int j = 0; j < t.length(); j++) {
       
       int cost = (s[i] == t[j]) ? 0 : 1;           // condition ? result_if_true : result_if_false
       
@@ -91,7 +91,7 @@ int levenshtein_dist(std::string s, std::string t) {
       v1[j + 1] = min(tmp_vec);
     }
     
-    for (int j = 0; j < v0.size(); j++) {
+    for (unsigned int j = 0; j < v0.size(); j++) {
       
       v0[j] = v1[j];
     }
@@ -109,7 +109,7 @@ arma::vec func_dct(arma::vec x) {
   
   arma::vec res(x.n_elem);
   
-  for (int k = 0; k < x.n_elem; k++) {
+  for (unsigned int k = 0; k < x.n_elem; k++) {
     
     res(k) = sum( x.t() * cos(arma::datum::pi / x.n_elem * (seq_rcpp(x.n_elem) + 0.5) * k));
   }
@@ -125,7 +125,7 @@ arma::mat dct_2d(arma::mat x) {
   
   arma::mat out(size(x), arma::fill::zeros);
   
-  for (int i = 0; i < out.n_rows; i++) {
+  for (unsigned int i = 0; i < out.n_rows; i++) {
     
     out.row(i) = arma::conv_to< arma::rowvec >::from(func_dct(arma::conv_to< arma::vec >::from(x.row(i))));
   }
@@ -163,9 +163,9 @@ arma::rowvec phash_binary(arma::mat gray_image, int hash_size = 8, int highfreq_
   
   arma::mat diff(size(dctlowfreq), arma::fill::zeros);
   
-  for (int i = 0; i < diff.n_rows; i++) {
+  for (unsigned int i = 0; i < diff.n_rows; i++) {
     
-    for (int j = 0; j < diff.n_cols; j++) {
+    for (unsigned int j = 0; j < diff.n_cols; j++) {
       
       diff(i,j) = dctlowfreq(i,j) > med;
     }
@@ -204,9 +204,9 @@ arma::mat phash_string(arma::mat gray_image, int hash_size = 8, int highfreq_fac
   
   arma::mat diff(arma::size(dctlowfreq), arma::fill::zeros);
   
-  for (int i = 0; i < diff.n_rows; i++) {
+  for (unsigned int i = 0; i < diff.n_rows; i++) {
     
-    for (int j = 0; j < diff.n_cols; j++) {
+    for (unsigned int j = 0; j < diff.n_cols; j++) {
       
       diff(i,j) = dctlowfreq(i,j) > med;
     }
@@ -237,9 +237,9 @@ arma::rowvec average_hash_binary(arma::mat gray_image, int hash_size = 8, std::s
   
   arma::mat diff(arma::size(resiz), arma::fill::zeros);
   
-  for (int i = 0; i < diff.n_rows; i++) {
+  for (unsigned int i = 0; i < diff.n_rows; i++) {
     
-    for (int j = 0; j < diff.n_cols; j++) {
+    for (unsigned int j = 0; j < diff.n_cols; j++) {
       
       diff(i,j) = resiz(i,j) > MEAN;
     }
@@ -269,9 +269,9 @@ arma::mat average_hash_string(arma::mat gray_image, int hash_size = 8, std::stri
   
   arma::mat diff(arma::size(resiz), arma::fill::zeros);
   
-  for (int i = 0; i < diff.n_rows; i++) {
+  for (unsigned int i = 0; i < diff.n_rows; i++) {
     
-    for (int j = 0; j < diff.n_cols; j++) {
+    for (unsigned int j = 0; j < diff.n_cols; j++) {
       
       diff(i,j) = resiz(i,j) > MEAN;
     }
@@ -304,9 +304,9 @@ arma::rowvec dhash_binary(arma::mat gray_image, int hash_size = 8, std::string r
   
   arma::mat out(tmp1.n_rows, tmp1.n_cols, arma::fill::zeros);
   
-  for (int i = 0; i < tmp1.n_cols; i++) {
+  for (unsigned int i = 0; i < tmp1.n_cols; i++) {
     
-    for (int j = 0; j < tmp1.n_rows; j++) {
+    for (unsigned int j = 0; j < tmp1.n_rows; j++) {
       
       out(i,j) = tmp1(i,j) > tmp2(i,j);
     }
@@ -338,9 +338,9 @@ arma::mat dhash_string(arma::mat gray_image, int hash_size = 8, std::string resi
   
   arma::mat out(tmp1.n_rows, tmp1.n_cols, arma::fill::zeros);
   
-  for (int i = 0; i < tmp1.n_cols; i++) {
+  for (unsigned int i = 0; i < tmp1.n_cols; i++) {
     
-    for (int j = 0; j < tmp1.n_rows; j++) {
+    for (unsigned int j = 0; j < tmp1.n_rows; j++) {
       
       out(i,j) = tmp1(i,j) > tmp2(i,j);
     }
@@ -361,15 +361,19 @@ arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size =
   
   if (method > 3 || method < 1) Rcpp::stop("method should be 1,2 or 3");
   
-  if (new_width * new_height > x.row(0).n_elem) Rcpp::stop("new_width times new_height should be equal to the columns of the matrix x");
+  unsigned int wid_heig = new_width * new_height;
+  
+  if (wid_heig > x.row(0).n_elem) Rcpp::stop("new_width times new_height should be equal to the columns of the matrix x");
+  
+  unsigned int uns_hash_siz = hash_size;
   
   if (method == 1 && (new_width < hash_size * highfreq_factor || new_height < hash_size * highfreq_factor)) { 
       
       Rcpp::stop("the value of hash_size leads to dimensions greater than the dimensions of the initial image. Hashing an image is meant for down-sampling");}
   
-  if (method == 2 && (hash_size >= x.n_rows || hash_size >= x.n_cols)) { Rcpp::stop("the hash size should be less than the original dimensions of the image");}
+  if (method == 2 && (uns_hash_siz >= x.n_rows || uns_hash_siz >= x.n_cols)) { Rcpp::stop("the hash size should be less than the original dimensions of the image");}
   
-  if (method == 3 && (hash_size >= x.n_rows - 1 || hash_size >= x.n_cols - 1)) { Rcpp::stop("the hash size should be less than the (original dimensions - 1) of the image"); }
+  if (method == 3 && (uns_hash_siz >= x.n_rows - 1 || uns_hash_siz >= x.n_cols - 1)) { Rcpp::stop("the hash size should be less than the (original dimensions - 1) of the image"); }
   
   int tmp_cols_h = std::pow(static_cast<double>(hash_size), 2.0);    // static_cast to make pow(..) work AND int conversion, so that n_cols is an integer
   
@@ -378,7 +382,7 @@ arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size =
   #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
   #endif
-  for (int i = 0; i < x.n_rows; i++) {
+  for (unsigned int i = 0; i < x.n_rows; i++) {
     
     arma::mat tmp_mat = vec2mat(arma::conv_to< arma::rowvec >::from(x.row(i)), new_width, new_height);
     
@@ -412,13 +416,17 @@ arma::mat hash_image_cube(arma::cube x, int hash_size = 8, int highfreq_factor =
   
   if (method > 3 || method < 1) Rcpp::stop("method should be 1,2 or 3");
   
-  if (method == 1 && (x.n_rows < hash_size * highfreq_factor || x.n_cols < hash_size * highfreq_factor)) { 
+  unsigned int uns_hash_siz = hash_size;
+  
+  unsigned int uns_hash_freq = hash_size * highfreq_factor;
+  
+  if (method == 1 && (x.n_rows < uns_hash_freq || x.n_cols < uns_hash_freq)) { 
       
       Rcpp::stop("the value of hash_size leads to dimensions greater than the dimensions of the initial image. Hashing an image is meant for down-sampling");}
   
-  if (method == 2 && (hash_size >= x.n_rows || hash_size >= x.n_cols)) { Rcpp::stop("the hash size should be less than the original dimensions of the image");}
+  if (method == 2 && (uns_hash_siz >= x.n_rows || uns_hash_siz >= x.n_cols)) { Rcpp::stop("the hash size should be less than the original dimensions of the image");}
     
-  if (method == 3 && (hash_size >= x.n_rows - 1 || hash_size >= x.n_cols - 1)) { Rcpp::stop("the hash size should be less than the (original dimensions - 1) of the image");}
+  if (method == 3 && (uns_hash_siz >= x.n_rows - 1 || uns_hash_siz >= x.n_cols - 1)) { Rcpp::stop("the hash size should be less than the (original dimensions - 1) of the image");}
   
   int tmp_cols_h = std::pow(static_cast<double>(hash_size), 2.0);    // static_cast to make pow(..) work AND int conversion, so that n_cols is an integer
   
@@ -427,7 +435,7 @@ arma::mat hash_image_cube(arma::cube x, int hash_size = 8, int highfreq_factor =
   #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
   #endif
-  for (int i = 0; i < x.n_slices; i++) {
+  for (unsigned int i = 0; i < x.n_slices; i++) {
     
     if (method == 1) {
       
@@ -460,7 +468,7 @@ arma::cube list_2array_convert(Rcpp::List x) {
   arma::cube out(tmp_x.n_rows, tmp_x.n_cols, x.size());
 
   //#pragma omp critical(random)                            # SEE, http://stackoverflow.com/questions/19414416/openmp-generate-segfault-in-rcpp-code-for-the-seir-model [ single-thread is faster ]
-  for (int i = 0; i < x.size(); i++) {
+  for (unsigned int i = 0; i < x.size(); i++) {
     
     arma::mat tmp_mat = x[i];
     
@@ -483,22 +491,26 @@ std::vector<std::string> hash_image_hex(arma::mat x, int new_width, int new_heig
   
   if (method > 3 || method < 1) Rcpp::stop("method should be 1,2 or 3");
   
-  if (new_width * new_height > x.row(0).n_elem) Rcpp::stop("new_width times new_height should be equal to the columns of the matrix x");
+  unsigned int new_hei_weig = new_width * new_height;
+  
+  unsigned int uns_hash_siz = hash_size;
+  
+  if (new_hei_weig > x.row(0).n_elem) Rcpp::stop("new_width times new_height should be equal to the columns of the matrix x");
   
   if (method == 1 && (new_width < hash_size * highfreq_factor || new_height < hash_size * highfreq_factor)) { 
       
       Rcpp::stop("the value of hash_size leads to dimensions greater than the dimensions of the initial image. Hashing an image is meant for down-sampling");}
   
-  if (method == 2 && (hash_size >= x.n_rows || hash_size >= x.n_cols)) Rcpp::stop("the hash size should be less than the original dimensions of the image");
+  if (method == 2 && (uns_hash_siz >= x.n_rows || uns_hash_siz >= x.n_cols)) Rcpp::stop("the hash size should be less than the original dimensions of the image");
   
-  if (method == 3 && (hash_size >= x.n_rows - 1 || hash_size >= x.n_cols - 1)) Rcpp::stop("the hash size should be less than the (original dimensions - 1) of the image");
+  if (method == 3 && (uns_hash_siz >= x.n_rows - 1 || uns_hash_siz >= x.n_cols - 1)) Rcpp::stop("the hash size should be less than the (original dimensions - 1) of the image");
   
   std::vector<std::string> out(x.n_rows);
   
   #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
   #endif
-  for (int i = 0; i < x.n_rows; i++) {
+  for (unsigned int i = 0; i < x.n_rows; i++) {
     
     arma::mat tmp_out;
     
@@ -537,20 +549,24 @@ std::vector<std::string> hash_image_cube_hex(arma::cube x, int hash_size = 8, in
   
   if (method > 3 || method < 1) Rcpp::stop("method should be 1,2 or 3");
   
-  if (method == 1 && (x.n_rows < hash_size * highfreq_factor || x.n_cols < hash_size * highfreq_factor)) { 
+  unsigned int uns_hash_siz = hash_size;
+  
+  unsigned int uns_hash_freq = hash_size * highfreq_factor;
+  
+  if (method == 1 && (x.n_rows < uns_hash_freq || x.n_cols < uns_hash_freq)) { 
       
       Rcpp::stop("the value of hash_size leads to dimensions greater than the dimensions of the initial image. Hashing an image is meant for down-sampling");}
   
-  if (method == 2 && (hash_size >= x.n_rows || hash_size >= x.n_cols)) Rcpp::stop("the hash size should be less than the original dimensions of the image");
+  if (method == 2 && (uns_hash_siz >= x.n_rows || uns_hash_siz >= x.n_cols)) Rcpp::stop("the hash size should be less than the original dimensions of the image");
   
-  if (method == 3 && (hash_size >= x.n_rows - 1 || hash_size >= x.n_cols - 1)) Rcpp::stop("the hash size should be less than the (original dimensions - 1) of the image");
+  if (method == 3 && (uns_hash_siz >= x.n_rows - 1 || uns_hash_siz >= x.n_cols - 1)) Rcpp::stop("the hash size should be less than the (original dimensions - 1) of the image");
   
   std::vector<std::string> out(x.n_slices);
   
   #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
   #endif
-  for (int i = 0; i < x.n_slices; i++) {
+  for (unsigned int i = 0; i < x.n_slices; i++) {
     
     arma::mat tmp_out;
     

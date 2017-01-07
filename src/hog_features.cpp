@@ -51,9 +51,9 @@ arma::rowvec hog_cpp(arma::mat image, int n_divs = 3, int n_bins = 6) {
   
   arma::mat angles(Iy.n_rows, Iy.n_cols);                               // assume Ix, Iy have the same dimensions
   
-  for (int i = 0; i < Iy.n_rows; i++) {
+  for (unsigned int i = 0; i < Iy.n_rows; i++) {
     
-    for (int j = 0; j < Iy.n_cols; j++) {
+    for (unsigned int j = 0; j < Iy.n_cols; j++) {
       
       angles(i,j) = atan2(Iy(i,j), Ix(i,j));
     }
@@ -114,7 +114,7 @@ arma::mat HOG_matrix(arma::mat x, int height, int width, int n_divs = 3, int n_b
   #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
   #endif
-  for (int i = 0; i < out.n_rows; i++) {
+  for (unsigned int i = 0; i < out.n_rows; i++) {
     
     arma::mat tmp = vec2mat(x.row(i), height, width);
     
@@ -140,7 +140,7 @@ arma::mat HOG_array(arma::cube x, int n_divs = 3, int n_bins = 6, int threads = 
   #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
   #endif
-  for (int i = 0; i < out.n_rows; i++) {
+  for (unsigned int i = 0; i < out.n_rows; i++) {
     
     out.row(i) =  hog_cpp(x.slice(i), n_divs, n_bins);
   }

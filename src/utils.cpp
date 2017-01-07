@@ -208,9 +208,9 @@ arma::mat replaceVal(arma::mat x, double thresh, double value, int mode = 1) {
   
   arma::mat out = x;
   
-  for (int i = 0; i < x.n_rows; i++) {
+  for (unsigned int i = 0; i < x.n_rows; i++) {
     
-    for (int j = 0; j < x.n_cols; j++) {
+    for (unsigned int j = 0; j < x.n_cols; j++) {
       
       if (mode == 1) {
         
@@ -304,7 +304,7 @@ arma::mat resize_bilinear_rcpp(arma::mat image, double width, double height) {
   arma::rowvec in3_IND(in3_ind.n_elem, arma::fill::zeros);
   arma::rowvec in4_IND(in4_ind.n_elem, arma::fill::zeros);
   
-  for (int i = 0; i < in1_ind.n_elem; i++) {
+  for (unsigned int i = 0; i < in1_ind.n_elem; i++) {
     
     in1_IND(i) = vect_image(in1_ind(i) - 1);
     in2_IND(i) = vect_image(in2_ind(i) - 1);
@@ -664,7 +664,7 @@ arma::mat removeMean(arma::mat data) {
   
   arma::mat subtr_avg(data.n_rows, data.n_cols);
   
-  for (int i = 0; i < data.n_cols; i++) {
+  for (unsigned int i = 0; i < data.n_cols; i++) {
     
     double tmp_mean = mean(data.col(i));
     
@@ -890,7 +890,7 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
   #ifdef _OPENMP
   #pragma omp parallel for schedule(static)
   #endif
-  for (int i = 0; i < image.n_slices; i++) {
+  for (unsigned int i = 0; i < image.n_slices; i++) {
     
     arma::mat tmp_mat;
     

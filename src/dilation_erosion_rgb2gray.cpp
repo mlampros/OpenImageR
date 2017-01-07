@@ -43,19 +43,23 @@ arma::mat diate_erode(arma::mat image, arma::rowvec Filter, int method = 1, int 
   #ifdef _OPENMP  
   #pragma omp parallel for collapse(2)
   #endif
-  for (int i = 0; i < image.n_rows; i++) {
+  for (unsigned int i = 0; i < image.n_rows; i++) {
     
-    for (int j = 0; j < image.n_cols; j++) {
+    for (unsigned int j = 0; j < image.n_cols; j++) {
       
       arma::mat tmp_kern(Filter(0), Filter(1));
       
       tmp_kern.fill(replace_Val); 
       
-      for (int k = 0; k < tmp_kern.n_rows; k++) {
+      for (unsigned int k = 0; k < tmp_kern.n_rows; k++) {
         
-        for (int f = 0; f < tmp_kern.n_cols; f++) {
+        for (unsigned int f = 0; f < tmp_kern.n_cols; f++) {
           
-          if (i + k > (image.n_rows - 1) || j + f > (image.n_cols - 1)) {
+          unsigned int use_rows = i + k; 
+          
+          unsigned int use_cols = j + f; 
+          
+          if (use_rows > (image.n_rows - 1) || use_cols > (image.n_cols - 1)) {
             
             if (method == 1) {
               

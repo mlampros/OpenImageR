@@ -3,7 +3,7 @@ Type: Package
 Title: An Image Processing Toolkit
 Version: 1.0.3
 Imports: Rcpp (>= 0.12.5), shiny, jpeg, png, tiff, utils
-Date: 2016-11-20
+Date: 2017-01-07
 Authors@R: c( person("Lampros", "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre")), person("Sight", "Machine", role = "cph", comment = "findHOGFeatures function of the SimpleCV computer vision platform"), person("Johannes", "Buchner", role = "cph", comment = "average_hash, dhash and phash functions of the ImageHash python library") )
 BugReports: https://github.com/mlampros/OpenImageR/issues
 URL: https://github.com/mlampros/OpenImageR
