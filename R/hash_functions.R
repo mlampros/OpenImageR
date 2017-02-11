@@ -252,7 +252,7 @@ hash_apply = function(object, rows = 28, columns = 28, hash_size = 8, highfreq_f
     
     flag_type = unlist(strsplit(lst_files[1], '[.]'))[length(unlist(strsplit(lst_files[1], '[.]')))]
     
-    if (!flag_type %in% c("png", "jpg", "jpeg", "tiff")) stop('supported types of images are "png", "jpg", "jpeg" or "tiff"')
+    if (!flag_type %in% c("png", "jpg", "jpeg", "tiff", "tif", "TIFF", "TIF")) stop('supported image types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)')
     
     tmp_lst = lapply(1:length(lst_files), function(y) func_transform(lst_files[y], object, flag_type, T))
     

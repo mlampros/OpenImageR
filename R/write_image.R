@@ -1,7 +1,7 @@
 
 #' This function writes 2- or 3-dimensional image data to a file
 #' 
-#' This function writes 2- or 3-dimensional image data to a file ( supported types .png, .jpeg, .jpg, .tiff )
+#' This function writes 2- or 3-dimensional image data to a file. Supported types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)
 #' 
 #' @param data a 2- or 3-dimensional object (matrix, data frame or array)
 #' @param file_name a string specifying the name of the new file
@@ -9,6 +9,7 @@
 #' @return a saved image file
 #' @details
 #' This function takes as input a matrix, data frame or array and saves the data in one of the supported image types ( .png, .jpeg, .jpg, .tiff ).
+#' Extension types similar to .tiff such as .tif, .TIFF, .TIF are also supported
 #' @export
 #' @examples
 #' 
@@ -26,7 +27,7 @@ writeImage = function(data, file_name, ...) {
   
   if (!class(data) %in% c('matrix', 'array')) stop('supported image data are matrix, data frame, array')
   
-  if (class(file_name) != "character") stop("the file_name should be a character string such as '/home/my_image.png'")
+  if (class(file_name) != "character") stop("The file_name should be a character string. For instance, '/home/my_image.png'")
   
   flag_type = strsplit(file_name, '[.]')[[1]]
   
@@ -40,13 +41,13 @@ writeImage = function(data, file_name, ...) {
     
     jpeg::writeJPEG(data, target = file_name, ...)}
   
-  else if (flag_type == "tiff") {
+  else if (flag_type %in% c("tiff", "tif", "TIFF", "TIF")) {
     
     tiff::writeTIFF(data, where = file_name, ...)}
   
   else {
     
-    stop('invalid image type')
+    stop('supported image types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)')
   }
 }
 

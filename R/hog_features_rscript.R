@@ -61,14 +61,14 @@ func_transform = function(image, folder_path, flag_type, RGB_2gray = F) {
   else if (flag_type == "jpg" || flag_type == "jpeg") {
     
     img = jpeg::readJPEG(paste(folder_path, image, sep = ""))}
-  
-  else if (flag_type == "tiff") {
+
+  else if (flag_type %in% c("tiff", "tif", "TIFF", "TIF")) {
     
     img = tiff::readTIFF(paste(folder_path, image, sep = ""))}
   
   else {
     
-    stop('invalid image type')
+    stop('supported image types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)')
   }
   
   if (RGB_2gray) {
@@ -135,8 +135,8 @@ HOG_apply = function(object, cells = 3, orientations = 6, rows = NULL, columns =
     lst_files = list.files(object)
     
     flag_type = unlist(strsplit(lst_files[1], '[.]'))[length(unlist(strsplit(lst_files[1], '[.]')))]
-    
-    if (!flag_type %in% c("png", "jpg", "jpeg", "tiff")) stop('supported types of images are "png", "jpg", "jpeg" or "tiff"')
+
+    if (!flag_type %in% c("png", "jpg", "jpeg", "tiff", "tif", "TIFF", "TIF")) stop('supported image types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)')
     
     tmp_lst = lapply(1:length(lst_files), function(y) func_transform(lst_files[y], object, flag_type, T))
     

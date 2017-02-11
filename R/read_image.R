@@ -8,6 +8,7 @@
 #' @return the image in a matrix or array form
 #' @details
 #' This function takes as input a string-path and returns the image in a matrix or array form. Supported types of images are .png, .jpeg, .jpg, .tiff.
+#' Extension types similar to .tiff such as .tif, .TIFF, .TIF are also supported
 #' @export
 #' @examples
 #' 
@@ -37,13 +38,13 @@ readImage = function(path, ...) {
     
     img = jpeg::readJPEG(path, ...)}
   
-  else if (flag_type == "tiff") {
+  else if (flag_type %in% c("tiff", "tif", "TIFF", "TIF")) {
     
     img = tiff::readTIFF(path, ...)}
   
   else {
     
-    stop('supported image types are .png, .jpeg, .jpg, .tiff')
+    stop('supported image types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)')
   }
   
   return(img)

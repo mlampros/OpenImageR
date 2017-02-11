@@ -17,10 +17,11 @@ writeImage(data, file_name, ...)
 a saved image file
 }
 \description{
-This function writes 2- or 3-dimensional image data to a file ( supported types .png, .jpeg, .jpg, .tiff )
+This function writes 2- or 3-dimensional image data to a file. Supported types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)
 }
 \details{
 This function takes as input a matrix, data frame or array and saves the data in one of the supported image types ( .png, .jpeg, .jpg, .tiff ).
+Extension types similar to .tiff such as .tif, .TIFF, .TIF are also supported
 }
 \examples{
 

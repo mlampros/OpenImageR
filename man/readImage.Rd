@@ -19,6 +19,7 @@ Reads images of type .png, .jpeg, .jpg, .tiff
 }
 \details{
 This function takes as input a string-path and returns the image in a matrix or array form. Supported types of images are .png, .jpeg, .jpg, .tiff.
+Extension types similar to .tiff such as .tif, .TIFF, .TIF are also supported
 }
 \examples{
 
