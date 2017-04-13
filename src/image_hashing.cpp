@@ -1,3 +1,10 @@
+
+/*
+* Copyright (c) 2013-2016, Johannes Buchner
+* All rights reserved.
+* https://github.com/JohannesBuchner/imagehash
+*/
+
 //==============================================================================================================
 
 # include <RcppArmadillo.h>
