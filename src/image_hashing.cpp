@@ -1,16 +1,16 @@
-<<<<<<< HEAD
-
-/*
- * Copyright (c) 2013-2016, Johannes Buchner
- * All rights reserved.
- * https://github.com/JohannesBuchner/imagehash
- */
-
 
 # include <RcppArmadillo.h>
 // [[Rcpp::plugins(openmp)]]
 // [[Rcpp::depends("RcppArmadillo")]]
 // [[Rcpp::plugins(cpp11)]]
+
+
+/**
+ * Copyright (c) 2013-2016, Johannes Buchner
+ * All rights reserved.
+ * https://github.com/JohannesBuchner/imagehash
+ **/
+
 
 #ifdef _OPENMP
 #include <omp.h>
