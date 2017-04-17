@@ -159,17 +159,21 @@ arma::mat HOG_array(arma::cube x, int n_divs = 3, int n_bins = 6, int threads = 
 
 =======
 
-/*
- * Copyright (c) 2012, Sight Machine
- * All rights reserved.
- * https://github.com/sightmachine/SimpleCV
- */
-
-
 # include <RcppArmadillo.h>
 // [[Rcpp::plugins(openmp)]]
 // [[Rcpp::depends("RcppArmadillo")]]
 // [[Rcpp::plugins(cpp11)]]
+
+
+/**
+ * Copyright (c) 2012, Sight Machine
+ *
+ * All rights reserved.
+ *
+ * https://github.com/sightmachine/SimpleCV
+ *
+ **/
+
 
 #include <math.h>
 
