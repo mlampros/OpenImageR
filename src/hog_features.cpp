@@ -1,15 +1,19 @@
 
-/*
- * Copyright (c) 2012, Sight Machine
- * All rights reserved.
- * https://github.com/sightmachine/SimpleCV
- */
-
-
 # include <RcppArmadillo.h>
 // [[Rcpp::plugins(openmp)]]
 // [[Rcpp::depends("RcppArmadillo")]]
 // [[Rcpp::plugins(cpp11)]]
+
+
+/**
+ * Copyright (c) 2012, Sight Machine
+ *
+ * All rights reserved.
+ *
+ * https://github.com/sightmachine/SimpleCV
+ *
+ **/
+
 
 #include <math.h>
 
