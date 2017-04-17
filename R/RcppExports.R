@@ -40,6 +40,10 @@ HOG_array <- function(x, n_divs = 3L, n_bins = 6L, threads = 1L) {
     .Call('OpenImageR_HOG_array', PACKAGE = 'OpenImageR', x, n_divs, n_bins, threads)
 }
 
+round_rcpp <- function(f, decimal_places = 5L) {
+    .Call('OpenImageR_round_rcpp', PACKAGE = 'OpenImageR', f, decimal_places)
+}
+
 binary_to_hex <- function(x) {
     .Call('OpenImageR_binary_to_hex', PACKAGE = 'OpenImageR', x)
 }

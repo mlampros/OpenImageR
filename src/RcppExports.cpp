@@ -88,6 +88,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// round_rcpp
+float round_rcpp(float f, int decimal_places);
+RcppExport SEXP OpenImageR_round_rcpp(SEXP fSEXP, SEXP decimal_placesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< float >::type f(fSEXP);
+    Rcpp::traits::input_parameter< int >::type decimal_places(decimal_placesSEXP);
+    rcpp_result_gen = Rcpp::wrap(round_rcpp(f, decimal_places));
+    return rcpp_result_gen;
+END_RCPP
+}
 // binary_to_hex
 std::string binary_to_hex(arma::mat x);
 RcppExport SEXP OpenImageR_binary_to_hex(SEXP xSEXP) {

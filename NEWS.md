@@ -1,4 +1,9 @@
 
+## OpenImageR 1.0.5
+
+I fixed a bug in the *dhash* function according to the [Changelog](https://github.com/JohannesBuchner/imagehash) of the imagehash python library. Moreover, I added a function to round float numbers in the *image_hashing.cpp* source file, otherwise by creating hash values using the *bilinear* interpolation method the returned values are incorrect.
+
+
 ## OpenImageR 1.0.4
 
 I modified the R script files to accept extension types similar to .tiff such as .tif, .TIFF or .TIF

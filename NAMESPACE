@@ -1,4 +1,4 @@
-useDynLib(OpenImageR)
+useDynLib(OpenImageR, .registration = TRUE)
 importFrom(Rcpp, evalCpp)
 import(jpeg)
 import(png)
