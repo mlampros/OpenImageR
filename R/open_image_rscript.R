@@ -933,7 +933,7 @@ delationErosion = function(image, Filter, method = 'delation', threads = 1) {
 #' @param image a matrix, data frame or 3-dimensional array
 #' @param shift_rows a positive or negative integer specifying the direction that the rows should be shifted
 #' @param shift_cols a positive or negative integer specifying the direction that the columns should be shifted
-#' @param padded_value a numeric value. If it is greater than 0 then the values of the shifted rows or columns will be filled with the padded_value
+#' @param padded_value a numeric value. If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value
 #' @return a matrix or 3-dimensional array
 #' @details
 #' If shift_rows is not zero then the image will be sifted row-wise (upsides or downsides depending on the sign). If shift_cols is not zero then 
@@ -1044,7 +1044,7 @@ List_2_Array = function(data, verbose = FALSE) {
 #' @param zca_comps an integer specifying the number of components to keep by zca whitening, when svd is performed 
 #' @param zca_epsilon a float specifying the regularization parameter by zca whitening
 #' @param image_thresh the threshold parameter, by image thresholding, should be between 0 and 1 if the data is normalized or between 0-255 otherwise
-#' @param padded_value a numeric value. If it is greater than 0 then the values of the shifted rows or columns will be filled with the padded_value. Applies only to the shift_rows and shift_cols parameters.
+#' @param padded_value a numeric value. If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value. Applies only to the shift_rows and shift_cols parameters.
 #' @param threads an integer specifying the number of cores to run in parallel ( applies only in case that the image parameter is an array )
 #' @param verbose a boolean (TRUE, FALSE). If TRUE, then the total time of the preprocessing task will be printed.
 #' @return the output is of the same type with the input (in case of a data frame it returns a matrix)

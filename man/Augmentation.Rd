@@ -40,7 +40,7 @@ Augmentation(image, flip_mode = NULL, crop_width = NULL,
 
 \item{image_thresh}{the threshold parameter, by image thresholding, should be between 0 and 1 if the data is normalized or between 0-255 otherwise}
 
-\item{padded_value}{a numeric value. If it is greater than 0 then the values of the shifted rows or columns will be filled with the padded_value. Applies only to the shift_rows and shift_cols parameters.}
+\item{padded_value}{a numeric value. If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value. Applies only to the shift_rows and shift_cols parameters.}
 
 \item{threads}{an integer specifying the number of cores to run in parallel ( applies only in case that the image parameter is an array )}
 
