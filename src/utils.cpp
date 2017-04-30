@@ -768,33 +768,70 @@ arma::cube im_flip_cube(arma::cube src, int mode = 1) {
 //
 
 // [[Rcpp::export]]
-arma::mat translation_mat(arma::mat& image, int shift_rows = 0, int shift_cols = 0) {
+arma::mat translation_mat(arma::mat& image, int shift_rows = 0, int shift_cols = 0, double FILL_VALUE = 0.0) {
   
   if (shift_rows > 0) {
     
     image = image.rows(shift_rows, image.n_rows - 1);
     
+    unsigned int previous_rows;
+    
+    if (FILL_VALUE != 0.0) { previous_rows = image.n_rows; }
+    
     image.insert_rows(image.n_rows, shift_rows);
+    
+    if (FILL_VALUE != 0.0) {
+      
+      image.rows(previous_rows, image.n_rows -1).fill(FILL_VALUE);
+    }
   }
   
   if (shift_rows < 0) {
     
-    image = image.rows(0, image.n_rows - abs(shift_rows));
+    image = image.rows(0, image.n_rows - std::abs(shift_rows) - 1);
     
-    image.insert_rows(0, abs(shift_rows) - 1);
+    unsigned int previous_rows_neg;
+    
+    if (FILL_VALUE != 0.0) { previous_rows_neg = image.n_rows; }
+    
+    image.insert_rows(0, std::abs(shift_rows));
+    
+    if (FILL_VALUE != 0.0) {
+      
+      image.rows(0, std::abs(shift_rows) - 1).fill(FILL_VALUE);
+    }
   }
   
   if (shift_cols > 0) {
     
     image = image.cols(shift_cols, image.n_cols - 1);
     
-    image.insert_cols(image.n_cols, shift_cols);}
+    unsigned int previous_cols;
+    
+    if (FILL_VALUE != 0.0) { previous_cols = image.n_cols; }
+    
+    image.insert_cols(image.n_cols, shift_cols);
+    
+    if (FILL_VALUE != 0.0) {
+      
+      image.cols(previous_cols, image.n_cols -1).fill(FILL_VALUE);
+    }
+  }
   
   if (shift_cols < 0) {
     
-    image = image.cols(0, image.n_cols - abs(shift_cols));
+    image = image.cols(0, image.n_cols - std::abs(shift_cols) - 1);
     
-    image.insert_cols(0, abs(shift_cols) - 1);
+    unsigned int previous_cols_neg;
+    
+    if (FILL_VALUE != 0.0) { previous_cols_neg = image.n_cols; }
+    
+    image.insert_cols(0, std::abs(shift_cols));
+    
+    if (FILL_VALUE != 0.0) {
+      
+      image.cols(0, std::abs(shift_cols) - 1).fill(FILL_VALUE);
+    }
   }
   
   return(image);
@@ -811,7 +848,9 @@ arma::mat augment_transf(arma::mat& image, std::string flip_mode, arma::uvec cro
                          
                          double resiz_height = 0.0, std::string resiz_method = "nearest", double shift_rows = 0.0, double shift_cols = 0.0, 
                          
-                         double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0, double image_thresh = 0.0) {
+                         double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0, 
+                         
+                         double image_thresh = 0.0, double pad_shift_value = 0.0) {
   
   int set_rows = 0;
   int set_cols = 0;
@@ -835,7 +874,7 @@ arma::mat augment_transf(arma::mat& image, std::string flip_mode, arma::uvec cro
   
   if (shift_rows > 0.0 || shift_cols > 0.0) {
     
-    image = translation_mat(image, shift_rows, shift_cols);
+    image = translation_mat(image, shift_rows, shift_cols, pad_shift_value);
   }
   
   if (rotate_angle > 0.0) {
@@ -869,7 +908,7 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
                                 
                                 double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0,
                                 
-                                double image_thresh = 0.0, int threads = 1) {
+                                double image_thresh = 0.0, double pad_shift_value = 0.0, int threads = 1) {
   #ifdef _OPENMP
   omp_set_num_threads(threads);
   #endif
@@ -900,7 +939,7 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
     
     cube_out.slice(i) = augment_transf(tmp_mat, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method,
                    
-                   shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh);
+                   shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, pad_shift_value);
   }
   
   return(cube_out);
@@ -918,7 +957,9 @@ Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec cr
                 
                 double resiz_height = 0.0, std::string resiz_method = "nearest", double shift_rows = 0.0, double shift_cols = 0.0, 
                 
-                double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0, double image_thresh = 0.0) {
+                double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0, 
+                
+                double image_thresh = 0.0, double pad_shift_value = 0.0) {
   
   Rcpp::List tmp_list(x.size());
   
@@ -928,7 +969,7 @@ Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec cr
 
     tmp_list[i] = augment_transf_array(tmp_cube, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, 
                                        
-                                       shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, 1);
+                                       shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, pad_shift_value, 1);  // threads by default set to 1
   }
   
   return(tmp_list);

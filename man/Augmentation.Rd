@@ -8,7 +8,8 @@ Augmentation(image, flip_mode = NULL, crop_width = NULL,
   crop_height = NULL, resiz_width = 0, resiz_height = 0,
   resiz_method = "nearest", shift_rows = 0, shift_cols = 0,
   rotate_angle = 0, rotate_method = "nearest", zca_comps = 0,
-  zca_epsilon = 0, image_thresh = 0, threads = 1, verbose = FALSE)
+  zca_epsilon = 0, image_thresh = 0, padded_value = 0, threads = 1,
+  verbose = FALSE)
 }
 \arguments{
 \item{image}{a matrix, data frame, array or list of 3-dimensional arrays}
@@ -38,6 +39,8 @@ Augmentation(image, flip_mode = NULL, crop_width = NULL,
 \item{zca_epsilon}{a float specifying the regularization parameter by zca whitening}
 
 \item{image_thresh}{the threshold parameter, by image thresholding, should be between 0 and 1 if the data is normalized or between 0-255 otherwise}
+
+\item{padded_value}{a numeric value. If it is greater than 0 then the values of the shifted rows or columns will be filled with the padded_value. Applies only to the shift_rows and shift_cols parameters.}
 
 \item{threads}{an integer specifying the number of cores to run in parallel ( applies only in case that the image parameter is an array )}
 
