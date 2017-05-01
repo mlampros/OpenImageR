@@ -717,8 +717,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // augment_transf_array
-arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, double resiz_width, double resiz_height, std::string resiz_method, double shift_rows, double shift_cols, double rotate_angle, std::string rotate_method, int zca_comps, double zca_epsilon, double image_thresh, double pad_shift_value, int threads);
-RcppExport SEXP OpenImageR_augment_transf_array(SEXP imageSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP, SEXP pad_shift_valueSEXP, SEXP threadsSEXP) {
+arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, arma::rowvec pad_shift_value, double resiz_width, double resiz_height, std::string resiz_method, double shift_rows, double shift_cols, double rotate_angle, std::string rotate_method, int zca_comps, double zca_epsilon, double image_thresh, int threads);
+RcppExport SEXP OpenImageR_augment_transf_array(SEXP imageSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP pad_shift_valueSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP, SEXP threadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -726,6 +726,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< std::string >::type flip_mode(flip_modeSEXP);
     Rcpp::traits::input_parameter< arma::uvec >::type crop_height(crop_heightSEXP);
     Rcpp::traits::input_parameter< arma::uvec >::type crop_width(crop_widthSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type pad_shift_value(pad_shift_valueSEXP);
     Rcpp::traits::input_parameter< double >::type resiz_width(resiz_widthSEXP);
     Rcpp::traits::input_parameter< double >::type resiz_height(resiz_heightSEXP);
     Rcpp::traits::input_parameter< std::string >::type resiz_method(resiz_methodSEXP);
@@ -736,15 +737,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type zca_comps(zca_compsSEXP);
     Rcpp::traits::input_parameter< double >::type zca_epsilon(zca_epsilonSEXP);
     Rcpp::traits::input_parameter< double >::type image_thresh(image_threshSEXP);
-    Rcpp::traits::input_parameter< double >::type pad_shift_value(pad_shift_valueSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
-    rcpp_result_gen = Rcpp::wrap(augment_transf_array(image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, pad_shift_value, threads));
+    rcpp_result_gen = Rcpp::wrap(augment_transf_array(image, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, threads));
     return rcpp_result_gen;
 END_RCPP
 }
 // augment_array_list
-Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, double resiz_width, double resiz_height, std::string resiz_method, double shift_rows, double shift_cols, double rotate_angle, std::string rotate_method, int zca_comps, double zca_epsilon, double image_thresh, double pad_shift_value);
-RcppExport SEXP OpenImageR_augment_array_list(SEXP xSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP, SEXP pad_shift_valueSEXP) {
+Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, arma::rowvec pad_shift_value, double resiz_width, double resiz_height, std::string resiz_method, double shift_rows, double shift_cols, double rotate_angle, std::string rotate_method, int zca_comps, double zca_epsilon, double image_thresh);
+RcppExport SEXP OpenImageR_augment_array_list(SEXP xSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP pad_shift_valueSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -752,6 +752,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< std::string >::type flip_mode(flip_modeSEXP);
     Rcpp::traits::input_parameter< arma::uvec >::type crop_height(crop_heightSEXP);
     Rcpp::traits::input_parameter< arma::uvec >::type crop_width(crop_widthSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type pad_shift_value(pad_shift_valueSEXP);
     Rcpp::traits::input_parameter< double >::type resiz_width(resiz_widthSEXP);
     Rcpp::traits::input_parameter< double >::type resiz_height(resiz_heightSEXP);
     Rcpp::traits::input_parameter< std::string >::type resiz_method(resiz_methodSEXP);
@@ -762,8 +763,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type zca_comps(zca_compsSEXP);
     Rcpp::traits::input_parameter< double >::type zca_epsilon(zca_epsilonSEXP);
     Rcpp::traits::input_parameter< double >::type image_thresh(image_threshSEXP);
-    Rcpp::traits::input_parameter< double >::type pad_shift_value(pad_shift_valueSEXP);
-    rcpp_result_gen = Rcpp::wrap(augment_array_list(x, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, pad_shift_value));
+    rcpp_result_gen = Rcpp::wrap(augment_array_list(x, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh));
     return rcpp_result_gen;
 END_RCPP
 }

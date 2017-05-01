@@ -872,7 +872,7 @@ arma::mat augment_transf(arma::mat& image, std::string flip_mode, arma::uvec cro
     image = resize_bilinear_rcpp(image, set_rows, set_cols);
   }
   
-  if (shift_rows > 0.0 || shift_cols > 0.0) {
+  if (shift_rows != 0.0 || shift_cols != 0.0) {
     
     image = translation_mat(image, shift_rows, shift_cols, pad_shift_value);
   }
@@ -902,13 +902,13 @@ arma::mat augment_transf(arma::mat& image, std::string flip_mode, arma::uvec cro
 //
 
 // [[Rcpp::export]]
-arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, double resiz_width = 0.0, 
+arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, arma::rowvec pad_shift_value, double resiz_width = 0.0, 
                                 
                                 double resiz_height = 0.0, std::string resiz_method = "nearest", double shift_rows = 0.0, double shift_cols = 0.0, 
                                 
                                 double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0,
                                 
-                                double image_thresh = 0.0, double pad_shift_value = 0.0, int threads = 1) {
+                                double image_thresh = 0.0, int threads = 1) {
   #ifdef _OPENMP
   omp_set_num_threads(threads);
   #endif
@@ -939,7 +939,7 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
     
     cube_out.slice(i) = augment_transf(tmp_mat, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method,
                    
-                   shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, pad_shift_value);
+                   shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, arma::as_scalar(pad_shift_value(i)));
   }
   
   return(cube_out);
@@ -953,13 +953,13 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
 
 
 // [[Rcpp::export]]
-Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, double resiz_width = 0.0, 
+Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, arma::rowvec pad_shift_value, double resiz_width = 0.0, 
                 
                 double resiz_height = 0.0, std::string resiz_method = "nearest", double shift_rows = 0.0, double shift_cols = 0.0, 
                 
                 double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0, 
                 
-                double image_thresh = 0.0, double pad_shift_value = 0.0) {
+                double image_thresh = 0.0) {
   
   Rcpp::List tmp_list(x.size());
   
@@ -967,9 +967,9 @@ Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec cr
     
     arma::cube tmp_cube = x[i];
 
-    tmp_list[i] = augment_transf_array(tmp_cube, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, 
+    tmp_list[i] = augment_transf_array(tmp_cube, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width, resiz_height, resiz_method, shift_rows, 
                                        
-                                       shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, pad_shift_value, 1);  // threads by default set to 1
+                                       shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, 1);  // threads by default set to 1
   }
   
   return(tmp_list);
