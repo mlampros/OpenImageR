@@ -957,13 +957,25 @@ translation = function(image, shift_rows = 0, shift_cols = 0, padded_value = 0) 
 
   if (class(image) == 'matrix') {
     
-    out = translation_mat(image, shift_rows, shift_cols, padded_value)}
+    if (length(padded_value) != 1) {
+     
+      stop("the padded_value parameter should be a numeric value", call. = F) 
+    }
+    
+    out = translation_mat(image, shift_rows, shift_cols, padded_value)}                 # padded_value is a numeric value
   
   else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) { 
     
     if (length(padded_value) == 1) {
       
-      padded_value = rep(padded_value, 3)            # here by default arrays are 3-dimensional
+      padded_value = rep(padded_value, 3)}                                               # here by default arrays are 3-dimensional (padded_value vector of length 3)
+    
+    else {
+      
+      if (length(padded_value) > 1 && length(padded_value) != 3) {
+        
+        stop("the padded_value parameter should be a vector of length 3", call. = F)
+      }
     }
     
     out = list()
@@ -1118,6 +1130,11 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
   
   if (class(image) == 'matrix') {
     
+    if (length(padded_value) != 1) {
+      
+      stop("the padded_value parameter should be a numeric value", call. = F) 
+    }
+    
     out = augment_transf(image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, 
                          
                          zca_comps, zca_epsilon, image_thresh, padded_value)}
@@ -1126,7 +1143,14 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
     
     if (length(padded_value) == 1) {
       
-      padded_value = rep(padded_value, dim(image)[3])
+      padded_value = rep(padded_value, dim(image)[3])}
+    
+    else {
+      
+      if (length(padded_value) > 1 && length(padded_value) != dim(image)[3]) {
+        
+        stop(paste0("the padded_value parameter should be a vector of length equal to ", dim(image)[3]), call. = F)
+      }
     }
     
     out = augment_transf_array(image, flip_mode, crop_height, crop_width, padded_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, 
@@ -1141,7 +1165,14 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
     
     if (length(padded_value) == 1) {
       
-      padded_value = rep(padded_value, 3)
+      padded_value = rep(padded_value, 3)}
+    
+    else {
+      
+      if (length(padded_value) > 1 && length(padded_value) != 3) {
+        
+        stop("the padded_value parameter should be a vector of length 3", call. = F)
+      }
     }
     
     out = augment_array_list(image, flip_mode, crop_height, crop_width, padded_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, 

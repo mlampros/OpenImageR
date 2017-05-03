@@ -62,6 +62,14 @@ testthat::test_that("in case that the zca_comps is greater than the number of co
 })
 
 
+testthat::test_that("in case that the padded_value is not a numeric value it returns an error (if the input data is a matrix)", {
+  
+  testthat::expect_error( Augmentation(object_mat, crop_height = 10:50, crop_width = 10:50, resiz_width = 40, resiz_height = 40, resiz_method = 'nearest', rotate_angle = 40, 
+                                       
+                                       rotate_method = 'nearest', padded_value = c(0,1))  )
+})
+
+
 testthat::test_that("in case that the threads is less than 1 and input data is an array, it returns an error", {
   
   testthat::expect_error( Augmentation(object_array, crop_height = 10:50, crop_width = 10:50, resiz_width = 60, resiz_height = 60, resiz_method = 'nearest', rotate_angle = 40, 
@@ -118,6 +126,30 @@ testthat::test_that("in case that the flip_mode is incorrect it returns an error
   testthat::expect_error( Augmentation(object_list, flip_mode = 'invalid', crop_height = 1:80, crop_width = 1:90, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
                                        
                                        rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, threads = 1)  )
+})
+
+
+testthat::test_that("the function Augmentation returns an error if the padded_value parameter is not a numeric vector of length equal to the dimensions of the array (3-dimensional array)", {
+  
+  testthat::expect_error( Augmentation(object_array, crop_height = 1:80, crop_width = 1:90, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
+                                       
+                                       rotate_method = 'nearest', padded_value = c(0,1)) )
+})
+
+
+testthat::test_that("the function Augmentation returns an error if the padded_value parameter is not a numeric vector of length equal to the dimensions of the array (10-dimensional array -- array of matrices)", {
+  
+  testthat::expect_error( Augmentation(object_array_mlt, crop_height = 1:80, crop_width = 1:90, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
+                                       
+                                       rotate_method = 'nearest', padded_value = c(0,1)) )
+})
+
+
+testthat::test_that("the function Augmentation returns an error if the padded_value parameter is not a numeric vector of length equal to 3 (in case that the input is a list)", {
+  
+  testthat::expect_error( Augmentation(object_list, crop_height = 1:80, crop_width = 1:90, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
+                                       
+                                       rotate_method = 'nearest', padded_value = c(0,1)) )
 })
 
 
