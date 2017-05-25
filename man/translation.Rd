@@ -34,5 +34,3 @@ image = readImage(path)
 res_tr = translation(image, shift_rows = 10, shift_cols = -10)
 
 }
-
-
