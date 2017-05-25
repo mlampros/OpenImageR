@@ -10,4 +10,3 @@ func_transform(image, folder_path, flag_type, RGB_2gray = F)
 secondary function for HOG_apply
 }
 \keyword{internal}
-

@@ -4,7 +4,7 @@
 \alias{translation}
 \title{image translation}
 \usage{
-translation(image, shift_rows = 0, shift_cols = 0)
+translation(image, shift_rows = 0, shift_cols = 0, padded_value = 0)
 }
 \arguments{
 \item{image}{a matrix, data frame or 3-dimensional array}
@@ -12,6 +12,8 @@ translation(image, shift_rows = 0, shift_cols = 0)
 \item{shift_rows}{a positive or negative integer specifying the direction that the rows should be shifted}
 
 \item{shift_cols}{a positive or negative integer specifying the direction that the columns should be shifted}
+
+\item{padded_value}{either a numeric value or a numeric vector of length 3 (corresponding to RGB). If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value}
 }
 \value{
 a matrix or 3-dimensional array
@@ -32,4 +34,3 @@ image = readImage(path)
 res_tr = translation(image, shift_rows = 10, shift_cols = -10)
 
 }
-

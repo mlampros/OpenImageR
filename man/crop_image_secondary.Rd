@@ -10,4 +10,3 @@ crop_image_secondary(image, new_width, new_height)
 crop an image in R  [ for RGB or grey images ]
 }
 \keyword{internal}
-

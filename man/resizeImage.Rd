@@ -36,4 +36,3 @@ resiz = resizeImage(image, width = 32, height = 32, method = 'nearest')
 \author{
 Lampros Mouselimis
 }
-

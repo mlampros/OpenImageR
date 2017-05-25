@@ -39,4 +39,3 @@ dsamp = down_sample_image(image, factor = 2.0, gaussian_blur = TRUE)
 \author{
 Lampros Mouselimis
 }
-

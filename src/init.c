@@ -9,9 +9,9 @@
 
 /* .Call calls */
 extern SEXP OpenImageR_Array_range(SEXP, SEXP);
-extern SEXP OpenImageR_augment_array_list(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP OpenImageR_augment_transf(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP OpenImageR_augment_transf_array(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP OpenImageR_augment_array_list(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP OpenImageR_augment_transf(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP OpenImageR_augment_transf_array(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP OpenImageR_average_hash_binary(SEXP, SEXP, SEXP);
 extern SEXP OpenImageR_average_hash_string(SEXP, SEXP, SEXP);
 extern SEXP OpenImageR_bilinear_array(SEXP, SEXP, SEXP);
@@ -60,7 +60,7 @@ extern SEXP OpenImageR_round_rcpp(SEXP, SEXP);
 extern SEXP OpenImageR_seq_rcpp(SEXP);
 extern SEXP OpenImageR_seq_rcpp_range(SEXP, SEXP);
 extern SEXP OpenImageR_svd_arma_econ(SEXP);
-extern SEXP OpenImageR_translation_mat(SEXP, SEXP, SEXP);
+extern SEXP OpenImageR_translation_mat(SEXP, SEXP, SEXP, SEXP);
 extern SEXP OpenImageR_vec2mat(SEXP, SEXP, SEXP);
 extern SEXP OpenImageR_vec2mat_colwise(SEXP, SEXP, SEXP);
 extern SEXP OpenImageR_Vectz(SEXP);
@@ -69,9 +69,9 @@ extern SEXP OpenImageR_zca_whitening(SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"OpenImageR_Array_range",                        (DL_FUNC) &OpenImageR_Array_range,                         2},
-    {"OpenImageR_augment_array_list",                 (DL_FUNC) &OpenImageR_augment_array_list,                 14},
-    {"OpenImageR_augment_transf",                     (DL_FUNC) &OpenImageR_augment_transf,                     14},
-    {"OpenImageR_augment_transf_array",               (DL_FUNC) &OpenImageR_augment_transf_array,               15},
+    {"OpenImageR_augment_array_list",                 (DL_FUNC) &OpenImageR_augment_array_list,                 15},
+    {"OpenImageR_augment_transf",                     (DL_FUNC) &OpenImageR_augment_transf,                     15},
+    {"OpenImageR_augment_transf_array",               (DL_FUNC) &OpenImageR_augment_transf_array,               16},
     {"OpenImageR_average_hash_binary",                (DL_FUNC) &OpenImageR_average_hash_binary,                 3},
     {"OpenImageR_average_hash_string",                (DL_FUNC) &OpenImageR_average_hash_string,                 3},
     {"OpenImageR_bilinear_array",                     (DL_FUNC) &OpenImageR_bilinear_array,                      3},
@@ -120,7 +120,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"OpenImageR_seq_rcpp",                           (DL_FUNC) &OpenImageR_seq_rcpp,                            1},
     {"OpenImageR_seq_rcpp_range",                     (DL_FUNC) &OpenImageR_seq_rcpp_range,                      2},
     {"OpenImageR_svd_arma_econ",                      (DL_FUNC) &OpenImageR_svd_arma_econ,                       1},
-    {"OpenImageR_translation_mat",                    (DL_FUNC) &OpenImageR_translation_mat,                     3},
+    {"OpenImageR_translation_mat",                    (DL_FUNC) &OpenImageR_translation_mat,                     4},
     {"OpenImageR_vec2mat",                            (DL_FUNC) &OpenImageR_vec2mat,                             3},
     {"OpenImageR_vec2mat_colwise",                    (DL_FUNC) &OpenImageR_vec2mat_colwise,                     3},
     {"OpenImageR_Vectz",                              (DL_FUNC) &OpenImageR_Vectz,                               1},
@@ -134,4 +134,3 @@ void R_init_OpenImageR(DllInfo *dll)
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
-

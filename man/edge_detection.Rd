@@ -46,4 +46,3 @@ res = edge_detection(image, method = 'Frei_chen', conv_mode = 'same')
 \author{
 Lampros Mouselimis
 }
-

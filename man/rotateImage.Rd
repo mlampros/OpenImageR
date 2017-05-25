@@ -35,4 +35,3 @@ image = readImage(path)
 r = rotateImage(image, 75, threads = 1)
 
 }
-

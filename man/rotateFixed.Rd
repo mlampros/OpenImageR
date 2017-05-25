@@ -29,4 +29,3 @@ image = readImage(path)
 r = rotateFixed(image, 90)
 
 }
-

@@ -10,4 +10,3 @@ norm_range_gauss(data, max_range = -1, min_range = 1)
 normalize in specific range of values
 }
 \keyword{internal}
-

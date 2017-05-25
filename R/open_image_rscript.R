@@ -933,6 +933,7 @@ delationErosion = function(image, Filter, method = 'delation', threads = 1) {
 #' @param image a matrix, data frame or 3-dimensional array
 #' @param shift_rows a positive or negative integer specifying the direction that the rows should be shifted
 #' @param shift_cols a positive or negative integer specifying the direction that the columns should be shifted
+#' @param padded_value either a numeric value or a numeric vector of length 3 (corresponding to RGB). If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value
 #' @return a matrix or 3-dimensional array
 #' @details
 #' If shift_rows is not zero then the image will be sifted row-wise (upsides or downsides depending on the sign). If shift_cols is not zero then 
@@ -949,22 +950,39 @@ delationErosion = function(image, Filter, method = 'delation', threads = 1) {
 
 
 
-translation = function(image, shift_rows = 0, shift_cols = 0) {
+translation = function(image, shift_rows = 0, shift_cols = 0, padded_value = 0) {
   
   if (is.data.frame(image)) image = as.matrix(image)
   if (shift_rows == 0 && shift_cols == 0) stop("one of shift_rows, shift_cols should be non zero")
 
   if (class(image) == 'matrix') {
     
-    out = translation_mat(image, shift_rows, shift_cols)}
+    if (length(padded_value) != 1) {
+     
+      stop("the padded_value parameter should be a numeric value", call. = F) 
+    }
+    
+    out = translation_mat(image, shift_rows, shift_cols, padded_value)}                 # padded_value is a numeric value
   
   else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) { 
+    
+    if (length(padded_value) == 1) {
+      
+      padded_value = rep(padded_value, 3)}                                               # here by default arrays are 3-dimensional (padded_value vector of length 3)
+    
+    else {
+      
+      if (length(padded_value) > 1 && length(padded_value) != 3) {
+        
+        stop("the padded_value parameter should be a vector of length 3", call. = F)
+      }
+    }
     
     out = list()
     
     for (i in 1:3) {
       
-      out[[i]] = translation_mat(image[,,i], shift_rows, shift_cols)
+      out[[i]] = translation_mat(image[,,i], shift_rows, shift_cols, padded_value[i])
     }
     
     out = list_2array_convert(out)
@@ -1043,6 +1061,7 @@ List_2_Array = function(data, verbose = FALSE) {
 #' @param zca_comps an integer specifying the number of components to keep by zca whitening, when svd is performed 
 #' @param zca_epsilon a float specifying the regularization parameter by zca whitening
 #' @param image_thresh the threshold parameter, by image thresholding, should be between 0 and 1 if the data is normalized or between 0-255 otherwise
+#' @param padded_value either a numeric value or a numeric vector of length equal to N of an N-dimensional array. If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value. Applies only to the shift_rows and shift_cols parameters.
 #' @param threads an integer specifying the number of cores to run in parallel ( applies only in case that the image parameter is an array )
 #' @param verbose a boolean (TRUE, FALSE). If TRUE, then the total time of the preprocessing task will be printed.
 #' @return the output is of the same type with the input (in case of a data frame it returns a matrix)
@@ -1080,7 +1099,7 @@ List_2_Array = function(data, verbose = FALSE) {
 
 Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height = NULL, resiz_width = 0, resiz_height = 0, resiz_method = "nearest", shift_rows = 0,
                         
-                        shift_cols = 0, rotate_angle = 0, rotate_method = "nearest", zca_comps = 0, zca_epsilon = 0.0, image_thresh = 0.0, threads = 1, verbose = FALSE) {
+                        shift_cols = 0, rotate_angle = 0, rotate_method = "nearest", zca_comps = 0, zca_epsilon = 0.0, image_thresh = 0.0, padded_value = 0, threads = 1, verbose = FALSE) {
   
   
   if (!class(image) %in% c('data.frame', 'matrix', 'array', 'list')) stop('the image parameter should be either a matrix, data frame, array or a list')
@@ -1111,13 +1130,30 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
   
   if (class(image) == 'matrix') {
     
+    if (length(padded_value) != 1) {
+      
+      stop("the padded_value parameter should be a numeric value", call. = F) 
+    }
+    
     out = augment_transf(image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, 
                          
-                         zca_comps, zca_epsilon, image_thresh)}
+                         zca_comps, zca_epsilon, image_thresh, padded_value)}
   
-  if (class(image) == 'array' && !is.na(dim(image)[3])) {
+  if (class(image) == 'array' && !is.na(dim(image)[3])) {             # here arrays can be >= 3-dimensional ( besides RGB-images also an array of matrices )
     
-    out = augment_transf_array(image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, 
+    if (length(padded_value) == 1) {
+      
+      padded_value = rep(padded_value, dim(image)[3])}
+    
+    else {
+      
+      if (length(padded_value) > 1 && length(padded_value) != dim(image)[3]) {
+        
+        stop(paste0("the padded_value parameter should be a vector of length equal to ", dim(image)[3]), call. = F)
+      }
+    }
+    
+    out = augment_transf_array(image, flip_mode, crop_height, crop_width, padded_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, 
                                
                                rotate_method, zca_comps, zca_epsilon, image_thresh, threads)}
   
@@ -1127,7 +1163,19 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
     if ( sum(unlist(lapply(image, function(x) nrow(x) <= length(crop_width)))) ) stop('the length of the crop_width sequence should be less than or equal to the initial width of each of the images')
     if ( sum(unlist(lapply(image, function(x) ncol(x) <= length(crop_height)))) ) stop('the length of the crop_height sequence should be less than or equal to the initial height of each of the images')
     
-    out = augment_array_list(image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, 
+    if (length(padded_value) == 1) {
+      
+      padded_value = rep(padded_value, 3)}
+    
+    else {
+      
+      if (length(padded_value) > 1 && length(padded_value) != 3) {
+        
+        stop("the padded_value parameter should be a vector of length 3", call. = F)
+      }
+    }
+    
+    out = augment_array_list(image, flip_mode, crop_height, crop_width, padded_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, 
                              
                              zca_comps, zca_epsilon, image_thresh)
   }

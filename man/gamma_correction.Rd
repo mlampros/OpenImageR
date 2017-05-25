@@ -32,4 +32,3 @@ filt = gamma_correction(image, gamma = 0.5)
 \author{
 Lampros Mouselimis
 }
-

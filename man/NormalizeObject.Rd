@@ -48,4 +48,3 @@ res = NormalizeObject(x)
 \author{
 Lampros Mouselimis
 }
-

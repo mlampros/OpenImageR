@@ -33,4 +33,3 @@ image = readImage(path)
 res = HOG(image, cells = 3, orientations = 6)
 
 }
-

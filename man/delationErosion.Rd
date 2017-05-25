@@ -36,4 +36,3 @@ res_delate = delationErosion(image, Filter = c(3,3), method = 'delation')
 res_erode = delationErosion(image, Filter = c(5,5), method = 'erosion')
 
 }
-

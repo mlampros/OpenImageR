@@ -10,4 +10,3 @@ switch_invariant(method, gray_image, MODE, hash_size, highfreq_factor, resize)
 secondary function for invariant_hash
 }
 \keyword{internal}
-

@@ -34,4 +34,3 @@ filt = uniform_filter(image, c(4,4), conv_mode = "same")
 \author{
 Lampros Mouselimis
 }
-

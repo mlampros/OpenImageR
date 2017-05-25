@@ -29,4 +29,3 @@ im = readImage(path)
 flp = flipImage(im, mode = 'vertical')
 
 }
-

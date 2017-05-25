@@ -224,20 +224,20 @@ im_flip_cube <- function(src, mode = 1L) {
     .Call('OpenImageR_im_flip_cube', PACKAGE = 'OpenImageR', src, mode)
 }
 
-translation_mat <- function(image, shift_rows = 0L, shift_cols = 0L) {
-    .Call('OpenImageR_translation_mat', PACKAGE = 'OpenImageR', image, shift_rows, shift_cols)
+translation_mat <- function(image, shift_rows = 0L, shift_cols = 0L, FILL_VALUE = 0.0) {
+    .Call('OpenImageR_translation_mat', PACKAGE = 'OpenImageR', image, shift_rows, shift_cols, FILL_VALUE)
 }
 
-augment_transf <- function(image, flip_mode, crop_height, crop_width, resiz_width = 0.0, resiz_height = 0.0, resiz_method = "nearest", shift_rows = 0.0, shift_cols = 0.0, rotate_angle = 0.0, rotate_method = "nearest", zca_comps = 0L, zca_epsilon = 0.0, image_thresh = 0.0) {
-    .Call('OpenImageR_augment_transf', PACKAGE = 'OpenImageR', image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh)
+augment_transf <- function(image, flip_mode, crop_height, crop_width, resiz_width = 0.0, resiz_height = 0.0, resiz_method = "nearest", shift_rows = 0.0, shift_cols = 0.0, rotate_angle = 0.0, rotate_method = "nearest", zca_comps = 0L, zca_epsilon = 0.0, image_thresh = 0.0, pad_shift_value = 0.0) {
+    .Call('OpenImageR_augment_transf', PACKAGE = 'OpenImageR', image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, pad_shift_value)
 }
 
-augment_transf_array <- function(image, flip_mode, crop_height, crop_width, resiz_width = 0.0, resiz_height = 0.0, resiz_method = "nearest", shift_rows = 0.0, shift_cols = 0.0, rotate_angle = 0.0, rotate_method = "nearest", zca_comps = 0L, zca_epsilon = 0.0, image_thresh = 0.0, threads = 1L) {
-    .Call('OpenImageR_augment_transf_array', PACKAGE = 'OpenImageR', image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, threads)
+augment_transf_array <- function(image, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width = 0.0, resiz_height = 0.0, resiz_method = "nearest", shift_rows = 0.0, shift_cols = 0.0, rotate_angle = 0.0, rotate_method = "nearest", zca_comps = 0L, zca_epsilon = 0.0, image_thresh = 0.0, threads = 1L) {
+    .Call('OpenImageR_augment_transf_array', PACKAGE = 'OpenImageR', image, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, threads)
 }
 
-augment_array_list <- function(x, flip_mode, crop_height, crop_width, resiz_width = 0.0, resiz_height = 0.0, resiz_method = "nearest", shift_rows = 0.0, shift_cols = 0.0, rotate_angle = 0.0, rotate_method = "nearest", zca_comps = 0L, zca_epsilon = 0.0, image_thresh = 0.0) {
-    .Call('OpenImageR_augment_array_list', PACKAGE = 'OpenImageR', x, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh)
+augment_array_list <- function(x, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width = 0.0, resiz_height = 0.0, resiz_method = "nearest", shift_rows = 0.0, shift_cols = 0.0, rotate_angle = 0.0, rotate_method = "nearest", zca_comps = 0L, zca_epsilon = 0.0, image_thresh = 0.0) {
+    .Call('OpenImageR_augment_array_list', PACKAGE = 'OpenImageR', x, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh)
 }
 
 MinMaxArray <- function(x) {

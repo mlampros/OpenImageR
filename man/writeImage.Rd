@@ -32,4 +32,3 @@ Extension types similar to .tiff such as .tif, .TIFF, .TIF are also supported
 # writeImage(im, 'new_image.jpeg')
 
 }
-

@@ -36,4 +36,3 @@ res_hash = dhash(image, hash_size = 8, MODE = 'hash')
 res_binary = dhash(image, hash_size = 8, MODE = 'binary')
 
 }
-

@@ -10,4 +10,3 @@ laplacian_kernels(type = 1)
 laplacian kernels
 }
 \keyword{internal}
-

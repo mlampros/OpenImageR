@@ -11,4 +11,3 @@ switch_filter(kernel, conv_mod, gaussian_dims = 5, sigma = 1,
 secondary function for edge_detection function
 }
 \keyword{internal}
-

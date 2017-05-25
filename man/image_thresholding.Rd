@@ -32,4 +32,3 @@ filt = image_thresholding(image, thresh = 0.5)
 \author{
 Lampros Mouselimis
 }
-

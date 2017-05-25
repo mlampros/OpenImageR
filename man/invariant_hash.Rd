@@ -60,4 +60,3 @@ res1 = invariant_hash(image1, image2, hash_size = 3, flip = TRUE, crop = FALSE)
 res2 = invariant_hash(image1, image2, mode = 'hash', hash_size = 3, angle_bidirectional = 10)
 
 }
-

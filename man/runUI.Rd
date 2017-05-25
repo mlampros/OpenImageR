@@ -10,4 +10,3 @@ runUI()
 launcher for the shiny application
 }
 \keyword{internal}
-

@@ -10,4 +10,3 @@ func_chech_range(image)
 function to check the range of values of an image or normalize an image
 }
 \keyword{internal}
-

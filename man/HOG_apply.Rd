@@ -49,4 +49,3 @@ FOLDER_path = paste0(system.file("tmp_images", "same_type", package = "OpenImage
 res = HOG_apply(FOLDER_path, cells = 3, orientations = 6, threads = 1)
 
 }
-

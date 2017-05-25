@@ -11,4 +11,3 @@ switch_hashing(object, width, height, hash_size, highfreq_factor, method, mode,
 if-else function for hashing
 }
 \keyword{internal}
-

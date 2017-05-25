@@ -45,4 +45,3 @@ res = convolution(image_array, x, "same")
 \author{
 Lampros Mouselimis
 }
-

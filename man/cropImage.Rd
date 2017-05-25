@@ -40,4 +40,3 @@ crop2 = cropImage(image, new_width = 5:20, new_height = 5:20, type = 'user_defin
 \author{
 Lampros Mouselimis
 }
-

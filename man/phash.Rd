@@ -39,4 +39,3 @@ res_hash = phash(image, hash_size = 6, highfreq_factor = 3, MODE = 'hash')
 res_binary = phash(image, hash_size = 6, highfreq_factor = 3, MODE = 'binary')
 
 }
-

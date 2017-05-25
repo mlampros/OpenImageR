@@ -10,4 +10,3 @@ sec_resiz_array(image, flag = T)
 secondary function for 'resizeImage'  [ array ]
 }
 \keyword{internal}
-

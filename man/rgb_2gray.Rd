@@ -29,4 +29,3 @@ gray = rgb_2gray(image)
 \author{
 Lampros Mouselimis
 }
-

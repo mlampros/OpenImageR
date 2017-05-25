@@ -46,4 +46,3 @@ path = paste0(system.file("tmp_images", "same_type", package = "OpenImageR"), '/
 res_phash = hash_apply(path, method = 'phash', mode = 'binary')
 
 }
-

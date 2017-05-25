@@ -10,4 +10,3 @@ sec_gaus_bl(image, factor, sigma, range_gauss)
 secondary function for downsampling
 }
 \keyword{internal}
-

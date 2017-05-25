@@ -76,6 +76,18 @@ testthat::test_that("the function translation returns an error if the input imag
 })
 
 
+testthat::test_that("the function translation returns an error if the padded_value parameter is not a numeric value (in case that the input is a matrix)", {
+  
+  testthat::expect_error( translation(test_mat, shift_rows = 10, shift_cols = 0, padded_value = c(0,1,1)) )
+})
+
+
+testthat::test_that("the function translation returns an error if the padded_value parameter is not a numeric vector of length 3 (in case that the input is an array)", {
+  
+  testthat::expect_error( translation(test_array, shift_rows = 10, shift_cols = 0, padded_value = c(0,1)) )
+})
+
+
 # matrix
 
 testthat::test_that("the function translation returns the correct output in case of matrix and shift_rows and shift_cols are positive", {

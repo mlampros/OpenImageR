@@ -25,4 +25,3 @@ This function displays an image using either a character path, a 2- or a 3-dimen
 # imageShow(path)
 
 }
-

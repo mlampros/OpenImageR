@@ -10,4 +10,3 @@ gaussian_kernel(xy_length = 2, sigma = 1, range_gauss = 2)
 gaussian-kernel
 }
 \keyword{internal}
-

@@ -38,4 +38,3 @@ res_hash = average_hash(image, hash_size = 8, MODE = 'hash')
 res_binary = average_hash(image, hash_size = 8, MODE = 'binary')
 
 }
-

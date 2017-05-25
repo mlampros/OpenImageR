@@ -48,4 +48,3 @@ res = MinMaxObject(x)
 \author{
 Lampros Mouselimis
 }
-
