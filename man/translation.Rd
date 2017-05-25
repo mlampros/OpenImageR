@@ -22,7 +22,7 @@ a matrix or 3-dimensional array
 shift the position of an image by adding/subtracting a value to/from the X or Y coordinates
 }
 \details{
-If shift_rows is not zero then the image will be sifted row-wise (upsides or downsides depending on the sign). If shift_cols is not zero then 
+If shift_rows is not zero then the image will be sifted row-wise (upsides or downsides depending on the sign). If shift_cols is not zero then
 the image will be sifted column-wise (right or left depending on the sign).
 }
 \examples{

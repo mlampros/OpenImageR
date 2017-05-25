@@ -77,7 +77,7 @@ res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 20)
 
 
 # a list of 3-dimensional arrays
-object = list(array(0, dim = c(10, 10, 3)), array(0, dim = c(10, 10, 3)))                
+object = list(array(0, dim = c(10, 10, 3)), array(0, dim = c(10, 10, 3)))
 
 res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 40)
 
