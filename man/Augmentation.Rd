@@ -85,5 +85,3 @@ res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 40)
 \author{
 Lampros Mouselimis
 }
-
-
