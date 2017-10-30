@@ -390,10 +390,38 @@ arma::mat dhash_string(arma::mat gray_image, int hash_size = 8, std::string resi
 }
 
 
+
+// secondary function for 'hash_image'
+//
+
+// [[Rcpp::export]]
+arma::rowvec inner_hash_im(arma::mat& x, unsigned int i, int new_width, int new_height, int method, int hash_size, int highfreq_factor, std::string& resize_method) {
+  
+  arma::mat tmp_mat = vec2mat(arma::conv_to< arma::rowvec >::from(x.row(i)), new_width, new_height);
+  
+  arma::rowvec tmp_vec;
+  
+  if (method == 1) {
+    
+    tmp_vec = phash_binary(tmp_mat, hash_size, highfreq_factor, resize_method);}
+  
+  if (method == 2) {
+    
+    tmp_vec = average_hash_binary(tmp_mat, hash_size, resize_method);}
+  
+  if (method == 3) {
+    
+    tmp_vec = dhash_binary(tmp_mat, hash_size, resize_method);
+  }
+  
+  return tmp_vec;
+}
+
+
 // this function takes a matrix and it returns a binary matrix using either phash, average_hash or dhash
 
 // [[Rcpp::export]]
-arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1, std::string resize_method = "nearest") {
+arma::mat hash_image(arma::mat& x, int new_width, int new_height, std::string& resize_method, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1) {
 
   #ifdef _OPENMP
   omp_set_num_threads(threads);
@@ -418,25 +446,22 @@ arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size =
   int tmp_cols_h = std::pow(static_cast<double>(hash_size), 2.0);    // static_cast to make pow(..) work AND int conversion, so that n_cols is an integer
 
   arma::mat out(x.n_rows, tmp_cols_h, arma::fill::zeros);
+  
+  unsigned int i,k;
 
   #ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static) shared(x, new_height, new_width, method, resize_method, highfreq_factor, hash_size, out) private(i,k)
   #endif
-  for (unsigned int i = 0; i < x.n_rows; i++) {
+  for (i = 0; i < x.n_rows; i++) {
 
-    arma::mat tmp_mat = vec2mat(arma::conv_to< arma::rowvec >::from(x.row(i)), new_width, new_height);
-
-    if (method == 1) {
-
-      out.row(i) = phash_binary(tmp_mat, hash_size, highfreq_factor, resize_method);}
-
-    if (method == 2) {
-
-      out.row(i) = average_hash_binary(tmp_mat, hash_size, resize_method);}
-
-    if (method == 3) {
-
-      out.row(i) = dhash_binary(tmp_mat, hash_size, resize_method);
+    arma::rowvec tmp_vec = inner_hash_im(x, i, new_width, new_height, method, hash_size, highfreq_factor, resize_method);
+    
+    for (k = 0; k < tmp_vec.n_elem; k++) {
+      
+      #ifdef _OPENMP
+      #pragma omp atomic write
+      #endif
+      out(i,k) = tmp_vec(k);
     }
   }
 
@@ -444,11 +469,35 @@ arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size =
 }
 
 
+// secondary function for 'hash_image_cube'
+//
+
+// [[Rcpp::export]]
+arma::rowvec inner_hash_im_cube(arma::cube& x, unsigned int i, int method, int hash_size, int highfreq_factor, std::string& resize_method) {
+  
+  arma::rowvec tmp_vec;
+  
+  if (method == 1) {
+    
+    tmp_vec = phash_binary(x.slice(i), hash_size, highfreq_factor, resize_method);}
+  
+  if (method == 2) {
+    
+    tmp_vec = average_hash_binary(x.slice(i), hash_size, resize_method);}
+  
+  if (method == 3) {
+    
+    tmp_vec = dhash_binary(x.slice(i), hash_size, resize_method);
+  }
+  
+  return tmp_vec;
+}
+
 
 // this function takes an array and it returns a binary matrix using either phash, average_hash or dhash
 
 // [[Rcpp::export]]
-arma::mat hash_image_cube(arma::cube x, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1, std::string resize_method = "nearest") {
+arma::mat hash_image_cube(arma::cube& x, std::string& resize_method, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1) {
 
   #ifdef _OPENMP
   omp_set_num_threads(threads);
@@ -471,23 +520,22 @@ arma::mat hash_image_cube(arma::cube x, int hash_size = 8, int highfreq_factor =
   int tmp_cols_h = std::pow(static_cast<double>(hash_size), 2.0);    // static_cast to make pow(..) work AND int conversion, so that n_cols is an integer
 
   arma::mat out(x.n_slices, tmp_cols_h, arma::fill::zeros);
+  
+  unsigned int i,k;
 
   #ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static) shared(x, method, resize_method, highfreq_factor, hash_size, out) private(i,k)
   #endif
-  for (unsigned int i = 0; i < x.n_slices; i++) {
-
-    if (method == 1) {
-
-      out.row(i) = phash_binary(x.slice(i), hash_size, highfreq_factor, resize_method);}
-
-    if (method == 2) {
-
-      out.row(i) = average_hash_binary(x.slice(i), hash_size, resize_method);}
-
-    if (method == 3) {
-
-      out.row(i) = dhash_binary(x.slice(i), hash_size, resize_method);
+  for (i = 0; i < x.n_slices; i++) {
+    
+    arma::rowvec tmp_vec = inner_hash_im_cube(x, i, method, hash_size, highfreq_factor, resize_method);
+    
+    for (k = 0; k < tmp_vec.n_elem; k++) {
+      
+      #ifdef _OPENMP
+      #pragma omp atomic write
+      #endif
+      out(i,k) = tmp_vec(k);
     }
   }
 
@@ -501,14 +549,13 @@ arma::mat hash_image_cube(arma::cube x, int hash_size = 8, int highfreq_factor =
 // [[Rcpp::export]]
 arma::cube list_2array_convert(Rcpp::List x) {
 
-  //omp_set_num_threads(threads);
-
   arma::mat tmp_x = x[0];
+  
+  unsigned int ITERS = x.size();
 
-  arma::cube out(tmp_x.n_rows, tmp_x.n_cols, x.size());
+  arma::cube out(tmp_x.n_rows, tmp_x.n_cols, ITERS);
 
-  //#pragma omp critical(random)                            # SEE, http://stackoverflow.com/questions/19414416/openmp-generate-segfault-in-rcpp-code-for-the-seir-model [ single-thread is faster ]
-  for (unsigned int i = 0; i < x.size(); i++) {
+  for (unsigned int i = 0; i < ITERS; i++) {
 
     arma::mat tmp_mat = x[i];
 
@@ -519,11 +566,40 @@ arma::cube list_2array_convert(Rcpp::List x) {
 }
 
 
+// secondary function for 'hash_image_hex'
+//
+
+// [[Rcpp::export]]
+std::string inner_hash_im_hex(arma::mat& x, unsigned int i, int new_width, int new_height, std::string& resize_method, int hash_size, int highfreq_factor, int method) {
+  
+  arma::mat tmp_out;
+  
+  arma::mat tmp_mat = vec2mat(arma::conv_to< arma::rowvec >::from(x.row(i)), new_width, new_height);
+  
+  if (method == 1) {
+    
+    tmp_out = phash_string(tmp_mat, hash_size, highfreq_factor, resize_method);}
+  
+  if (method == 2) {
+    
+    tmp_out = average_hash_string(tmp_mat, hash_size, resize_method);}
+  
+  if (method == 3) {
+    
+    tmp_out = dhash_string(tmp_mat, hash_size, resize_method);
+  }
+  
+  std::string str_val = binary_to_hex(tmp_out);
+  
+  return str_val;
+}
+
+
 
 // this function takes a matrix and it returns a character vector of hashes using either phash, average_hash or dhash
 
 // [[Rcpp::export]]
-std::vector<std::string> hash_image_hex(arma::mat x, int new_width, int new_height, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1, std::string resize_method = "nearest") {
+std::vector<std::string> hash_image_hex(arma::mat& x, int new_width, int new_height, std::string& resize_method, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1) {
 
   #ifdef _OPENMP
   omp_set_num_threads(threads);
@@ -547,41 +623,59 @@ std::vector<std::string> hash_image_hex(arma::mat x, int new_width, int new_heig
 
   std::vector<std::string> out(x.n_rows);
 
+  unsigned int i;
+  
   #ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static) shared(x, new_height, new_width, method, resize_method, highfreq_factor, hash_size, out) private(i)
   #endif
-  for (unsigned int i = 0; i < x.n_rows; i++) {
+  for (i = 0; i < x.n_rows; i++) {
 
-    arma::mat tmp_out;
-
-    arma::mat tmp_mat = vec2mat(arma::conv_to< arma::rowvec >::from(x.row(i)), new_width, new_height);
-
-    if (method == 1) {
-
-      tmp_out = phash_string(tmp_mat, hash_size, highfreq_factor, resize_method);}
-
-    if (method == 2) {
-
-      tmp_out = average_hash_string(tmp_mat, hash_size, resize_method);}
-
-    if (method == 3) {
-
-      tmp_out = dhash_string(tmp_mat, hash_size, resize_method);
+    #ifdef _OPENMP
+    #pragma omp critical
+    #endif
+    {
+      std::string tmp_str = inner_hash_im_hex(x, i, new_width, new_height, resize_method, hash_size, highfreq_factor, method);
+      
+      out[i] = tmp_str;
     }
-
-    out[i] = binary_to_hex(tmp_out);
   }
 
   return(out);
 }
 
 
+// secondary function for the 'hash_image_cube_hex' function
+//
+
+// [[Rcpp::export]]
+std::string inner_hash_im_cube_hex(arma::cube& x, unsigned int i, std::string& resize_method, int hash_size, int highfreq_factor, int method) {
+  
+  arma::mat tmp_out;
+  
+  if (method == 1) {
+    
+    tmp_out = phash_string(x.slice(i), hash_size, highfreq_factor, resize_method);}
+  
+  if (method == 2) {
+    
+    tmp_out = average_hash_string(x.slice(i), hash_size, resize_method);}
+  
+  if (method == 3) {
+    
+    tmp_out = dhash_string(x.slice(i), hash_size, resize_method);
+  }
+  
+  std::string str_val = binary_to_hex(tmp_out);
+  
+  return str_val;
+}
+
 
 
 // this function takes an array and it returns a character vector of hashes using either phash, average_hash or dhash
 
 // [[Rcpp::export]]
-std::vector<std::string> hash_image_cube_hex(arma::cube x, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1, std::string resize_method = "nearest") {
+std::vector<std::string> hash_image_cube_hex(arma::cube& x, std::string& resize_method, int hash_size = 8, int highfreq_factor = 4, int method = 1, int threads = 1) {
 
   #ifdef _OPENMP
   omp_set_num_threads(threads);
@@ -603,28 +697,23 @@ std::vector<std::string> hash_image_cube_hex(arma::cube x, int hash_size = 8, in
 
   std::vector<std::string> out(x.n_slices);
 
+  unsigned int i;
+  
   #ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static) shared(x, method, resize_method, highfreq_factor, hash_size, out) private(i)
   #endif
-  for (unsigned int i = 0; i < x.n_slices; i++) {
+  for (i = 0; i < x.n_slices; i++) {
 
-    arma::mat tmp_out;
-
-    if (method == 1) {
-
-      tmp_out = phash_string(x.slice(i), hash_size, highfreq_factor, resize_method);}
-
-    if (method == 2) {
-
-      tmp_out = average_hash_string(x.slice(i), hash_size, resize_method);}
-
-    if (method == 3) {
-
-      tmp_out = dhash_string(x.slice(i), hash_size, resize_method);
+    #ifdef _OPENMP
+    #pragma omp critical
+    #endif
+    {
+      std::string tmp_str = inner_hash_im_cube_hex(x, i, resize_method, hash_size, highfreq_factor, method);
+      
+      out[i] = tmp_str;
     }
-
-    out[i] = binary_to_hex(tmp_out);
   }
 
   return(out);
 }
+

@@ -26,10 +26,12 @@ This function takes either a matrix, a data frame or a 3-dimensional array and r
 }
 \examples{
 
+\dontrun{
+ 
 path = system.file("tmp_images", "1.png", package = "OpenImageR")
 
 image = readImage(path)
 
 res = HOG(image, cells = 3, orientations = 6)
-
+}
 }

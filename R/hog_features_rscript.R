@@ -15,12 +15,14 @@
 #' @export
 #' @examples
 #' 
+#' \dontrun{
+#'  
 #' path = system.file("tmp_images", "1.png", package = "OpenImageR")
 #' 
 #' image = readImage(path)
 #' 
 #' res = HOG(image, cells = 3, orientations = 6)
-#' 
+#' }
 
 
 HOG = function(image, cells = 3, orientations = 6) {
@@ -99,6 +101,8 @@ func_transform = function(image, folder_path, flag_type, RGB_2gray = F) {
 #' @export
 #' @examples
 #' 
+#' \dontrun{
+#' 
 #' MATR = matrix(runif(75), ncol = 25, nrow = 5)
 #' 
 #' res = HOG_apply(MATR, cells = 3, orientations = 5, rows = 5, columns = 5, threads = 1)
@@ -112,7 +116,7 @@ func_transform = function(image, folder_path, flag_type, RGB_2gray = F) {
 #' FOLDER_path = paste0(system.file("tmp_images", "same_type", package = "OpenImageR"), '/')
 #' 
 #' res = HOG_apply(FOLDER_path, cells = 3, orientations = 6, threads = 1)
-#'
+#' }
 
 
 HOG_apply = function(object, cells = 3, orientations = 6, rows = NULL, columns = NULL, threads = 1) {

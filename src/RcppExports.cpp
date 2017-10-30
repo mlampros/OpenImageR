@@ -6,14 +6,30 @@
 
 using namespace Rcpp;
 
-// diate_erode
-arma::mat diate_erode(arma::mat image, arma::rowvec Filter, int method, int threads);
-RcppExport SEXP OpenImageR_diate_erode(SEXP imageSEXP, SEXP FilterSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
+// inner_dilate_erode
+double inner_dilate_erode(arma::rowvec& Filter, double replace_Val, unsigned int i, unsigned int j, int method, arma::mat& image);
+RcppExport SEXP _OpenImageR_inner_dilate_erode(SEXP FilterSEXP, SEXP replace_ValSEXP, SEXP iSEXP, SEXP jSEXP, SEXP methodSEXP, SEXP imageSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type image(imageSEXP);
-    Rcpp::traits::input_parameter< arma::rowvec >::type Filter(FilterSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec& >::type Filter(FilterSEXP);
+    Rcpp::traits::input_parameter< double >::type replace_Val(replace_ValSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type j(jSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type image(imageSEXP);
+    rcpp_result_gen = Rcpp::wrap(inner_dilate_erode(Filter, replace_Val, i, j, method, image));
+    return rcpp_result_gen;
+END_RCPP
+}
+// diate_erode
+arma::mat diate_erode(arma::mat& image, arma::rowvec& Filter, int method, int threads);
+RcppExport SEXP _OpenImageR_diate_erode(SEXP imageSEXP, SEXP FilterSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type image(imageSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec& >::type Filter(FilterSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
     rcpp_result_gen = Rcpp::wrap(diate_erode(image, Filter, method, threads));
@@ -22,7 +38,7 @@ END_RCPP
 }
 // diate_erode_cube
 arma::cube diate_erode_cube(arma::cube image, arma::rowvec Filter, int method, int threads);
-RcppExport SEXP OpenImageR_diate_erode_cube(SEXP imageSEXP, SEXP FilterSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
+RcppExport SEXP _OpenImageR_diate_erode_cube(SEXP imageSEXP, SEXP FilterSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -36,7 +52,7 @@ END_RCPP
 }
 // rgb_2gray
 arma::mat rgb_2gray(arma::cube RGB_image);
-RcppExport SEXP OpenImageR_rgb_2gray(SEXP RGB_imageSEXP) {
+RcppExport SEXP _OpenImageR_rgb_2gray(SEXP RGB_imageSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -47,7 +63,7 @@ END_RCPP
 }
 // hog_cpp
 arma::rowvec hog_cpp(arma::mat image, int n_divs, int n_bins);
-RcppExport SEXP OpenImageR_hog_cpp(SEXP imageSEXP, SEXP n_divsSEXP, SEXP n_binsSEXP) {
+RcppExport SEXP _OpenImageR_hog_cpp(SEXP imageSEXP, SEXP n_divsSEXP, SEXP n_binsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -58,13 +74,29 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// HOG_matrix
-arma::mat HOG_matrix(arma::mat x, int height, int width, int n_divs, int n_bins, int threads);
-RcppExport SEXP OpenImageR_HOG_matrix(SEXP xSEXP, SEXP heightSEXP, SEXP widthSEXP, SEXP n_divsSEXP, SEXP n_binsSEXP, SEXP threadsSEXP) {
+// inner_hog_mat
+arma::rowvec inner_hog_mat(arma::mat& x, unsigned int i, int height, int width, int n_divs, int n_bins);
+RcppExport SEXP _OpenImageR_inner_hog_mat(SEXP xSEXP, SEXP iSEXP, SEXP heightSEXP, SEXP widthSEXP, SEXP n_divsSEXP, SEXP n_binsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type height(heightSEXP);
+    Rcpp::traits::input_parameter< int >::type width(widthSEXP);
+    Rcpp::traits::input_parameter< int >::type n_divs(n_divsSEXP);
+    Rcpp::traits::input_parameter< int >::type n_bins(n_binsSEXP);
+    rcpp_result_gen = Rcpp::wrap(inner_hog_mat(x, i, height, width, n_divs, n_bins));
+    return rcpp_result_gen;
+END_RCPP
+}
+// HOG_matrix
+arma::mat HOG_matrix(arma::mat& x, int height, int width, int n_divs, int n_bins, int threads);
+RcppExport SEXP _OpenImageR_HOG_matrix(SEXP xSEXP, SEXP heightSEXP, SEXP widthSEXP, SEXP n_divsSEXP, SEXP n_binsSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
     Rcpp::traits::input_parameter< int >::type height(heightSEXP);
     Rcpp::traits::input_parameter< int >::type width(widthSEXP);
     Rcpp::traits::input_parameter< int >::type n_divs(n_divsSEXP);
@@ -74,13 +106,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// HOG_array
-arma::mat HOG_array(arma::cube x, int n_divs, int n_bins, int threads);
-RcppExport SEXP OpenImageR_HOG_array(SEXP xSEXP, SEXP n_divsSEXP, SEXP n_binsSEXP, SEXP threadsSEXP) {
+// inner_hog_array
+arma::rowvec inner_hog_array(arma::cube& x, int n_divs, int n_bins, unsigned int i);
+RcppExport SEXP _OpenImageR_inner_hog_array(SEXP xSEXP, SEXP n_divsSEXP, SEXP n_binsSEXP, SEXP iSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::cube >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::cube& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type n_divs(n_divsSEXP);
+    Rcpp::traits::input_parameter< int >::type n_bins(n_binsSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type i(iSEXP);
+    rcpp_result_gen = Rcpp::wrap(inner_hog_array(x, n_divs, n_bins, i));
+    return rcpp_result_gen;
+END_RCPP
+}
+// HOG_array
+arma::mat HOG_array(arma::cube& x, int n_divs, int n_bins, int threads);
+RcppExport SEXP _OpenImageR_HOG_array(SEXP xSEXP, SEXP n_divsSEXP, SEXP n_binsSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::cube& >::type x(xSEXP);
     Rcpp::traits::input_parameter< int >::type n_divs(n_divsSEXP);
     Rcpp::traits::input_parameter< int >::type n_bins(n_binsSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
@@ -90,7 +136,7 @@ END_RCPP
 }
 // round_rcpp
 float round_rcpp(float f, int decimal_places);
-RcppExport SEXP OpenImageR_round_rcpp(SEXP fSEXP, SEXP decimal_placesSEXP) {
+RcppExport SEXP _OpenImageR_round_rcpp(SEXP fSEXP, SEXP decimal_placesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -102,7 +148,7 @@ END_RCPP
 }
 // binary_to_hex
 std::string binary_to_hex(arma::mat x);
-RcppExport SEXP OpenImageR_binary_to_hex(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_binary_to_hex(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -113,7 +159,7 @@ END_RCPP
 }
 // levenshtein_dist
 int levenshtein_dist(std::string s, std::string t);
-RcppExport SEXP OpenImageR_levenshtein_dist(SEXP sSEXP, SEXP tSEXP) {
+RcppExport SEXP _OpenImageR_levenshtein_dist(SEXP sSEXP, SEXP tSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -125,7 +171,7 @@ END_RCPP
 }
 // func_dct
 arma::vec func_dct(arma::vec x);
-RcppExport SEXP OpenImageR_func_dct(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_func_dct(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -136,7 +182,7 @@ END_RCPP
 }
 // dct_2d
 arma::mat dct_2d(arma::mat x);
-RcppExport SEXP OpenImageR_dct_2d(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_dct_2d(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -147,7 +193,7 @@ END_RCPP
 }
 // phash_binary
 arma::rowvec phash_binary(arma::mat gray_image, int hash_size, int highfreq_factor, std::string resize_method);
-RcppExport SEXP OpenImageR_phash_binary(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP resize_methodSEXP) {
+RcppExport SEXP _OpenImageR_phash_binary(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP resize_methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -161,7 +207,7 @@ END_RCPP
 }
 // phash_string
 arma::mat phash_string(arma::mat gray_image, int hash_size, int highfreq_factor, std::string resize_method);
-RcppExport SEXP OpenImageR_phash_string(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP resize_methodSEXP) {
+RcppExport SEXP _OpenImageR_phash_string(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP resize_methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -175,7 +221,7 @@ END_RCPP
 }
 // average_hash_binary
 arma::rowvec average_hash_binary(arma::mat gray_image, int hash_size, std::string resize_method);
-RcppExport SEXP OpenImageR_average_hash_binary(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP resize_methodSEXP) {
+RcppExport SEXP _OpenImageR_average_hash_binary(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP resize_methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -188,7 +234,7 @@ END_RCPP
 }
 // average_hash_string
 arma::mat average_hash_string(arma::mat gray_image, int hash_size, std::string resize_method);
-RcppExport SEXP OpenImageR_average_hash_string(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP resize_methodSEXP) {
+RcppExport SEXP _OpenImageR_average_hash_string(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP resize_methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -201,7 +247,7 @@ END_RCPP
 }
 // dhash_binary
 arma::rowvec dhash_binary(arma::mat gray_image, int hash_size, std::string resize_method);
-RcppExport SEXP OpenImageR_dhash_binary(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP resize_methodSEXP) {
+RcppExport SEXP _OpenImageR_dhash_binary(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP resize_methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -214,7 +260,7 @@ END_RCPP
 }
 // dhash_string
 arma::mat dhash_string(arma::mat gray_image, int hash_size, std::string resize_method);
-RcppExport SEXP OpenImageR_dhash_string(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP resize_methodSEXP) {
+RcppExport SEXP _OpenImageR_dhash_string(SEXP gray_imageSEXP, SEXP hash_sizeSEXP, SEXP resize_methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -225,43 +271,77 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// hash_image
-arma::mat hash_image(arma::mat x, int new_width, int new_height, int hash_size, int highfreq_factor, int method, int threads, std::string resize_method);
-RcppExport SEXP OpenImageR_hash_image(SEXP xSEXP, SEXP new_widthSEXP, SEXP new_heightSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP, SEXP threadsSEXP, SEXP resize_methodSEXP) {
+// inner_hash_im
+arma::rowvec inner_hash_im(arma::mat& x, unsigned int i, int new_width, int new_height, int method, int hash_size, int highfreq_factor, std::string& resize_method);
+RcppExport SEXP _OpenImageR_inner_hash_im(SEXP xSEXP, SEXP iSEXP, SEXP new_widthSEXP, SEXP new_heightSEXP, SEXP methodSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP resize_methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type i(iSEXP);
     Rcpp::traits::input_parameter< int >::type new_width(new_widthSEXP);
     Rcpp::traits::input_parameter< int >::type new_height(new_heightSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< int >::type hash_size(hash_sizeSEXP);
+    Rcpp::traits::input_parameter< int >::type highfreq_factor(highfreq_factorSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type resize_method(resize_methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(inner_hash_im(x, i, new_width, new_height, method, hash_size, highfreq_factor, resize_method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// hash_image
+arma::mat hash_image(arma::mat& x, int new_width, int new_height, std::string& resize_method, int hash_size, int highfreq_factor, int method, int threads);
+RcppExport SEXP _OpenImageR_hash_image(SEXP xSEXP, SEXP new_widthSEXP, SEXP new_heightSEXP, SEXP resize_methodSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type new_width(new_widthSEXP);
+    Rcpp::traits::input_parameter< int >::type new_height(new_heightSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type resize_method(resize_methodSEXP);
     Rcpp::traits::input_parameter< int >::type hash_size(hash_sizeSEXP);
     Rcpp::traits::input_parameter< int >::type highfreq_factor(highfreq_factorSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type resize_method(resize_methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(hash_image(x, new_width, new_height, hash_size, highfreq_factor, method, threads, resize_method));
+    rcpp_result_gen = Rcpp::wrap(hash_image(x, new_width, new_height, resize_method, hash_size, highfreq_factor, method, threads));
+    return rcpp_result_gen;
+END_RCPP
+}
+// inner_hash_im_cube
+arma::rowvec inner_hash_im_cube(arma::cube& x, unsigned int i, int method, int hash_size, int highfreq_factor, std::string& resize_method);
+RcppExport SEXP _OpenImageR_inner_hash_im_cube(SEXP xSEXP, SEXP iSEXP, SEXP methodSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP resize_methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::cube& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< int >::type hash_size(hash_sizeSEXP);
+    Rcpp::traits::input_parameter< int >::type highfreq_factor(highfreq_factorSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type resize_method(resize_methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(inner_hash_im_cube(x, i, method, hash_size, highfreq_factor, resize_method));
     return rcpp_result_gen;
 END_RCPP
 }
 // hash_image_cube
-arma::mat hash_image_cube(arma::cube x, int hash_size, int highfreq_factor, int method, int threads, std::string resize_method);
-RcppExport SEXP OpenImageR_hash_image_cube(SEXP xSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP, SEXP threadsSEXP, SEXP resize_methodSEXP) {
+arma::mat hash_image_cube(arma::cube& x, std::string& resize_method, int hash_size, int highfreq_factor, int method, int threads);
+RcppExport SEXP _OpenImageR_hash_image_cube(SEXP xSEXP, SEXP resize_methodSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::cube >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::cube& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type resize_method(resize_methodSEXP);
     Rcpp::traits::input_parameter< int >::type hash_size(hash_sizeSEXP);
     Rcpp::traits::input_parameter< int >::type highfreq_factor(highfreq_factorSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type resize_method(resize_methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(hash_image_cube(x, hash_size, highfreq_factor, method, threads, resize_method));
+    rcpp_result_gen = Rcpp::wrap(hash_image_cube(x, resize_method, hash_size, highfreq_factor, method, threads));
     return rcpp_result_gen;
 END_RCPP
 }
 // list_2array_convert
 arma::cube list_2array_convert(Rcpp::List x);
-RcppExport SEXP OpenImageR_list_2array_convert(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_list_2array_convert(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -270,43 +350,77 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// hash_image_hex
-std::vector<std::string> hash_image_hex(arma::mat x, int new_width, int new_height, int hash_size, int highfreq_factor, int method, int threads, std::string resize_method);
-RcppExport SEXP OpenImageR_hash_image_hex(SEXP xSEXP, SEXP new_widthSEXP, SEXP new_heightSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP, SEXP threadsSEXP, SEXP resize_methodSEXP) {
+// inner_hash_im_hex
+std::string inner_hash_im_hex(arma::mat& x, unsigned int i, int new_width, int new_height, std::string& resize_method, int hash_size, int highfreq_factor, int method);
+RcppExport SEXP _OpenImageR_inner_hash_im_hex(SEXP xSEXP, SEXP iSEXP, SEXP new_widthSEXP, SEXP new_heightSEXP, SEXP resize_methodSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type i(iSEXP);
     Rcpp::traits::input_parameter< int >::type new_width(new_widthSEXP);
     Rcpp::traits::input_parameter< int >::type new_height(new_heightSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type resize_method(resize_methodSEXP);
+    Rcpp::traits::input_parameter< int >::type hash_size(hash_sizeSEXP);
+    Rcpp::traits::input_parameter< int >::type highfreq_factor(highfreq_factorSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(inner_hash_im_hex(x, i, new_width, new_height, resize_method, hash_size, highfreq_factor, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// hash_image_hex
+std::vector<std::string> hash_image_hex(arma::mat& x, int new_width, int new_height, std::string& resize_method, int hash_size, int highfreq_factor, int method, int threads);
+RcppExport SEXP _OpenImageR_hash_image_hex(SEXP xSEXP, SEXP new_widthSEXP, SEXP new_heightSEXP, SEXP resize_methodSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type new_width(new_widthSEXP);
+    Rcpp::traits::input_parameter< int >::type new_height(new_heightSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type resize_method(resize_methodSEXP);
     Rcpp::traits::input_parameter< int >::type hash_size(hash_sizeSEXP);
     Rcpp::traits::input_parameter< int >::type highfreq_factor(highfreq_factorSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type resize_method(resize_methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(hash_image_hex(x, new_width, new_height, hash_size, highfreq_factor, method, threads, resize_method));
+    rcpp_result_gen = Rcpp::wrap(hash_image_hex(x, new_width, new_height, resize_method, hash_size, highfreq_factor, method, threads));
+    return rcpp_result_gen;
+END_RCPP
+}
+// inner_hash_im_cube_hex
+std::string inner_hash_im_cube_hex(arma::cube& x, unsigned int i, std::string& resize_method, int hash_size, int highfreq_factor, int method);
+RcppExport SEXP _OpenImageR_inner_hash_im_cube_hex(SEXP xSEXP, SEXP iSEXP, SEXP resize_methodSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::cube& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type resize_method(resize_methodSEXP);
+    Rcpp::traits::input_parameter< int >::type hash_size(hash_sizeSEXP);
+    Rcpp::traits::input_parameter< int >::type highfreq_factor(highfreq_factorSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(inner_hash_im_cube_hex(x, i, resize_method, hash_size, highfreq_factor, method));
     return rcpp_result_gen;
 END_RCPP
 }
 // hash_image_cube_hex
-std::vector<std::string> hash_image_cube_hex(arma::cube x, int hash_size, int highfreq_factor, int method, int threads, std::string resize_method);
-RcppExport SEXP OpenImageR_hash_image_cube_hex(SEXP xSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP, SEXP threadsSEXP, SEXP resize_methodSEXP) {
+std::vector<std::string> hash_image_cube_hex(arma::cube& x, std::string& resize_method, int hash_size, int highfreq_factor, int method, int threads);
+RcppExport SEXP _OpenImageR_hash_image_cube_hex(SEXP xSEXP, SEXP resize_methodSEXP, SEXP hash_sizeSEXP, SEXP highfreq_factorSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::cube >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::cube& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type resize_method(resize_methodSEXP);
     Rcpp::traits::input_parameter< int >::type hash_size(hash_sizeSEXP);
     Rcpp::traits::input_parameter< int >::type highfreq_factor(highfreq_factorSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type resize_method(resize_methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(hash_image_cube_hex(x, hash_size, highfreq_factor, method, threads, resize_method));
+    rcpp_result_gen = Rcpp::wrap(hash_image_cube_hex(x, resize_method, hash_size, highfreq_factor, method, threads));
     return rcpp_result_gen;
 END_RCPP
 }
 // mod
 int mod(int a, int b);
-RcppExport SEXP OpenImageR_mod(SEXP aSEXP, SEXP bSEXP) {
+RcppExport SEXP _OpenImageR_mod(SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -318,7 +432,7 @@ END_RCPP
 }
 // indices
 arma::mat indices(int rows, int cols);
-RcppExport SEXP OpenImageR_indices(SEXP rowsSEXP, SEXP colsSEXP) {
+RcppExport SEXP _OpenImageR_indices(SEXP rowsSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -330,7 +444,7 @@ END_RCPP
 }
 // vec2mat
 arma::mat vec2mat(arma::rowvec V, int mat_rows, int mat_cols);
-RcppExport SEXP OpenImageR_vec2mat(SEXP VSEXP, SEXP mat_rowsSEXP, SEXP mat_colsSEXP) {
+RcppExport SEXP _OpenImageR_vec2mat(SEXP VSEXP, SEXP mat_rowsSEXP, SEXP mat_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -343,7 +457,7 @@ END_RCPP
 }
 // seq_rcpp
 arma::vec seq_rcpp(int x);
-RcppExport SEXP OpenImageR_seq_rcpp(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_seq_rcpp(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -354,7 +468,7 @@ END_RCPP
 }
 // resize_nearest_rcpp
 arma::mat resize_nearest_rcpp(arma::mat image, double width, double height);
-RcppExport SEXP OpenImageR_resize_nearest_rcpp(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP) {
+RcppExport SEXP _OpenImageR_resize_nearest_rcpp(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -367,7 +481,7 @@ END_RCPP
 }
 // resize_nearest_array
 arma::cube resize_nearest_array(arma::cube image, double width, double height);
-RcppExport SEXP OpenImageR_resize_nearest_array(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP) {
+RcppExport SEXP _OpenImageR_resize_nearest_array(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -380,7 +494,7 @@ END_RCPP
 }
 // indices_bilinear
 arma::mat indices_bilinear(int rows, int cols);
-RcppExport SEXP OpenImageR_indices_bilinear(SEXP rowsSEXP, SEXP colsSEXP) {
+RcppExport SEXP _OpenImageR_indices_bilinear(SEXP rowsSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -392,7 +506,7 @@ END_RCPP
 }
 // meshgrid_x
 arma::mat meshgrid_x(int rows, int cols);
-RcppExport SEXP OpenImageR_meshgrid_x(SEXP rowsSEXP, SEXP colsSEXP) {
+RcppExport SEXP _OpenImageR_meshgrid_x(SEXP rowsSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -404,7 +518,7 @@ END_RCPP
 }
 // meshgrid_y
 arma::mat meshgrid_y(int rows, int cols);
-RcppExport SEXP OpenImageR_meshgrid_y(SEXP rowsSEXP, SEXP colsSEXP) {
+RcppExport SEXP _OpenImageR_meshgrid_y(SEXP rowsSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -416,7 +530,7 @@ END_RCPP
 }
 // replaceVal
 arma::mat replaceVal(arma::mat x, double thresh, double value, int mode);
-RcppExport SEXP OpenImageR_replaceVal(SEXP xSEXP, SEXP threshSEXP, SEXP valueSEXP, SEXP modeSEXP) {
+RcppExport SEXP _OpenImageR_replaceVal(SEXP xSEXP, SEXP threshSEXP, SEXP valueSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -430,7 +544,7 @@ END_RCPP
 }
 // vec2mat_colwise
 arma::mat vec2mat_colwise(arma::rowvec VEC, int mat_rows, int mat_cols);
-RcppExport SEXP OpenImageR_vec2mat_colwise(SEXP VECSEXP, SEXP mat_rowsSEXP, SEXP mat_colsSEXP) {
+RcppExport SEXP _OpenImageR_vec2mat_colwise(SEXP VECSEXP, SEXP mat_rowsSEXP, SEXP mat_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -443,7 +557,7 @@ END_RCPP
 }
 // Vectz
 arma::rowvec Vectz(arma::mat x);
-RcppExport SEXP OpenImageR_Vectz(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_Vectz(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -454,7 +568,7 @@ END_RCPP
 }
 // resize_bilinear_rcpp
 arma::mat resize_bilinear_rcpp(arma::mat image, double width, double height);
-RcppExport SEXP OpenImageR_resize_bilinear_rcpp(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP) {
+RcppExport SEXP _OpenImageR_resize_bilinear_rcpp(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -467,7 +581,7 @@ END_RCPP
 }
 // bilinear_array
 arma::cube bilinear_array(arma::cube image, double width, double height);
-RcppExport SEXP OpenImageR_bilinear_array(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP) {
+RcppExport SEXP _OpenImageR_bilinear_array(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -480,7 +594,7 @@ END_RCPP
 }
 // Array_range
 arma::rowvec Array_range(arma::cube x, int mode);
-RcppExport SEXP OpenImageR_Array_range(SEXP xSEXP, SEXP modeSEXP) {
+RcppExport SEXP _OpenImageR_Array_range(SEXP xSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -492,7 +606,7 @@ END_RCPP
 }
 // Normalize_array
 arma::cube Normalize_array(arma::cube x);
-RcppExport SEXP OpenImageR_Normalize_array(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_Normalize_array(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -503,7 +617,7 @@ END_RCPP
 }
 // Normalize_matrix
 arma::mat Normalize_matrix(arma::mat x);
-RcppExport SEXP OpenImageR_Normalize_matrix(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_Normalize_matrix(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -514,7 +628,7 @@ END_RCPP
 }
 // rotate_rcpp
 arma::mat rotate_rcpp(arma::mat image, int angle);
-RcppExport SEXP OpenImageR_rotate_rcpp(SEXP imageSEXP, SEXP angleSEXP) {
+RcppExport SEXP _OpenImageR_rotate_rcpp(SEXP imageSEXP, SEXP angleSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -526,7 +640,7 @@ END_RCPP
 }
 // seq_rcpp_range
 arma::uvec seq_rcpp_range(int start, int end);
-RcppExport SEXP OpenImageR_seq_rcpp_range(SEXP startSEXP, SEXP endSEXP) {
+RcppExport SEXP _OpenImageR_seq_rcpp_range(SEXP startSEXP, SEXP endSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -537,14 +651,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rotate_nearest_bilinear
-arma::mat rotate_nearest_bilinear(arma::mat image, double angle, std::string method, std::string mode, int threads);
-RcppExport SEXP OpenImageR_rotate_nearest_bilinear(SEXP imageSEXP, SEXP angleSEXP, SEXP methodSEXP, SEXP modeSEXP, SEXP threadsSEXP) {
+arma::mat rotate_nearest_bilinear(arma::mat& image, double angle, std::string& method, std::string mode, int threads);
+RcppExport SEXP _OpenImageR_rotate_nearest_bilinear(SEXP imageSEXP, SEXP angleSEXP, SEXP methodSEXP, SEXP modeSEXP, SEXP threadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type image(imageSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type image(imageSEXP);
     Rcpp::traits::input_parameter< double >::type angle(angleSEXP);
-    Rcpp::traits::input_parameter< std::string >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type method(methodSEXP);
     Rcpp::traits::input_parameter< std::string >::type mode(modeSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
     rcpp_result_gen = Rcpp::wrap(rotate_nearest_bilinear(image, angle, method, mode, threads));
@@ -553,7 +667,7 @@ END_RCPP
 }
 // rotate_nearest_bilinear_array_same
 arma::cube rotate_nearest_bilinear_array_same(arma::cube src, double angle, std::string method, int threads);
-RcppExport SEXP OpenImageR_rotate_nearest_bilinear_array_same(SEXP srcSEXP, SEXP angleSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
+RcppExport SEXP _OpenImageR_rotate_nearest_bilinear_array_same(SEXP srcSEXP, SEXP angleSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -567,7 +681,7 @@ END_RCPP
 }
 // rotate_nearest_bilinear_array_full
 arma::cube rotate_nearest_bilinear_array_full(arma::cube src, double angle, std::string method, int threads);
-RcppExport SEXP OpenImageR_rotate_nearest_bilinear_array_full(SEXP srcSEXP, SEXP angleSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
+RcppExport SEXP _OpenImageR_rotate_nearest_bilinear_array_full(SEXP srcSEXP, SEXP angleSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -581,7 +695,7 @@ END_RCPP
 }
 // conv2d
 arma::mat conv2d(arma::mat image, arma::mat kernel, std::string mode);
-RcppExport SEXP OpenImageR_conv2d(SEXP imageSEXP, SEXP kernelSEXP, SEXP modeSEXP) {
+RcppExport SEXP _OpenImageR_conv2d(SEXP imageSEXP, SEXP kernelSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -594,7 +708,7 @@ END_RCPP
 }
 // conv3d
 arma::cube conv3d(arma::cube image, arma::mat kernel, std::string mode);
-RcppExport SEXP OpenImageR_conv3d(SEXP imageSEXP, SEXP kernelSEXP, SEXP modeSEXP) {
+RcppExport SEXP _OpenImageR_conv3d(SEXP imageSEXP, SEXP kernelSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -607,7 +721,7 @@ END_RCPP
 }
 // svd_arma_econ
 arma::mat svd_arma_econ(arma::mat m);
-RcppExport SEXP OpenImageR_svd_arma_econ(SEXP mSEXP) {
+RcppExport SEXP _OpenImageR_svd_arma_econ(SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -618,7 +732,7 @@ END_RCPP
 }
 // removeMean
 arma::mat removeMean(arma::mat data);
-RcppExport SEXP OpenImageR_removeMean(SEXP dataSEXP) {
+RcppExport SEXP _OpenImageR_removeMean(SEXP dataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -629,7 +743,7 @@ END_RCPP
 }
 // zca_whitening
 arma::mat zca_whitening(arma::mat data, int k, double epsilon);
-RcppExport SEXP OpenImageR_zca_whitening(SEXP dataSEXP, SEXP kSEXP, SEXP epsilonSEXP) {
+RcppExport SEXP _OpenImageR_zca_whitening(SEXP dataSEXP, SEXP kSEXP, SEXP epsilonSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -642,7 +756,7 @@ END_RCPP
 }
 // zca_whiten_cube
 arma::cube zca_whiten_cube(arma::cube src, int k, double epsilon);
-RcppExport SEXP OpenImageR_zca_whiten_cube(SEXP srcSEXP, SEXP kSEXP, SEXP epsilonSEXP) {
+RcppExport SEXP _OpenImageR_zca_whiten_cube(SEXP srcSEXP, SEXP kSEXP, SEXP epsilonSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -655,7 +769,7 @@ END_RCPP
 }
 // im_flip
 arma::mat im_flip(arma::mat x, int mode);
-RcppExport SEXP OpenImageR_im_flip(SEXP xSEXP, SEXP modeSEXP) {
+RcppExport SEXP _OpenImageR_im_flip(SEXP xSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -667,7 +781,7 @@ END_RCPP
 }
 // im_flip_cube
 arma::cube im_flip_cube(arma::cube src, int mode);
-RcppExport SEXP OpenImageR_im_flip_cube(SEXP srcSEXP, SEXP modeSEXP) {
+RcppExport SEXP _OpenImageR_im_flip_cube(SEXP srcSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -679,7 +793,7 @@ END_RCPP
 }
 // translation_mat
 arma::mat translation_mat(arma::mat& image, int shift_rows, int shift_cols, double FILL_VALUE);
-RcppExport SEXP OpenImageR_translation_mat(SEXP imageSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP FILL_VALUESEXP) {
+RcppExport SEXP _OpenImageR_translation_mat(SEXP imageSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP FILL_VALUESEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -693,7 +807,7 @@ END_RCPP
 }
 // augment_transf
 arma::mat augment_transf(arma::mat& image, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, double resiz_width, double resiz_height, std::string resiz_method, double shift_rows, double shift_cols, double rotate_angle, std::string rotate_method, int zca_comps, double zca_epsilon, double image_thresh, double pad_shift_value);
-RcppExport SEXP OpenImageR_augment_transf(SEXP imageSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP, SEXP pad_shift_valueSEXP) {
+RcppExport SEXP _OpenImageR_augment_transf(SEXP imageSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP, SEXP pad_shift_valueSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -717,8 +831,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // augment_transf_array
-arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, arma::rowvec pad_shift_value, double resiz_width, double resiz_height, std::string resiz_method, double shift_rows, double shift_cols, double rotate_angle, std::string rotate_method, int zca_comps, double zca_epsilon, double image_thresh, int threads);
-RcppExport SEXP OpenImageR_augment_transf_array(SEXP imageSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP pad_shift_valueSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP, SEXP threadsSEXP) {
+arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, arma::rowvec pad_shift_value, double resiz_width, double resiz_height, std::string resiz_method, double shift_rows, double shift_cols, double rotate_angle, std::string rotate_method, int zca_comps, double zca_epsilon, double image_thresh);
+RcppExport SEXP _OpenImageR_augment_transf_array(SEXP imageSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP pad_shift_valueSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -737,14 +851,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type zca_comps(zca_compsSEXP);
     Rcpp::traits::input_parameter< double >::type zca_epsilon(zca_epsilonSEXP);
     Rcpp::traits::input_parameter< double >::type image_thresh(image_threshSEXP);
-    Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
-    rcpp_result_gen = Rcpp::wrap(augment_transf_array(image, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, threads));
+    rcpp_result_gen = Rcpp::wrap(augment_transf_array(image, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh));
     return rcpp_result_gen;
 END_RCPP
 }
 // augment_array_list
 Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec crop_height, arma::uvec crop_width, arma::rowvec pad_shift_value, double resiz_width, double resiz_height, std::string resiz_method, double shift_rows, double shift_cols, double rotate_angle, std::string rotate_method, int zca_comps, double zca_epsilon, double image_thresh);
-RcppExport SEXP OpenImageR_augment_array_list(SEXP xSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP pad_shift_valueSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP) {
+RcppExport SEXP _OpenImageR_augment_array_list(SEXP xSEXP, SEXP flip_modeSEXP, SEXP crop_heightSEXP, SEXP crop_widthSEXP, SEXP pad_shift_valueSEXP, SEXP resiz_widthSEXP, SEXP resiz_heightSEXP, SEXP resiz_methodSEXP, SEXP shift_rowsSEXP, SEXP shift_colsSEXP, SEXP rotate_angleSEXP, SEXP rotate_methodSEXP, SEXP zca_compsSEXP, SEXP zca_epsilonSEXP, SEXP image_threshSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -769,7 +882,7 @@ END_RCPP
 }
 // MinMaxArray
 Rcpp::List MinMaxArray(arma::cube x);
-RcppExport SEXP OpenImageR_MinMaxArray(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_MinMaxArray(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -780,7 +893,7 @@ END_RCPP
 }
 // MinMaxMatrix
 Rcpp::List MinMaxMatrix(arma::mat x);
-RcppExport SEXP OpenImageR_MinMaxMatrix(SEXP xSEXP) {
+RcppExport SEXP _OpenImageR_MinMaxMatrix(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;

@@ -1062,7 +1062,6 @@ List_2_Array = function(data, verbose = FALSE) {
 #' @param zca_epsilon a float specifying the regularization parameter by zca whitening
 #' @param image_thresh the threshold parameter, by image thresholding, should be between 0 and 1 if the data is normalized or between 0-255 otherwise
 #' @param padded_value either a numeric value or a numeric vector of length equal to N of an N-dimensional array. If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value. Applies only to the shift_rows and shift_cols parameters.
-#' @param threads an integer specifying the number of cores to run in parallel ( applies only in case that the image parameter is an array )
 #' @param verbose a boolean (TRUE, FALSE). If TRUE, then the total time of the preprocessing task will be printed.
 #' @return the output is of the same type with the input (in case of a data frame it returns a matrix)
 #' @author Lampros Mouselimis
@@ -1071,6 +1070,8 @@ List_2_Array = function(data, verbose = FALSE) {
 #' is : 1st flip image, 2nd crop image, 3rd resize image, 4th shift rows or columns, 5th rotate image, 6th zca-whitening and 7th image-thresholding.
 #' @export
 #' @examples
+#' 
+#' \dontrun{
 #' 
 #' # a matrix
 #' object = matrix(1, 10, 10)
@@ -1094,12 +1095,12 @@ List_2_Array = function(data, verbose = FALSE) {
 #' object = list(array(0, dim = c(10, 10, 3)), array(0, dim = c(10, 10, 3)))                
 #' 
 #' res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 40)
-#'
+#' }
 
 
 Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height = NULL, resiz_width = 0, resiz_height = 0, resiz_method = "nearest", shift_rows = 0,
                         
-                        shift_cols = 0, rotate_angle = 0, rotate_method = "nearest", zca_comps = 0, zca_epsilon = 0.0, image_thresh = 0.0, padded_value = 0, threads = 1, verbose = FALSE) {
+                        shift_cols = 0, rotate_angle = 0, rotate_method = "nearest", zca_comps = 0, zca_epsilon = 0.0, image_thresh = 0.0, padded_value = 0, verbose = FALSE) {
   
   
   if (!class(image) %in% c('data.frame', 'matrix', 'array', 'list')) stop('the image parameter should be either a matrix, data frame, array or a list')
@@ -1108,7 +1109,6 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
   if (!resiz_method %in% c('nearest', 'bilinear')) stop("valid resizing methods are 'nearest', 'bilinear'")
   if (rotate_angle > 360.0 || rotate_angle < 0.0) stop("valid angles to rotate an image are values greater than 0 and less than 360")
   if (!rotate_method %in% c('nearest', 'bilinear')) stop("valid rotation methods are 'nearest', 'bilinear'")
-  if (class(image) == 'array' && threads < 1) stop('the number of threads should be at least 1')
   if (class(image) == 'data.frame') image = as.matrix(image)
   if (ncol(image) <= length(crop_height) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_height sequence should be less than the initial height of the image")
   if (nrow(image) <= length(crop_width) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_width sequence should be less than the initial width of the image")
@@ -1155,7 +1155,7 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
     
     out = augment_transf_array(image, flip_mode, crop_height, crop_width, padded_value, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols, rotate_angle, 
                                
-                               rotate_method, zca_comps, zca_epsilon, image_thresh, threads)}
+                               rotate_method, zca_comps, zca_epsilon, image_thresh)}
   
   if (class(image) == 'list') {
     

@@ -161,11 +161,11 @@ switch_hashing = function(object, width, height, hash_size, highfreq_factor, met
     
     if (class(object) == 'matrix') {
       
-      out = hash_image(object, width, height, hash_size, highfreq_factor, method, threads, resize)}
+      out = hash_image(object, width, height, resize, hash_size, highfreq_factor, method, threads)}
     
     if (class(object) == 'array') {
       
-      out = hash_image_cube(object, hash_size, highfreq_factor, method, threads, resize)
+      out = hash_image_cube(object, resize, hash_size, highfreq_factor, method, threads)
     }
   }
   
@@ -173,11 +173,11 @@ switch_hashing = function(object, width, height, hash_size, highfreq_factor, met
     
     if (class(object) == 'matrix') {
       
-      out = hash_image_hex(object, width, height, hash_size, highfreq_factor, method, threads, resize)}
+      out = hash_image_hex(object, width, height, resize, hash_size, highfreq_factor, method, threads)}
     
     if (class(object) == 'array') {
       
-      out = hash_image_cube_hex(object, hash_size, highfreq_factor, method, threads, resize)
+      out = hash_image_cube_hex(object, resize, hash_size, highfreq_factor, method, threads)
     }
   }
   
@@ -342,6 +342,8 @@ switch_invariant = function(method, gray_image, MODE, hash_size, highfreq_factor
 #' @export
 #' @examples
 #' 
+#' \dontrun{
+#' 
 #' path1 = system.file("tmp_images", "1.png", package = "OpenImageR")
 #' 
 #' path2 = system.file("tmp_images", "2.jpg", package = "OpenImageR")
@@ -353,7 +355,7 @@ switch_invariant = function(method, gray_image, MODE, hash_size, highfreq_factor
 #' res1 = invariant_hash(image1, image2, hash_size = 3, flip = TRUE, crop = FALSE)
 #' 
 #' res2 = invariant_hash(image1, image2, mode = 'hash', hash_size = 3, angle_bidirectional = 10)
-#' 
+#' }
 
 
 invariant_hash = function(image, new_image, method = 'phash', mode = 'binary', hash_size = 8, highfreq_factor = 4, resize = 'nearest', flip = T, rotate = T, angle_bidirectional = 10, crop = T) {

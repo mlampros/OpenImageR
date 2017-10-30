@@ -34,6 +34,8 @@ This function takes as input either a matrix, a data frame, a 3-dimensional arra
 }
 \examples{
 
+\dontrun{
+
 MATR = matrix(runif(75), ncol = 25, nrow = 5)
 
 res = HOG_apply(MATR, cells = 3, orientations = 5, rows = 5, columns = 5, threads = 1)
@@ -47,5 +49,5 @@ res = HOG_apply(ARRAY, cells = 3, orientations = 6, threads = 1)
 FOLDER_path = paste0(system.file("tmp_images", "same_type", package = "OpenImageR"), '/')
 
 res = HOG_apply(FOLDER_path, cells = 3, orientations = 6, threads = 1)
-
+}
 }

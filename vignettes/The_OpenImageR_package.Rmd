@@ -352,7 +352,7 @@ augm = Augmentation(im, flip_mode = 'horizontal', crop_width = 20:460, crop_heig
                     
                     rotate_method = 'bilinear', zca_comps = 100, 
                     
-                    zca_epsilon = 0.1, image_thresh = 0.0, threads = 1, verbose = T)
+                    zca_epsilon = 0.1, image_thresh = 0.0, verbose = T)
 
 imageShow(augm)
 
@@ -384,7 +384,7 @@ res = lapply(1:length(samp_rot), function(x)
                
                rotate_angle = samp_rot[x], rotate_method = 'bilinear', zca_comps = 100, 
               
-               zca_epsilon = 0.1, image_thresh = 0.0, threads = 1, verbose = F))
+               zca_epsilon = 0.1, image_thresh = 0.0, verbose = F))
 
 
 print(length(res))

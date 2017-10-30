@@ -110,10 +110,25 @@ arma::rowvec hog_cpp(arma::mat image, int n_divs = 3, int n_bins = 6) {
 
 
 
+// secondary function for the 'HOG_matrix' function
+//
+
+// [[Rcpp::export]]
+arma::rowvec inner_hog_mat(arma::mat& x, unsigned int i, int height, int width, int n_divs, int n_bins) {
+
+  arma::mat tmp = vec2mat(x.row(i), height, width);
+  
+  arma::rowvec tmp_hog = hog_cpp(tmp, n_divs, n_bins);
+  
+  return tmp_hog;
+}
+
+
+
 // Use this function if the input x is a matrix like the MNIST data where each row of matrix x is an image of 28x28 dimensions
 
 // [[Rcpp::export]]
-arma::mat HOG_matrix(arma::mat x, int height, int width, int n_divs = 3, int n_bins = 6, int threads = 1) {
+arma::mat HOG_matrix(arma::mat& x, int height, int width, int n_divs = 3, int n_bins = 6, int threads = 1) {
 
   #ifdef _OPENMP
   omp_set_num_threads(threads);
@@ -121,17 +136,38 @@ arma::mat HOG_matrix(arma::mat x, int height, int width, int n_divs = 3, int n_b
 
   arma::mat out(x.n_rows, n_divs * n_divs * n_bins);
 
+  unsigned int i,j;
+
   #ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static) shared(out, width, height, x, n_bins, n_divs) private(i,j)
   #endif
-  for (unsigned int i = 0; i < out.n_rows; i++) {
+  for (i = 0; i < out.n_rows; i++) {
 
-    arma::mat tmp = vec2mat(x.row(i), height, width);
-
-    out.row(i) =  hog_cpp(tmp, n_divs, n_bins);
+    arma::rowvec tmp_hog = inner_hog_mat(x, i, height, width, n_divs, n_bins);
+    
+    for (j = 0; j < tmp_hog.n_elem; j++) {
+      
+      #ifdef _OPENMP
+      #pragma omp atomic write
+      #endif
+      out(i,j) = tmp_hog(j);
+    }
   }
 
   return(out);
+}
+
+
+
+// secondary function for the 'HOG_array' function
+//
+
+// [[Rcpp::export]]
+arma::rowvec inner_hog_array(arma::cube& x, int n_divs, int n_bins, unsigned int i) {
+
+  arma::rowvec tmp_hog = hog_cpp(x.slice(i), n_divs, n_bins);
+  
+  return tmp_hog;
 }
 
 
@@ -139,7 +175,7 @@ arma::mat HOG_matrix(arma::mat x, int height, int width, int n_divs = 3, int n_b
 // use this function if the input x is an array of images like the CIFAR-10 data
 
 // [[Rcpp::export]]
-arma::mat HOG_array(arma::cube x, int n_divs = 3, int n_bins = 6, int threads = 1) {
+arma::mat HOG_array(arma::cube& x, int n_divs = 3, int n_bins = 6, int threads = 1) {
 
   #ifdef _OPENMP
   omp_set_num_threads(threads);
@@ -147,15 +183,24 @@ arma::mat HOG_array(arma::cube x, int n_divs = 3, int n_bins = 6, int threads = 
 
   arma::mat out(x.n_slices, n_divs * n_divs * n_bins);
 
-  #ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
-  #endif
-  for (unsigned int i = 0; i < out.n_rows; i++) {
+  unsigned int i,j;
 
-    out.row(i) =  hog_cpp(x.slice(i), n_divs, n_bins);
+  #ifdef _OPENMP
+  #pragma omp parallel for schedule(static) shared(out, n_bins, n_divs, x) private(i,j)
+  #endif
+  for (i = 0; i < out.n_rows; i++) {
+    
+    arma::rowvec tmp_hog = inner_hog_array(x, n_divs, n_bins, i);
+
+    for (j = 0; j < tmp_hog.n_elem; j++) {
+      
+      #ifdef _OPENMP
+      #pragma omp atomic write
+      #endif
+      out(i,j) = tmp_hog(j);
+    }
   }
 
   return(out);
 }
-
 

@@ -7,13 +7,68 @@
 #include <omp.h>
 #endif
 
+
+// secondary function for 'dilate_erode'
+//
+
+// [[Rcpp::export]]
+double inner_dilate_erode(arma::rowvec& Filter, double replace_Val, unsigned int i, unsigned int j, int method, arma::mat& image) {
+  
+  arma::mat tmp_kern(Filter(0), Filter(1));
+  
+  tmp_kern.fill(replace_Val);
+  
+  double out_val = 0.0;
+  
+  for (unsigned int k = 0; k < tmp_kern.n_rows; k++) {
+    
+    for (unsigned int f = 0; f < tmp_kern.n_cols; f++) {
+      
+      unsigned int use_rows = i + k; 
+      
+      unsigned int use_cols = j + f; 
+      
+      if (use_rows > (image.n_rows - 1) || use_cols > (image.n_cols - 1)) {
+        
+        if (method == 1) {
+          
+          tmp_kern(k, f) = replace_Val;}
+        
+        if (method == 2) {
+          
+          tmp_kern(k, f) = replace_Val;
+        }
+      }
+      
+      else {
+        
+        tmp_kern(k, f) = image(i + k, j + f);
+      }
+    }
+  }
+  
+  if (method == 1) {
+    
+    out_val = arma::max(arma::vectorise(tmp_kern));
+  }
+  
+  if (method == 2) {
+    
+    out_val = arma::min(arma::vectorise(tmp_kern));
+  }
+  
+  return out_val;
+}
+
+
+
 // dilation or erosion of an image   [ matrix ]
 //
 // http://www.mathworks.com/help/images/morphological-dilation-and-erosion.html
 //
 
 // [[Rcpp::export]]
-arma::mat diate_erode(arma::mat image, arma::rowvec Filter, int method = 1, int threads = 1) {
+arma::mat diate_erode(arma::mat& image, arma::rowvec& Filter, int method = 1, int threads = 1) {
   
   #ifdef _OPENMP
   omp_set_num_threads(threads);
@@ -39,53 +94,20 @@ arma::mat diate_erode(arma::mat image, arma::rowvec Filter, int method = 1, int 
   }
   
   arma::mat tmp_filt(image.n_rows, image.n_cols, arma::fill::zeros);
-    
+  
+  unsigned int i,j;
+  
   #ifdef _OPENMP  
-  #pragma omp parallel for collapse(2)
+  #pragma omp parallel for schedule(static) shared(image, Filter, replace_Val, method, tmp_filt) private(i,j)
   #endif
-  for (unsigned int i = 0; i < image.n_rows; i++) {
+  for (i = 0; i < image.n_rows; i++) {
     
-    for (unsigned int j = 0; j < image.n_cols; j++) {
+    for (j = 0; j < image.n_cols; j++) {
       
-      arma::mat tmp_kern(Filter(0), Filter(1));
-      
-      tmp_kern.fill(replace_Val); 
-      
-      for (unsigned int k = 0; k < tmp_kern.n_rows; k++) {
-        
-        for (unsigned int f = 0; f < tmp_kern.n_cols; f++) {
-          
-          unsigned int use_rows = i + k; 
-          
-          unsigned int use_cols = j + f; 
-          
-          if (use_rows > (image.n_rows - 1) || use_cols > (image.n_cols - 1)) {
-            
-            if (method == 1) {
-              
-              tmp_kern(k, f) = replace_Val;}
-            
-            if (method == 2) {
-              
-              tmp_kern(k, f) = replace_Val;
-            }
-          }
-          
-          else {
-            
-            tmp_kern(k, f) = image(i + k, j + f);
-          }
-        }
-      }
-      
-      if (method == 1) {
-        
-        tmp_filt(i,j) = max(arma::vectorise(tmp_kern));}
-      
-      if (method == 2) {
-        
-        tmp_filt(i,j) = min(arma::vectorise(tmp_kern));
-      }
+      #ifdef _OPENMP
+      #pragma omp atomic write
+      #endif
+      tmp_filt(i,j) = inner_dilate_erode(Filter, replace_Val, i, j, method, image);
     }
   }
   

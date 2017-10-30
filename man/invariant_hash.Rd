@@ -47,6 +47,8 @@ crops an image (no-crop, 10-percent-crop, 20-percent-crop). Depending on the typ
 }
 \examples{
 
+\dontrun{
+
 path1 = system.file("tmp_images", "1.png", package = "OpenImageR")
 
 path2 = system.file("tmp_images", "2.jpg", package = "OpenImageR")
@@ -58,5 +60,5 @@ image2 = rgb_2gray(readImage(path2))
 res1 = invariant_hash(image1, image2, hash_size = 3, flip = TRUE, crop = FALSE)
 
 res2 = invariant_hash(image1, image2, mode = 'hash', hash_size = 3, angle_bidirectional = 10)
-
+}
 }

@@ -70,19 +70,11 @@ testthat::test_that("in case that the padded_value is not a numeric value it ret
 })
 
 
-testthat::test_that("in case that the threads is less than 1 and input data is an array, it returns an error", {
-  
-  testthat::expect_error( Augmentation(object_array, crop_height = 10:50, crop_width = 10:50, resiz_width = 60, resiz_height = 60, resiz_method = 'nearest', rotate_angle = 40, 
-                                       
-                                       rotate_method = 'nearest', zca_comps = 10, zca_epsilon = 0.1, image_thresh = 0.5, threads = 0)  )
-})
-
-
 testthat::test_that("in case that the length of crop_height is greater than the columns of the image it returns an error", {
   
   testthat::expect_error( Augmentation(object_array, crop_height = 1:110, crop_width = 1:90, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
                                        
-                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, threads = 1)  )
+                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)  )
 })
 
 
@@ -90,7 +82,7 @@ testthat::test_that("in case that the length of crop_width is greater than the r
   
   testthat::expect_error( Augmentation(object_array, crop_height = 1:90, crop_width = 1:110, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
                                        
-                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, threads = 1)  )
+                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)  )
 })
 
 
@@ -101,7 +93,7 @@ testthat::test_that("in case that the input list consists of matrices it returns
   
   testthat::expect_error( Augmentation(tmp_lst, crop_height = 1:30, crop_width = 1:30, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
                                        
-                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, threads = 1)  )
+                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)  )
 })
 
 
@@ -109,7 +101,7 @@ testthat::test_that("in case that the crop_width in the input list is greater th
   
   testthat::expect_error( Augmentation(object_list, crop_height = 1:90, crop_width = 1:110, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
                                        
-                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, threads = 1)  )
+                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)  )
 })
 
 
@@ -117,7 +109,7 @@ testthat::test_that("in case that the crop_height in the input list is greater t
   
   testthat::expect_error( Augmentation(object_list, crop_height = 1:110, crop_width = 1:90, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
                                        
-                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, threads = 1)  )
+                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)  )
 })
 
 
@@ -125,7 +117,7 @@ testthat::test_that("in case that the flip_mode is incorrect it returns an error
   
   testthat::expect_error( Augmentation(object_list, flip_mode = 'invalid', crop_height = 1:80, crop_width = 1:90, resiz_width = 20, resiz_height = 20, resiz_method = 'nearest', rotate_angle = 40, 
                                        
-                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, threads = 1)  )
+                                       rotate_method = 'nearest', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)  )
 })
 
 

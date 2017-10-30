@@ -451,7 +451,7 @@ arma::uvec seq_rcpp_range(int start, int end) {
 //
 
 // [[Rcpp::export]]
-arma::mat rotate_nearest_bilinear(arma::mat image, double angle, std::string method, std::string mode, int threads) {
+arma::mat rotate_nearest_bilinear(arma::mat& image, double angle, std::string& method, std::string mode, int threads) {
 
   #ifdef _OPENMP
   omp_set_num_threads(threads);
@@ -466,13 +466,15 @@ arma::mat rotate_nearest_bilinear(arma::mat image, double angle, std::string met
   arma::mat im2(mm, nn, arma::fill::zeros);
 
   double thet = angle * arma::datum::pi / 180.0;
+  
+  int t,s;
 
   #ifdef _OPENMP
-  #pragma omp parallel for collapse(2)
+  #pragma omp parallel for collapse(2) shared(mm, nn, method, thet, n, m, im2, image) private(t,s)
   #endif
-  for (int t = 0; t < mm; t++) {
+  for (t = 0; t < mm; t++) {
 
-    for (int s = 0; s < nn; s++) {
+    for (s = 0; s < nn; s++) {
 
       if (method == "nearest") {                          // http://stackoverflow.com/questions/1811372/how-to-rotate-image-by-nearest-neighbor-interpolation-using-matlab
 
@@ -481,6 +483,9 @@ arma::mat rotate_nearest_bilinear(arma::mat image, double angle, std::string met
 
         if ( i > 0.0 && j > 0.0 && i < n && j < m) {
 
+          #ifdef _OPENMP
+          #pragma omp atomic write
+          #endif
           im2(t,s) = image(i,j);
         }
       }
@@ -508,6 +513,9 @@ arma::mat rotate_nearest_bilinear(arma::mat image, double angle, std::string met
 
         if (n1 >= 0.0 && n2 < n && m1 >= 0.0 && m2 < m) {
 
+          #ifdef _OPENMP
+          #pragma omp atomic write
+          #endif
           im2(t,s) = ((n2 - n0 + m2 - m0) * image(n1,m1) + (n2 - n0 + m0 - m1) * image(n1,m2) + (n0 - n1 + m2 - m0) * image(n2,m1) + (n0 - n1 + m0 - m1) * image(n2,m1)) / 4.0;
         }
       }
@@ -888,7 +896,6 @@ arma::mat augment_transf(arma::mat& image, std::string flip_mode, arma::uvec cro
 }
 
 
-
 // function which takes as input either a 3-dimensional array OR an array of gray-matrices (2-dimensional matrices) and performs augmentations
 // the size of BOTH the cube AND the cube.slice(i) is changed dynamically using the .set_size() operator
 //
@@ -900,10 +907,7 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
 
                                 double rotate_angle = 0.0, std::string rotate_method = "nearest", int zca_comps = 0, double zca_epsilon = 0.0,
 
-                                double image_thresh = 0.0, int threads = 1) {
-  #ifdef _OPENMP
-  omp_set_num_threads(threads);
-  #endif
+                                double image_thresh = 0.0) {
 
   arma::cube cube_out;
 
@@ -917,16 +921,13 @@ arma::cube augment_transf_array(arma::cube& image, std::string flip_mode, arma::
   if (resiz_width > 0.0) {tmp_rows = resiz_width;}
 
   cube_out.set_size(tmp_rows, tmp_cols, image.n_slices);
-
-  #ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
-  #endif
+  
+  arma::mat tmp_mat;
+  
+  tmp_mat.set_size(tmp_rows, tmp_cols);
+  
   for (unsigned int i = 0; i < image.n_slices; i++) {
-
-    arma::mat tmp_mat;
-
-    tmp_mat.set_size(tmp_rows, tmp_cols);
-
+    
     tmp_mat = image.slice(i);
 
     cube_out.slice(i) = augment_transf(tmp_mat, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method,
@@ -961,7 +962,7 @@ Rcpp::List augment_array_list(Rcpp::List x, std::string flip_mode, arma::uvec cr
 
     tmp_list[i] = augment_transf_array(tmp_cube, flip_mode, crop_height, crop_width, pad_shift_value, resiz_width, resiz_height, resiz_method, shift_rows,
 
-                                       shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, 1);  // threads by default set to 1
+                                       shift_cols, rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh);
   }
 
   return(tmp_list);
