@@ -101,8 +101,14 @@ int levenshtein_dist(std::string s, std::string t) {
     for (unsigned int j = 0; j < t.length(); j++) {
 
       int cost = (s[i] == t[j]) ? 0 : 1;           // condition ? result_if_true : result_if_false
+      
+      arma::rowvec tmp_vec(3, arma::fill::zeros);
+      
+      tmp_vec(0) = v1[j] + 1;
+      tmp_vec(1) = v0[j + 1] + 1;
+      tmp_vec(2) = v0[j] + cost;
 
-      arma::rowvec tmp_vec = {v1[j] + 1, v0[j + 1] + 1, v0[j] + cost};
+      //arma::rowvec tmp_vec = {v1[j] + 1, v0[j + 1] + 1, v0[j] + cost};              // I commented this line due to the following warning : "warning: attempt to free a non-heap object ‘tmp’ [-Wfree-nonheap-object]"
 
       v1[j + 1] = min(tmp_vec);
     }
