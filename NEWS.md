@@ -1,4 +1,9 @@
 
+## OpenImageR 1.0.8
+
+I added the *DARMA_64BIT_WORD* flag in the Makevars file to allow the package processing big datasets
+
+
 ## OpenImageR 1.0.7
 
 I removed the *threads* parameter from the *Augmentation* function as there is no significant improvement (in execution speed) between a threaded and a non-threaded version.
