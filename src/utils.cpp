@@ -447,6 +447,57 @@ arma::uvec seq_rcpp_range(int start, int end) {
 
 
 
+// inner function for 'rotate_nearest_bilinear'
+//
+
+// [[Rcpp::export]]
+double inner_bilinear(int t, int s, arma::mat& image, std::string& method, int n, int m, int mm, int nn, double thet) {
+  
+  double im_value = 0.0;
+  
+  if (method == "nearest") {                          // http://stackoverflow.com/questions/1811372/how-to-rotate-image-by-nearest-neighbor-interpolation-using-matlab
+    
+    int i = ((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
+    int j = (-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
+    
+    if ( i > 0.0 && j > 0.0 && i < n && j < m) {
+      
+      im_value = image(i,j);
+    }
+  }
+  
+  if (method == "bilinear") {                        // http://www.itu.dk/people/vedrana/reports/IA_Report.pdf [ page 18, using distances rather than coefficients ]
+    
+    double n0 = ((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
+    double m0 = (-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
+    
+    int n1 = floor(n0);
+    int n2 = ceil(n0);
+    
+    if (n1 == n2) {
+      
+      n2 = n2 + 1;
+    }
+    
+    int m1 = floor(m0);
+    int m2 = ceil(m0);
+    
+    if (m1 == m2) {
+      
+      m2 = m2 + 1;
+    }
+    
+    if (n1 >= 0.0 && n2 < n && m1 >= 0.0 && m2 < m) {
+      
+      im_value = ((n2 - n0 + m2 - m0) * image(n1,m1) + (n2 - n0 + m0 - m1) * image(n1,m2) + (n0 - n1 + m2 - m0) * image(n2,m1) + (n0 - n1 + m0 - m1) * image(n2,m1)) / 4.0;
+    }
+  }
+  
+  return im_value;
+}
+
+
+
 // rotate image using an angle and methods 'nearest', 'bilinear' [ matrix ]
 //
 
@@ -475,50 +526,13 @@ arma::mat rotate_nearest_bilinear(arma::mat& image, double angle, std::string& m
   for (t = 0; t < mm; t++) {
 
     for (s = 0; s < nn; s++) {
+      
+      double tmp_val = inner_bilinear(t, s, image, method, n, m, mm, nn, thet);
 
-      if (method == "nearest") {                          // http://stackoverflow.com/questions/1811372/how-to-rotate-image-by-nearest-neighbor-interpolation-using-matlab
-
-        int i = ((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
-        int j = (-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
-
-        if ( i > 0.0 && j > 0.0 && i < n && j < m) {
-
-          #ifdef _OPENMP
-          #pragma omp atomic write
-          #endif
-          im2(t,s) = image(i,j);
-        }
-      }
-
-      if (method == "bilinear") {                        // http://www.itu.dk/people/vedrana/reports/IA_Report.pdf [ page 18, using distances rather than coefficients ]
-
-        double n0 = ((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
-        double m0 = (-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
-
-        int n1 = floor(n0);
-        int n2 = ceil(n0);
-
-        if (n1 == n2) {
-
-          n2 = n2 + 1;
-        }
-
-        int m1 = floor(m0);
-        int m2 = ceil(m0);
-
-        if (m1 == m2) {
-
-          m2 = m2 + 1;
-        }
-
-        if (n1 >= 0.0 && n2 < n && m1 >= 0.0 && m2 < m) {
-
-          #ifdef _OPENMP
-          #pragma omp atomic write
-          #endif
-          im2(t,s) = ((n2 - n0 + m2 - m0) * image(n1,m1) + (n2 - n0 + m0 - m1) * image(n1,m2) + (n0 - n1 + m2 - m0) * image(n2,m1) + (n0 - n1 + m0 - m1) * image(n2,m1)) / 4.0;
-        }
-      }
+      #ifdef _OPENMP
+      #pragma omp atomic write
+      #endif
+      im2(t,s) = tmp_val;
     }
   }
 

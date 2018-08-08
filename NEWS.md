@@ -1,4 +1,16 @@
 
+## OpenImageR 1.1.0
+
+* I fixed the ASAN-gcc error.
+* I commented 3 test cases for the Solaris OS, otherwise it gives an error (see the comments in the *test-gabor.R* tests file).
+* I updated the Vignette *Gabor Feature extraction*.
+
+
+## OpenImageR 1.0.9
+
+I added the *GaborFeatureExtract* R6 class, which as the name suggests extracts Gabor features from images (I updated the documentation and Vignettes too)
+
+
 ## OpenImageR 1.0.8
 
 I added the *DARMA_64BIT_WORD* flag in the Makevars file to allow the package processing big datasets

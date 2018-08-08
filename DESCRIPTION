@@ -1,16 +1,18 @@
 Package: OpenImageR
 Type: Package
 Title: An Image Processing Toolkit
-Version: 1.0.8
-Imports: Rcpp (>= 0.12.5), shiny, jpeg, png, tiff, utils
-Date: 2018-01-16
-Authors@R: c( person("Lampros", "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre")), person("Sight", "Machine", role = "cph", comment = "findHOGFeatures function of the SimpleCV computer vision platform"), person("Johannes", "Buchner", role = "cph", comment = "average_hash, dhash and phash functions of the ImageHash python library") )
+Version: 1.1.0
+Date: 2018-08-06
+Depends: R(>= 3.2.3)
+Imports: Rcpp (>= 0.12.17), shiny, jpeg, png, tiff, utils, R6
+Authors@R: c( person("Lampros", "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre")), person("Sight", "Machine", role = "cph", comment = "findHOGFeatures function of the SimpleCV computer vision platform"), person("Johannes", "Buchner", role = "cph", comment = "average_hash, dhash and phash functions of the ImageHash python library"), person("Mohammad", "Haghighat", email = "haghighat@ieee.org", role = "cph", comment = "Gabor Feature Extraction") )
 BugReports: https://github.com/mlampros/OpenImageR/issues
 URL: https://github.com/mlampros/OpenImageR
-Description: Incorporates functions for image preprocessing, filtering and image recognition. The package takes advantage of 'RcppArmadillo' to speed up computationally intensive functions. The histogram of oriented gradients descriptor is a modification of the 'findHOGFeatures' function of the 'SimpleCV' computer vision platform and the average_hash(), dhash() and phash() functions are based on the 'ImageHash' python library.
+Description: Incorporates functions for image preprocessing, filtering and image recognition. The package takes advantage of 'RcppArmadillo' to speed up computationally intensive functions. The histogram of oriented gradients descriptor is a modification of the 'findHOGFeatures' function of the 'SimpleCV' computer vision platform, the average_hash(), dhash() and phash() functions are based on the 'ImageHash' python library and the Gabor Feature Extraction functions are based on 'Matlab' code of the paper, "CloudID: Trustworthy cloud-based and cross-enterprise biometric identification" by M. Haghighat, S. Zonouz, M. Abdel-Mottaleb, Expert Systems with Applications, vol. 42, no. 21, pp. 7905-7916, 2015, <doi:10.1016/j.eswa.2015.06.025>.
 License: GPL-3
 Copyright: inst/COPYRIGHTS
-LinkingTo: Rcpp, RcppArmadillo
+SystemRequirements: The package requires a C++11 compiler.
+LinkingTo: Rcpp, RcppArmadillo (>= 0.8.0)
 Suggests:
     testthat,
     knitr,
