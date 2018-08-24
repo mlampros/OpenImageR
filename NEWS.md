@@ -1,4 +1,9 @@
 
+## OpenImageR 1.1.1
+
+* I modified the *rotate_nearest_bilinear* Rcpp function in the *utils.cpp* file to fix the ASAN-gcc error.
+
+
 ## OpenImageR 1.1.0
 
 * I fixed the ASAN-gcc error.

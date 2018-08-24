@@ -9,7 +9,7 @@
 ## OpenImageR
 <br>
 
-The OpenImageR package is an image processing library. It includes functions for image preprocessing, filtering and image recognition. More details on the functionality of OpenImageR can be found in the [blog-post](http://mlampros.github.io/2016/07/08/OpenImageR/) and in the package Vignette. 
+The OpenImageR package is an image processing library. It includes functions for image preprocessing, filtering and image recognition. More details on the functionality of OpenImageR can be found in the [first](http://mlampros.github.io/2016/07/08/OpenImageR/) and [second](http://mlampros.github.io/2018/08/08/Gabor_Feature_Extraction/) blog-posts, and in the package Vignette. 
 <br><br>
 
 To install the package from CRAN use, 

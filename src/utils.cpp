@@ -521,7 +521,7 @@ arma::mat rotate_nearest_bilinear(arma::mat& image, double angle, std::string& m
   int t,s;
 
   #ifdef _OPENMP
-  #pragma omp parallel for collapse(2) shared(mm, nn, method, thet, n, m, im2, image) private(t,s)
+  #pragma omp parallel for schedule(static) shared(mm, nn, method, thet, n, m, im2, image) private(t,s)
   #endif
   for (t = 0; t < mm; t++) {
 

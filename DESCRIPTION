@@ -1,8 +1,8 @@
 Package: OpenImageR
 Type: Package
 Title: An Image Processing Toolkit
-Version: 1.1.0
-Date: 2018-08-06
+Version: 1.1.1
+Date: 2018-08-21
 Depends: R(>= 3.2.3)
 Imports: Rcpp (>= 0.12.17), shiny, jpeg, png, tiff, utils, R6
 Authors@R: c( person("Lampros", "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre")), person("Sight", "Machine", role = "cph", comment = "findHOGFeatures function of the SimpleCV computer vision platform"), person("Johannes", "Buchner", role = "cph", comment = "average_hash, dhash and phash functions of the ImageHash python library"), person("Mohammad", "Haghighat", email = "haghighat@ieee.org", role = "cph", comment = "Gabor Feature Extraction") )
