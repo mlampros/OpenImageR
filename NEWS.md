@@ -1,4 +1,14 @@
 
+## OpenImageR 1.1.2
+
+* I converted the OpenImageR package to a header-only package, so that Rcpp functions can be called from another R package.
+* I added the *SLIC* and *SLICO* superpixel algorithms as header files and as a function (*superpixels()*) which can be called from within R.
+* I added the *load_3d_binary()* function in case that a user intends to load 3d-image data from a binary file (as is the case when a user writes data when using the *superpixels()* function).
+* I added the RGB (Red-Green-Blue) to LAB (Lightness, A-colour-dimension, B-colour-dimension) colour conversion (*RGB_to_Lab()*).
+* I added the RGB (Red-Green-Blue) to HSV (Hue, Saturation, Value) colour conversion (*RGB_to_HSV()*).
+* I added the vignette "Image_segmentation_superpixels_clustering.Rmd"
+
+
 ## OpenImageR 1.1.1
 
 * I modified the *rotate_nearest_bilinear* Rcpp function in the *utils.cpp* file to fix the ASAN-gcc error.

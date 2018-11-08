@@ -4,8 +4,8 @@
 \alias{down_sample_image}
 \title{downsampling an image ( by a factor ) using gaussian blur}
 \usage{
-down_sample_image(image, factor, gaussian_blur = FALSE, gauss_sigma = 1,
-  range_gauss = 2)
+down_sample_image(image, factor, gaussian_blur = FALSE,
+  gauss_sigma = 1, range_gauss = 2)
 }
 \arguments{
 \item{image}{matrix or 3-dimensional array}

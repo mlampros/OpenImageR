@@ -4,7 +4,8 @@
 \alias{rotateImage}
 \title{Rotate an image using the 'nearest' or 'bilinear' method}
 \usage{
-rotateImage(image, angle, method = "nearest", mode = "same", threads = 1)
+rotateImage(image, angle, method = "nearest", mode = "same",
+  threads = 1)
 }
 \arguments{
 \item{image}{matrix, data frame or 3-dimensional array}

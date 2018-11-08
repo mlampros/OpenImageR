@@ -8,7 +8,8 @@ Augmentation(image, flip_mode = NULL, crop_width = NULL,
   crop_height = NULL, resiz_width = 0, resiz_height = 0,
   resiz_method = "nearest", shift_rows = 0, shift_cols = 0,
   rotate_angle = 0, rotate_method = "nearest", zca_comps = 0,
-  zca_epsilon = 0, image_thresh = 0, padded_value = 0, verbose = FALSE)
+  zca_epsilon = 0, image_thresh = 0, padded_value = 0,
+  verbose = FALSE)
 }
 \arguments{
 \item{image}{a matrix, data frame, array or list of 3-dimensional arrays}

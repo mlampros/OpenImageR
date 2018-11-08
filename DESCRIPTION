@@ -1,14 +1,15 @@
 Package: OpenImageR
 Type: Package
 Title: An Image Processing Toolkit
-Version: 1.1.1
-Date: 2018-08-21
+Version: 1.1.2
+Date: 2018-11-08
 Depends: R(>= 3.2.3)
 Imports: Rcpp (>= 0.12.17), shiny, jpeg, png, tiff, utils, R6
-Authors@R: c( person("Lampros", "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre")), person("Sight", "Machine", role = "cph", comment = "findHOGFeatures function of the SimpleCV computer vision platform"), person("Johannes", "Buchner", role = "cph", comment = "average_hash, dhash and phash functions of the ImageHash python library"), person("Mohammad", "Haghighat", email = "haghighat@ieee.org", role = "cph", comment = "Gabor Feature Extraction") )
+Authors@R: c( person("Lampros", "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre")), person("Sight", "Machine", role = "cph", comment = "findHOGFeatures function of the SimpleCV computer vision platform"), person("Johannes", "Buchner", role = "cph", comment = "average_hash, dhash and phash functions of the ImageHash python library"), person("Mohammad", "Haghighat", email = "haghighat@ieee.org", role = "cph", comment = "Gabor Feature Extraction"), person("Radhakrishna", "Achanta", email = "Radhakrishna.Achanta@epfl.ch", role = "cph", comment = "Author of the C++ code of the SLIC and SLICO algorithms (for commercial use please contact the author)") )
+Maintainer: Lampros Mouselimis <mouselimislampros@gmail.com>
 BugReports: https://github.com/mlampros/OpenImageR/issues
 URL: https://github.com/mlampros/OpenImageR
-Description: Incorporates functions for image preprocessing, filtering and image recognition. The package takes advantage of 'RcppArmadillo' to speed up computationally intensive functions. The histogram of oriented gradients descriptor is a modification of the 'findHOGFeatures' function of the 'SimpleCV' computer vision platform, the average_hash(), dhash() and phash() functions are based on the 'ImageHash' python library and the Gabor Feature Extraction functions are based on 'Matlab' code of the paper, "CloudID: Trustworthy cloud-based and cross-enterprise biometric identification" by M. Haghighat, S. Zonouz, M. Abdel-Mottaleb, Expert Systems with Applications, vol. 42, no. 21, pp. 7905-7916, 2015, <doi:10.1016/j.eswa.2015.06.025>.
+Description: Incorporates functions for image preprocessing, filtering and image recognition. The package takes advantage of 'RcppArmadillo' to speed up computationally intensive functions. The histogram of oriented gradients descriptor is a modification of the 'findHOGFeatures' function of the 'SimpleCV' computer vision platform, the average_hash(), dhash() and phash() functions are based on the 'ImageHash' python library. The Gabor Feature Extraction functions are based on 'Matlab' code of the paper, "CloudID: Trustworthy cloud-based and cross-enterprise biometric identification" by M. Haghighat, S. Zonouz, M. Abdel-Mottaleb, Expert Systems with Applications, vol. 42, no. 21, pp. 7905-7916, 2015, <doi:10.1016/j.eswa.2015.06.025>. The 'SLIC' and 'SLICO' superpixel algorithms were explained in detail in (i) "SLIC Superpixels Compared to State-of-the-art Superpixel Methods", Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi, Pascal Fua, and Sabine Suesstrunk, IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 34, num. 11, p. 2274-2282, May 2012, <doi:10.1109/TPAMI.2012.120> and (ii) "SLIC Superpixels", Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi, Pascal Fua, and Sabine Suesstrunk, EPFL Technical Report no. 149300, June 2010.
 License: GPL-3
 Copyright: inst/COPYRIGHTS
 SystemRequirements: The package requires a C++11 compiler.
@@ -19,5 +20,5 @@ Suggests:
     rmarkdown,
     grid,
     covr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: knitr

@@ -4,7 +4,8 @@
 \alias{switch_invariant}
 \title{secondary function for invariant_hash}
 \usage{
-switch_invariant(method, gray_image, MODE, hash_size, highfreq_factor, resize)
+switch_invariant(method, gray_image, MODE, hash_size, highfreq_factor,
+  resize)
 }
 \description{
 secondary function for invariant_hash

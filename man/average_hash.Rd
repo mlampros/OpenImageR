@@ -4,7 +4,8 @@
 \alias{average_hash}
 \title{calculation of the 'average hash' of an image}
 \usage{
-average_hash(gray_image, hash_size = 8, MODE = "hash", resize = "nearest")
+average_hash(gray_image, hash_size = 8, MODE = "hash",
+  resize = "nearest")
 }
 \arguments{
 \item{gray_image}{a (2-dimensional) matrix or data frame}
