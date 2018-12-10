@@ -109,7 +109,7 @@ if (Sys.info()['sysname'] != "SunOS") {
   
                              all(unlist(lapply(gb_im$gabor_features_imaginary, function(x) inherits(x, "array")))) && all(unlist(lapply(gb_im$gabor_features_real, function(x) inherits(x, "array")))) &&
   
-                             dim(gb_im$gabor_features_imaginary[[1]]) == c(nrow(im), ncol(im), ORIEN) && dim(gb_im$gabor_features_real[[1]]) == c(nrow(im), ncol(im), ORIEN) )
+                             all(dim(gb_im$gabor_features_imaginary[[1]]) == c(nrow(im), ncol(im), ORIEN)) && all(dim(gb_im$gabor_features_real[[1]]) == c(nrow(im), ncol(im), ORIEN)) )
   })
   
   
@@ -142,7 +142,7 @@ if (Sys.info()['sysname'] != "SunOS") {
   
                               all(unlist(lapply(gb_im$gabor_features_imaginary, function(x) inherits(x, "array")))) && all(unlist(lapply(gb_im$gabor_features_real, function(x) inherits(x, "array")))) &&
   
-                             dim(gb_im$gabor_features_imaginary[[1]]) == c(nrow(im), ncol(im), ORIEN) && dim(gb_im$gabor_features_real[[1]]) == c(nrow(im), ncol(im), ORIEN) )
+                             all(dim(gb_im$gabor_features_imaginary[[1]]) == c(nrow(im), ncol(im), ORIEN)) && all(dim(gb_im$gabor_features_real[[1]]) == c(nrow(im), ncol(im), ORIEN)) )
   })
 }
 

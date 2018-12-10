@@ -1,4 +1,9 @@
 
+## OpenImageR 1.1.3
+
+* I fixed a documentation error as suggested in [issue 11](https://github.com/mlampros/OpenImageR/issues/11) of the OpenImageR Github repository (converted radians to degrees in all scripts of the OpenImageR package).
+
+
 ## OpenImageR 1.1.2
 
 * I converted the OpenImageR package to a header-only package, so that Rcpp functions can be called from another R package.

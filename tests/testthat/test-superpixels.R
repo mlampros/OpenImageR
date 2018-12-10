@@ -19,7 +19,7 @@ testthat::test_that("the 'slic' function returns the expected output", {
   
   nams = c("slic_data", "labels", "lab_data")
   
-  testthat::expect_true( names(res) %in% nams && all(unlist(lapply(res, function(x) length(as.vector(x)) > 0))) )
+  testthat::expect_true( all(names(res) %in% nams) && all(unlist(lapply(res, function(x) length(as.vector(x)) > 0))) )
 })
 
 
@@ -36,7 +36,7 @@ testthat::test_that("the 'slico' function returns the expected output", {
   
   nams = c("slic_data", "labels", "lab_data")
   
-  testthat::expect_true( names(res) %in% nams && all(unlist(lapply(res, function(x) length(as.vector(x)) > 0))) )
+  testthat::expect_true( all(names(res) %in% nams) && all(unlist(lapply(res, function(x) length(as.vector(x)) > 0))) )
 })
 
 

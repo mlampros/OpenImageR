@@ -1,7 +1,7 @@
 context('Rotate image')
 
 
-# rotateFixed function  [ rotates an image for 90, 180, 270 radians ]
+# rotateFixed function  [ rotates an image for 90, 180, 270 degrees ]
 
 
 testthat::test_that("in case that image is not an array, matrix or data frame it returns an error", {
@@ -69,10 +69,10 @@ testthat::test_that("in case of an angle it returns a array", {
 })
 
 
-# rotateImage function     [ rotate image in a range between 0.0 and 360.0 radians ]
+# rotateImage function     [ rotate image in a range between 0.0 and 360.0 degrees ]
 
  
-testthat::test_that("in case of a gray image (2-dimensional) when the angle value is below 0.0 radians it returns an error", {
+testthat::test_that("in case of a gray image (2-dimensional) when the angle value is below 0.0 degrees it returns an error", {
   
   image_array =  matrix(runif(30), 5, 5)
   
@@ -80,7 +80,7 @@ testthat::test_that("in case of a gray image (2-dimensional) when the angle valu
 })
 
 
-testthat::test_that("in case of a gray image (2-dimensional) when the angle value is greater than 360.0 radians it returns an error", {
+testthat::test_that("in case of a gray image (2-dimensional) when the angle value is greater than 360.0 degrees it returns an error", {
   
   image_array =  matrix(runif(30), 5, 5)
   
@@ -126,7 +126,7 @@ testthat::test_that("in case of a gray image (2-dimensional) if the mode is inva
   testthat::expect_error( rotateImage(image_array, 60, mode = 'invalid', threads = 1) )
 })
 
-testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 20 radians", {
+testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 20 degrees", {
   
   image_array =  matrix(runif(30), 5, 5)
   
@@ -135,7 +135,7 @@ testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix
   testthat::expect_true(is.matrix(res) && nrow(res) != nrow(image_array) && ncol(res) != ncol(image_array))
 })
 
-testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 20 radians", {
+testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 20 degrees", {
   
   image_array =  matrix(runif(30), 5, 5)
   
@@ -145,7 +145,7 @@ testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix
 })
 
 
-testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 20 radians", {
+testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 20 degrees", {
   
   image_array =  matrix(runif(30), 5, 5)
   
@@ -154,7 +154,7 @@ testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix
   testthat::expect_true(is.matrix(res) && nrow(res) != nrow(image_array) && ncol(res) != ncol(image_array))
 })
 
-testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 20 radians", {
+testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 20 degrees", {
   
   image_array =  matrix(runif(30), 5, 5)
   
@@ -163,7 +163,7 @@ testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix
   testthat::expect_true(is.matrix(res) && nrow(res) == nrow(image_array) && ncol(res) == ncol(image_array))
 })
 
-testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 90 radians", {
+testthat::test_that("in case of a gray image (2-dimensional) it returns a matrix with the same dimensions of the initial image, 90 degrees", {
   
   image_array =  matrix(runif(30), 5, 5)
   

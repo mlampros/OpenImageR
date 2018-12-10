@@ -10,7 +10,7 @@ rotateImage(image, angle, method = "nearest", mode = "same",
 \arguments{
 \item{image}{matrix, data frame or 3-dimensional array}
 
-\item{angle}{specifies the number of radians}
+\item{angle}{specifies the number of degrees}
 
 \item{method}{a string specifying the interpolation method when rotating an image ( 'nearest', 'bilinear' )}
 

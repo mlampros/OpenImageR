@@ -154,7 +154,7 @@ imageShow(r270)
 
 #### rotateImage
 
-The *rotateImage* function is more flexible in comparison to the *rotateFixed* function. It allows the user to rotate an image by a specific angle (between 0 and 360 radians) using either the 'nearest' or the 'bilinear' interpolation method,
+The *rotateImage* function is more flexible in comparison to the *rotateFixed* function. It allows the user to rotate an image by a specific angle (between 0 and 360 degrees) using either the 'nearest' or the 'bilinear' interpolation method,
 <br><br>
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}

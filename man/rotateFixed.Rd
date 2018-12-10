@@ -9,7 +9,7 @@ rotateFixed(image, angle)
 \arguments{
 \item{image}{matrix, data frame or 3-dimensional array}
 
-\item{angle}{one of 90, 180 and 270 radians}
+\item{angle}{one of 90, 180 and 270 degrees}
 }
 \value{
 depending on the input, either a matrix or an array
@@ -18,7 +18,7 @@ depending on the input, either a matrix or an array
 Rotate an image by 90, 180, 270 degrees
 }
 \details{
-This function is faster than the rotateImage function as it rotates an image for specific angles (90, 180 or 270 radians).
+This function is faster than the rotateImage function as it rotates an image for specific angles (90, 180 or 270 degrees).
 }
 \examples{
 

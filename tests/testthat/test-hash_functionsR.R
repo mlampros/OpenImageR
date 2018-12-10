@@ -424,7 +424,7 @@ testthat::test_that("the hash_apply function returns a correct output when the i
   
   res = hash_apply(ARRAY[,,1], rows = 10, columns = 10, hash_size = hashs, highfreq_factor = highfreqf, method = 'phash', mode = 'hash', threads = 1, resize = 'nearest')
   
-  testthat::expect_true( length(res) == nrow(ARRAY[,,1]) && is.character(res) && res != "" )
+  testthat::expect_true( length(res) == nrow(ARRAY[,,1]) && is.character(res) )
 })
 
 

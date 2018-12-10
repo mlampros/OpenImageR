@@ -578,7 +578,7 @@ cropImage = function(image, new_width, new_height, type = 'equal_spaced') {
 #' Rotate an image by angle using the 'nearest' or 'bilinear' method
 #'
 #' @param image matrix, data frame or 3-dimensional array
-#' @param angle specifies the number of radians
+#' @param angle specifies the number of degrees
 #' @param method a string specifying the interpolation method when rotating an image ( 'nearest', 'bilinear' )
 #' @param mode one of 'full', 'same' (same indicates that the ouput image will have the same dimensions with initial image) 
 #' @param threads the number of cores to run in parallel
@@ -633,10 +633,10 @@ rotateImage = function(image, angle, method = 'nearest', mode = 'same', threads 
 #' Rotate an image by 90, 180, 270 degrees
 #'
 #' @param image matrix, data frame or 3-dimensional array
-#' @param angle one of 90, 180 and 270 radians
+#' @param angle one of 90, 180 and 270 degrees
 #' @return depending on the input, either a matrix or an array
 #' @details
-#' This function is faster than the rotateImage function as it rotates an image for specific angles (90, 180 or 270 radians).
+#' This function is faster than the rotateImage function as it rotates an image for specific angles (90, 180 or 270 degrees).
 #' @export
 #' @examples
 #' 
