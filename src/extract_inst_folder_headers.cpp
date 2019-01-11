@@ -294,23 +294,11 @@ arma::mat HOG_matrix(arma::mat& x, int height, int width, int n_divs = 3, int n_
 //----------------------------------------------------------------------------------------------------------------------------  Utility Functions
 
 
-//' convert an RGB image to Gray
-//'
-//' @param RGB_image a 3-dimensional array
-//' @return a matrix
-//' @author Lampros Mouselimis
-//' @details
-//' This function converts an RGB image to gray
-//' @export
-//' @examples
-//'
-//' path = system.file("tmp_images", "1.png", package = "OpenImageR")
-//'
-//' image = readImage(path)
-//'
-//' gray = rgb_2gray(image)
+// convert an RGB image to Gray
+//
+
 // [[Rcpp::export]]
-arma::mat rgb_2gray(arma::cube RGB_image) {
+arma::mat Rgb_2gray(arma::cube RGB_image) {
 
   oimageR::Utility_functions UTLF;
   return UTLF.rgb_2gray(RGB_image);

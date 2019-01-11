@@ -289,14 +289,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rgb_2gray
-arma::mat rgb_2gray(arma::cube RGB_image);
-RcppExport SEXP _OpenImageR_rgb_2gray(SEXP RGB_imageSEXP) {
+// Rgb_2gray
+arma::mat Rgb_2gray(arma::cube RGB_image);
+RcppExport SEXP _OpenImageR_Rgb_2gray(SEXP RGB_imageSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::cube >::type RGB_image(RGB_imageSEXP);
-    rcpp_result_gen = Rcpp::wrap(rgb_2gray(RGB_image));
+    rcpp_result_gen = Rcpp::wrap(Rgb_2gray(RGB_image));
     return rcpp_result_gen;
 END_RCPP
 }

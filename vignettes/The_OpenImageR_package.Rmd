@@ -23,7 +23,7 @@ The *readImage* function reads images from a variety of types such as 'png', 'jp
 
 library(OpenImageR)
 
-path = 'image1.jpeg'
+path = file.path(getwd(), 'vignette_1', 'image1.jpeg')
 
 im = readImage(path)
 dim(im)
@@ -66,7 +66,7 @@ To convert an image from RGB to gray one can use the *rgb_2gray* function, which
 <br>
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-path = 'image2.jpg'
+path = file.path(getwd(), 'vignette_1', 'image2.jpg')
 
 im = readImage(path)
 
@@ -116,7 +116,7 @@ A [flipped image](https://en.wikipedia.org/wiki/Flipped_image) (or reversed imag
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-path = 'image1.jpeg'
+path = file.path(getwd(), 'vignette_1', 'image1.jpeg')
 
 im = readImage(path)
 
@@ -174,7 +174,7 @@ The *resizeImage* function takes advantage of two different interpolation method
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-path = 'image2.jpg'
+path = file.path(getwd(), 'vignette_1', 'image2.jpg')
 
 im = readImage(path)
 
@@ -231,7 +231,7 @@ According to Wikipedia, edge detection is the name for a set of mathematical met
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-path = 'image1.jpeg'
+path = file.path(getwd(), 'vignette_1', 'image1.jpeg')
 
 im = readImage(path)
 
@@ -268,7 +268,7 @@ According to Wikipedia, *thresholding* is the simplest method of image segmentat
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-path = 'image2.jpg'
+path = file.path(getwd(), 'vignette_1', 'image2.jpg')
 
 im = readImage(path)
 
@@ -338,7 +338,7 @@ Augmentations are specific transformations applied to an image. The **Augmentati
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-path = 'image1.jpeg'
+path = file.path(getwd(), 'vignette_1', 'image1.jpeg')
 
 im = readImage(path)
 
@@ -422,7 +422,9 @@ The *HOG* function of the OpenImageR package is a modification and extention of 
 The purpose of the function is to create a vector of HOG descriptors, which can be used in classification tasks. It takes either RGB (they will be converted to gray) or gray images as input,
 ```{r, eval = T}
 
-image = readImage('image2.jpg')
+path = file.path(getwd(), 'vignette_1', 'image2.jpg')
+
+image = readImage(path)
 
 image = image * 255
 
@@ -444,8 +446,11 @@ In the following code chunk I'll apply the HOG function to an array of images. T
 
 ```{r, eval = T}
 
-tmp_im1 = readImage('image1.jpeg')
-tmp_im2 = readImage('image2.jpg')
+path_im1 = file.path(getwd(), 'vignette_1', 'image1.jpeg')
+path_im2 = file.path(getwd(), 'vignette_1', 'image2.jpg')
+
+tmp_im1 = readImage(path_im1)
+tmp_im2 = readImage(path_im2)
 
 tmp_im1 = resizeImage(tmp_im1, 200, 200)
 tmp_im2 = resizeImage(tmp_im2, 200, 200)
@@ -478,7 +483,9 @@ The **average hash** algorithm of the OpenImageR package works in the following 
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-image = readImage('view1.jpg')
+path = file.path(getwd(), 'vignette_1', 'view1.jpg')
+
+image = readImage(path)
 
 imageShow(image)
 
@@ -500,7 +507,9 @@ While the average_hash is fast, it can generate false-misses if there is a gamma
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-image2 = readImage('view2.jpg')
+path = file.path(getwd(), 'vignette_1', 'view2.jpg')
+
+image2 = readImage(path)
 
 imageShow(image2)
 
@@ -523,7 +532,9 @@ In comparison to average_hash and phash, the **dhash** algorithm takes into cons
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-image3 = readImage('view3.jpg')
+path = file.path(getwd(), 'vignette_1', 'view3.jpg')
+
+image3 = readImage(path)
 
 imageShow(image3)
 

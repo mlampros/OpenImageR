@@ -4,7 +4,7 @@ author: "Lampros Mouselimis"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Gabor Feature extraction}
+  %\VignetteIndexEntry{Image segmentation based on Superpixels and Clustering}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -98,7 +98,7 @@ graphics::plot(plot_slico)
 
 <br>
 
-![](slic_vs_slico.png)
+![](./vignette_3/slic_vs_slico.png)
 
 <br>
 
@@ -170,7 +170,7 @@ im = OpenImageR::readImage(path)
 
 <br>
 
-![](BSR_bsds500_image.jpg)
+![](./vignette_3/BSR_bsds500_image.jpg)
 
 
 
@@ -229,7 +229,7 @@ OpenImageR::imageShow(spx$AP_image_data)
 
 <br>
 
-![](BSR_bsds500_segmentation.png)
+![](./vignette_3/BSR_bsds500_segmentation.png)
 
 <br>
 
@@ -257,7 +257,7 @@ OpenImageR::imageShow(im_km)
 
 <br>
 
-![](airplane.jpg)
+![](./vignette_3/airplane.jpg)
 
 <br>
 
@@ -325,7 +325,7 @@ OpenImageR::imageShow(spx_km$AP_image_data)
 
 <br>
 
-![](segment_AP.png)
+![](./vignette_3/segment_AP.png)
 
 <br>
 
@@ -341,7 +341,7 @@ OpenImageR::imageShow(spx_km$KMeans_image_data)
 
 <br>
 
-![](segment_kmeans.png)
+![](./vignette_3/segment_kmeans.png)
 
 <br>
 
@@ -396,7 +396,7 @@ OpenImageR::imageShow(spx_mbkm$KMeans_image_data)
 ```
 <br>
 
-![](segment_mbkm.png)
+![](./vignette_3/segment_mbkm.png)
 
 <br>
 
@@ -480,7 +480,7 @@ init$spixel_masks_show(display_all = TRUE)
 
 <br>
 
-![](im_masks.png)
+![](./vignette_3/im_masks.png)
 
 
 <br><br>

@@ -77,23 +77,8 @@ HOG_matrix <- function(x, height, width, n_divs = 3L, n_bins = 6L, threads = 1L)
     .Call(`_OpenImageR_HOG_matrix`, x, height, width, n_divs, n_bins, threads)
 }
 
-#' convert an RGB image to Gray
-#'
-#' @param RGB_image a 3-dimensional array
-#' @return a matrix
-#' @author Lampros Mouselimis
-#' @details
-#' This function converts an RGB image to gray
-#' @export
-#' @examples
-#'
-#' path = system.file("tmp_images", "1.png", package = "OpenImageR")
-#'
-#' image = readImage(path)
-#'
-#' gray = rgb_2gray(image)
-rgb_2gray <- function(RGB_image) {
-    .Call(`_OpenImageR_rgb_2gray`, RGB_image)
+Rgb_2gray <- function(RGB_image) {
+    .Call(`_OpenImageR_Rgb_2gray`, RGB_image)
 }
 
 conv2d <- function(image, kernel, mode) {

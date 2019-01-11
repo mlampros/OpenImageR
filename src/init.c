@@ -49,7 +49,7 @@ extern SEXP _OpenImageR_phash_string(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_resize_bilinear_rcpp(SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_resize_nearest_array(SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_resize_nearest_rcpp(SEXP, SEXP, SEXP);
-extern SEXP _OpenImageR_rgb_2gray(SEXP);
+extern SEXP _OpenImageR_Rgb_2gray(SEXP);
 extern SEXP _OpenImageR_RGB_to_hsv(SEXP);
 extern SEXP _OpenImageR_rgbtolab(SEXP);
 extern SEXP _OpenImageR_rotate_nearest_bilinear(SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -102,7 +102,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_OpenImageR_resize_bilinear_rcpp",               (DL_FUNC) &_OpenImageR_resize_bilinear_rcpp,                3},
     {"_OpenImageR_resize_nearest_array",               (DL_FUNC) &_OpenImageR_resize_nearest_array,                3},
     {"_OpenImageR_resize_nearest_rcpp",                (DL_FUNC) &_OpenImageR_resize_nearest_rcpp,                 3},
-    {"_OpenImageR_rgb_2gray",                          (DL_FUNC) &_OpenImageR_rgb_2gray,                           1},
+    {"_OpenImageR_Rgb_2gray",                          (DL_FUNC) &_OpenImageR_Rgb_2gray,                           1},
     {"_OpenImageR_RGB_to_hsv",                         (DL_FUNC) &_OpenImageR_RGB_to_hsv,                          1},
     {"_OpenImageR_rgbtolab",                           (DL_FUNC) &_OpenImageR_rgbtolab,                            1},
     {"_OpenImageR_rotate_nearest_bilinear",            (DL_FUNC) &_OpenImageR_rotate_nearest_bilinear,             5},

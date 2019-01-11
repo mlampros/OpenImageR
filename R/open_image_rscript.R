@@ -1370,3 +1370,25 @@ convolution = function(image, kernel, mode = "same") {
   return(out)
 }
 
+
+
+#' convert an RGB image to Gray
+#'
+#' @param RGB_image a 3-dimensional array
+#' @return a matrix
+#' @author Lampros Mouselimis
+#' @details
+#' This function converts an RGB image to gray
+#' @export
+#' @examples
+#'
+#' path = system.file("tmp_images", "1.png", package = "OpenImageR")
+#'
+#' image = readImage(path)
+#'
+#' gray = rgb_2gray(image)
+#' 
+
+rgb_2gray = function(RGB_image) {
+  return(Rgb_2gray(RGB_image))
+}
