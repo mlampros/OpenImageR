@@ -1,4 +1,9 @@
 
+## OpenImageR 1.1.5
+
+* I renamed the internal function *norm_range_gauss* to *norm_matrix_range*. Now, the *norm_matrix_range* function is accessible when loading the OpenImageR package. Moreover, I excluded rounding [ round() ], which occured by default in the *norm_range_gauss* function.
+
+
 ## OpenImageR 1.1.4
 
 * I fixed the duplicated vignette title warning

@@ -26,25 +26,39 @@ gaussian_kernel = function(xy_length = 2, sigma = 1.0, range_gauss = 2) {
 
 
 
-#' normalize in specific range of values
+#' Normalize a matrix to specific range of values
 #'
-#' @keywords internal
+#' @param data a matrix
+#' @param min_value the new minimum value for the input \emph{data}
+#' @param max_value the new maximum value for the input \emph{data}
+#' @return a matrix
+#' @export
+#' @examples
+#' 
+#' set.seed(1)
+#' mt = matrix(1:48, 8, 6)
+#' 
+#' res = norm_matrix_range(mt, min_value = -1, max_value = 1)
+#' 
 
-norm_range_gauss = function(data, max_range = -1, min_range = 1) {
-
+norm_matrix_range = function(data, min_value = -1, max_value = 1) {
+  
   if (!is.matrix(data)) {
-
     stop('data should be a matrix')
   }
-
-  data = (data - min(data))/(max(data) - min(data))           # first normalize data to 0-1
-
-  rng = max_range - min_range
-
-  out = data * rng - min_range                        # then adjust to specified range
-
-  return(round(out))
+  
+  MIN = min(data)
+  
+  data = (data - MIN) / (max(data) - MIN)
+  
+  rng = min_value - max_value
+  
+  out = min_value - data * rng
+  
+  return(out)
 }
+
+
 
 
 #' laplacian kernels
@@ -90,7 +104,7 @@ switch_filter = function(kernel, conv_mod, gaussian_dims = 5, sigma = 1.0, lapla
 
   if (kernel == 'LoG') {                  # a discrete kernel approximation for laplacian of Gaussian for a sigma of 1.4, http://homepages.inf.ed.ac.uk/rbf/HIPR2/log.htm
 
-    gaus_kern = norm_range_gauss(gaussian_kernel(gaussian_dims, sigma, range_gauss = 2), 255, 0)        # pixels between 0 and 255  (by default)
+    gaus_kern = norm_matrix_range(gaussian_kernel(gaussian_dims, sigma, range_gauss = 2), 0.0, 255.0)        # pixels between 0 and 255  (by default)  
 
     lapl_kern = laplacian_kernels(laplacian_type)
 
