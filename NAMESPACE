@@ -5,7 +5,6 @@ import(png)
 import(shiny)
 import(tiff)
 import(utils)
-importFrom(R6,R6Class)
 
 export(Augmentation)
 export(GaborFeatureExtract)
