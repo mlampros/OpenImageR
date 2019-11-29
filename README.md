@@ -4,12 +4,13 @@
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/mlampros/OpenImageR?branch=master&svg=true)](https://ci.appveyor.com/project/mlampros/OpenImageR/branch/master)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/OpenImageR?color=blue)](http://www.r-pkg.org/pkg/OpenImageR)
 <a href="https://www.buymeacoffee.com/VY0x8snyh" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
+[![](https://img.shields.io/docker/automated/mlampros/openimager.svg)](https://hub.docker.com/r/mlampros/openimager)
 
 
 ## OpenImageR
 <br>
 
-The OpenImageR package is an image processing library. It includes functions for image preprocessing, filtering and image recognition. More details on the functionality of OpenImageR can be found in the [first](http://mlampros.github.io/2016/07/08/OpenImageR/), [second](http://mlampros.github.io/2018/08/08/Gabor_Feature_Extraction/) and [third](http://mlampros.github.io/2018/11/09/Image_Segmentation_Superpixels_Clustering/) blog-posts, and in the package Documentation. 
+The OpenImageR package is an image processing library. It includes functions for image preprocessing, filtering and image recognition. More details on the functionality of OpenImageR can be found in the [first](http://mlampros.github.io/2016/07/08/OpenImageR/), [second](http://mlampros.github.io/2018/08/08/Gabor_Feature_Extraction/) and [third](http://mlampros.github.io/2018/11/09/Image_Segmentation_Superpixels_Clustering/) blog-posts, and in the package Documentation  ( *scroll down for information on how to use the* **docker image** )
 <br><br>
 
 
@@ -130,3 +131,87 @@ Use the following link to report bugs/issues,
 <br><br>
 
 [https://github.com/mlampros/OpenImageR/issues](https://github.com/mlampros/OpenImageR/issues)
+
+
+<br>
+
+
+**UPDATE 29-11-2019**
+
+<br>
+
+**Docker images** of the *OpenImageR* package are available to download from my [dockerhub](https://hub.docker.com/r/mlampros/openimager) account. The images come with *Rstudio* and the *R-development* version (latest) installed. The whole process was tested on Ubuntu 18.04. To **pull** & **run** the image do the following,
+
+<br>
+
+```R
+
+docker pull mlampros/openimager:rstudiodev
+
+docker run -d --name rstudio_dev -e USER=rstudio -e PASSWORD=give_here_your_password --rm -p 8787:8787 mlampros/openimager:rstudiodev
+
+```
+
+<br>
+
+The user can also **bind** a home directory / folder to the image to use its files by specifying the **-v** command,
+
+<br>
+
+```R
+
+docker run -d --name rstudio_dev -e USER=rstudio -e PASSWORD=give_here_your_password --rm -p 8787:8787 -v /home/YOUR_DIR:/home/rstudio/YOUR_DIR mlampros/openimager:rstudiodev
+
+
+```
+
+<br>
+
+In the latter case you might have first give permission privileges for write access to **YOUR_DIR** directory (not necessarily) using,
+
+<br>
+
+```R
+
+chmod -R 777 /home/YOUR_DIR
+
+
+```
+
+<br>
+
+The **USER** defaults to *rstudio* but you have to give your **PASSWORD** of preference (see [www.rocker-project.org](https://www.rocker-project.org/) for more information).
+
+<br>
+
+Open your web-browser and depending where the docker image was *build / run* give, 
+
+<br>
+
+**1st. Option** on your personal computer,
+
+<br>
+
+```R
+http://0.0.0.0:8787 
+
+```
+
+<br>
+
+**2nd. Option** on a cloud instance, 
+
+<br>
+
+```R
+http://Public DNS:8787
+
+```
+
+<br>
+
+to access the Rstudio console in order to give your username and password.
+
+<br>
+
+
