@@ -51,7 +51,7 @@ public:
       const int&					STEP,
       const double&				m);
   //============================================================================
-  // Superpixel segmentation for a given number of superpixels 
+  // Superpixel segmentation for a given number of superpixels
   /**
    * I removed the "m" parameter (compactness factor) as the 'SLICO' method adjusts it dynamically / differently for each superpixel in comparison to 'SLIC' ]
    */
@@ -64,7 +64,7 @@ public:
   //     int&						numlabels,
   //     const int&					K,
   //     const double&				m);
-  
+
   void PerformSLICO_ForGivenK(
       const unsigned int*			ubuff,//Each 32 bit unsigned int contains ARGB pixel values.
       const int					width,
@@ -761,7 +761,7 @@ void SLICO::GetLABXYSeeds_ForGivenK(
 
       //_ASSERT(n < K);                   // assert is not allowed on CRAN
       if (n >= K) {
-        Rcpp::stop("The 'K' parameter should be less than 'n' in the 'SLICO::GetLABXYSeeds_ForGivenK()' function!");
+        Rcpp::stop("The 'K' parameter (number-of-superpixels) should be bigger than 'n' in the 'SLICO::GetLABXYSeeds_ForGivenK()' function!");
       }
 
       //kseedsl[n] = m_lvec[i];
@@ -918,7 +918,7 @@ void SLICO::PerformSuperpixelSegmentation_VariableSandM (
       if (klabels[j] < 0) {
         Rcpp::stop("The 'klabels[j]' variable should be greater or equal to '0' in the 'SLICO::PerformSuperpixelSegmentation_VariableSandM()' function!");
       }
-      
+
       sigmal[klabels[j]] += m_lvec[j];
       sigmaa[klabels[j]] += m_avec[j];
       sigmab[klabels[j]] += m_bvec[j];
@@ -934,7 +934,7 @@ void SLICO::PerformSuperpixelSegmentation_VariableSandM (
       if (clustersize[k] <= 0) {
         Rcpp::stop("The 'clustersize[k]' variable should be greater than '0' in the 'SLICO::PerformSuperpixelSegmentation_VariableSandM()' function!");
       }
-      
+
       if( clustersize[k] <= 0 ) clustersize[k] = 1;
       inv[k] = 1.0/double(clustersize[k]);//computing inverse now to multiply, than divide later
     }}
@@ -1144,7 +1144,7 @@ void SLICO::PerformSLICO_ForGivenStepSize(
 // {
 
 /**
- * I removed the "m" parameter (compactness factor) as the 'SLICO' method adjusts it dynamically / differently for each superpixel in comparison to 'SLIC' ]
+ * I [ Mouselimis Lampros ] removed the "m" parameter (compactness factor) as the 'SLICO' method adjusts it dynamically / differently for each superpixel in comparison to 'SLIC' ]
  */
 
 void SLICO::PerformSLICO_ForGivenK(

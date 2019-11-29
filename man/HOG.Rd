@@ -18,7 +18,7 @@ a numeric vector
 }
 \description{
 The function is a modification of the 'findHOGFeatures' function of the SimpleCV package [ please consult the COPYRIGHT file ]
-The function takes either an RGB (it will be converted to gray) or a gray image and returns a vector of the HOG descriptors. 
+The function takes either an RGB (it will be converted to gray) or a gray image and returns a vector of the HOG descriptors.
 The main purpose of the function is to create a vector of features, which can be used in classification tasks.
 }
 \details{
@@ -27,7 +27,7 @@ This function takes either a matrix, a data frame or a 3-dimensional array and r
 \examples{
 
 \dontrun{
- 
+
 path = system.file("tmp_images", "1.png", package = "OpenImageR")
 
 image = readImage(path)

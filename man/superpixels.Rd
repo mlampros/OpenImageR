@@ -10,7 +10,7 @@ superpixels(input_image, method = "slic", superpixel = 200,
   verbose = FALSE)
 }
 \arguments{
-\item{input_image}{a 3-dimensional input image (the range of the pixel values should be preferably in the range 0 to 255)}
+\item{input_image}{either a 2-dimensional or a 3-dimensional input image (the range of the pixel values should be preferably in the range 0 to 255)}
 
 \item{method}{a character string specifying the method to use. Either "slic" or "slico"}
 
@@ -20,7 +20,7 @@ superpixels(input_image, method = "slic", superpixel = 200,
 
 \item{return_slic_data}{a boolean. If TRUE then the resulted slic or slico data will be returned}
 
-\item{return_lab_data}{a boolean. If TRUE then the Lab data will be returned}
+\item{return_lab_data}{a boolean. If TRUE then the Lab data will be returned ( the Lab-colour format )}
 
 \item{return_labels}{a boolean. If TRUE then the labels will be returned}
 
@@ -31,20 +31,32 @@ superpixels(input_image, method = "slic", superpixel = 200,
 \description{
 SLIC and SLICO superpixel implementations
 }
-\details{
-The \emph{input_image} can take images of any type as long as they are 3-dimensional. In case that a .tif file has less than 3-image-bands the user can convert the image to 3-dimensional using the \emph{List_2_Array ()} function.
-}
 \examples{
 
 library(OpenImageR)
+
+#-------------------
+# 3-dimensional data
+#-------------------
 
 path = system.file("tmp_images", "slic_im.png", package = "OpenImageR")
 
 im = readImage(path)
 
-res = superpixels(input_image = im, method = "slic", superpixel = 200, 
+res = superpixels(input_image = im, method = "slic", superpixel = 200,
 
                   compactness = 20, return_slic_data = TRUE)
+
+
+#-------------------
+# 2-dimensional data
+#-------------------
+
+im_2d = im[,,1]
+
+res_mt = superpixels(input_image = im_2d, method = "slic", superpixel = 200,
+
+                     compactness = 20, return_slic_data = TRUE)
 
 }
 \references{

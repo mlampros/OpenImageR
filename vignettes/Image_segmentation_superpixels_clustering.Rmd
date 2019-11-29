@@ -121,7 +121,7 @@ More information about the parameters of the *superpixels()* function can be fou
 ### Affinity Propagation
 
 
-"Affinity propagation is a new algorithm that takes as input measures of similarity between pairs of data points and simultaneously considers all data points as potential exemplars. Real-valued messages are exchanged between data points until a high-quality set of exemplars and corresponding clusters gradually emerges. We have used affinity propagation to solve a variety of clustering problems and we found that it uniformly found clusters with much lower error than those found by other methods, and it did so in less than one-hundredth the amount of time. Because of its simplicity, general applicability, and performance, we believe affinity propagation will prove to be of broad value in science and engineering." The Affinity Propagation algorithm is explained in detail in the [authors web page](https://www.psi.toronto.edu/index.php?q=affinity%20propagation).
+"Affinity propagation is a new algorithm that takes as input measures of similarity between pairs of data points and simultaneously considers all data points as potential exemplars. Real-valued messages are exchanged between data points until a high-quality set of exemplars and corresponding clusters gradually emerges. We have used affinity propagation to solve a variety of clustering problems and we found that it uniformly found clusters with much lower error than those found by other methods, and it did so in less than one-hundredth the amount of time. Because of its simplicity, general applicability, and performance, we believe affinity propagation will prove to be of broad value in science and engineering." The Affinity Propagation algorithm is explained in detail in the *"authors web page"* ( www.psi.toronto.edu/index.php?q=affinity%20propagation ).
 
 
 <br>
@@ -492,8 +492,8 @@ init$spixel_masks_show(display_all = TRUE)
 * [Image segmentation, wikipedia](https://en.wikipedia.org/wiki/Image_segmentation)
 * [SLIC Superpixels](https://ivrl.epfl.ch/research-2/research-current/research-superpixels/)
 * [Superpixels: An Evaluation of the State-of-the-Art, David Stutz, Alexander Hermans, Bastian Leibe, 2016](https://arxiv.org/pdf/1612.01601.pdf)
-* [Affinity Propagation](https://www.psi.toronto.edu/index.php?q=affinity%20propagation)
-* [Clustering by Passing Messages Between Data Points, Brendan J. Frey and Delbert Dueck, University of Toronto, Science 315, 972-976, February 2007](https://www.psi.toronto.edu/affinitypropagation/FreyDueckScience07.pdf)
+* **Affinity Propagation** ( www.psi.toronto.edu/index.php?q=affinity%20propagation )
+* **Clustering by Passing Messages Between Data Points, Brendan J. Frey and Delbert Dueck, University of Toronto, Science 315, 972-976, February 2007** ( www.psi.toronto.edu/affinitypropagation/FreyDueckScience07.pdf )
 * [CIELAB colour space](https://en.wikipedia.org/wiki/CIELAB_color_space)
 * [Berkeley Segmentation Database (BSD)](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html)
 * [OpenImageR package](https://github.com/mlampros/OpenImageR) 

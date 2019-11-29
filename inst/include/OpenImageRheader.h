@@ -16,6 +16,48 @@
 # include "SLICO.h"
 
 
+/**
+ * Copyright (c) 2015, Mohammad Haghighat
+ *
+ * All rights reserved.
+ *
+ * https://github.com/mhaghighat/gabor
+ *
+ *
+ * [ for the reimplementation of the "Gabor Features" code in Rcpp see the lines 1662 - 2197 of this file ]
+ *
+ **/
+
+
+
+/**
+ * Copyright (c) 2012, Sight Machine
+ *
+ * All rights reserved.
+ *
+ * https://github.com/sightmachine/SimpleCV
+ *
+ *
+ * [ for the reimplementation of the "HoG Features" code in Rcpp see the lines 2202 - 2391 of this file ]
+ *
+ **/
+
+
+
+/**
+ * Copyright (c) 2013-2016, Johannes Buchner
+ *
+ * All rights reserved.
+ *
+ * https://github.com/JohannesBuchner/imagehash
+ *
+ *
+ * [ for the reimplementation of the "Image Hashing" code in Rcpp see the lines 2397 - 3107 of this file ]
+ *
+ **/
+
+
+
 namespace oimageR {
 
 
@@ -309,47 +351,205 @@ namespace oimageR {
       }
 
 
-      // similar to the 'x' matrix of the matlab 'meshgrid' function
+      // similar to the 'x' matrix of the matlab 'meshgrid' function  [ populating the matrices column-wise, is faster ]
       //
 
       arma::mat meshgrid_x(int rows, int cols) {
 
         arma::mat out(rows, cols, arma::fill::zeros);
 
-        for (int i = 0; i < rows; i++) {
+        arma::colvec tmp_vec(out.col(0).n_elem);
 
-          arma::vec tmp_vec(cols, arma::fill::zeros);
+        for (int i = 0; i < cols; i++) {
 
-          for (int j = 0; j < cols; j++) {
-
-            tmp_vec(j) = j;
-          }
-
-          out.row(i) = arma::conv_to< arma::rowvec >::from(tmp_vec);
+          out.col(i) = tmp_vec.fill(i);
         }
 
         return(out);
       }
 
+      // arma::mat meshgrid_x(int rows, int cols) {             // previous version of function
+      //   arma::mat out(rows, cols, arma::fill::zeros);
+      //   for (int i = 0; i < rows; i++) {
+      //     arma::vec tmp_vec(cols, arma::fill::zeros);
+      //     for (int j = 0; j < cols; j++) {
+      //       tmp_vec(j) = j;
+      //     }
+      //     out.row(i) = arma::conv_to< arma::rowvec >::from(tmp_vec);
+      //   }
+      //   return(out);
+      // }
 
-      // similar to the 'y' matrix of the matlab 'meshgrid' function
+
+      // similar to the 'y' matrix of the matlab 'meshgrid' function  [ populating the matrices column-wise, is faster ]
       //
 
       arma::mat meshgrid_y(int rows, int cols) {
 
         arma::mat out(rows, cols, arma::fill::zeros);
 
-        int len = out.row(0).n_elem;
+        for (int i = 0; i < cols; i++) {
 
-        for (int i = 0; i < rows; i++) {
-
-          arma::rowvec tmp_vec(len);
-
-          out.row(i) = tmp_vec.fill(i);
+          out.col(i) = arma::regspace<arma::colvec>(0, rows - 1);
         }
 
         return(out);
       }
+
+      // arma::mat meshgrid_y(int rows, int cols) {             // previous version of function
+      //   arma::mat out(rows, cols, arma::fill::zeros);
+      //   int len = out.row(0).n_elem;
+      //   for (int i = 0; i < rows; i++) {
+      //     arma::rowvec tmp_vec(len);
+      //     out.row(i) = tmp_vec.fill(i);
+      //   }
+      //   return(out);
+      // }
+
+
+
+      // bounding box for the superpixels
+      // similar to 'regionprops' in python : https://stackoverflow.com/a/40228346/8302386  [ if 'non_overlapping_superpixels' is set to false ]
+      //
+      // non-overlapping : it should return the same min-max values ( x-y-coordinates ) as the overlapping case, however
+      //                   I will also return the pixel-indices of each rectangle ( bounding box ) that contain missing values (NA's).
+      //                   so when I create the patches ( rectangles ) from an image I should fill the overlapping pixels with
+      //                   a fill value ( ideally 0.0 ). That way I can use the rectangle-patches to train algorithms.
+      //                   Creating non-overlapping extended superpixels ( in form of rectangles ) is not possible due to the
+      //                   irregular shape of the superpixels and moreover because it is highly probable that the boundaries of a
+      //                   single superpixel might belong to more than 1 superpixel-rows or -columns of an image making the calculation
+      //                   of a max. value for each image superpixel-row or -column impossible.
+      //
+
+      Rcpp::List spix_bbox(arma::mat& spix_labels, bool non_overlapping_superpixels = false) {
+
+        if (spix_labels.empty()) {
+          Rcpp::stop("The input matrix is empty!");
+        }
+
+        arma::mat copy_labels;
+
+        if (non_overlapping_superpixels) {
+          copy_labels = spix_labels;
+        }
+
+        arma::mat unq_labels = arma::unique(spix_labels);
+        arma::mat res_mt(unq_labels.n_rows, 6, arma::fill::zeros);
+
+        Rcpp::List overlap_pixs;
+
+        if (non_overlapping_superpixels) {
+          overlap_pixs = Rcpp::List(unq_labels.n_rows);                  // declare and then initialize to a specific size an Rcpp-object, see : https://stackoverflow.com/a/30135123/8302386
+        }
+
+        arma::mat idx_rows = meshgrid_y(spix_labels.n_rows, spix_labels.n_cols);
+        arma::mat idx_cols = meshgrid_x(spix_labels.n_rows, spix_labels.n_cols);
+
+        for (unsigned int i = 0; i < unq_labels.n_rows; i++) {
+
+          unsigned int tmp_unq_label = unq_labels[i];                   // the min, max values will be saved in the same order as the unique labels
+
+          arma::uvec idx = arma::find(spix_labels == tmp_unq_label);
+
+          arma::mat subset_r = idx_rows(idx);
+          arma::mat subset_c = idx_cols(idx);
+
+          int min_r = subset_r.min();
+          int max_r = subset_r.max();
+          int min_c = subset_c.min();
+          int max_c = subset_c.max();
+          int dif_r = max_r - min_r + 1;          // add 1 because when extracting the bbox'es I want the boundaries included too [ 6 - 2 == 4 but to get 2 included I have to add 1 ]
+          int dif_c = max_c - min_c + 1;          // add 1 because when extracting the bbox'es I want the boundaries included too
+
+          // std::cout << min_r << " - " << min_c << " - " << max_r << " - " << max_c  << std::endl;
+
+          arma::uvec cp_idx;
+
+          if (non_overlapping_superpixels) {
+
+            arma::mat cp_mt = copy_labels.submat( min_r, min_c, max_r, max_c );
+
+            if (cp_mt.has_nan()) {
+
+              cp_idx = arma::find_nonfinite(cp_mt);
+            }
+
+            copy_labels.submat( min_r, min_c, max_r, max_c ).fill(arma::datum::nan);         // by default fill overlapping pixels with NA's
+
+            overlap_pixs[unq_labels[i]] = cp_idx;
+          }
+
+          res_mt(tmp_unq_label,0) = min_r;
+          res_mt(tmp_unq_label,1) = max_r;
+          res_mt(tmp_unq_label,2) = min_c;
+          res_mt(tmp_unq_label,3) = max_c;
+          res_mt(tmp_unq_label,4) = dif_r;
+          res_mt(tmp_unq_label,5) = dif_c;
+        }
+
+        res_mt = arma::join_horiz(res_mt, unq_labels);
+
+        if (non_overlapping_superpixels) {
+
+          return Rcpp::List::create( Rcpp::Named("bbox_matrix") = res_mt,
+                                     Rcpp::Named("overlapping_pixs") = overlap_pixs);
+        }
+        else {
+          return Rcpp::List::create( Rcpp::Named("bbox_matrix") = res_mt );
+        }
+      }
+
+
+      // compute the bounding box for a subset of superpixels
+      //
+
+      std::vector<int> spix_bbox_vector(arma::mat& spix_labels, arma::rowvec spix_labels_vec) {
+
+        if (spix_labels.empty()) {
+          Rcpp::stop("The input matrix is empty!");
+        }
+
+        arma::mat idx_rows = meshgrid_y(spix_labels.n_rows, spix_labels.n_cols);
+        arma::mat idx_cols = meshgrid_x(spix_labels.n_rows, spix_labels.n_cols);
+
+        std::vector<int> all_idxs;
+
+        for (unsigned int i = 0; i < spix_labels_vec.n_elem; i++) {
+
+          std::vector<int> idx = arma::conv_to<std::vector<int> >::from(arma::find(spix_labels == spix_labels_vec(i)));
+
+          all_idxs.insert(std::end(all_idxs), std::begin(idx), std::end(idx));
+        }
+
+        arma::uvec all_idxs_ar = arma::conv_to<arma::uvec >::from(all_idxs);
+
+        arma::mat subset_r = idx_rows(all_idxs_ar);
+        arma::mat subset_c = idx_cols(all_idxs_ar);
+
+        int min_r = subset_r.min();
+        int max_r = subset_r.max();
+        int min_c = subset_c.min();
+        int max_c = subset_c.max();
+
+        std::vector<int> res_out = { min_r, max_r, min_c, max_c, max_r - min_r + 1, max_c - min_c + 1 };
+
+        return res_out;
+      }
+
+
+      // secondary function for 'pad_matrix'
+      //
+
+      bool EVEN( int value ) {
+
+        if ( value % 2 == 0 ) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+
 
 
       // replace value above or below a thresh
@@ -1216,17 +1416,17 @@ namespace oimageR {
         return res;
       }
 
-      
+
 
       // interface-function for the 'slic' and 'slico' superpixels
-      // the INPUT data should be of type arma::cube() (3-dimensional)
-      // In case of .TIFF files if the image has less than 3 image-bands convert from 2-dimensional to 3-dimensional (can be done with the 'List_2_Array' function or 
+      // the INPUT data should be of type arma::cube() (2-dimensional or 3-dimensional)
+      // In case of .TIFF files if the image has less than 3 image-bands convert from 2-dimensional to 3-dimensional (can be done with the 'List_2_Array' function or
       // directly using Rcpp by appending 3 times the same matrix to an arma::cube - if the .tif file is a matrix)
       // the 'output_image' parameter should be a binary file such as "/my_directory/image.bin"
       //
 
-      Rcpp::List interface_superpixels(arma::cube image, std::string method = "slic", int num_superpixel = 200, double compactness_factor = 20, 
-                                       bool return_slic_data = false, bool return_lab_data = false, bool return_labels = false, 
+      Rcpp::List interface_superpixels(arma::cube image, std::string method = "slic", int num_superpixel = 200, double compactness_factor = 20,
+                                       bool return_slic_data = false, bool return_lab_data = false, bool return_labels = false,
                                        std::string write_slic = "", bool verbose = false) {
 
         if (image.empty()) {
@@ -1236,11 +1436,11 @@ namespace oimageR {
         if (CHANNELS > 3) {                                                                 // in case of more than 3 slices keep the first 3 and print a warning
           image = image.slices(0,2);
           std::string str_slices = std::to_string(CHANNELS);
-          Rcpp::Rcout << "WARNING: The input data has more than 3 dimensions. The dimensions were reduced from " + str_slices + " to 3!" << std::endl;
-          CHANNELS = image.n_slices;
+          Rcpp::warning("The input data has more than 3 dimensions. The dimensions were reduced from " + str_slices + " to 3!");
+          CHANNELS = image.n_slices;                                                        // update the image-channels after subsetting
         }
-        if (CHANNELS != 3) {                                                                // raise an error if the image is not 3-dimensional
-          Rcpp::stop("The input image should be a 3-dimensional object (RGB)!");
+        if (CHANNELS != 3 && CHANNELS != 1) {                                               // raise an error if the image is not 3-dimensional
+          Rcpp::stop("The input image should be either a 2-dimensional (matrix) or a 3-dimensional object (RGB)!");
         }
         double im_MAX = image.max();
         double im_MIN = image.min();
@@ -1252,20 +1452,26 @@ namespace oimageR {
         unsigned int blue, green, red;
         int numlabels = 0;
         arma::cube dat_cube_lab;
-        
+
         if (im_MAX <= 1.0 && im_MIN >= -1.0) {                                              // multiply with 255 if the input image takes values betw. -1 and 1
           image *= 255;
-          Rcpp::Rcout << "WARNING: The input data has values between " + std::to_string(im_MIN) + " and " + std::to_string(im_MAX) +  ". The image-data will be multiplied by the value: 255!" << std::endl;
+          Rcpp::warning("The input data has values between " + std::to_string(im_MIN) + " and " + std::to_string(im_MAX) +  ". The image-data will be multiplied by the value: 255!");
         }
         if (verbose) {
           Rcpp::Rcout << "The input image has the following dimensions: " << image.n_rows << " " << image.n_cols << " " << image.n_slices << std::endl;
         }
         for (int i = 0; i < ROWS; i++) {
           for (int j = 0; j < COLS; j++) {
-            blue = image.slice(2)(i,j);                                                     // revert the order of the 'color' variable so that it can be correctly displayed in R
-            green = image.slice(1)(i,j);
-            red = image.slice(0)(i,j);
-            pbuff[j + COLS * i] = (red << (16 & 0xff)) + (green << (8 & 0xff)) + (blue & 0xff);
+            if (CHANNELS == 1) {
+              red = image.slice(0)(i,j);
+              pbuff[j + COLS * i] = (red << (16 & 0xff)) + (red << (8 & 0xff)) + (red & 0xff);   // replicate the input-channel 3 times
+            }
+            else {
+              blue = image.slice(2)(i,j);                                                        // revert the order of the 'color' variable so that it can be correctly displayed in R
+              green = image.slice(1)(i,j);
+              red = image.slice(0)(i,j);
+              pbuff[j + COLS * i] = (red << (16 & 0xff)) + (green << (8 & 0xff)) + (blue & 0xff);
+            }
           }
         }
         if (verbose) {
@@ -1295,27 +1501,54 @@ namespace oimageR {
         std::vector<int> res_labels;                                                        // return the labels if the 'return_labels' parameter is set to true
         arma::mat mt_labels;
         arma::cube arma_3d;
-        
-        if (return_slic_data) { 
+
+        if ( (write_slic != "") || return_slic_data) {
           ROW_3mat.resize(3, COLS * ROWS);                                                  // save the data in 3 * (ROWS * COLS) format
           arma_3d.set_size(ROWS, COLS, 3);
-        }
-        if ( (write_slic != "") || return_slic_data) {
+
           for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
               uint8_t *color = (uint8_t*)(pbuff+ i * COLS + j);
 
-              arma_3d.slice(0)(i,j) = color[2];                                             // revert the order of the 'color' variable so that it can be correctly displayed in R
+              arma_3d.slice(0)(i,j) = color[2];                                                // revert the order of the 'color' variable so that it can be correctly displayed in R
               arma_3d.slice(1)(i,j) = color[1];
               arma_3d.slice(2)(i,j) = color[0];
             }
           }
         }
+
+        int store_n_rows = arma_3d.n_rows;                                                     // store information of the output matrix before reseting the object
+        int store_n_cols = arma_3d.n_cols;
+
+        arma::mat tmp_slice, tmp_lab;
+        if ( (write_slic != "") || return_slic_data || return_lab_data) {
+          if (CHANNELS == 1) {                                                                 // subset the data for the 2-dimensional case
+            tmp_slice = arma_3d.slice(2);                                                      // save slice 2 because I reverted the 'color' order
+            arma_3d.reset();                                                                   // after reseting I have to set-the-size, otherwise it gives an error
+
+            if (return_lab_data) {
+              tmp_lab = dat_cube_lab.slice(2);
+              dat_cube_lab.reset();
+            }
+          }
+        }
+
         if (verbose) {
-          Rcpp::Rcout << "The output image has the following dimensions: " << arma_3d.n_rows << " " << arma_3d.n_cols << " " << arma_3d.n_slices << std::endl;
+          Rcpp::Rcout << "The output image has the following dimensions: " << store_n_rows << " " << store_n_cols << " " << CHANNELS << std::endl;
         }
         if (write_slic != "") {                                                             // write the data to a binary file using armadillo
-          arma_3d.save(write_slic);
+          if (CHANNELS == 1) {
+            tmp_slice.save(write_slic);
+            if (!return_slic_data) {
+              tmp_slice.reset();            // if 'return_slic_data' is set tp false, reset the size of the cube to zero after saving the data
+            }
+          }
+          else {
+            arma_3d.save(write_slic);
+            if (!return_slic_data) {
+              arma_3d.reset();              // if 'return_slic_data' is set tp false, reset the size of the cube to zero after saving the data
+            }
+          }
         }
         if (return_labels) {
           res_labels.assign(klabels, klabels + sz);
@@ -1329,15 +1562,27 @@ namespace oimageR {
 
         if (pbuff) delete [] pbuff;                                                         // Clean up
         if (klabels) delete [] klabels;
-        Rcpp::List all_obj = Rcpp::List::create(Rcpp::Named("slic_data") = arma_3d, Rcpp::Named("labels") = mt_labels);
+        Rcpp::List all_obj;
+
+        if (CHANNELS == 1) {
+          all_obj = Rcpp::List::create(Rcpp::Named("slic_data") = tmp_slice, Rcpp::Named("labels") = mt_labels);
+        }
+        else {
+          all_obj = Rcpp::List::create(Rcpp::Named("slic_data") = arma_3d, Rcpp::Named("labels") = mt_labels);
+        }
 
         if (return_lab_data) {
-          all_obj["lab_data"] = dat_cube_lab;
+          if (CHANNELS == 1) {
+            all_obj["lab_data"] = tmp_lab;
+          }
+          else {
+            all_obj["lab_data"] = dat_cube_lab;
+          }
         }
-        
+
         return all_obj;
       }
-      
+
 
       ~Utility_functions() { }
 
@@ -1346,16 +1591,6 @@ namespace oimageR {
 
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Gabor-features [ parallelized & not-parallelized]
-
-
-  /**
-   * Copyright (c) 2015, Mohammad Haghighat
-   *
-   * All rights reserved.
-   *
-   * https://github.com/mhaghighat/gabor
-   *
-   **/
 
 
   // struct to return the 'gaborFilterBank' matrices
@@ -1865,7 +2100,7 @@ namespace oimageR {
       // return 'gaborFeatures' results
       //
 
-      Rcpp::List return_gaborFeatures(bool plot_data) {
+      Rcpp::List return_gaborFeatures(bool plot_data, bool vectorize_magnitude = true) {
 
         arma::Mat<double> local_energy  = arma::sum(arma::pow(gabor_features, 2.0), 0);
 
@@ -1873,7 +2108,10 @@ namespace oimageR {
 
         arma::Mat<double> concat = arma::join_rows(local_energy, mean_aplitude);
 
-        gabor_features_Magn = arma::vectorise(gabor_features_Magn).t();
+        if (vectorize_magnitude) {
+
+          gabor_features_Magn = arma::vectorise(gabor_features_Magn).t();
+        }
 
         Rcpp::List res_out_fts;
 
@@ -1893,15 +2131,6 @@ namespace oimageR {
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HoG-features
-
-  /**
-   * Copyright (c) 2012, Sight Machine
-   *
-   * All rights reserved.
-   *
-   * https://github.com/sightmachine/SimpleCV
-   *
-   **/
 
 
   class HoG_features {
@@ -2097,15 +2326,6 @@ namespace oimageR {
 
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Image-Hashing
-
-  /**
-   * Copyright (c) 2013-2016, Johannes Buchner
-   *
-   * All rights reserved.
-   *
-   * https://github.com/JohannesBuchner/imagehash
-   *
-   **/
 
 
   class Image_Hashing {

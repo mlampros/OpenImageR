@@ -1,4 +1,13 @@
 
+## OpenImageR 1.1.6
+
+* I renamed the *load_3d_binary* to *load_binary* and now a user can load either a 2- or a 3-dimensional object. I also fixed a bug in the function.
+* I modified the *superpixels* function, so that it can take 2-dimensional objects too (matrices) besides 3-dimensional images (no need to convert to 3-dimensional outside of the function).
+* I added the parameter *vectorize_magnitude* to the *gabor_feature_extraction* method of the *GaborFeatureExtract* R6 class. In case that the *vectorize_magnitude* parameter is set to FALSE the user will receive the magnitude in form of a matrix ( for instance if the *scales* parameter is set to 2 and the (rows, cols) of the image are (128, 128) then the resulted magnitude will be a list of length 2 where each sublist will be a matrix with dimensions (128, 128) (pixel-wise magnitude values) )
+* I modified the *meshgrid_x()* and *meshgrid_y()* Rcpp functions and now they return faster as before
+* I modified the check-input-data-cases for the *RGB_to_Lab* and *RGB_to_HSV*
+
+
 ## OpenImageR 1.1.5
 
 * I renamed the internal function *norm_range_gauss* to *norm_matrix_range*. Now, the *norm_matrix_range* function is accessible when loading the OpenImageR package. Moreover, I excluded rounding [ round() ], which occured by default in the *norm_range_gauss* function.

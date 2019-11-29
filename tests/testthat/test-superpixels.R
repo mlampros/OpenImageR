@@ -7,7 +7,7 @@ context("superpixels")
 # 'superpixels' function
 #-----------------------
 
-testthat::test_that("the 'slic' function returns the expected output", {
+testthat::test_that("the 'slic' function returns the expected output ( for 3-dimensional data )", {
 
   path = system.file("tmp_images", "slic_im.png", package = "OpenImageR")
   
@@ -24,7 +24,7 @@ testthat::test_that("the 'slic' function returns the expected output", {
 
 
 
-testthat::test_that("the 'slico' function returns the expected output", {
+testthat::test_that("the 'slico' function returns the expected output ( for 3-dimensional data )", {
 
   path = system.file("tmp_images", "slic_im.png", package = "OpenImageR")
   
@@ -37,6 +37,73 @@ testthat::test_that("the 'slico' function returns the expected output", {
   nams = c("slic_data", "labels", "lab_data")
   
   testthat::expect_true( all(names(res) %in% nams) && all(unlist(lapply(res, function(x) length(as.vector(x)) > 0))) )
+})
+
+
+testthat::test_that("the 'slic' function returns the expected output ( for 2-dimensional data )", {
+  
+  path = system.file("tmp_images", "slic_im.png", package = "OpenImageR")
+  
+  im = readImage(path)
+  
+  im = im[,,1]
+  
+  res = superpixels(input_image = im, method = "slic", superpixel = 200, compactness = 20,
+                    return_slic_data = T, return_lab_data = T,
+                    return_labels = T, write_slic = "", verbose = FALSE)
+  
+  nams = c("slic_data", "labels", "lab_data")
+  
+  testthat::expect_true( all(names(res) %in% nams) && all(unlist(lapply(res, function(x) length(as.vector(x)) > 0))) && inherits(res$slic_data, 'matrix') && inherits(res$lab_data, 'matrix') )
+})
+
+
+
+testthat::test_that("the 'slico' function returns the expected output ( for 2-dimensional data )", {
+  
+  path = system.file("tmp_images", "slic_im.png", package = "OpenImageR")
+  
+  im = readImage(path)
+  
+  im = im[,,1]
+  
+  res = superpixels(input_image = im, method = "slico", superpixel = 200, compactness = 20,
+                    return_slic_data = T, return_lab_data = T,
+                    return_labels = T, write_slic = "", verbose = FALSE)
+  
+  nams = c("slic_data", "labels", "lab_data")
+  
+  testthat::expect_true( all(names(res) %in% nams) && all(unlist(lapply(res, function(x) length(as.vector(x)) > 0))) && inherits(res$slic_data, 'matrix') && inherits(res$lab_data, 'matrix') )
+})
+
+
+testthat::test_that("the 'slic' function returns the expected output ( for 2-dimensional data )", {
+  
+  path = system.file("tmp_images", "slic_im.png", package = "OpenImageR")
+  
+  im = readImage(path)
+  
+  im = im[,,1]
+  
+  res = superpixels(input_image = im, method = "slic", superpixel = 200, compactness = 20,
+                    return_slic_data = F, return_lab_data = F,
+                    return_labels = F, write_slic = "", verbose = FALSE)
+  
+  nams = c("slic_data", "labels", "lab_data")
+  
+  testthat::expect_true( all(names(res) %in% nams) && all(unlist(lapply(res, function(x) length(as.vector(x)) == 0))) )
+})
+
+
+testthat::test_that("the 'slic' function returns an error if the input data is not a matrix or an array", {
+  
+  path = system.file("tmp_images", "slic_im.png", package = "OpenImageR")
+  
+  im = readImage(path)
+  
+  testthat::expect_error( superpixels(input_image = list(im), method = "slic", superpixel = 200, compactness = 20,
+                                      return_slic_data = F, return_lab_data = F,
+                                      return_labels = F, write_slic = "", verbose = FALSE) )
 })
 
 

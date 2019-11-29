@@ -1,16 +1,16 @@
 
-pageWithSidebar(
-  
-  headerPanel("display image"),
-  
-  sidebarPanel(
-    
-    sliderInput("height_width", "Adjust Image Height and Width:",
-                
-                min = 1, max = 1000,  value = 575)
-  ),
-  mainPanel(
+shiny::pageWithSidebar(
 
-    imageOutput("myImage")
+  shiny::headerPanel("display image"),
+
+  shiny::sidebarPanel(
+
+    shiny::sliderInput("height_width", "Adjust Image Height and Width:",
+
+                       min = 1, max = 1000,  value = 575)
+  ),
+  shiny::mainPanel(
+
+    shiny::imageOutput("myImage")
   )
 )

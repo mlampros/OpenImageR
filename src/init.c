@@ -22,7 +22,7 @@ extern SEXP _OpenImageR_dhash_binary(SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_dhash_string(SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_diate_erode(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_diate_erode_cube(SEXP, SEXP, SEXP, SEXP);
-extern SEXP _OpenImageR_Gabor_export_Features(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _OpenImageR_Gabor_export_Features(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_Gabor_Filter_Bank(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_Gabor_generate(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_hash_image(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -37,7 +37,7 @@ extern SEXP _OpenImageR_im_flip_cube(SEXP, SEXP);
 extern SEXP _OpenImageR_interface_superpixels(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_levenshtein_dist(SEXP, SEXP);
 extern SEXP _OpenImageR_list_2array_convert(SEXP);
-extern SEXP _OpenImageR_LOAD_3d_data(SEXP);
+extern SEXP _OpenImageR_LOAD_data(SEXP, SEXP);
 extern SEXP _OpenImageR_meshgrid_x(SEXP, SEXP);
 extern SEXP _OpenImageR_meshgrid_y(SEXP, SEXP);
 extern SEXP _OpenImageR_MinMaxArray(SEXP);
@@ -56,6 +56,8 @@ extern SEXP _OpenImageR_rotate_nearest_bilinear(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_rotate_nearest_bilinear_array_full(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_rotate_nearest_bilinear_array_same(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_rotate_rcpp(SEXP, SEXP);
+extern SEXP _OpenImageR_spix_bbox(SEXP, SEXP);
+extern SEXP _OpenImageR_spix_bbox_vector(SEXP, SEXP);
 extern SEXP _OpenImageR_translation_mat(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_zca_whiten_cube(SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_zca_whitening(SEXP, SEXP, SEXP);
@@ -75,7 +77,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_OpenImageR_dhash_string",                       (DL_FUNC) &_OpenImageR_dhash_string,                        3},
     {"_OpenImageR_diate_erode",                        (DL_FUNC) &_OpenImageR_diate_erode,                         4},
     {"_OpenImageR_diate_erode_cube",                   (DL_FUNC) &_OpenImageR_diate_erode_cube,                    4},
-    {"_OpenImageR_Gabor_export_Features",              (DL_FUNC) &_OpenImageR_Gabor_export_Features,              11},
+    {"_OpenImageR_Gabor_export_Features",              (DL_FUNC) &_OpenImageR_Gabor_export_Features,              12},
     {"_OpenImageR_Gabor_Filter_Bank",                  (DL_FUNC) &_OpenImageR_Gabor_Filter_Bank,                   5},
     {"_OpenImageR_Gabor_generate",                     (DL_FUNC) &_OpenImageR_Gabor_generate,                     12},
     {"_OpenImageR_hash_image",                         (DL_FUNC) &_OpenImageR_hash_image,                          8},
@@ -90,7 +92,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_OpenImageR_interface_superpixels",              (DL_FUNC) &_OpenImageR_interface_superpixels,               9},
     {"_OpenImageR_levenshtein_dist",                   (DL_FUNC) &_OpenImageR_levenshtein_dist,                    2},
     {"_OpenImageR_list_2array_convert",                (DL_FUNC) &_OpenImageR_list_2array_convert,                 1},
-    {"_OpenImageR_LOAD_3d_data",                       (DL_FUNC) &_OpenImageR_LOAD_3d_data,                        1},
+    {"_OpenImageR_LOAD_data",                          (DL_FUNC) &_OpenImageR_LOAD_data,                           2},
     {"_OpenImageR_meshgrid_x",                         (DL_FUNC) &_OpenImageR_meshgrid_x,                          2},
     {"_OpenImageR_meshgrid_y",                         (DL_FUNC) &_OpenImageR_meshgrid_y,                          2},
     {"_OpenImageR_MinMaxArray",                        (DL_FUNC) &_OpenImageR_MinMaxArray,                         1},
@@ -109,6 +111,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_OpenImageR_rotate_nearest_bilinear_array_full", (DL_FUNC) &_OpenImageR_rotate_nearest_bilinear_array_full,  4},
     {"_OpenImageR_rotate_nearest_bilinear_array_same", (DL_FUNC) &_OpenImageR_rotate_nearest_bilinear_array_same,  4},
     {"_OpenImageR_rotate_rcpp",                        (DL_FUNC) &_OpenImageR_rotate_rcpp,                         2},
+    {"_OpenImageR_spix_bbox",                          (DL_FUNC) &_OpenImageR_spix_bbox,                           2},
+    {"_OpenImageR_spix_bbox_vector",                   (DL_FUNC) &_OpenImageR_spix_bbox_vector,                    2},
     {"_OpenImageR_translation_mat",                    (DL_FUNC) &_OpenImageR_translation_mat,                     4},
     {"_OpenImageR_zca_whiten_cube",                    (DL_FUNC) &_OpenImageR_zca_whiten_cube,                     3},
     {"_OpenImageR_zca_whitening",                      (DL_FUNC) &_OpenImageR_zca_whitening,                       3},

@@ -5,8 +5,8 @@ Gabor_Filter_Bank <- function(u, v, m, n, plot_data = FALSE) {
     .Call(`_OpenImageR_Gabor_Filter_Bank`, u, v, m, n, plot_data)
 }
 
-Gabor_export_Features <- function(img, d1, d2, u, v, m, n, downsample_vec = FALSE, plot_data = FALSE, normalize_features = FALSE, threads = 1L) {
-    .Call(`_OpenImageR_Gabor_export_Features`, img, d1, d2, u, v, m, n, downsample_vec, plot_data, normalize_features, threads)
+Gabor_export_Features <- function(img, d1, d2, u, v, m, n, downsample_vec = FALSE, plot_data = FALSE, normalize_features = FALSE, threads = 1L, vectorize_magnitude = TRUE) {
+    .Call(`_OpenImageR_Gabor_export_Features`, img, d1, d2, u, v, m, n, downsample_vec, plot_data, normalize_features, threads, vectorize_magnitude)
 }
 
 Gabor_generate <- function(img_data, img_nrow, img_ncol, d1, d2, u, v, m, n, downsample_vec = FALSE, normalize_features = FALSE, threads = 1L) {
@@ -201,7 +201,15 @@ interface_superpixels <- function(input_image, method = "slic", num_superpixel =
     .Call(`_OpenImageR_interface_superpixels`, input_image, method, num_superpixel, compactness_factor, return_slic_data, return_lab_data, return_labels, write_slic, verbose)
 }
 
-LOAD_3d_data <- function(write_slic) {
-    .Call(`_OpenImageR_LOAD_3d_data`, write_slic)
+spix_bbox <- function(spix_labels, non_overlapping_superpixels = FALSE) {
+    .Call(`_OpenImageR_spix_bbox`, spix_labels, non_overlapping_superpixels)
+}
+
+spix_bbox_vector <- function(spix_labels, spix_labels_vec) {
+    .Call(`_OpenImageR_spix_bbox_vector`, spix_labels, spix_labels_vec)
+}
+
+LOAD_data <- function(write_slic, type = "2d") {
+    .Call(`_OpenImageR_LOAD_data`, write_slic, type)
 }
 

@@ -14,6 +14,7 @@
 #' @param downsample_gabor either TRUE or FALSE. If TRUE then downsampling of data will take place. The \emph{downsample_rows} and \emph{downsample_cols} should be adjusted accordingly. Downsampling does not affect the output plots but the output \emph{gabor_features}     ( gabor_feature_extraction function )
 #' @param normalize_features either TRUE or FALSE. If TRUE then the output gabor-features will be normalized to zero mean and unit variance    ( gabor_feature_extraction function )
 #' @param threads a numeric value specifying the number of threads to use    ( gabor_feature_extraction function )
+#' @param vectorize_magnitude either TRUE or FALSE. If TRUE the computed magnitude feature will be returned in the form of a vector, otherwise it will be returned as a list of matrices  ( gabor_feature_extraction function )
 #' @param real_matrices a list of 3-dimensional arrays. These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )
 #' @param margin_btw_plots a float between 0.0 and 1.0 specifying the margin between the multiple output plots      ( plot_gabor function )
 #' @param thresholding either TRUE or FALSE. If TRUE then a threshold of 0.5 will be used to push values above 0.5 to 1.0 ( similar to otsu-thresholding )      ( plot_gabor function )
@@ -39,6 +40,7 @@
 #'
 #' @docType class
 #' @importFrom R6 R6Class
+#' @importFrom graphics image title par
 #'
 #' @section Methods:
 #'
@@ -52,7 +54,7 @@
 #'  \item{\code{--------------}}{}
 #'
 #'  \item{\code{gabor_feature_extraction(image, scales, orientations, gabor_rows, gabor_columns, downsample_gabor = FALSE, plot_data = FALSE,
-#'                                       downsample_rows = NULL, downsample_cols = NULL, normalize_features = FALSE, threads = 1)}}{}
+#'                                       downsample_rows = NULL, downsample_cols = NULL, normalize_features = FALSE, threads = 1, vectorize_magnitude = TRUE)}}{}
 #'
 #'  \item{\code{--------------}}{}
 #'
@@ -188,7 +190,7 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
 
                                      gabor_feature_extraction = function(image, scales, orientations, gabor_rows, gabor_columns, downsample_gabor = FALSE, plot_data = FALSE,
 
-                                                                         downsample_rows = NULL, downsample_cols = NULL, normalize_features = FALSE, threads = 1, verbose = FALSE) {
+                                                                         downsample_rows = NULL, downsample_cols = NULL, normalize_features = FALSE, threads = 1, verbose = FALSE, vectorize_magnitude = TRUE) {
 
                                        if (verbose) { START = Sys.time() }
 
@@ -208,7 +210,18 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
 
                                        if (!inherits(image, "matrix")) stop("The 'image' parameter should be a 2-dimensional image ( matrix )", call. = F)
 
-                                       res = Gabor_export_Features(image, downsample_rows, downsample_cols, scales, orientations, gabor_rows, gabor_columns, downsample_gabor, plot_data, normalize_features, threads)
+                                       res = Gabor_export_Features(image, downsample_rows, downsample_cols, scales, orientations, gabor_rows, gabor_columns, downsample_gabor, plot_data, normalize_features, threads, vectorize_magnitude)
+
+                                       #----------------------------------------------------------------------------------------------------------
+                                       # the conversion of the vectors to matrices will be column-wise, because the armadillo 'vectorise' function
+                                       # vectorizes the matrices column-wise. SEE line 1887 ('gabor_features_Magn' variable) and line 1778
+                                       # ('gaborMagn_vec') for the details on why I use matrix(data, nrow, ncol, byrow = F) in the next two lines.
+                                       # Moreover, line 1776 explains the computation of the magnitude based on the real and imaginary parts
+                                       #----------------------------------------------------------------------------------------------------------
+
+                                       if (!vectorize_magnitude) {     # convert to list of matrices
+                                         res$gaborFeatures$magnitude = lapply(1:ncol(res$gaborFeatures$magnitude), function(x) matrix(res$gaborFeatures$magnitude[, x], nrow = nrow(image), ncol = ncol(image)))
+                                       }
 
                                        private$flag_filter_bank = FALSE
 
@@ -279,7 +292,7 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
                                          grid_columns = ifelse(private$flag_filter_bank, private$COLS, dim(real_matrices[[1]])[3])
                                        }
 
-                                       par(mfrow = c(grid_rows, grid_columns), mar = c(margin_btw_plots, margin_btw_plots, margin_btw_plots, margin_btw_plots))
+                                       graphics::par(mfrow = c(grid_rows, grid_columns), mar = c(margin_btw_plots, margin_btw_plots, margin_btw_plots, margin_btw_plots))
 
                                        if (is.null(private$flag_filter_bank)) {
 
@@ -292,15 +305,15 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
                                              gpl = rotateFixed(gpl, angle = 90)                               # rotate image 90 degrees   ( necessary otherwise the image() function does not show the image in the same angle as is the case in the original image )
 
                                              if (thresholding) {
-                                               
+
                                                gpl = image_thresholding(gpl, thresh = 0.5)
-                                               
+
                                                gpl = private$adjust_minority_class(gpl)
                                              }
 
-                                             image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
-                                             
-                                             title(main = paste("scale:", i, "&", "orientation:", j, sep = " "), font.main = 1)
+                                             graphics::image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
+
+                                             graphics::title(main = paste("scale:", i, "&", "orientation:", j, sep = " "), font.main = 1)
                                            }
                                          }
                                        }
@@ -308,24 +321,24 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
                                        else {
 
                                          if (private$flag_filter_bank) {
-                                           
+
                                            grid_extend = matrix(1:(grid_rows * grid_columns), nrow = grid_rows, ncol = grid_columns)                               # make the grid ordering row-wise
 
                                            mesh_scales = meshgrid_y(grid_rows, grid_columns) + 1                                                                   # necessary for the title() function
-                                           
+
                                            mesh_orient = meshgrid_x(grid_rows, grid_columns) + 1                                                                   # necessary for the title() function
-                                           
+
                                            idx = unlist(lapply(1:nrow(grid_extend), function(x) grid_extend[x, ]))
-                                           
+
                                            for (i in 1:(grid_rows * grid_columns)) {                                # this works in the same way as the for-loop in the 'gaborFilterBank()' rcpp function
 
                                              gpl = NormalizeObject(real_matrices[[idx[i]]])                         # normalize so that negative values will be pushed between [0,1]
 
                                              gpl = rotateFixed(gpl, angle = 90)                                     # rotate image 90 degrees   ( necessary otherwise the image() function does not show the image in the same angle as is the case in the original image )
-                                             
-                                             image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
-                                             
-                                             title(main = paste("scale:", mesh_scales[idx[i]], "&", "orientation:", mesh_orient[idx[i]], sep = " "), font.main = 1)
+
+                                             graphics::image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
+
+                                             graphics::title(main = paste("scale:", mesh_scales[idx[i]], "&", "orientation:", mesh_orient[idx[i]], sep = " "), font.main = 1)
                                            }
                                          }
 
@@ -340,15 +353,15 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
                                                gpl = rotateFixed(gpl, angle = 90)                               # rotate image 90 degrees   ( necessary otherwise the image() function does not show the image in the same angle as is the case in the original image )
 
                                                if (thresholding) {
-                                                 
+
                                                  gpl = image_thresholding(gpl, thresh = 0.5)
-                                                 
+
                                                  gpl = private$adjust_minority_class(gpl)
                                                }
 
-                                               image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
-                                               
-                                               title(main = paste("scale:", i, "&", "orientation:", j, sep = " "), font.main = 1)
+                                               graphics::image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
+
+                                               graphics::title(main = paste("scale:", i, "&", "orientation:", j, sep = " "), font.main = 1)
                                              }
                                            }
                                          }
@@ -362,7 +375,7 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
 
                                      plot_multi_images = function(list_images, par_ROWS, par_COLS) {
 
-                                       par(mfrow = c(par_ROWS, par_COLS))
+                                       graphics::par(mfrow = c(par_ROWS, par_COLS))
 
                                        out = lapply(list_images, function(x) {
 
@@ -370,7 +383,7 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
 
                                          gpl = rotateFixed(gpl, angle = 90)                # rotate image 90 degrees
 
-                                         image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
+                                         graphics::image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
                                        })
                                      }
 
@@ -383,22 +396,22 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
                                      ROWS = NULL,
 
                                      COLS = NULL,
-                                     
-                                     
+
+
                                      # when I threshold the image I need the minority class to take always 1.0 (or 255)
-                                     # and the majority class to take 0.0, so that the output images are consistent 
+                                     # and the majority class to take 0.0, so that the output images are consistent
                                      # across the grid of images
                                      #---------------------------------------------------------------------------------
-                                     
+
                                      adjust_minority_class = function(img) {
-                                       
+
                                        if (sum(img) > length(img[img == 0])) {
-                                         
+
                                          img[img == 0] = 255
-                                         
+
                                          img[img == 1] = 0
                                        }
-                                       
+
                                        return(img)
                                      }
                                    )

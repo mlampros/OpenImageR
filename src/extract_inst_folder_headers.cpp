@@ -40,7 +40,7 @@ Rcpp::List Gabor_Filter_Bank(int u, int v, int m, int n, bool plot_data = false)
 // [[Rcpp::export]]
 Rcpp::List Gabor_export_Features(arma::Mat<double> img, int d1, int d2, int u, int v, int m, int n, bool downsample_vec = false,
 
-                                 bool plot_data = false, bool normalize_features = false, int threads = 1) {
+                                 bool plot_data = false, bool normalize_features = false, int threads = 1, bool vectorize_magnitude = true) {
 
   oimageR::Gabor_Features_Rcpp gab_fts_Rcpp;
 
@@ -48,7 +48,7 @@ Rcpp::List Gabor_export_Features(arma::Mat<double> img, int d1, int d2, int u, i
 
   gab_fts_Rcpp.gaborFeaturesRcpp(img_cx, u, v, m, n, d1, d2, downsample_vec, plot_data, normalize_features, threads);
 
-  return gab_fts_Rcpp.return_gaborFeatures(plot_data);
+  return gab_fts_Rcpp.return_gaborFeatures(plot_data, vectorize_magnitude);
 }
 
 
@@ -638,6 +638,7 @@ arma::mat meshgrid_x(int rows, int cols) {
 }
 
 
+
 //---------------------------------------------------------------------------------------------------------------------------- SLIC, SLICO
 
 // RGB to LAB colour type conversion [ see the 'snic' superpixel implementation -- slightly modified to return data ]
@@ -774,16 +775,52 @@ Rcpp::List interface_superpixels(arma::cube input_image, std::string method = "s
 }
 
 
-// function to load 3-dimensional data [ in combination with the "interface_superpixels()"
+// superpixels bounding-box
+//
+
+// [[Rcpp::export]]
+Rcpp::List spix_bbox(arma::mat& spix_labels, bool non_overlapping_superpixels = false) {
+  
+  oimageR::Utility_functions UTLF;
+  return UTLF.spix_bbox(spix_labels, non_overlapping_superpixels);
+}
+
+
+// bounding box for a subset of superpixels
+//
+
+// [[Rcpp::export]]
+std::vector<int> spix_bbox_vector(arma::mat& spix_labels, arma::rowvec spix_labels_vec) {
+  
+  oimageR::Utility_functions UTLF;
+  return UTLF.spix_bbox_vector(spix_labels, spix_labels_vec);
+}
+
+
+
+// function to load 2- or 3-dimensional data [ in combination with the "interface_superpixels()"
 // if the "write_slic" parameter is not set to "" ]
 //
 
 // [[Rcpp::export]]
-arma::cube LOAD_3d_data(std::string write_slic) {
+Rcpp::List LOAD_data(std::string write_slic, std::string type = "2d") {    // type can be either '2d' or '3d'
 
-  arma::cube im;
-  im.load(write_slic);
-  return im;
+  Rcpp::List out;
+  arma::cube im3d;
+  arma::mat im2d;
+  if (type == "2d") {
+    im2d.load(write_slic);
+    out.push_back(im2d);
+  }
+  else if (type == "3d") {
+    im3d.load(write_slic);
+    out.push_back(im3d);
+  }
+  else {
+    Rcpp::stop("The 'type' parameter can be either '2d' or '3d'!");
+  }
+  
+  return out;
 }
 
 

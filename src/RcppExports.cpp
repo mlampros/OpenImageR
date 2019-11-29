@@ -22,8 +22,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // Gabor_export_Features
-Rcpp::List Gabor_export_Features(arma::Mat<double> img, int d1, int d2, int u, int v, int m, int n, bool downsample_vec, bool plot_data, bool normalize_features, int threads);
-RcppExport SEXP _OpenImageR_Gabor_export_Features(SEXP imgSEXP, SEXP d1SEXP, SEXP d2SEXP, SEXP uSEXP, SEXP vSEXP, SEXP mSEXP, SEXP nSEXP, SEXP downsample_vecSEXP, SEXP plot_dataSEXP, SEXP normalize_featuresSEXP, SEXP threadsSEXP) {
+Rcpp::List Gabor_export_Features(arma::Mat<double> img, int d1, int d2, int u, int v, int m, int n, bool downsample_vec, bool plot_data, bool normalize_features, int threads, bool vectorize_magnitude);
+RcppExport SEXP _OpenImageR_Gabor_export_Features(SEXP imgSEXP, SEXP d1SEXP, SEXP d2SEXP, SEXP uSEXP, SEXP vSEXP, SEXP mSEXP, SEXP nSEXP, SEXP downsample_vecSEXP, SEXP plot_dataSEXP, SEXP normalize_featuresSEXP, SEXP threadsSEXP, SEXP vectorize_magnitudeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -38,7 +38,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type plot_data(plot_dataSEXP);
     Rcpp::traits::input_parameter< bool >::type normalize_features(normalize_featuresSEXP);
     Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
-    rcpp_result_gen = Rcpp::wrap(Gabor_export_Features(img, d1, d2, u, v, m, n, downsample_vec, plot_data, normalize_features, threads));
+    Rcpp::traits::input_parameter< bool >::type vectorize_magnitude(vectorize_magnitudeSEXP);
+    rcpp_result_gen = Rcpp::wrap(Gabor_export_Features(img, d1, d2, u, v, m, n, downsample_vec, plot_data, normalize_features, threads, vectorize_magnitude));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -721,14 +722,39 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// LOAD_3d_data
-arma::cube LOAD_3d_data(std::string write_slic);
-RcppExport SEXP _OpenImageR_LOAD_3d_data(SEXP write_slicSEXP) {
+// spix_bbox
+Rcpp::List spix_bbox(arma::mat& spix_labels, bool non_overlapping_superpixels);
+RcppExport SEXP _OpenImageR_spix_bbox(SEXP spix_labelsSEXP, SEXP non_overlapping_superpixelsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type spix_labels(spix_labelsSEXP);
+    Rcpp::traits::input_parameter< bool >::type non_overlapping_superpixels(non_overlapping_superpixelsSEXP);
+    rcpp_result_gen = Rcpp::wrap(spix_bbox(spix_labels, non_overlapping_superpixels));
+    return rcpp_result_gen;
+END_RCPP
+}
+// spix_bbox_vector
+std::vector<int> spix_bbox_vector(arma::mat& spix_labels, arma::rowvec spix_labels_vec);
+RcppExport SEXP _OpenImageR_spix_bbox_vector(SEXP spix_labelsSEXP, SEXP spix_labels_vecSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type spix_labels(spix_labelsSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type spix_labels_vec(spix_labels_vecSEXP);
+    rcpp_result_gen = Rcpp::wrap(spix_bbox_vector(spix_labels, spix_labels_vec));
+    return rcpp_result_gen;
+END_RCPP
+}
+// LOAD_data
+Rcpp::List LOAD_data(std::string write_slic, std::string type);
+RcppExport SEXP _OpenImageR_LOAD_data(SEXP write_slicSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type write_slic(write_slicSEXP);
-    rcpp_result_gen = Rcpp::wrap(LOAD_3d_data(write_slic));
+    Rcpp::traits::input_parameter< std::string >::type type(typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(LOAD_data(write_slic, type));
     return rcpp_result_gen;
 END_RCPP
 }

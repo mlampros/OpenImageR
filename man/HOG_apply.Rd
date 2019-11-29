@@ -21,7 +21,7 @@ HOG_apply(object, cells = 3, orientations = 6, rows = NULL,
 \item{threads}{the number of parallel cores to use}
 }
 \value{
-If the input is a matrix, data frame or array it returns a matrix of the hog descriptors. If the input is a path to a folder it returns a list of length 2, 
+If the input is a matrix, data frame or array it returns a matrix of the hog descriptors. If the input is a path to a folder it returns a list of length 2,
 the 1st sublist is a vector with the names of the image files (the order of the files in the vector corresponds to the order of the rows of the output matrix),
 the 2nd sublist is the matrix of the hog descriptors.
 }
@@ -29,7 +29,7 @@ the 2nd sublist is the matrix of the hog descriptors.
 calculate the HOG (Histogram of oriented gradients) for a matrix, array or a folder of images
 }
 \details{
-This function takes as input either a matrix, a data frame, a 3-dimensional array or a character path to a folder of files (images). It returns the HOG-descriptors 
+This function takes as input either a matrix, a data frame, a 3-dimensional array or a character path to a folder of files (images). It returns the HOG-descriptors
 (histogram of oriented gradients) for each row (if matrix or data frame), for each array-slice (if array) or for each file (if path to a folder of images).
 }
 \examples{

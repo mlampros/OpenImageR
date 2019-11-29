@@ -31,6 +31,8 @@
 
 \item{threads}{a numeric value specifying the number of threads to use    ( gabor_feature_extraction function )}
 
+\item{vectorize_magnitude}{either TRUE or FALSE. If TRUE the computed magnitude feature will be returned in the form of a vector, otherwise it will be returned as a list of matrices  ( gabor_feature_extraction function )}
+
 \item{real_matrices}{a list of 3-dimensional arrays. These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )}
 
 \item{margin_btw_plots}{a float between 0.0 and 1.0 specifying the margin between the multiple output plots      ( plot_gabor function )}
@@ -66,7 +68,7 @@ I added the option \emph{downsample_gabor} to the original matlab code based on 
  \item{\code{--------------}}{}
 
  \item{\code{gabor_feature_extraction(image, scales, orientations, gabor_rows, gabor_columns, downsample_gabor = FALSE, plot_data = FALSE,
-                                      downsample_rows = NULL, downsample_cols = NULL, normalize_features = FALSE, threads = 1)}}{}
+                                      downsample_rows = NULL, downsample_cols = NULL, normalize_features = FALSE, threads = 1, vectorize_magnitude = TRUE)}}{}
 
  \item{\code{--------------}}{}
 
