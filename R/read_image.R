@@ -26,27 +26,25 @@
 readImage = function(path, ...) {
 
   try_err_file = inherits(tryCatch(normalizePath(path, mustWork = T), error = function(e) e), "error")
-
-  if (class(path) != "character" || try_err_file == T) stop('the path to an image is invalid or the image does not exist')
-
+  if (!inherits(path, "character") || try_err_file == T) stop('the path to an image is invalid or the image does not exist')
+  
   flag_type = strsplit(path, '[.]')[[1]]
-
   flag_type = flag_type[length(flag_type)]
-
+  
   if (length(flag_type) == 0) stop('invalid path')
 
   if (flag_type == "png") {
 
-    img = png::readPNG(path, ...)}
-
+    img = png::readPNG(path, ...)
+  }
   else if (flag_type == "jpg" || flag_type == "jpeg") {
 
-    img = jpeg::readJPEG(path, ...)}
-
+    img = jpeg::readJPEG(path, ...)
+  }
   else if (flag_type %in% c("tiff", "tif", "TIFF", "TIF")) {
 
-    img = tiff::readTIFF(path, ...)}
-
+    img = tiff::readTIFF(path, ...)
+  }
   else {
 
     stop('supported image types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)')

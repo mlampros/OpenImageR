@@ -27,18 +27,17 @@
 
 HOG = function(image, cells = 3, orientations = 6) {
 
-  if (is.data.frame(image)) image = as.matrix(image)
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
 
-  if (is.matrix(image)) {
+  if (inherits(image, 'matrix')) {
 
-    res = hog_cpp(image, n_divs = cells, n_bins = orientations)}
-
-  else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+    res = hog_cpp(image, n_divs = cells, n_bins = orientations)
+  }
+  else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
 
     image = rgb_2gray(image)
-
-    res = hog_cpp(image, n_divs = cells, n_bins = orientations)}
-
+    res = hog_cpp(image, n_divs = cells, n_bins = orientations)
+  }
   else {
 
     stop('valid types of input are matrix, data frame and 3-dimensional array')
@@ -126,15 +125,15 @@ func_transform = function(image, folder_path, flag_type, RGB_2gray = F) {
 HOG_apply = function(object, cells = 3, orientations = 6, rows = NULL, columns = NULL, threads = 1) {
 
   if (threads < 1) stop('threads should be at least 1')
-  if (is.matrix(object) && (is.null(columns) || is.null(rows))) stop('give number of rows and columns of the matrix')
+  if (inherits(object, 'matrix') && (is.null(columns) || is.null(rows))) stop('give number of rows and columns of the matrix')
   if (cells < 1 || orientations < 1) stop("The 'cells' and 'orientations' arguments should be greater than 0")
-  if (is.data.frame(object)) object = as.matrix(object)
+  if (inherits(object, 'data.frame')) object = as.matrix(object)
 
   try_err_files = inherits(tryCatch(normalizePath(object, mustWork = T), error = function(e) e), "error")
 
   start = Sys.time()
 
-  if (class(object) == "character" && try_err_files == F) {
+  if (inherits(object, "character") && try_err_files == F) {
 
     str_SPL = strsplit(object, "")[[1]]
 
@@ -154,13 +153,13 @@ HOG_apply = function(object, cells = 3, orientations = 6, rows = NULL, columns =
 
     out = list(files = lst_files, hog = tmp_out)}
 
-  else if (class(object) == 'matrix' && try_err_files == T) {
+  else if (inherits(object, 'matrix') && try_err_files == T) {
 
     if (length(object[1, ]) != columns * rows) stop('rows * columns must be equal to the length of each row')
 
     out = HOG_matrix(object, columns, rows, n_divs = cells, n_bins = orientations, threads = threads)}
 
-  else if (class(object) == 'array' && try_err_files == T) {
+  else if (inherits(object, 'array') && try_err_files == T) {
 
     out = HOG_array(object, n_divs = cells, n_bins = orientations, threads = threads)}
 

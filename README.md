@@ -1,3 +1,4 @@
+
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/OpenImageR)](http://cran.r-project.org/package=OpenImageR)
 [![Travis-CI Build Status](https://travis-ci.org/mlampros/OpenImageR.svg?branch=master)](https://travis-ci.org/mlampros/OpenImageR)
 [![codecov.io](https://codecov.io/github/mlampros/OpenImageR/coverage.svg?branch=master)](https://codecov.io/github/mlampros/OpenImageR?branch=master)
@@ -97,10 +98,10 @@ A *complete minimal example* would be :
 
 
 // [[Rcpp::export]]
-arma::mat rgb_2gray(arma::cube RGB_image) {
+arma::mat rgb_2gray_exp(arma::cube RGB_image) {
 
   oimageR::Utility_functions UTLF;
-  return UTLF.rgb_2gray(RGB_image);
+  return UTLF.rgb_2gray_rcpp(RGB_image);
 }
 
 
@@ -108,7 +109,7 @@ arma::mat rgb_2gray(arma::cube RGB_image) {
 
 <br>
 
-Then, by opening an R file a user can call the *rgb_2gray* function using,
+Then, by opening an R file a user can call the *rgb_2gray_exp* function using,
 
 <br>
 
@@ -119,7 +120,7 @@ Rcpp::sourceCpp('example.cpp')              # assuming that the previous Rcpp co
 set.seed(1)
 im_rgb = array(runif(30000), c(100, 100, 3))
 
-im_grey = rgb_2gray(im_rgb)
+im_grey = rgb_2gray_exp(im_rgb)
 
 str(im_grey)
 

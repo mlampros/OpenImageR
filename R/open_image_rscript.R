@@ -43,16 +43,13 @@ gaussian_kernel = function(xy_length = 2, sigma = 1.0, range_gauss = 2) {
 
 norm_matrix_range = function(data, min_value = -1, max_value = 1) {
   
-  if (!is.matrix(data)) {
+  if (!inherits(data, 'matrix')) {
     stop('data should be a matrix')
   }
   
   MIN = min(data)
-  
   data = (data - MIN) / (max(data) - MIN)
-  
   rng = min_value - max_value
-  
   out = min_value - data * rng
   
   return(out)
@@ -155,17 +152,22 @@ switch_filter = function(kernel, conv_mod, gaussian_dims = 5, sigma = 1.0, lapla
 
 func_chech_range = function(image) {
 
-  if (class(image) == 'matrix' && (max(image) != 1.0 || min(image) != 0.0)) {
+  if (inherits(image, 'matrix') && (max(image) != 1.0 || min(image) != 0.0)) {
 
-    image = Normalize_matrix(image)}
-
-  if (class(image) == 'array' && (max(Array_range(image, 1)) != 1.0 || min(Array_range(image, 2)) != 0.0)) {
+    image = Normalize_matrix(image)
+  }
+  else if (inherits(image, 'array') && (max(Array_range(image, 1)) != 1.0 || min(Array_range(image, 2)) != 0.0)) {
 
     image = Normalize_array(image)
   }
-
-  image
+  else {
+    
+    return(image)
+  }
+  
+  return(image)
 }
+
 
 
 #' edge detection (Frei_chen, LoG, Prewitt, Roberts_cross, Scharr, Sobel)
@@ -197,7 +199,7 @@ func_chech_range = function(image) {
 edge_detection = function(image, method = NULL, conv_mode = 'same', approx = F, gaussian_dims = 5, sigma = 1.0, range_gauss = 2, laplacian_type = 1) {
   
   if (is.null(method) || !method %in% c('Frei_chen', 'LoG', 'Prewitt', 'Roberts_cross', 'Scharr', 'Sobel')) stop("method shoud be non-NULL and one of : 'Frei_chen', 'LoG', 'Prewitt', 'Roberts_cross', 'Scharr', 'Sobel'")
-  if (is.data.frame(image)) image = as.matrix(image)                    # default conversion for armadillo function conv2d
+  if (inherits(image, 'data.frame')) image = as.matrix(image)                    # default conversion for armadillo function conv2d
   if (is.null(conv_mode)) stop("conv_mode should be one of : 'full', 'same'")
   if (!conv_mode %in% c('full', 'same')) stop("conv_mode should be one of : 'full', 'same'")
   
@@ -205,20 +207,21 @@ edge_detection = function(image, method = NULL, conv_mode = 'same', approx = F, 
   
   res_kernel = switch_filter(method, conv_mode, gaussian_dims = gaussian_dims, sigma = sigma, laplacian_type = laplacian_type, range_gauss = range_gauss)
   
-  if (is.list(res_kernel)) {
+  if (inherits(res_kernel, 'list')) {
     
-    if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+    if (inherits(image, 'array') && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
       
       new_image_horizontal = conv3d(image, res_kernel$G_horiz, conv_mode)
-      
       new_image_vertical = conv3d(image, res_kernel$G_vert, conv_mode)
     }
-    
-    if (is.matrix(image)) {
+    else if (inherits(image, 'matrix')) {
       
       new_image_horizontal = conv2d(image, res_kernel$G_horiz, conv_mode)
-      
       new_image_vertical = conv2d(image, res_kernel$G_vert, conv_mode)
+    }
+    else {
+      
+      stop("the 'image' parameter can be either a matrix or a 3-dimensional array")
     }
     
     if (approx) {
@@ -235,16 +238,18 @@ edge_detection = function(image, method = NULL, conv_mode = 'same', approx = F, 
     return(res)
   }
   
-  else if (is.matrix(res_kernel)) {
+  else if (inherits(res_kernel, 'matrix')) {
     
     if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
       
       new_LoG = conv3d(image, res_kernel, conv_mode)
     }
-    
-    if (is.matrix(image)) {
+    else if (is.matrix(image)) {
       
       new_LoG = conv2d(image, res_kernel, mode = conv_mode)
+    }
+    else {
+      stop("the 'new_LoG' parameter can be either a matrix or a 3-dimensional array")
     }
     
     new_LoG = func_chech_range(new_LoG)
@@ -287,15 +292,14 @@ uniform_filter = function(image, size, conv_mode = 'same') {
   
   unif_filt = matrix(1, ncol = size[1], nrow = size[2])/(size[1] * size[2])
   
-  if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+  if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
     
     out = conv3d(image, unif_filt, conv_mode)
   }
-  
   else if (is.matrix(image)) {
     
-    out = conv2d(image, unif_filt, conv_mode)}
-  
+    out = conv2d(image, unif_filt, conv_mode)
+  }
   else {
     
     stop('valid type of input-images is array or matrix')
@@ -327,22 +331,20 @@ uniform_filter = function(image, size, conv_mode = 'same') {
 image_thresholding = function(image, thresh) {
   
   if (thresh <= 0.0) stop('the thresh parameter should be greater than 0')
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
 
-  if (is.data.frame(image)) { image = as.matrix(image) }
+  if (inherits(image, 'matrix')) {
 
-  if (is.matrix(image)) {
-
-    image_out = ifelse(image > thresh, 1, 0)}
-
-  else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
-
+    image_out = ifelse(image > thresh, 1, 0)
+  }
+  else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
+    
     image = rgb_2gray(image)
-
-    image_out = ifelse(image > thresh, 1, 0)}
-
+    image_out = ifelse(image > thresh, 1, 0)
+  }
   else {
 
-    stop('the image should be either a matrix or an array')
+    stop('the image should be either a matrix or a 3-dimensional array')
   }
 
   return(image_out)
@@ -371,10 +373,10 @@ image_thresholding = function(image, thresh) {
 
 gamma_correction = function(image, gamma) {
 
-  if (is.array(image) || is.matrix(image)) {
+  if (inherits(image, 'array') || inherits(image, 'matrix')) {
 
-    out = ((image ) ^ (1 / gamma))}
-
+    out = ((image ) ^ (1 / gamma))
+  }
   else {
 
     stop('the image should be either a matrix or an array')
@@ -393,11 +395,8 @@ gamma_correction = function(image, gamma) {
 sec_gaus_bl = function(image, factor, sigma, range_gauss) {
 
   kernel_size = ifelse(factor == 2, 3, round( 3 * (factor / 2)))
-
   gaus_kern = gaussian_kernel(kernel_size, sigma = sigma, range_gauss = range_gauss)
-
   image = conv2d(image, gaus_kern, 'same')        # convolve
-
   return(image)
 }
 
@@ -428,8 +427,8 @@ sec_gaus_bl = function(image, factor, sigma, range_gauss) {
 down_sample_image = function(image, factor, gaussian_blur = FALSE, gauss_sigma = 1.0, range_gauss = 2) {
   
   if (!is.logical(gaussian_blur)) stop("'gaussian_blur should be one of TRUE, FALSE")
-  if (is.data.frame(image)) image = as.matrix(image)
-  if (!class(image) %in% c('matrix', 'array')) stop('invalid type of image, use either array or matrix')
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
+  if (!inherits(image, c('matrix', 'array'))) stop('invalid type of image, use either array or matrix')
   if (factor < 1.0) stop('factor should be greater or equal to 1.0')
 
   new_rows = seq(1, nrow(image), factor)
@@ -448,28 +447,30 @@ down_sample_image = function(image, factor, gaussian_blur = FALSE, gauss_sigma =
       }
 
       new_array = array(unlist(new_array), dim = c(nrow(new_array[[1]]), ncol(new_array[[1]]), length(new_array)))
-
       out = new_array[new_rows, new_cols, ]
     }
     
     if (is.matrix(image)) {
 
       new_array = sec_gaus_bl(image, factor, gauss_sigma, range_gauss)
-
       out = new_array[new_rows, new_cols]
     }
   }
 
   else {
+    
+    if (inherits(image, 'matrix')) {
+      
+      out = image[new_rows, new_cols]
+    }
 
-    if (class(image) == 'array') {
+    else if (inherits(image, 'array')) {
 
       out = image[new_rows, new_cols, ]
     }
-
-    if (class(image) == 'matrix') {
-
-      out = image[new_rows, new_cols]
+    else {
+      
+      stop('invalid type of image, use either array or matrix')
     }
   }
 
@@ -531,18 +532,18 @@ crop_image_secondary = function(image, new_width, new_height) {         # reduce
 
 cropImage = function(image, new_width, new_height, type = 'equal_spaced') {
 
-  if (is.null(new_width) || is.null(new_height) || !class(new_height) %in% c('numeric', 'integer') || !class(new_width) %in% c('numeric', 'integer')) stop('new_height and new_width should be of type numeric')
+  if (is.null(new_width) || is.null(new_height) || !inherits(new_height, c('numeric', 'integer')) || !inherits(new_width, c('numeric', 'integer'))) stop('new_height and new_width should be of type numeric')
   if (!type %in% c('equal_spaced', 'user_defined') || is.null(type)) stop('valid types are equal_spaced and user_defined')
   if (type == 'equal_spaced' && (length(new_height) != 1 || length(new_width) != 1)) stop('if the type is equal_spaced then the new_height and new_width should be numeric of length 1')
   if (type == 'user_defined' && (length(new_height) < 2 || length(new_width) < 2)) stop('if the type is user_defined then the new_height and new_width should be a sequence of numeric values')
 
   if (type == 'equal_spaced') {
 
-    if (is.matrix(image)) {
+    if (inherits(image, 'matrix')) {
 
-      res = crop_image_secondary(image, new_width, new_height)}
-
-    else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+      res = crop_image_secondary(image, new_width, new_height)
+    }
+    else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
 
       res = array(, dim = c(new_width, new_height, dim(image)[3]))
 
@@ -551,7 +552,6 @@ cropImage = function(image, new_width, new_height, type = 'equal_spaced') {
         res[,, i] = crop_image_secondary(image[,, i], new_width, new_height)
       }
     }
-
     else {
 
       stop('invalid type of image, supported types are matrix and 3 dimensional array')
@@ -560,11 +560,11 @@ cropImage = function(image, new_width, new_height, type = 'equal_spaced') {
 
   if (type == 'user_defined') {
 
-    if (is.matrix(image)) {
+    if (inherits(image, 'matrix')) {
 
-      res = image[new_width, new_height]}
-
-    else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+      res = image[new_width, new_height]
+    }
+    else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
 
       res = array(, dim = c(length(new_width), length(new_height), dim(image)[3]))
 
@@ -617,18 +617,18 @@ rotateImage = function(image, angle, method = 'nearest', mode = 'same', threads 
   if (!method %in% c('nearest', 'bilinear')) stop("valid methods are 'nearest', 'bilinear'")
   if (!mode %in% c('same', 'full')) stop("invalid mode, choose one of 'same', 'full'")
   
-  if (class(image) == 'data.frame') image = as.matrix(image)
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
   
-  if (class(image) == 'matrix') {
+  if (inherits(image, 'matrix')) {
     
-    out = rotate_nearest_bilinear(image, angle, method, mode, threads)}
-  
-  else if (class(image) == 'array' && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+    out = rotate_nearest_bilinear(image, angle, method, mode, threads)
+  }
+  else if (inherits(image, 'array') && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
     
     if (mode == 'same') {
       
-      out = rotate_nearest_bilinear_array_same(image, angle, method, threads)}
-    
+      out = rotate_nearest_bilinear_array_same(image, angle, method, threads)
+    }
     if (mode == 'full') {
       
       out = rotate_nearest_bilinear_array_full(image, angle, method, threads)
@@ -664,13 +664,13 @@ rotateImage = function(image, angle, method = 'nearest', mode = 'same', threads 
 
 rotateFixed = function(image, angle) {
 
-  if (class(image) == 'data.frame') image = as.matrix(image)
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
 
-  if (class(image) == 'matrix') {
+  if (inherits(image, 'matrix')) {
 
     out = rotate_rcpp(image, angle)}
 
-  else if (class(image) == 'array' && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+  else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
 
     new_array = list()
 
@@ -741,33 +741,33 @@ sec_resiz_array = function(image, flag = T) {
 
 resizeImage = function(image, width, height, method = 'nearest') {
 
-  if (is.data.frame(image)) image = as.matrix(image)
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
   if (width < 1.0) stop("width should be at least 1.0")
   if (height < 1.0) stop("height should be at least 1.0")
   if (!method %in% c('nearest', 'bilinear')) stop("valid methods are 'nearest' or 'bilinear'")
 
-  if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+  if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
 
     image = sec_resiz_array(image, T)
 
     if (method == 'nearest') {
 
-      out = resize_nearest_array(image, width, height)}
-
+      out = resize_nearest_array(image, width, height)
+    }
     if (method == 'bilinear') {
 
       out = bilinear_array(image, width, height)
     }
   }
 
-  else if (is.matrix(image)) {
+  else if (inherits(image, 'matrix')) {
 
     image = sec_resiz_array(image, F)
 
     if (method == 'nearest') {
 
-      out = resize_nearest_rcpp(image, width, height)}
-
+      out = resize_nearest_rcpp(image, width, height)
+    }
     if (method == 'bilinear') {
 
       out = resize_bilinear_rcpp(image, width, height)
@@ -814,16 +814,16 @@ flipImage = function(image, mode = 'horizontal') {
     stop('invalid mode')
   }
 
-  if (is.data.frame(image)) image = as.matrix(image)
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
 
-  if (is.matrix(image)) {
+  if (inherits(image, 'matrix')) {
 
-    res = im_flip(image, mode)}
+    res = im_flip(image, mode)
+  }
+  else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
 
-  else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
-
-    res = im_flip_cube(image, mode)}
-
+    res = im_flip_cube(image, mode)
+  }
   else {
 
     stop('valid types of input are matrix, data frame and 3-dimensional array')
@@ -860,21 +860,19 @@ flipImage = function(image, mode = 'horizontal') {
 ZCAwhiten = function(image, k, epsilon) {
 
   if (epsilon <= 0) stop('epsilon should be greater than 0')
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
 
-  if (is.data.frame(image)) image = as.matrix(image)
-
-  if (is.matrix(image)) {
+  if (inherits(image, 'matrix')) {
 
     if (k < 1 || k > ncol(image)) stop('k should be greater or equal to 1 and less than ncol(image) + 1')
 
-    res = zca_whitening(image, k, epsilon)}
-
-  else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+    res = zca_whitening(image, k, epsilon)
+  }
+  else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
 
     if (k < 1 || k > ncol(image[,,1])) stop('k should be greater or equal to 1 and less than ncol(image) + 1 of each array slice')
-
-    res = zca_whiten_cube(image, k, epsilon)}
-
+    res = zca_whiten_cube(image, k, epsilon)
+  }
   else {
 
     stop('valid types of input are matrix, data frame and 3-dimensional array')
@@ -912,11 +910,11 @@ ZCAwhiten = function(image, k, epsilon) {
 
 delationErosion = function(image, Filter, method = 'delation', threads = 1) {
   
-  if (is.data.frame(image)) image = as.matrix(image)
-  if (!class(image) %in% c('matrix', 'array')) stop('invalid type of image, use either array or matrix')
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
+  if (!inherits(image, c('matrix', 'array'))) stop('invalid type of image, use either array or matrix')
   if (threads < 1) stop('theads should be at least 1')
   if (!method %in% c('delation', 'erosion')) stop("invalid method, choose one of 'delation', 'erosion'")
-  if (length(Filter) != 2 || Filter[1] < 1 || Filter[2] < 1 || Filter[1] > nrow(image) - 1 || Filter[2] > ncol(image) - 1 || class(Filter) != 'numeric') 
+  if (length(Filter) != 2 || Filter[1] < 1 || Filter[2] < 1 || Filter[1] > nrow(image) - 1 || Filter[2] > ncol(image) - 1 || (!inherits(Filter, 'numeric'))) 
     stop('Filter should be a numeric vector, such as c(3,3), where each value of the vector is greater than 1 and less than the number of 
          rows and columns of the image')
   
@@ -926,11 +924,11 @@ delationErosion = function(image, Filter, method = 'delation', threads = 1) {
     method = 2
   }
   
-  if (is.matrix(image)) {
+  if (inherits(image, 'matrix')) {
 
-    res = diate_erode(image, Filter, method, threads)}
-  
-  if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+    res = diate_erode(image, Filter, method, threads)
+  }
+  if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
     
     res = diate_erode_cube(image, Filter, method, threads)
   }
@@ -966,24 +964,24 @@ delationErosion = function(image, Filter, method = 'delation', threads = 1) {
 
 translation = function(image, shift_rows = 0, shift_cols = 0, padded_value = 0) {
   
-  if (is.data.frame(image)) image = as.matrix(image)
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
   if (shift_rows == 0 && shift_cols == 0) stop("one of shift_rows, shift_cols should be non zero")
 
-  if (class(image) == 'matrix') {
+  if (inherits(image, 'matrix')) {
     
     if (length(padded_value) != 1) {
      
       stop("the padded_value parameter should be a numeric value", call. = F) 
     }
     
-    out = translation_mat(image, shift_rows, shift_cols, padded_value)}                 # padded_value is a numeric value
-  
-  else if (is.array(image) && !is.na(dim(image)[3]) && dim(image)[3] == 3) { 
+    out = translation_mat(image, shift_rows, shift_cols, padded_value)                 # padded_value is a numeric value
+  }
+  else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) { 
     
     if (length(padded_value) == 1) {
       
-      padded_value = rep(padded_value, 3)}                                               # here by default arrays are 3-dimensional (padded_value vector of length 3)
-    
+      padded_value = rep(padded_value, 3)                                               # here by default arrays are 3-dimensional (padded_value vector of length 3)
+    }
     else {
       
       if (length(padded_value) > 1 && length(padded_value) != 3) {
@@ -1032,22 +1030,18 @@ translation = function(image, shift_rows = 0, shift_cols = 0, padded_value = 0) 
 
 List_2_Array = function(data, verbose = FALSE) {
   
-  if (class(data) != 'list') stop('the data should be a list') 
-  if (sum(unlist(lapply(data, is.matrix))) != length(data)) stop('the sublists should be of type matrix')
+  if (!inherits(data, 'list')) stop('the data should be a list') 
+  if (sum(unlist(lapply(data, function(x) inherits(x, 'matrix')))) != length(data)) stop('the sublists should be of type matrix')
   if (sum(unlist(lapply(data, nrow)) == nrow(data[[1]])) != length(data) || sum(unlist(lapply(data, ncol)) == ncol(data[[1]])) != length(data)) stop('dimension mismatch of columns or rows of the sublists')
   
   if (verbose) {
     
     start = Sys.time()
-    
     out = list_2array_convert(data)
-    
     end = Sys.time()
-    
     t = end - start
-    
-    cat('\n'); cat('time to complete :', t, attributes(t)$units, '\n'); cat('\n');}
-  
+    cat('\n'); cat('time to complete :', t, attributes(t)$units, '\n'); cat('\n');
+  }
   else {
     
     out = list_2array_convert(data)
@@ -1117,19 +1111,19 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
                         shift_cols = 0, rotate_angle = 0, rotate_method = "nearest", zca_comps = 0, zca_epsilon = 0.0, image_thresh = 0.0, padded_value = 0, verbose = FALSE) {
   
   
-  if (!class(image) %in% c('data.frame', 'matrix', 'array', 'list')) stop('the image parameter should be either a matrix, data frame, array or a list')
+  if (!inherits(image, c('data.frame', 'matrix', 'array', 'list'))) stop('the image parameter should be either a matrix, data frame, array or a list')
   if ((length(crop_height) < 2 && !is.null(crop_height)) || (length(crop_width) < 2 && !is.null(crop_width))) stop('crop_height and crop_width should be a sequence of numeric values')
   if (length(resiz_width) != 1 || length(resiz_height) != 1) stop('resiz_height and resiz_width should be a single value')
   if (!resiz_method %in% c('nearest', 'bilinear')) stop("valid resizing methods are 'nearest', 'bilinear'")
   if (rotate_angle > 360.0 || rotate_angle < 0.0) stop("valid angles to rotate an image are values greater than 0 and less than 360")
   if (!rotate_method %in% c('nearest', 'bilinear')) stop("valid rotation methods are 'nearest', 'bilinear'")
-  if (class(image) == 'data.frame') image = as.matrix(image)
-  if (ncol(image) <= length(crop_height) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_height sequence should be less than the initial height of the image")
-  if (nrow(image) <= length(crop_width) && class(image) %in% c('data.frame', 'matrix', 'array')) stop("the length of the crop_width sequence should be less than the initial width of the image")
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
+  if (ncol(image) <= length(crop_height) && inherits(image, c('data.frame', 'matrix', 'array'))) stop("the length of the crop_height sequence should be less than the initial height of the image")
+  if (nrow(image) <= length(crop_width) && inherits(image, c('data.frame', 'matrix', 'array'))) stop("the length of the crop_width sequence should be less than the initial width of the image")
   flag_comps = 0
   if (inherits(image, c('data.frame', 'matrix', 'array'))) {
     flag_comps = dim(image)[1] - 1}
-  if (class(image) == "list") {
+  if (inherits(image, "list")) {
     flag_comps = dim(image[[1]])[1] - 1
   }
   if (!is.null(crop_width)) flag_comps = length(crop_width)
@@ -1142,7 +1136,7 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
   
   if (verbose) start = Sys.time()
   
-  if (class(image) == 'matrix') {
+  if (inherits(image, 'matrix')) {
     
     if (length(padded_value) != 1) {
       
@@ -1153,12 +1147,12 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
                          
                          zca_comps, zca_epsilon, image_thresh, padded_value)}
   
-  if (class(image) == 'array' && !is.na(dim(image)[3])) {             # here arrays can be >= 3-dimensional ( besides RGB-images also an array of matrices )
+  if (inherits(image, 'array') && !is.na(dim(image)[3])) {             # here arrays can be >= 3-dimensional ( besides RGB-images also an array of matrices )
     
     if (length(padded_value) == 1) {
       
-      padded_value = rep(padded_value, dim(image)[3])}
-    
+      padded_value = rep(padded_value, dim(image)[3])
+    }
     else {
       
       if (length(padded_value) > 1 && length(padded_value) != dim(image)[3]) {
@@ -1171,16 +1165,16 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
                                
                                rotate_method, zca_comps, zca_epsilon, image_thresh)}
   
-  if (class(image) == 'list') {
+  if (inherits(image, 'list')) {
     
-    if ( sum(unlist(lapply(image, function(x) class(x) == 'array' && dim(x)[3] == 3))) != length(image) ) stop('the list should consist of 3-dimensional arrays')
+    if ( sum(unlist(lapply(image, function(x) inherits(x, 'array') && dim(x)[3] == 3))) != length(image) ) stop('the list should consist of 3-dimensional arrays')
     if ( sum(unlist(lapply(image, function(x) nrow(x) <= length(crop_width)))) ) stop('the length of the crop_width sequence should be less than or equal to the initial width of each of the images')
     if ( sum(unlist(lapply(image, function(x) ncol(x) <= length(crop_height)))) ) stop('the length of the crop_height sequence should be less than or equal to the initial height of each of the images')
     
     if (length(padded_value) == 1) {
       
-      padded_value = rep(padded_value, 3)}
-    
+      padded_value = rep(padded_value, 3)
+    }
     else {
       
       if (length(padded_value) > 1 && length(padded_value) != 3) {
@@ -1197,9 +1191,7 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
   if (verbose) {
     
     end = Sys.time()
-    
     t = end - start
-    
     cat('\n'); cat('time to complete :', t, attributes(t)$units, '\n'); cat('\n');
   }
   
@@ -1245,20 +1237,20 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
 
 NormalizeObject = function(x) {
   
-  if (is.data.frame(x)) x = as.matrix(x)
+  if (inherits(x, 'data.frame')) x = as.matrix(x)
   
   if (is.vector(x, mode = 'numeric')) {
     
-    out = (x - min(x))/(max(x) - min(x))}
-  
-  else if (class(x) == 'matrix') {
+    out = (x - min(x))/(max(x) - min(x))
+  }
+  else if (inherits(x, 'matrix')) {
     
-    out = Normalize_matrix(x)}
-  
-  else if (is.array(x) && !is.na(dim(x)[3]) && dim(x)[3] == 3) { 
+    out = Normalize_matrix(x)
+  }
+  else if (all(c(inherits(x, 'array'), !is.na(dim(x)[3]), dim(x)[3] == 3))) { 
     
-    out = Normalize_array(x)}
-  
+    out = Normalize_array(x)
+  }
   else {
     
     stop('invalid data type, use one of vector, matrix, data frame or array')
@@ -1307,20 +1299,20 @@ NormalizeObject = function(x) {
 
 MinMaxObject = function(x) {
   
-  if (is.data.frame(x)) x = as.matrix(x)
+  if (inherits(x, 'data.frame')) x = as.matrix(x)
   
   if (is.vector(x, mode = 'numeric')) {
     
-    out = list(min = min(x), max = max(x))}
-  
-  else if (class(x) == 'matrix') {
+    out = list(min = min(x), max = max(x))
+  }
+  else if (inherits(x, 'matrix')) {
     
-    out = MinMaxMatrix(x)}
-  
-  else if (is.array(x) && !is.na(dim(x)[3]) && dim(x)[3] == 3) { 
+    out = MinMaxMatrix(x)
+  }
+  else if (all(c(inherits(x, 'array'), !is.na(dim(x)[3]), dim(x)[3] == 3))) { 
     
-    out = MinMaxArray(x)}
-  
+    out = MinMaxArray(x)
+  }
   else {
     
     stop('invalid data type, use one of vector, matrix, data frame or array')
@@ -1364,18 +1356,18 @@ MinMaxObject = function(x) {
 
 convolution = function(image, kernel, mode = "same") {
   
-  if (class(kernel) != 'matrix') stop('the kernel should be a matrix')
+  if (!inherits(kernel, 'matrix')) stop('the kernel should be a matrix')
   if (!mode %in% c('same', 'full')) stop('the mode should one of same, full')
-  if (class(image) == 'data.frame') image = as.matrix(image)
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
   
-  if (class(image) == 'matrix') {
+  if (inherits(image, 'matrix')) {
     
-    out = conv2d(image, kernel, mode)}
-  
-  else if (class(image) == 'array' && !is.na(dim(image)[3]) && dim(image)[3] == 3) {
+    out = conv2d(image, kernel, mode)
+  }
+  else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
     
-    out = conv3d(image, kernel, mode)}
-  
+    out = conv3d(image, kernel, mode)
+  }
   else {
     
     stop('invalid type of image, choose one of data frame, matrix or 3 dimensional array')
@@ -1404,5 +1396,7 @@ convolution = function(image, kernel, mode = "same") {
 #' 
 
 rgb_2gray = function(RGB_image) {
+  if (!all(c(inherits(RGB_image, 'array'), !is.na(dim(RGB_image)[3]), dim(RGB_image)[3] == 3))) stop("The 'RGB_image' parameter must be a 3-dimensional array!")
+  
   return(Rgb_2gray(RGB_image))
 }

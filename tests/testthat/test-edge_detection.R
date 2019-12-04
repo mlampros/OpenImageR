@@ -12,7 +12,7 @@ testthat::test_that("in case of a matrix input (image) the edge detection functi
   
   image_array = matrix(runif(25), 5, 5)
   
-  testthat::expect_true(is.matrix(edge_detection(image_array, method = 'LoG', conv_mode = 'same', approx = F, gaussian_dims = 5, sigma = 1.0, range_gauss = 2, laplacian_type = 1)))
+  testthat::expect_true( inherits(edge_detection(image_array, method = 'LoG', conv_mode = 'same', approx = F, gaussian_dims = 5, sigma = 1.0, range_gauss = 2, laplacian_type = 1), 'matrix') )
 })
 
 
@@ -83,7 +83,7 @@ testthat::test_that("in case of an matrix input (image) the edge detection funct
   
   image_array = matrix(runif(25), 5, 5)
   
-  testthat::expect_true(is.matrix(edge_detection(image_array, method = 'Roberts_cross', conv_mode = 'same', approx = T, gaussian_dims = 5, sigma = 1.0, range_gauss = 2, laplacian_type = 1)))
+  testthat::expect_true( inherits(edge_detection(image_array, method = 'Roberts_cross', conv_mode = 'same', approx = T, gaussian_dims = 5, sigma = 1.0, range_gauss = 2, laplacian_type = 1), 'matrix') )
 })
 
 
@@ -91,7 +91,7 @@ testthat::test_that("in case of an data frame input (image) the edge detection f
   
   image_array = as.data.frame(matrix(runif(25), 5, 5))
   
-  testthat::expect_true(is.matrix(edge_detection(image_array, method = 'Roberts_cross', conv_mode = 'full', approx = T, gaussian_dims = 5, sigma = 1.0, range_gauss = 2, laplacian_type = 1)))
+  testthat::expect_true( inherits(edge_detection(image_array, method = 'Roberts_cross', conv_mode = 'full', approx = T, gaussian_dims = 5, sigma = 1.0, range_gauss = 2, laplacian_type = 1), 'matrix') )
 })
 
 testthat::test_that("in case of an array input (image) the edge detection function returns an array", {

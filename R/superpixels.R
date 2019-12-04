@@ -49,7 +49,6 @@ superpixels = function(input_image, method = "slic", superpixel = 200, compactne
   if (!inherits(input_image, c('matrix', 'array'))) {
     stop("The 'superpixels' function takes either matrices or arrays as input!", call. = F)
   }
-
   if (inherits(input_image, 'matrix')) {                                    # in case of a 'matrix' convert it to an array with 1 slice [ for instance dims = c(128, 128, 1) ]
     input_image = array(data = input_image, dim = c(dim(input_image), 1))
   }

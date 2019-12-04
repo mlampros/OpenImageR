@@ -16,7 +16,7 @@ testthat::test_that("the binary_to_hex function takes a binary matrix and return
   
   res = binary_to_hex(image_array)
   
-  testthat::expect_true( class(res) == 'character' && nchar(res) > 0 )
+  testthat::expect_true( inherits(res, 'character') && nchar(res) > 0 )
 })
 
 
@@ -44,7 +44,7 @@ testthat::test_that("the average_hash function returns a hex string if MODE = 'h
   
   res = average_hash(image_array, hash_size = 6, MODE = 'hash')
   
-  testthat::expect_true( class(res) == 'character' && nchar(res) > 0 )
+  testthat::expect_true( inherits(res, 'character') && nchar(res) > 0 )
 })
 
 
@@ -111,7 +111,7 @@ testthat::test_that("the phash function returns a hex string if MODE = 'hash'", 
   
   res = phash(image_array, hash_size = 3, highfreq_factor = 2, MODE = 'hash')
   
-  testthat::expect_true( class(res) == 'character' && nchar(res) > 0 )
+  testthat::expect_true( inherits(res, 'character') && nchar(res) > 0 )
 })
 
 
@@ -177,7 +177,7 @@ testthat::test_that("the dhash function returns a hex string if MODE = 'hash'", 
   
   res = dhash(image_array, hash_size = 6, MODE = 'hash')
   
-  testthat::expect_true( class(res) == 'character' && nchar(res) > 0 )
+  testthat::expect_true( inherits(res, 'character') && nchar(res) > 0 )
 })
 
 
@@ -304,7 +304,7 @@ testthat::test_that("the hash_apply function returns a binary matrix with equal 
   
   res = hash_apply(image_array, rows = 28, columns = 28, hash_size = 8, highfreq_factor = 3, method = 'phash', threads = 1)
   
-  testthat::expect_true( is.matrix(res) && nrow(res) == nrow(image_array) && sum(apply(res, 2, function(x) all(unique(x) %in% c(0,1)))) == ncol(res) )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == nrow(image_array) && sum(apply(res, 2, function(x) all(unique(x) %in% c(0,1)))) == ncol(res) )
 })
 
 
@@ -314,7 +314,7 @@ testthat::test_that("the hash_apply function returns a binary matrix with equal 
   
   res = hash_apply(image_array, rows = 28, columns = 28, hash_size = 8, highfreq_factor = 3, method = 'average_hash', threads = 1)
   
-  testthat::expect_true( is.matrix(res) && nrow(res) == nrow(image_array) && sum(apply(res, 2, function(x) all(unique(x) %in% c(0,1)))) == ncol(res) )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == nrow(image_array) && sum(apply(res, 2, function(x) all(unique(x) %in% c(0,1)))) == ncol(res) )
 })
 
 
@@ -324,7 +324,7 @@ testthat::test_that("the hash_apply function returns a binary matrix with equal 
   
   res = hash_apply(image_array, rows = 28, columns = 28, hash_size = 8, highfreq_factor = 3, method = 'dhash', threads = 1)
   
-  testthat::expect_true( is.matrix(res) && nrow(res) == nrow(image_array) && sum(apply(res, 2, function(x) all(unique(x) %in% c(0,1)))) == ncol(res) )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == nrow(image_array) && sum(apply(res, 2, function(x) all(unique(x) %in% c(0,1)))) == ncol(res) )
 })
 
 
@@ -334,7 +334,7 @@ testthat::test_that("the hash_apply function returns a binary matrix with equal 
   
   res = hash_apply(image_array, rows = 28, columns = 28, hash_size = 8, highfreq_factor = 3, method = 'dhash', threads = 1, resize = 'bilinear')
   
-  testthat::expect_true( is.matrix(res) && nrow(res) == nrow(image_array) && sum(apply(res, 2, function(x) all(unique(x) %in% c(0,1)))) == ncol(res) )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == nrow(image_array) && sum(apply(res, 2, function(x) all(unique(x) %in% c(0,1)))) == ncol(res) )
 })
 
 
@@ -646,7 +646,7 @@ testthat::test_that("the invariant_hash function returns the correct output [her
   
   res = invariant_hash(mtrx, mtrx1, method = 'average_hash', mode = 'hash', hash_size = 10, highfreq_factor = 5, resize = 'nearest', flip = T, rotate = T, crop = T)
   
-  testthat::expect_true( class(res) == 'data.frame' && sum(dim(res)) > 0 )
+  testthat::expect_true( inherits(res, 'data.frame') && sum(dim(res)) > 0 )
 })
 
 
@@ -658,7 +658,7 @@ testthat::test_that("the invariant_hash function returns the correct output [her
   
   res = invariant_hash(mtrx, mtrx1, method = 'average_hash', mode = 'hash', hash_size = 10, highfreq_factor = 5, resize = 'nearest', flip = T, rotate = T, angle_bidirectional = 10, crop = T)
   
-  testthat::expect_true( class(res) == 'data.frame' && sum(dim(res)) > 0 )
+  testthat::expect_true( inherits(res, 'data.frame') && sum(dim(res)) > 0 )
 })
 
 
@@ -670,7 +670,7 @@ testthat::test_that("the invariant_hash function returns the correct output [her
   
   res = invariant_hash(mtrx, mtrx1, method = 'average_hash', mode = 'hash', hash_size = 10, highfreq_factor = 5, resize = 'nearest', flip = T, rotate = T, angle_bidirectional = 10, crop = T)
   
-  testthat::expect_true( class(res) == 'data.frame' && sum(dim(res)) > 0 )
+  testthat::expect_true( inherits(res, 'data.frame') && sum(dim(res)) > 0 )
 })
 
 
@@ -682,5 +682,5 @@ testthat::test_that("the invariant_hash function returns the correct output [her
   
   res = invariant_hash(mtrx, mtrx1, method = 'average_hash', mode = 'hash', hash_size = 10, highfreq_factor = 5, resize = 'nearest', flip = T, rotate = T, angle_bidirectional = 90, crop = T)
   
-  testthat::expect_true( class(res) == 'data.frame' && sum(dim(res)) > 0 )
+  testthat::expect_true( inherits(res, 'data.frame') && sum(dim(res)) > 0 )
 })

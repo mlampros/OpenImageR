@@ -6,6 +6,7 @@
 * I added the parameter *vectorize_magnitude* to the *gabor_feature_extraction* method of the *GaborFeatureExtract* R6 class. In case that the *vectorize_magnitude* parameter is set to FALSE the user will receive the magnitude in form of a matrix ( for instance if the *scales* parameter is set to 2 and the (rows, cols) of the image are (128, 128) then the resulted magnitude will be a list of length 2 where each sublist will be a matrix with dimensions (128, 128) (pixel-wise magnitude values) )
 * I modified the *meshgrid_x()* and *meshgrid_y()* Rcpp functions and now they return faster as before
 * I modified the check-input-data-cases for the *RGB_to_Lab* and *RGB_to_HSV*
+* I fixed the *"failure: the condition has length > 1"* CRAN error which appeared mainly due to the misuse of the base *class()* function in multiple code snippets in the package (for more info on this matter see: https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again/index.html)
 
 
 ## OpenImageR 1.1.5

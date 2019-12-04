@@ -89,7 +89,7 @@ testthat::test_that("in case of a matrix as input it returns a correct output", 
   
   res = convolution(image_array, kern, mode = "same") 
   
-  testthat::expect_true( class(image_array) == class(res) && nrow(image_array) == nrow(res) && ncol(image_array) == ncol(res) )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(image_array) == nrow(res) && ncol(image_array) == ncol(res) )
 })
 
 
@@ -101,7 +101,7 @@ testthat::test_that("in case of an array as input it returns a correct output", 
   
   res = convolution(image_array, kern, mode = "same") 
   
-  testthat::expect_true( class(image_array) == class(res) && nrow(image_array) == nrow(res) && ncol(image_array) == ncol(res) && !is.na(dim(res)[3]) )
+  testthat::expect_true( inherits(res, 'array') && nrow(image_array) == nrow(res) && ncol(image_array) == ncol(res) && !is.na(dim(res)[3]) )
 })
 
 

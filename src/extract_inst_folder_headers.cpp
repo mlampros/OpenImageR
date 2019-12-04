@@ -301,7 +301,7 @@ arma::mat HOG_matrix(arma::mat& x, int height, int width, int n_divs = 3, int n_
 arma::mat Rgb_2gray(arma::cube RGB_image) {
 
   oimageR::Utility_functions UTLF;
-  return UTLF.rgb_2gray(RGB_image);
+  return UTLF.rgb_2gray_rcpp(RGB_image);
 }
 
 

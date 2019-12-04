@@ -3,7 +3,19 @@ context('Gamma threshold functions')
 # thresholding
 
 
-testthat::test_that("in case that image is not an array or matrix it returns an error", {
+testthat::test_that("image thresholding works as expected", {
+  
+  pth_im = system.file("tmp_images", "car.png", package = "OpenImageR")
+  
+  im = readImage(pth_im)
+  
+  thr = image_thresholding(im, thresh = 0.5)
+  
+  testthat::expect_true( inherits(thr, 'matrix') && nrow(im) == nrow(thr) && ncol(im) == ncol(thr) )
+})
+
+
+testthat::test_that("in case that the 'thresh' parameter is less than or equal to 0.0 it returns an error", {
   
   image_array = matrix(runif(25), 5, 5)
   
@@ -55,7 +67,5 @@ testthat::test_that("in case that image is an array it returns an array", {
   
   testthat::expect_true(is.array(gamma_correction(image_array, gamma = 1.5)))
 })
-
-
 
 

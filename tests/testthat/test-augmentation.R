@@ -154,7 +154,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(object_mat) == nrow(res) && ncol(object_mat) == ncol(res) )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(object_mat) == nrow(res) && ncol(object_mat) == ncol(res) )
 })
 
 
@@ -162,7 +162,7 @@ testthat::test_that("in case of an array with different parameters each time it 
   
   res = Augmentation(object_array)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(object_array) == nrow(res) && ncol(object_array) == ncol(res) && dim(res)[3] == dim(object_array)[3] )
+  testthat::expect_true( inherits(res, 'array') && nrow(object_array) == nrow(res) && ncol(object_array) == ncol(res) && dim(res)[3] == dim(object_array)[3] )
 })
 
 
@@ -170,7 +170,7 @@ testthat::test_that("in case of a list with different parameters each time it re
   
   res = Augmentation(object_list)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(object_list, nrow))) == mean(unlist(lapply(res, nrow))) && 
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(object_list, nrow))) == mean(unlist(lapply(res, nrow))) && 
                            
                            mean(unlist(lapply(object_list, ncol))) == mean(unlist(lapply(res, ncol))) && length(res) == length(object_list) )
 })
@@ -183,7 +183,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:50, crop_width = 1:30)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 30 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 30 && ncol(res) == 50 )
 })
 
 
@@ -191,7 +191,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:10, crop_width = 1:30)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 30 && ncol(res) == 10 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 30 && ncol(res) == 10 )
 })
 
 
@@ -199,7 +199,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = NULL, crop_width = 1:30)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 30 && ncol(res) == ncol(object_mat) )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 30 && ncol(res) == ncol(object_mat) )
 })
 
 
@@ -207,7 +207,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:20, crop_width = NULL)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == nrow(object_mat) && ncol(res) == 20 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == nrow(object_mat) && ncol(res) == 20 )
 })
 
 
@@ -215,7 +215,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 20)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 20 && ncol(res) == 20 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 20 && ncol(res) == 20 )
 })
 
 
@@ -224,7 +224,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:50, crop_width = 1:50, resiz_width = 0, resiz_height = 20)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 50 && ncol(res) == 20 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 50 && ncol(res) == 20 )
 })
 
 
@@ -232,7 +232,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 0)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 20 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 20 && ncol(res) == 50 )
 })
 
 
@@ -240,7 +240,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 0, resiz_method = 'bilinear')
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 20 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 20 && ncol(res) == 50 )
 })
 
 
@@ -248,7 +248,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear')
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 30 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 30 && ncol(res) == 50 )
 })
 
 
@@ -256,7 +256,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear', rotate_angle = 40, rotate_method = 'nearest')
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 30 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 30 && ncol(res) == 50 )
 })
 
 
@@ -264,7 +264,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
   
   res = Augmentation(object_mat, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear', rotate_angle = 40, rotate_method = 'bilinear')
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 30 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 30 && ncol(res) == 50 )
 })
 
 
@@ -274,7 +274,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
                      
                      zca_comps = 5, zca_epsilon = 0.1)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 50 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 50 && ncol(res) == 50 )
 })
 
 
@@ -284,7 +284,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
                      
                      zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 50 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 50 && ncol(res) == 50 )
 })
 
 
@@ -294,7 +294,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
                      
                      rotate_method = 'bilinear', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 50 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 50 && ncol(res) == 50 )
 })
 
 
@@ -304,7 +304,7 @@ testthat::test_that("in case of a matrix with different parameters each time it 
                      
                      rotate_method = 'bilinear', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 50 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 50 && ncol(res) == 50 )
 })
 
 
@@ -316,7 +316,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:50, crop_width = 1:30)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 30 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 30 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -324,7 +324,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:10, crop_width = 1:30)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 30 && ncol(res) == 10 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 30 && ncol(res) == 10 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -332,7 +332,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:30, crop_width = NULL, resiz_method = 'nearest')
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == nrow(object_array) && ncol(res) == 30 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == nrow(object_array) && ncol(res) == 30 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -340,7 +340,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 20)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 20 && ncol(res) == 20 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 20 && ncol(res) == 20 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -349,7 +349,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:50, crop_width = 1:50, resiz_width = 0, resiz_height = 20)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 50 && ncol(res) == 20 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 50 && ncol(res) == 20 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -357,7 +357,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 0)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 20 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 20 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -365,7 +365,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 0, resiz_method = 'bilinear')
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 20 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 20 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -373,7 +373,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear')
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 30 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 30 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -381,7 +381,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear', rotate_angle = 40, rotate_method = 'nearest')
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 30 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 30 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -389,7 +389,7 @@ testthat::test_that("in case of a array with different parameters each time it r
   
   res = Augmentation(object_array, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear', rotate_angle = 40, rotate_method = 'bilinear')
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 30 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 30 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -399,7 +399,7 @@ testthat::test_that("in case of a array with different parameters each time it r
                      
                      zca_comps = 5, zca_epsilon = 0.1)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -409,7 +409,7 @@ testthat::test_that("in case of a array with different parameters each time it r
                      
                      zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -419,7 +419,7 @@ testthat::test_that("in case of a array with different parameters each time it r
                      
                      zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -429,7 +429,7 @@ testthat::test_that("in case of a array with different parameters each time it r
                      
                      zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -440,7 +440,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:50, crop_width = 1:30)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -448,7 +448,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:10, crop_width = 1:30)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 10 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 10 && length(res) == length(object_list))
 })
 
 
@@ -456,7 +456,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:30, crop_width = NULL, resiz_method = 'nearest')
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == mean(unlist(lapply(object_list, nrow))) && mean(unlist(lapply(res, ncol))) == 30 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == mean(unlist(lapply(object_list, nrow))) && mean(unlist(lapply(res, ncol))) == 30 && length(res) == length(object_list))
 })
 
 
@@ -464,7 +464,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 20)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 20 && mean(unlist(lapply(res, ncol))) == 20 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 20 && mean(unlist(lapply(res, ncol))) == 20 && length(res) == length(object_list))
 })
 
 
@@ -473,7 +473,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:50, crop_width = 1:50, resiz_width = 0, resiz_height = 20)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 20 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 20 && length(res) == length(object_list))
 })
 
 
@@ -481,7 +481,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 0)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 20 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 20 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -489,7 +489,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:50, crop_width = 1:50, resiz_width = 20, resiz_height = 0, resiz_method = 'bilinear')
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 20 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 20 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -497,7 +497,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear')
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -505,7 +505,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear', rotate_angle = 40, rotate_method = 'nearest')
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -513,7 +513,7 @@ testthat::test_that("in case of a List with different parameters each time it re
   
   res = Augmentation(object_list, crop_height = 1:30, crop_width = 1:30, resiz_width = 0, resiz_height = 50, resiz_method = 'bilinear', rotate_angle = 40, rotate_method = 'bilinear', verbose = T)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 30 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -523,7 +523,7 @@ testthat::test_that("in case of a List with different parameters each time it re
                      
                      zca_comps = 5, zca_epsilon = 0.1)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -533,7 +533,7 @@ testthat::test_that("in case of a List with different parameters each time it re
                      
                      zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, verbose = T)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -543,7 +543,7 @@ testthat::test_that("in case of a List with different parameters each time it re
                      
                      zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, verbose = T)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -553,7 +553,7 @@ testthat::test_that("in case of a List with different parameters each time it re
                      
                      zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, verbose = T)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })
 
 
@@ -567,7 +567,7 @@ testthat::test_that("in case of a matrix , change the values for both shift_rows
                      
                      shift_cols = -10, rotate_angle = 40, rotate_method = 'bilinear', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)
   
-  testthat::expect_true( class(object_mat) == class(res) && nrow(res) == 50 && ncol(res) == 50 )
+  testthat::expect_true( inherits(res, 'matrix') && nrow(res) == 50 && ncol(res) == 50 )
 })
 
 
@@ -577,7 +577,7 @@ testthat::test_that("in case of an array , change the values for both shift_rows
                      
                      shift_cols = -10, rotate_angle = 40, rotate_method = 'bilinear', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5)
   
-  testthat::expect_true( class(object_array) == class(res) && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
+  testthat::expect_true( inherits(res, 'array') && nrow(res) == 50 && ncol(res) == 50 && dim(res)[3] == dim(object_array)[3])
 })
 
 
@@ -587,5 +587,5 @@ testthat::test_that("in case of a List , change the values for both shift_rows, 
                      
                      shift_cols = 0, rotate_angle = 40, rotate_method = 'bilinear', zca_comps = 5, zca_epsilon = 0.1, image_thresh = 0.5, verbose = T)
   
-  testthat::expect_true( class(object_list) == class(res) && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
+  testthat::expect_true( inherits(res, 'list') && mean(unlist(lapply(res, nrow))) == 50 && mean(unlist(lapply(res, ncol))) == 50 && length(res) == length(object_list))
 })

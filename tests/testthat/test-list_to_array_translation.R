@@ -42,7 +42,7 @@ testthat::test_that("the function List_2_Array returns the correct output, if ve
   
   res = List_2_Array(test_lst, verbose = T)
   
-  testthat::expect_true( class(res) == 'array' && mean(apply(res, 3, nrow)) == mean(unlist(lapply(test_lst, nrow))) && mean(apply(res, 3, ncol)) == mean(unlist(lapply(test_lst, ncol))))
+  testthat::expect_true( inherits(res, 'array') && mean(apply(res, 3, nrow)) == mean(unlist(lapply(test_lst, nrow))) && mean(apply(res, 3, ncol)) == mean(unlist(lapply(test_lst, ncol))))
 })
 
 
@@ -50,7 +50,7 @@ testthat::test_that("the function List_2_Array returns the correct output, if ve
   
   res = List_2_Array(test_lst, verbose = F)
   
-  testthat::expect_true( class(res) == 'array' && mean(apply(res, 3, nrow)) == mean(unlist(lapply(test_lst, nrow))) && mean(apply(res, 3, ncol)) == mean(unlist(lapply(test_lst, ncol))))
+  testthat::expect_true( inherits(res, 'array') && mean(apply(res, 3, nrow)) == mean(unlist(lapply(test_lst, nrow))) && mean(apply(res, 3, ncol)) == mean(unlist(lapply(test_lst, ncol))))
 })
 
 

@@ -30,15 +30,12 @@
 average_hash = function(gray_image, hash_size = 8, MODE = 'hash', resize = 'nearest') {
   
   if (!resize %in% c('nearest', 'bilinear')) stop('invalid resizing method')
-  
   if (length(dim(gray_image)) != 2 || sum(dim(gray_image)) == 0) stop('the image should be a non empty 2-dimensional matrix or data frame)')
-  
   if (hash_size >= nrow(gray_image) || hash_size >= ncol(gray_image)) stop('the hash size should be less than the original dimensions of the image')
   
   if (MODE == 'hash') {
     
     diff = average_hash_string(gray_image, hash_size = hash_size, resize_method = resize)
-    
     out = binary_to_hex(diff)}
   
   if (MODE == 'binary') {
@@ -80,15 +77,12 @@ average_hash = function(gray_image, hash_size = 8, MODE = 'hash', resize = 'near
 phash = function(gray_image, hash_size = 8, highfreq_factor = 4, MODE = 'hash', resize = 'nearest') {
   
   if (!resize %in% c('nearest', 'bilinear')) stop('invalid resizing method')
-  
   if (length(dim(gray_image)) != 2 || sum(dim(gray_image)) == 0) stop('the image should be a non empty 2-dimensional matrix or data frame)')
-  
   if (hash_size * highfreq_factor >= nrow(gray_image) || hash_size * highfreq_factor >= ncol(gray_image)) stop('the hash_size * highfreq_factor should be less than the original dimensions of the image')
   
   if (MODE == 'hash') {
     
     diff = phash_string(gray_image, hash_size = hash_size, highfreq_factor = highfreq_factor, resize_method = resize)
-    
     out = binary_to_hex(diff)}
   
   if (MODE == 'binary') {
@@ -129,15 +123,12 @@ phash = function(gray_image, hash_size = 8, highfreq_factor = 4, MODE = 'hash', 
 dhash = function(gray_image, hash_size = 8, MODE = 'hash', resize = 'nearest') {
   
   if (!resize %in% c('nearest', 'bilinear')) stop('invalid resizing method')
-  
   if (length(dim(gray_image)) != 2 || sum(dim(gray_image)) == 0) stop('the image should be a non empty 2-dimensional matrix or data frame)')
-  
   if (hash_size + 1 >= nrow(gray_image) || hash_size + 1 >= ncol(gray_image)) stop('the hash size + 1 should be less than the original dimensions of the image')
   
   if (MODE == 'hash') {
     
     diff = dhash_string(gray_image, hash_size = hash_size, resize_method = resize)
-    
     out = binary_to_hex(diff)}
   
   if (MODE == 'binary') {
@@ -159,25 +150,31 @@ switch_hashing = function(object, width, height, hash_size, highfreq_factor, met
   
   if (mode == 'binary') {
     
-    if (class(object) == 'matrix') {
+    if (inherits(object, 'matrix')) {
       
-      out = hash_image(object, width, height, resize, hash_size, highfreq_factor, method, threads)}
-    
-    if (class(object) == 'array') {
+      out = hash_image(object, width, height, resize, hash_size, highfreq_factor, method, threads)
+    }
+    else if (inherits(object, 'array')) {
       
       out = hash_image_cube(object, resize, hash_size, highfreq_factor, method, threads)
+    }
+    else {
+      stop("The 'object' parameter must be either of type matrix or 3-dimensional array!")
     }
   }
   
   else if (mode == 'hash') {
     
-    if (class(object) == 'matrix') {
+    if (inherits(object, 'matrix')) {
       
-      out = hash_image_hex(object, width, height, resize, hash_size, highfreq_factor, method, threads)}
-    
-    if (class(object) == 'array') {
+      out = hash_image_hex(object, width, height, resize, hash_size, highfreq_factor, method, threads)
+    }
+    else if (inherits(object, 'array')) {
       
       out = hash_image_cube_hex(object, resize, hash_size, highfreq_factor, method, threads)
+    }
+    else {
+      stop("The 'object' parameter must be either of type matrix or 3-dimensional array!")
     }
   }
   
@@ -236,13 +233,13 @@ hash_apply = function(object, rows = 28, columns = 28, hash_size = 8, highfreq_f
   
   if (!resize %in% c('nearest', 'bilinear')) stop('invalid resizing method')
   if (threads < 1) stop('threads should be at least 1')
-  if (is.data.frame(object)) object = as.matrix(object)
+  if (inherits(object, 'data.frame')) object = as.matrix(object)
   
   try_err_files = inherits(tryCatch(normalizePath(object, mustWork = T), error = function(e) e), "error")
   
   start = Sys.time()
   
-  if (class(object) == "character" && try_err_files == F) {
+  if (inherits(object, "character") && try_err_files == F) {
     
     str_SPL = strsplit(object, "")[[1]]
     
@@ -263,13 +260,13 @@ hash_apply = function(object, rows = 28, columns = 28, hash_size = 8, highfreq_f
     tmp_out = list(files = lst_files, hash = tmp_out)
   }
   
-  else if (class(object) == 'matrix' && try_err_files == T) {
+  else if (inherits(object, 'matrix') && try_err_files == T) {
     
     if (is.null(columns) || is.null(rows)) stop('give the corresponding rows and columns for each image-row of the matrix')
     
     tmp_out = switch_hashing(object, columns, rows, hash_size, highfreq_factor, method, mode, threads, resize)}
   
-  else if (class(object) == 'array' && try_err_files == T) {
+  else if (inherits(object, 'array') && try_err_files == T) {
     
     tmp_out = switch_hashing(object, columns, rows, hash_size, highfreq_factor, method, mode, threads, resize)}
   
@@ -367,8 +364,8 @@ invariant_hash = function(image, new_image, method = 'phash', mode = 'binary', h
   
   ham_dist = function(x1, x2) { sum(x1 != x2)/length(x1) }
   
-  if (is.data.frame(image)) image = as.matrix(image)
-  if (is.data.frame(new_image)) new_image = as.matrix(new_image)
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
+  if (inherits(new_image, 'data.frame')) new_image = as.matrix(new_image)
   
   if (crop && (floor(nrow(image) * 0.8) < hash_size * highfreq_factor || floor(ncol(image) * 0.8) < hash_size * highfreq_factor) && (method == 'phash')) stop("the value of the hash_size * highfreq_factor should be less than floor(image * 0.8) which is the max. dims for a cropped image") 
   if (crop && (floor(nrow(new_image) * 0.8) < hash_size * highfreq_factor || floor(ncol(new_image) * 0.8) < hash_size * highfreq_factor) && (method == 'phash')) stop("the value of the hash_size * highfreq_factor should be less than floor(new_image * 0.8) which is the max. dims for a cropped new_image") 

@@ -33,6 +33,12 @@
 
 \item{vectorize_magnitude}{either TRUE or FALSE. If TRUE the computed magnitude feature will be returned in the form of a vector, otherwise it will be returned as a list of matrices  ( gabor_feature_extraction function )}
 
+\item{img_data}{a numeric matrix specifying the input data (gabor_feature_engine function)}
+
+\item{img_nrow}{an integer specifying the number of rows of the input matrix (gabor_feature_engine function)}
+
+\item{img_ncol}{an integer specifying the number of columns of the input matrix (gabor_feature_engine function)}
+
 \item{real_matrices}{a list of 3-dimensional arrays. These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )}
 
 \item{margin_btw_plots}{a float between 0.0 and 1.0 specifying the margin between the multiple output plots      ( plot_gabor function )}

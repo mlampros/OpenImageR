@@ -197,7 +197,7 @@ namespace oimageR {
       // convert an RGB image to Gray
       //
 
-      arma::mat rgb_2gray(arma::cube RGB_image) {
+      arma::mat rgb_2gray_rcpp(arma::cube RGB_image) {
 
         arma::mat image_out = RGB_image.slice(0) * 299 / 1000 + RGB_image.slice(1) * 587 / 1000 + RGB_image.slice(2) * 114 / 1000;
 

@@ -23,23 +23,20 @@
 imageShow = function(file_path) {
 
   try_err_files = inherits(tryCatch(normalizePath(file_path, mustWork = T), error = function(e) e), "error")
+  if (!inherits(file_path, "character") && length(dim(file_path)) == 2 && !is.matrix(file_path)) file_path = as.matrix(file_path)
 
-  if (class(file_path) != "character" && length(dim(file_path)) == 2 && !is.matrix(file_path)) file_path = as.matrix(file_path)
-
-  if ((class(file_path) == 'matrix' || class(file_path) == 'array')) {
+  if (inherits(file_path, 'matrix') || inherits(file_path, 'array')) {
 
     file_path = func_chech_range(file_path)
 
     grid::grid.raster(file_path)
   }
-
-  else if (class(file_path) == "character" && try_err_files == F){
+  else if (inherits(file_path, "character") && try_err_files == F){
 
     file_path <<- normalizePath(file_path)
 
     runUI()
   }
-
   else {
 
     stop('invalid path or object')

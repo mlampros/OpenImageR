@@ -36,7 +36,7 @@ testthat::test_that("in case of a data frame input (image) the down_sample_image
 
   image_array = as.data.frame(matrix(runif(25), 5, 5))
 
-  testthat::expect_true(is.matrix(down_sample_image(image_array, 2, F)))
+  testthat::expect_true( inherits(down_sample_image(image_array, 2, F), 'matrix') )
 })
 
 
