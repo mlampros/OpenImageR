@@ -4,8 +4,14 @@
 \alias{switch_filter}
 \title{secondary function for edge_detection function}
 \usage{
-switch_filter(kernel, conv_mod, gaussian_dims = 5, sigma = 1,
-  laplacian_type = 1, range_gauss = 2)
+switch_filter(
+  kernel,
+  conv_mod,
+  gaussian_dims = 5,
+  sigma = 1,
+  laplacian_type = 1,
+  range_gauss = 2
+)
 }
 \description{
 secondary function for edge_detection function

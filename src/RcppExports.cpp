@@ -746,6 +746,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// pad_matrix
+Rcpp::List pad_matrix(arma::mat& x, int new_rows, int new_cols, double fill_value);
+RcppExport SEXP _OpenImageR_pad_matrix(SEXP xSEXP, SEXP new_rowsSEXP, SEXP new_colsSEXP, SEXP fill_valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type new_rows(new_rowsSEXP);
+    Rcpp::traits::input_parameter< int >::type new_cols(new_colsSEXP);
+    Rcpp::traits::input_parameter< double >::type fill_value(fill_valueSEXP);
+    rcpp_result_gen = Rcpp::wrap(pad_matrix(x, new_rows, new_cols, fill_value));
+    return rcpp_result_gen;
+END_RCPP
+}
 // LOAD_data
 Rcpp::List LOAD_data(std::string write_slic, std::string type);
 RcppExport SEXP _OpenImageR_LOAD_data(SEXP write_slicSEXP, SEXP typeSEXP) {

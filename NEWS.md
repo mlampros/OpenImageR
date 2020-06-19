@@ -1,4 +1,14 @@
 
+
+## OpenImageR 1.1.7
+
+* I fixed an error in the *'equal_spaced'* version of the *crop_image_secondary()* function
+* I fixed invalid URL's (both in R scripts and vignettes)
+* I added the *superpixel_bbox()* function which returns the bounding box boundaries for the superpixels
+* I added the *superpixel_bbox_subset()* function which returns the bounding box boundaries of a subset of superpixels
+* I added the *padding()* function, which allows a user to pad / extend a matrix or array using a specified value
+
+
 ## OpenImageR 1.1.6
 
 * I renamed the *load_3d_binary* to *load_binary* and now a user can load either a 2- or a 3-dimensional object. I also fixed a bug in the function.

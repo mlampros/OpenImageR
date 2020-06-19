@@ -4,10 +4,17 @@
 \alias{superpixels}
 \title{SLIC and SLICO superpixel implementations}
 \usage{
-superpixels(input_image, method = "slic", superpixel = 200,
-  compactness = 20, return_slic_data = FALSE,
-  return_lab_data = FALSE, return_labels = FALSE, write_slic = "",
-  verbose = FALSE)
+superpixels(
+  input_image,
+  method = "slic",
+  superpixel = 200,
+  compactness = 20,
+  return_slic_data = FALSE,
+  return_lab_data = FALSE,
+  return_labels = FALSE,
+  write_slic = "",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{input_image}{either a 2-dimensional or a 3-dimensional input image (the range of the pixel values should be preferably in the range 0 to 255)}
@@ -60,5 +67,5 @@ res_mt = superpixels(input_image = im_2d, method = "slic", superpixel = 200,
 
 }
 \references{
-https://ivrl.epfl.ch/research-2/research-current/research-superpixels
+https://www.epfl.ch/labs/ivrl/research/slic-superpixels/
 }

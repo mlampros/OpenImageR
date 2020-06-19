@@ -22,7 +22,7 @@ a matrix or 3-dimensional array
 this function performs delation or erosion to a 2- or 3- dimensional image
 }
 \details{
-This function utilizes a kernel to perform delation or erosion. The first value of the vector indicates the number of rows of the kernel, whereas 
+This function utilizes a kernel to perform delation or erosion. The first value of the vector indicates the number of rows of the kernel, whereas
 the second value indicates the number of columns.
 }
 \examples{

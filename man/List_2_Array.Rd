@@ -18,7 +18,7 @@ an array
 convert a list of matrices to an array of matrices
 }
 \details{
-This is a helper function mainly for the HOG and hash functions. In case that matrices are stored in a list, 
+This is a helper function mainly for the HOG and hash functions. In case that matrices are stored in a list,
 this function converts the list to an array of 2-dimensional data.
 }
 \examples{

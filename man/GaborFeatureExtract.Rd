@@ -4,56 +4,12 @@
 \name{GaborFeatureExtract}
 \alias{GaborFeatureExtract}
 \title{Gabor Feature Extraction}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 # init <- GaborFeatureExtract$new()
 }
-\arguments{
-\item{scales}{a numeric value. Number of scales (usually set to 5)     ( gabor_filter_bank function )}
-
-\item{orientations}{a numeric value. Number of orientations (usually set to 8)     ( gabor_filter_bank function )}
-
-\item{gabor_rows}{a numeric value. Number of rows of the 2-D Gabor filter (an odd integer number, usually set to 39 depending on the image size)     ( gabor_filter_bank function )}
-
-\item{gabor_columns}{a numeric value. Number of columns of the 2-D Gabor filter (an odd integer number, usually set to 39 depending on the image size)       ( gabor_filter_bank function )}
-
-\item{plot_data}{either TRUE or FALSE. If TRUE then data needed for plotting will be returned     ( gabor_filter_bank, gabor_feature_extraction functions )}
-
-\item{image}{a 2-dimensional image of type matrix    ( gabor_feature_extraction function )}
-
-\item{downsample_rows}{either NULL or a numeric value specifying the factor of downsampling along rows    ( gabor_feature_extraction function )}
-
-\item{downsample_cols}{either NULL or a numeric value specifying the factor of downsampling along columns    ( gabor_feature_extraction function )}
-
-\item{downsample_gabor}{either TRUE or FALSE. If TRUE then downsampling of data will take place. The \emph{downsample_rows} and \emph{downsample_cols} should be adjusted accordingly. Downsampling does not affect the output plots but the output \emph{gabor_features}     ( gabor_feature_extraction function )}
-
-\item{normalize_features}{either TRUE or FALSE. If TRUE then the output gabor-features will be normalized to zero mean and unit variance    ( gabor_feature_extraction function )}
-
-\item{threads}{a numeric value specifying the number of threads to use    ( gabor_feature_extraction function )}
-
-\item{vectorize_magnitude}{either TRUE or FALSE. If TRUE the computed magnitude feature will be returned in the form of a vector, otherwise it will be returned as a list of matrices  ( gabor_feature_extraction function )}
-
-\item{img_data}{a numeric matrix specifying the input data (gabor_feature_engine function)}
-
-\item{img_nrow}{an integer specifying the number of rows of the input matrix (gabor_feature_engine function)}
-
-\item{img_ncol}{an integer specifying the number of columns of the input matrix (gabor_feature_engine function)}
-
-\item{real_matrices}{a list of 3-dimensional arrays. These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )}
-
-\item{margin_btw_plots}{a float between 0.0 and 1.0 specifying the margin between the multiple output plots      ( plot_gabor function )}
-
-\item{thresholding}{either TRUE or FALSE. If TRUE then a threshold of 0.5 will be used to push values above 0.5 to 1.0 ( similar to otsu-thresholding )      ( plot_gabor function )}
-
-\item{verbose}{either TRUE or FALSE. If TRUE then information will be printed in the console    ( gabor_feature_extraction, gabor_feature_engine functions )}
-
-\item{list_images}{a list containing the images to plot  ( plot_multi_images function )}
-
-\item{par_ROWS}{a numeric value specifying the number of rows of the plot-grid  ( plot_multi_images function )}
-
-\item{par_COLS}{a numeric value specifying the number of columns of the plot-grid  ( plot_multi_images function )}
-}
 \description{
+Gabor Feature Extraction
+
 Gabor Feature Extraction
 }
 \details{
@@ -181,4 +137,224 @@ https://stackoverflow.com/questions/20608458/gabor-feature-extraction
 
 https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filters
 }
-\keyword{datasets}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{GaborFeatureExtract$new()}}
+\item \href{#method-gabor_filter_bank}{\code{GaborFeatureExtract$gabor_filter_bank()}}
+\item \href{#method-gabor_feature_extraction}{\code{GaborFeatureExtract$gabor_feature_extraction()}}
+\item \href{#method-gabor_feature_engine}{\code{GaborFeatureExtract$gabor_feature_engine()}}
+\item \href{#method-plot_gabor}{\code{GaborFeatureExtract$plot_gabor()}}
+\item \href{#method-plot_multi_images}{\code{GaborFeatureExtract$plot_multi_images()}}
+\item \href{#method-clone}{\code{GaborFeatureExtract$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$new()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gabor_filter_bank"></a>}}
+\if{latex}{\out{\hypertarget{method-gabor_filter_bank}{}}}
+\subsection{Method \code{gabor_filter_bank()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$gabor_filter_bank(
+  scales,
+  orientations,
+  gabor_rows,
+  gabor_columns,
+  plot_data = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{scales}}{a numeric value. Number of scales (usually set to 5)     ( gabor_filter_bank function )}
+
+\item{\code{orientations}}{a numeric value. Number of orientations (usually set to 8)     ( gabor_filter_bank function )}
+
+\item{\code{gabor_rows}}{a numeric value. Number of rows of the 2-D Gabor filter (an odd integer number, usually set to 39 depending on the image size)     ( gabor_filter_bank function )}
+
+\item{\code{gabor_columns}}{a numeric value. Number of columns of the 2-D Gabor filter (an odd integer number, usually set to 39 depending on the image size)       ( gabor_filter_bank function )}
+
+\item{\code{plot_data}}{either TRUE or FALSE. If TRUE then data needed for plotting will be returned     ( gabor_filter_bank, gabor_feature_extraction functions )}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gabor_feature_extraction"></a>}}
+\if{latex}{\out{\hypertarget{method-gabor_feature_extraction}{}}}
+\subsection{Method \code{gabor_feature_extraction()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$gabor_feature_extraction(
+  image,
+  scales,
+  orientations,
+  gabor_rows,
+  gabor_columns,
+  downsample_gabor = FALSE,
+  plot_data = FALSE,
+  downsample_rows = NULL,
+  downsample_cols = NULL,
+  normalize_features = FALSE,
+  threads = 1,
+  verbose = FALSE,
+  vectorize_magnitude = TRUE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{image}}{a 2-dimensional image of type matrix    ( gabor_feature_extraction function )}
+
+\item{\code{scales}}{a numeric value. Number of scales (usually set to 5)     ( gabor_filter_bank function )}
+
+\item{\code{orientations}}{a numeric value. Number of orientations (usually set to 8)     ( gabor_filter_bank function )}
+
+\item{\code{gabor_rows}}{a numeric value. Number of rows of the 2-D Gabor filter (an odd integer number, usually set to 39 depending on the image size)     ( gabor_filter_bank function )}
+
+\item{\code{gabor_columns}}{a numeric value. Number of columns of the 2-D Gabor filter (an odd integer number, usually set to 39 depending on the image size)       ( gabor_filter_bank function )}
+
+\item{\code{downsample_gabor}}{either TRUE or FALSE. If TRUE then downsampling of data will take place. The \emph{downsample_rows} and \emph{downsample_cols} should be adjusted accordingly. Downsampling does not affect the output plots but the output \emph{gabor_features}     ( gabor_feature_extraction function )}
+
+\item{\code{plot_data}}{either TRUE or FALSE. If TRUE then data needed for plotting will be returned     ( gabor_filter_bank, gabor_feature_extraction functions )}
+
+\item{\code{downsample_rows}}{either NULL or a numeric value specifying the factor of downsampling along rows    ( gabor_feature_extraction function )}
+
+\item{\code{downsample_cols}}{either NULL or a numeric value specifying the factor of downsampling along columns    ( gabor_feature_extraction function )}
+
+\item{\code{normalize_features}}{either TRUE or FALSE. If TRUE then the output gabor-features will be normalized to zero mean and unit variance    ( gabor_feature_extraction function )}
+
+\item{\code{threads}}{a numeric value specifying the number of threads to use    ( gabor_feature_extraction function )}
+
+\item{\code{verbose}}{either TRUE or FALSE. If TRUE then information will be printed in the console    ( gabor_feature_extraction, gabor_feature_engine functions )}
+
+\item{\code{vectorize_magnitude}}{either TRUE or FALSE. If TRUE the computed magnitude feature will be returned in the form of a vector, otherwise it will be returned as a list of matrices  ( gabor_feature_extraction function )}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gabor_feature_engine"></a>}}
+\if{latex}{\out{\hypertarget{method-gabor_feature_engine}{}}}
+\subsection{Method \code{gabor_feature_engine()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$gabor_feature_engine(
+  img_data,
+  img_nrow,
+  img_ncol,
+  scales,
+  orientations,
+  gabor_rows,
+  gabor_columns,
+  downsample_gabor = FALSE,
+  downsample_rows = NULL,
+  downsample_cols = NULL,
+  normalize_features = FALSE,
+  threads = 1,
+  verbose = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{img_data}}{a numeric matrix specifying the input data (gabor_feature_engine function)}
+
+\item{\code{img_nrow}}{an integer specifying the number of rows of the input matrix (gabor_feature_engine function)}
+
+\item{\code{img_ncol}}{an integer specifying the number of columns of the input matrix (gabor_feature_engine function)}
+
+\item{\code{scales}}{a numeric value. Number of scales (usually set to 5)     ( gabor_filter_bank function )}
+
+\item{\code{orientations}}{a numeric value. Number of orientations (usually set to 8)     ( gabor_filter_bank function )}
+
+\item{\code{gabor_rows}}{a numeric value. Number of rows of the 2-D Gabor filter (an odd integer number, usually set to 39 depending on the image size)     ( gabor_filter_bank function )}
+
+\item{\code{gabor_columns}}{a numeric value. Number of columns of the 2-D Gabor filter (an odd integer number, usually set to 39 depending on the image size)       ( gabor_filter_bank function )}
+
+\item{\code{downsample_gabor}}{either TRUE or FALSE. If TRUE then downsampling of data will take place. The \emph{downsample_rows} and \emph{downsample_cols} should be adjusted accordingly. Downsampling does not affect the output plots but the output \emph{gabor_features}     ( gabor_feature_extraction function )}
+
+\item{\code{downsample_rows}}{either NULL or a numeric value specifying the factor of downsampling along rows    ( gabor_feature_extraction function )}
+
+\item{\code{downsample_cols}}{either NULL or a numeric value specifying the factor of downsampling along columns    ( gabor_feature_extraction function )}
+
+\item{\code{normalize_features}}{either TRUE or FALSE. If TRUE then the output gabor-features will be normalized to zero mean and unit variance    ( gabor_feature_extraction function )}
+
+\item{\code{threads}}{a numeric value specifying the number of threads to use    ( gabor_feature_extraction function )}
+
+\item{\code{verbose}}{either TRUE or FALSE. If TRUE then information will be printed in the console    ( gabor_feature_extraction, gabor_feature_engine functions )}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-plot_gabor"></a>}}
+\if{latex}{\out{\hypertarget{method-plot_gabor}{}}}
+\subsection{Method \code{plot_gabor()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$plot_gabor(
+  real_matrices,
+  margin_btw_plots = 0.65,
+  thresholding = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{real_matrices}}{a list of 3-dimensional arrays. These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )}
+
+\item{\code{margin_btw_plots}}{a float between 0.0 and 1.0 specifying the margin between the multiple output plots      ( plot_gabor function )}
+
+\item{\code{thresholding}}{either TRUE or FALSE. If TRUE then a threshold of 0.5 will be used to push values above 0.5 to 1.0 ( similar to otsu-thresholding )      ( plot_gabor function )}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-plot_multi_images"></a>}}
+\if{latex}{\out{\hypertarget{method-plot_multi_images}{}}}
+\subsection{Method \code{plot_multi_images()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$plot_multi_images(list_images, par_ROWS, par_COLS)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{list_images}}{a list containing the images to plot  ( plot_multi_images function )}
+
+\item{\code{par_ROWS}}{a numeric value specifying the number of rows of the plot-grid  ( plot_multi_images function )}
+
+\item{\code{par_COLS}}{a numeric value specifying the number of columns of the plot-grid  ( plot_multi_images function )}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

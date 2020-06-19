@@ -10,7 +10,7 @@ vignette: >
 ---
 
 
-In this vignette, I'll explain the new functionality of the OpenImageR package, [SLIC and SLICO superpixels](https://ivrl.epfl.ch/research-2/research-current/research-superpixels) (Simple Linear Iterative Clustering) and their applicability based on [an IJSR article](https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf). The author of the article uses superpixel (SLIC) and Clustering (Affinity Propagation) to perform image segmentation (the article was reproduced using the latest versions of the [OpenImageR](https://github.com/mlampros/OpenImageR) and [ClusterR](https://github.com/mlampros/ClusterR) packages).
+In this vignette, I'll explain the new functionality of the OpenImageR package, [SLIC and SLICO superpixels](https://www.epfl.ch/labs/ivrl/research/slic-superpixels/) (Simple Linear Iterative Clustering) and their applicability based on [an IJSR article](https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf). The author of the article uses superpixel (SLIC) and Clustering (Affinity Propagation) to perform image segmentation (the article was reproduced using the latest versions of the [OpenImageR](https://github.com/mlampros/OpenImageR) and [ClusterR](https://github.com/mlampros/ClusterR) packages).
 
 <br>
 
@@ -21,7 +21,7 @@ In this vignette, I'll explain the new functionality of the OpenImageR package, 
 
 <br> 
 
-The *superpixels()* function of the *OpenImageR* package is based on the open source C++ code of the [IMAGE AND VISUAL REPRESENTATION LAB IVRL](https://ivrl.epfl.ch/research-2/research-current/research-superpixels/) and allows users to receive *labels* and *output slic images*. The following code chunk illustrates how this can be done using either the "slic" or the "slico" method,
+The *superpixels()* function of the *OpenImageR* package is based on the open source C++ code of the [IMAGE AND VISUAL REPRESENTATION LAB IVRL](https://www.epfl.ch/labs/ivrl/research/slic-superpixels/) and allows users to receive *labels* and *output slic images*. The following code chunk illustrates how this can be done using either the "slic" or the "slico" method,
 
 <br>
 
@@ -102,7 +102,7 @@ graphics::plot(plot_slico)
 
 <br>
 
-According to the [authors of the slic method](https://ivrl.epfl.ch/research-2/research-current/research-superpixels/), "*SLIC uses the same compactness parameter (chosen by user) for all superpixels in the image. If the image is smooth in certain regions but highly textured in others, SLIC produces smooth regular-sized superpixels in the smooth regions and highly irregular superpixels in the textured regions. So, it becomes tricky choosing the right parameter for each image. SLICO does away with this problem completely. The user no longer has to set the compactness parameter or try different values of it. SLICO adaptively chooses the compactness parameter for each superpixel differently. This generates regular shaped superpixels in both textured and non textured regions alike. The improvement comes with hardly any compromise on the computational efficiency – SLICO continues to be as fast as SLIC*."
+According to the [authors of the slic method](https://www.epfl.ch/labs/ivrl/research/slic-superpixels/), "*SLIC uses the same compactness parameter (chosen by user) for all superpixels in the image. If the image is smooth in certain regions but highly textured in others, SLIC produces smooth regular-sized superpixels in the smooth regions and highly irregular superpixels in the textured regions. So, it becomes tricky choosing the right parameter for each image. SLICO does away with this problem completely. The user no longer has to set the compactness parameter or try different values of it. SLICO adaptively chooses the compactness parameter for each superpixel differently. This generates regular shaped superpixels in both textured and non textured regions alike. The improvement comes with hardly any compromise on the computational efficiency – SLICO continues to be as fast as SLIC*."
 
 <br>
 
@@ -490,7 +490,7 @@ init$spixel_masks_show(display_all = TRUE)
 
 * [Image Segmentation using SLIC Superpixels and Affinity Propagation Clustering, Bao Zhou, 2013](https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf)
 * [Image segmentation, wikipedia](https://en.wikipedia.org/wiki/Image_segmentation)
-* [SLIC Superpixels](https://ivrl.epfl.ch/research-2/research-current/research-superpixels/)
+* [SLIC Superpixels](https://www.epfl.ch/labs/ivrl/research/slic-superpixels/)
 * [Superpixels: An Evaluation of the State-of-the-Art, David Stutz, Alexander Hermans, Bastian Leibe, 2016](https://arxiv.org/pdf/1612.01601.pdf)
 * **Affinity Propagation** ( www.psi.toronto.edu/index.php?q=affinity%20propagation )
 * **Clustering by Passing Messages Between Data Points, Brendan J. Frey and Delbert Dueck, University of Toronto, Science 315, 972-976, February 2007** ( www.psi.toronto.edu/affinitypropagation/FreyDueckScience07.pdf )

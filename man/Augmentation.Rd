@@ -4,12 +4,24 @@
 \alias{Augmentation}
 \title{image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays}
 \usage{
-Augmentation(image, flip_mode = NULL, crop_width = NULL,
-  crop_height = NULL, resiz_width = 0, resiz_height = 0,
-  resiz_method = "nearest", shift_rows = 0, shift_cols = 0,
-  rotate_angle = 0, rotate_method = "nearest", zca_comps = 0,
-  zca_epsilon = 0, image_thresh = 0, padded_value = 0,
-  verbose = FALSE)
+Augmentation(
+  image,
+  flip_mode = NULL,
+  crop_width = NULL,
+  crop_height = NULL,
+  resiz_width = 0,
+  resiz_height = 0,
+  resiz_method = "nearest",
+  shift_rows = 0,
+  shift_cols = 0,
+  rotate_angle = 0,
+  rotate_method = "nearest",
+  zca_comps = 0,
+  zca_epsilon = 0,
+  image_thresh = 0,
+  padded_value = 0,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{image}{a matrix, data frame, array or list of 3-dimensional arrays}
@@ -77,7 +89,7 @@ res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 20)
 
 
 # a list of 3-dimensional arrays
-object = list(array(0, dim = c(10, 10, 3)), array(0, dim = c(10, 10, 3)))                
+object = list(array(0, dim = c(10, 10, 3)), array(0, dim = c(10, 10, 3)))
 
 res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 40)
 }

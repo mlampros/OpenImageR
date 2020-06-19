@@ -4,9 +4,16 @@
 \alias{edge_detection}
 \title{edge detection (Frei_chen, LoG, Prewitt, Roberts_cross, Scharr, Sobel)}
 \usage{
-edge_detection(image, method = NULL, conv_mode = "same", approx = F,
-  gaussian_dims = 5, sigma = 1, range_gauss = 2,
-  laplacian_type = 1)
+edge_detection(
+  image,
+  method = NULL,
+  conv_mode = "same",
+  approx = F,
+  gaussian_dims = 5,
+  sigma = 1,
+  range_gauss = 2,
+  laplacian_type = 1
+)
 }
 \arguments{
 \item{image}{matrix or 3-dimensional array}

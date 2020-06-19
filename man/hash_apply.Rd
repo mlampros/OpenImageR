@@ -4,9 +4,17 @@
 \alias{hash_apply}
 \title{calculate the binary or the hexadecimal hash for a matrix, array or a folder of images for the average_hash, phash or dhash functions}
 \usage{
-hash_apply(object, rows = 28, columns = 28, hash_size = 8,
-  highfreq_factor = 3, method = "phash", mode = "binary",
-  threads = 1, resize = "nearest")
+hash_apply(
+  object,
+  rows = 28,
+  columns = 28,
+  hash_size = 8,
+  highfreq_factor = 3,
+  method = "phash",
+  mode = "binary",
+  threads = 1,
+  resize = "nearest"
+)
 }
 \arguments{
 \item{object}{a matrix, a data frame, a 3-dimensional array or a path to a folder of files (images)}

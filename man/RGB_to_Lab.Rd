@@ -26,5 +26,5 @@ res = RGB_to_Lab(array_3d)
 
 }
 \references{
-https://ivrl.epfl.ch/research-2/research-current/research-superpixels/research-snic_superpixels/
+https://www.epfl.ch/labs/ivrl/research/snic-superpixels/
 }

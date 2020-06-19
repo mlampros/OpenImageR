@@ -642,7 +642,7 @@ arma::mat meshgrid_x(int rows, int cols) {
 //---------------------------------------------------------------------------------------------------------------------------- SLIC, SLICO
 
 // RGB to LAB colour type conversion [ see the 'snic' superpixel implementation -- slightly modified to return data ]
-// https://ivrl.epfl.ch/research-2/research-current/research-superpixels/research-snic_superpixels/
+// https://www.epfl.ch/labs/ivrl/research/snic-superpixels/
 //
 
 /**
@@ -794,6 +794,18 @@ std::vector<int> spix_bbox_vector(arma::mat& spix_labels, arma::rowvec spix_labe
   
   oimageR::Utility_functions UTLF;
   return UTLF.spix_bbox_vector(spix_labels, spix_labels_vec);
+}
+
+
+
+// padding of a matrix
+//
+
+// [[Rcpp::export]]
+Rcpp::List pad_matrix(arma::mat &x, int new_rows, int new_cols, double fill_value = 0.0) {
+  
+  oimageR::Utility_functions UTLF;
+  return UTLF.pad_matrix(x, new_rows, new_cols, fill_value);
 }
 
 

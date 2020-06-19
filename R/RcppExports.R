@@ -209,6 +209,10 @@ spix_bbox_vector <- function(spix_labels, spix_labels_vec) {
     .Call(`_OpenImageR_spix_bbox_vector`, spix_labels, spix_labels_vec)
 }
 
+pad_matrix <- function(x, new_rows, new_cols, fill_value = 0.0) {
+    .Call(`_OpenImageR_pad_matrix`, x, new_rows, new_cols, fill_value)
+}
+
 LOAD_data <- function(write_slic, type = "2d") {
     .Call(`_OpenImageR_LOAD_data`, write_slic, type)
 }

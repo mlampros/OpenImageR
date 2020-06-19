@@ -16,7 +16,7 @@ either a normalized vector, matrix, or array
 normalize a vector, matrix or array (in the range between 0 and 1)
 }
 \details{
-This is a helper function which normalizes all pixel values of the object to the range between 0 and 1. The function takes either a vector, matrix, data frame or 
+This is a helper function which normalizes all pixel values of the object to the range between 0 and 1. The function takes either a vector, matrix, data frame or
 array as input and returns a normalized object of the same type (in case of data frame it returns a matrix).
 }
 \examples{
@@ -40,7 +40,7 @@ res = NormalizeObject(x)
 
 
 # array
-x = array(runif(100), dim = c(10, 10, 3))               
+x = array(runif(100), dim = c(10, 10, 3))
 
 res = NormalizeObject(x)
 

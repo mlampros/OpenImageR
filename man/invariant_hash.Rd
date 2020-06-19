@@ -4,9 +4,19 @@
 \alias{invariant_hash}
 \title{invariant hashing (caclulation of the hamming or the levenshtein distance when the image is flipped, rotated or cropped)}
 \usage{
-invariant_hash(image, new_image, method = "phash", mode = "binary",
-  hash_size = 8, highfreq_factor = 4, resize = "nearest", flip = T,
-  rotate = T, angle_bidirectional = 10, crop = T)
+invariant_hash(
+  image,
+  new_image,
+  method = "phash",
+  mode = "binary",
+  hash_size = 8,
+  highfreq_factor = 4,
+  resize = "nearest",
+  flip = T,
+  rotate = T,
+  angle_bidirectional = 10,
+  crop = T
+)
 }
 \arguments{
 \item{image}{a 2-dimensional matrix or data frame (only gray-scale images are valid)}

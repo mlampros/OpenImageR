@@ -44,6 +44,7 @@ extern SEXP _OpenImageR_MinMaxArray(SEXP);
 extern SEXP _OpenImageR_MinMaxMatrix(SEXP);
 extern SEXP _OpenImageR_Normalize_array(SEXP);
 extern SEXP _OpenImageR_Normalize_matrix(SEXP);
+extern SEXP _OpenImageR_pad_matrix(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_phash_binary(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_phash_string(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_resize_bilinear_rcpp(SEXP, SEXP, SEXP);
@@ -99,6 +100,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_OpenImageR_MinMaxMatrix",                       (DL_FUNC) &_OpenImageR_MinMaxMatrix,                        1},
     {"_OpenImageR_Normalize_array",                    (DL_FUNC) &_OpenImageR_Normalize_array,                     1},
     {"_OpenImageR_Normalize_matrix",                   (DL_FUNC) &_OpenImageR_Normalize_matrix,                    1},
+    {"_OpenImageR_pad_matrix",                         (DL_FUNC) &_OpenImageR_pad_matrix,                          4},
     {"_OpenImageR_phash_binary",                       (DL_FUNC) &_OpenImageR_phash_binary,                        4},
     {"_OpenImageR_phash_string",                       (DL_FUNC) &_OpenImageR_phash_string,                        4},
     {"_OpenImageR_resize_bilinear_rcpp",               (DL_FUNC) &_OpenImageR_resize_bilinear_rcpp,                3},

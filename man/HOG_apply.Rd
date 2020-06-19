@@ -4,8 +4,14 @@
 \alias{HOG_apply}
 \title{calculate the HOG (Histogram of oriented gradients) for a matrix, array or a folder of images}
 \usage{
-HOG_apply(object, cells = 3, orientations = 6, rows = NULL,
-  columns = NULL, threads = 1)
+HOG_apply(
+  object,
+  cells = 3,
+  orientations = 6,
+  rows = NULL,
+  columns = NULL,
+  threads = 1
+)
 }
 \arguments{
 \item{object}{a matrix, a data frame, a 3-dimensional array or a path to a folder of files (images)}

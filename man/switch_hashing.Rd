@@ -4,8 +4,17 @@
 \alias{switch_hashing}
 \title{if-else function for hashing}
 \usage{
-switch_hashing(object, width, height, hash_size, highfreq_factor, method,
-  mode, threads, resize)
+switch_hashing(
+  object,
+  width,
+  height,
+  hash_size,
+  highfreq_factor,
+  method,
+  mode,
+  threads,
+  resize
+)
 }
 \description{
 if-else function for hashing

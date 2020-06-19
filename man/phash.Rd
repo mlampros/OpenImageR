@@ -4,8 +4,13 @@
 \alias{phash}
 \title{calculation of the 'phash' of an image}
 \usage{
-phash(gray_image, hash_size = 8, highfreq_factor = 4, MODE = "hash",
-  resize = "nearest")
+phash(
+  gray_image,
+  hash_size = 8,
+  highfreq_factor = 4,
+  MODE = "hash",
+  resize = "nearest"
+)
 }
 \arguments{
 \item{gray_image}{a (2-dimensional) matrix or data frame}
