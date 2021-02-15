@@ -1,8 +1,7 @@
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/OpenImageR)](http://cran.r-project.org/package=OpenImageR)
-[![Travis-CI Build Status](https://travis-ci.org/mlampros/OpenImageR.svg?branch=master)](https://travis-ci.org/mlampros/OpenImageR)
+[![tic](https://github.com/mlampros/OpenImageR/workflows/tic/badge.svg?branch=master)](https://github.com/mlampros/OpenImageR/actions)
 [![codecov.io](https://codecov.io/github/mlampros/OpenImageR/coverage.svg?branch=master)](https://codecov.io/github/mlampros/OpenImageR?branch=master)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/mlampros/OpenImageR?branch=master&svg=true)](https://ci.appveyor.com/project/mlampros/OpenImageR/branch/master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/OpenImageR)](http://cran.r-project.org/package=OpenImageR)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/OpenImageR?color=blue)](http://www.r-pkg.org/pkg/OpenImageR)
 <a href="https://www.buymeacoffee.com/VY0x8snyh" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
 [![](https://img.shields.io/docker/automated/mlampros/openimager.svg)](https://hub.docker.com/r/mlampros/openimager)
