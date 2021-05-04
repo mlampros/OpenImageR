@@ -126,7 +126,7 @@ namespace oimageR {
 
       // dilation or erosion of an image   [ matrix ]
       //
-      // http://www.mathworks.com/help/images/morphological-dilation-and-erosion.html
+      // https://www.mathworks.com/help/images/morphological-dilation-and-erosion.html
       //
 
       arma::mat diate_erode(arma::mat& image, arma::rowvec& Filter, int method = 1, int threads = 1) {
@@ -554,32 +554,32 @@ namespace oimageR {
         }
       }
 
-      
-      
+
+
       // padding of new rows / cols based on the 'new_rows' and 'new_cols' parameters
       //
-      
+
       Rcpp::List pad_matrix(arma::mat &x, int new_rows, int new_cols, double fill_value = 0.0) {
-        
+
         if (new_rows < x.n_rows) {
           Rcpp::stop("The 'new_rows' should be greater than the rows of the input data");
         }
         if (new_cols < x.n_cols) {
           Rcpp::stop("The 'new_cols' should be greater than columns of the input data");
         }
-        
+
         unsigned int dif_rows = new_rows - x.n_rows;
         arma::mat concat_row(1, x.n_cols);
-        
+
         int rows_start = 0;
         int rows_end = 0;
-        
+
         if (dif_rows > 0) {
-          
+
           concat_row.fill(fill_value);
-          
+
           for (unsigned int i = 0; i < dif_rows; i++) {
-            
+
             if (EVEN(i)) {
               x = arma::join_cols(x, concat_row);
               rows_end++;
@@ -590,19 +590,19 @@ namespace oimageR {
             }
           }
         }
-        
+
         arma::mat concat_col(x.n_rows, 1);
         unsigned int dif_cols = new_cols - x.n_cols;
-        
+
         int cols_start = 0;
         int cols_end = 0;
-        
+
         if (dif_cols > 0) {
-          
+
           concat_col.fill(fill_value);
-          
+
           for (unsigned int i = 0; i < dif_cols; i++) {
-            
+
             if (EVEN(i)) {
               x = arma::join_rows(x, concat_col);
               cols_end++;
@@ -613,7 +613,7 @@ namespace oimageR {
             }
           }
         }
-        
+
         return Rcpp::List::create( Rcpp::Named("data") = x,
                                    Rcpp::Named("padded_start") = rows_start,
                                    Rcpp::Named("padded_end") = rows_end,
@@ -622,7 +622,7 @@ namespace oimageR {
       }
 
 
-      
+
       // replace value above or below a thresh
       // if mode = 1 : thresh >   (if greater)
       // if mode = 2 : thresh <   (if less)

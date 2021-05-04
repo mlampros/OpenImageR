@@ -321,7 +321,7 @@ imageShow(res)
 
 #### delationErosion
 
-[**Dilation** and **erosion**](http://www.mathworks.com/help/images/morphological-dilation-and-erosion.html) are the most basic morphological operations. Dilation adds pixels to the boundaries of objects in an image, while erosion removes pixels on object boundaries,
+[**Dilation** and **erosion**](https://www.mathworks.com/help/images/morphological-dilation-and-erosion.html) are the most basic morphological operations. Dilation adds pixels to the boundaries of objects in an image, while erosion removes pixels on object boundaries,
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 

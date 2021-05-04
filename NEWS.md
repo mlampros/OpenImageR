@@ -1,4 +1,8 @@
 
+## OpenImageR 1.1.8
+
+* I've added the *CITATION* file in the *inst* directory
+
 
 ## OpenImageR 1.1.7
 

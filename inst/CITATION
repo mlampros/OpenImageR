@@ -1,0 +1,70 @@
+citHeader("Please cite both the package and the original articles / software in your publications:")
+
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(
+  bibtype = "Manual",
+  title   = "{OpenImageR}: An Image Processing Toolkit",
+  author  = person("Lampros", "Mouselimis"),
+  year    = year,
+  note    = note,
+  url     = "https://CRAN.R-project.org/package=OpenImageR"
+)
+
+bibentry(
+  bibtype = "Manual",
+  title   = "{SimpleCV}: The Open Source Framework for Machine Vision",
+  author  = person("Sight", "Machine"),
+  year    = "2012",
+  note    = "findHOGFeatures function of the SimpleCV computer vision platform",
+  url     = "https://github.com/sightmachine/SimpleCV"
+)
+
+bibentry(
+  bibtype = "Manual",
+  title   = "{imagehash}: A Python Perceptual Image Hashing Module",
+  author  = person("Johannes", "Buchner"),
+  year    = "2013",
+  note    = "average_hash, dhash and phash functions of the ImageHash python library",
+  url     = "https://github.com/JohannesBuchner/imagehash"
+)
+
+bibentry(
+  bibtype  = "Article",
+  title    = "CloudID: Trustworthy cloud-based and cross-enterprise biometric identification",
+  author   = c(as.person("M. Haghighat"), as.person("S. Zonouz"), as.person("M. Abdel-Mottaleb")),
+  journal  = "Expert Systems with Applications",
+  year     = "2015",
+  volume   = "42",
+  pages    = "7905--7916",
+  doi      = "10.1016/j.eswa.2015.06.025"
+)
+
+bibentry(
+  bibtype = "Manual",
+  title   = "{gabor}: Gabor Feature Extraction",
+  author  = person("Mohammad", "Haghighat"),
+  year    = "2015",
+  url     = "https://github.com/mhaghighat/gabor"
+)
+
+bibentry(
+  bibtype  = "Article",
+  title    = "SLIC Superpixels Compared to State-of-the-art Superpixel Methods",
+  author   = c(as.person("Radhakrishna Achanta"), as.person("Appu Shaji"), as.person("Kevin Smith"), as.person("Aurelien Lucchi"), as.person("Pascal Fua"), as.person("Sabine Suesstrunk")),
+  journal  = "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+  year     = "2012",
+  volume   = "34",
+  pages    = "2274--2282",
+  doi      = "10.1109/TPAMI.2012.120"
+)
+
+bibentry(
+  bibtype      = "TechReport",
+  title        = "SLIC Superpixels",
+  author       = c(as.person("Radhakrishna Achanta"), as.person("Appu Shaji"), as.person("Kevin Smith"), as.person("Aurelien Lucchi"), as.person("Pascal Fua"), as.person("Sabine Suesstrunk")),
+  institution  = "EPFL Technical Report",
+  number       = "149300",
+  year         = "2010"
+)

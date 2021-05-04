@@ -492,7 +492,7 @@ arma::cube zca_whiten_cube(arma::cube src, int k, double epsilon) {
 
 // dilation or erosion of an image   [ matrix ]
 //
-// http://www.mathworks.com/help/images/morphological-dilation-and-erosion.html
+// https://www.mathworks.com/help/images/morphological-dilation-and-erosion.html
 //
 
 // [[Rcpp::export]]
@@ -766,7 +766,7 @@ arma::cube RGB_to_hsv(arma::cube x) {
 
 // [[Rcpp::export]]
 Rcpp::List interface_superpixels(arma::cube input_image, std::string method = "slic", int num_superpixel = 200,
-                                 double compactness_factor = 20, bool return_slic_data = false, bool return_lab_data = false, 
+                                 double compactness_factor = 20, bool return_slic_data = false, bool return_lab_data = false,
                                  bool return_labels = false, std::string write_slic = "", bool verbose = false) {
 
   oimageR::Utility_functions UTLF;
@@ -780,7 +780,7 @@ Rcpp::List interface_superpixels(arma::cube input_image, std::string method = "s
 
 // [[Rcpp::export]]
 Rcpp::List spix_bbox(arma::mat& spix_labels, bool non_overlapping_superpixels = false) {
-  
+
   oimageR::Utility_functions UTLF;
   return UTLF.spix_bbox(spix_labels, non_overlapping_superpixels);
 }
@@ -791,7 +791,7 @@ Rcpp::List spix_bbox(arma::mat& spix_labels, bool non_overlapping_superpixels = 
 
 // [[Rcpp::export]]
 std::vector<int> spix_bbox_vector(arma::mat& spix_labels, arma::rowvec spix_labels_vec) {
-  
+
   oimageR::Utility_functions UTLF;
   return UTLF.spix_bbox_vector(spix_labels, spix_labels_vec);
 }
@@ -803,7 +803,7 @@ std::vector<int> spix_bbox_vector(arma::mat& spix_labels, arma::rowvec spix_labe
 
 // [[Rcpp::export]]
 Rcpp::List pad_matrix(arma::mat &x, int new_rows, int new_cols, double fill_value = 0.0) {
-  
+
   oimageR::Utility_functions UTLF;
   return UTLF.pad_matrix(x, new_rows, new_cols, fill_value);
 }
@@ -831,7 +831,7 @@ Rcpp::List LOAD_data(std::string write_slic, std::string type = "2d") {    // ty
   else {
     Rcpp::stop("The 'type' parameter can be either '2d' or '3d'!");
   }
-  
+
   return out;
 }
 

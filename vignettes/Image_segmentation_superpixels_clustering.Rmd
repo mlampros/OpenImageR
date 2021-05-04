@@ -10,7 +10,7 @@ vignette: >
 ---
 
 
-In this vignette, I'll explain the new functionality of the OpenImageR package, [SLIC and SLICO superpixels](https://www.epfl.ch/labs/ivrl/research/slic-superpixels/) (Simple Linear Iterative Clustering) and their applicability based on [an IJSR article](https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf). The author of the article uses superpixel (SLIC) and Clustering (Affinity Propagation) to perform image segmentation (the article was reproduced using the latest versions of the [OpenImageR](https://github.com/mlampros/OpenImageR) and [ClusterR](https://github.com/mlampros/ClusterR) packages).
+In this vignette, I'll explain the new functionality of the OpenImageR package, [SLIC and SLICO superpixels](https://www.epfl.ch/labs/ivrl/research/slic-superpixels/) (Simple Linear Iterative Clustering) and their applicability based on [an IJSR article](https://www.ijsr.net/archive/v4i4/SUB152869.pdf). The author of the article uses superpixel (SLIC) and Clustering (Affinity Propagation) to perform image segmentation (the article was reproduced using the latest versions of the [OpenImageR](https://github.com/mlampros/OpenImageR) and [ClusterR](https://github.com/mlampros/ClusterR) packages).
 
 <br>
 
@@ -129,7 +129,7 @@ More information about the parameters of the *superpixels()* function can be fou
 ### Image segmentation based on superpixels (SLIC, SLICO) and Affinity Propagation (AP)
 
 
-The [author of the article](https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf), that I mentioned earlier, uses a method named **SLICAP** (SLIC + AP) to perform image segmentation. The methodology is the following:
+The [author of the article](https://www.ijsr.net/archive/v4i4/SUB152869.pdf), that I mentioned earlier, uses a method named **SLICAP** (SLIC + AP) to perform image segmentation. The methodology is the following:
 
 * First, the SLICAP technique uses the SLIC superpixel algorithm to form an over-segmentation of an image
 * Then, a similarity is constructed based on the features of superpixels
@@ -488,7 +488,7 @@ init$spixel_masks_show(display_all = TRUE)
 
 **References :**
 
-* [Image Segmentation using SLIC Superpixels and Affinity Propagation Clustering, Bao Zhou, 2013](https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf)
+* [Image Segmentation using SLIC Superpixels and Affinity Propagation Clustering, Bao Zhou, 2013](https://www.ijsr.net/archive/v4i4/SUB152869.pdf)
 * [Image segmentation, wikipedia](https://en.wikipedia.org/wiki/Image_segmentation)
 * [SLIC Superpixels](https://www.epfl.ch/labs/ivrl/research/slic-superpixels/)
 * [Superpixels: An Evaluation of the State-of-the-Art, David Stutz, Alexander Hermans, Bastian Leibe, 2016](https://arxiv.org/pdf/1612.01601.pdf)
