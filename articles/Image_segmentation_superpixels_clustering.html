@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Image segmentation based on Superpixels and Clustering</h1>
                         <h4 class="author">Lampros Mouselimis</h4>
             
-            <h4 class="date">2021-04-17</h4>
+            <h4 class="date">2021-05-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/master/vignettes/Image_segmentation_superpixels_clustering.Rmd"><code>vignettes/Image_segmentation_superpixels_clustering.Rmd</code></a></small>
       <div class="hidden name"><code>Image_segmentation_superpixels_clustering.Rmd</code></div>
@@ -100,7 +100,7 @@
 
     
     
-<p>In this vignette, I’ll explain the new functionality of the OpenImageR package, <a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/">SLIC and SLICO superpixels</a> (Simple Linear Iterative Clustering) and their applicability based on <a href="https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf">an IJSR article</a>. The author of the article uses superpixel (SLIC) and Clustering (Affinity Propagation) to perform image segmentation (the article was reproduced using the latest versions of the <a href="https://github.com/mlampros/OpenImageR">OpenImageR</a> and <a href="https://github.com/mlampros/ClusterR">ClusterR</a> packages).</p>
+<p>In this vignette, I’ll explain the new functionality of the OpenImageR package, <a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/">SLIC and SLICO superpixels</a> (Simple Linear Iterative Clustering) and their applicability based on <a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf">an IJSR article</a>. The author of the article uses superpixel (SLIC) and Clustering (Affinity Propagation) to perform image segmentation (the article was reproduced using the latest versions of the <a href="https://github.com/mlampros/OpenImageR">OpenImageR</a> and <a href="https://github.com/mlampros/ClusterR">ClusterR</a> packages).</p>
 <p><br></p>
 <div id="superpixels" class="section level3">
 <h3 class="hasAnchor">
@@ -195,7 +195,7 @@
 <div id="image-segmentation-based-on-superpixels-slic-slico-and-affinity-propagation-ap" class="section level3">
 <h3 class="hasAnchor">
 <a href="#image-segmentation-based-on-superpixels-slic-slico-and-affinity-propagation-ap" class="anchor"></a>Image segmentation based on superpixels (SLIC, SLICO) and Affinity Propagation (AP)</h3>
-<p>The <a href="https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf">author of the article</a>, that I mentioned earlier, uses a method named <strong>SLICAP</strong> (SLIC + AP) to perform image segmentation. The methodology is the following:</p>
+<p>The <a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf">author of the article</a>, that I mentioned earlier, uses a method named <strong>SLICAP</strong> (SLIC + AP) to perform image segmentation. The methodology is the following:</p>
 <ul>
 <li>First, the SLICAP technique uses the SLIC superpixel algorithm to form an over-segmentation of an image</li>
 <li>Then, a similarity is constructed based on the features of superpixels</li>
@@ -464,7 +464,7 @@
 <p><br><br></p>
 <p><strong>References :</strong></p>
 <ul>
-<li><a href="https://pdfs.semanticscholar.org/6533/654973054b742e725fd433265700c07b48a2.pdf">Image Segmentation using SLIC Superpixels and Affinity Propagation Clustering, Bao Zhou, 2013</a></li>
+<li><a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf">Image Segmentation using SLIC Superpixels and Affinity Propagation Clustering, Bao Zhou, 2013</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Image_segmentation">Image segmentation, wikipedia</a></li>
 <li><a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/">SLIC Superpixels</a></li>
 <li><a href="https://arxiv.org/pdf/1612.01601.pdf">Superpixels: An Evaluation of the State-of-the-Art, David Stutz, Alexander Hermans, Bastian Leibe, 2016</a></li>
