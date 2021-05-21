@@ -40,7 +40,7 @@ res = NormalizeObject(x)
 
 
 # array
-x = array(runif(100), dim = c(10, 10, 3))
+x = array(runif(300), dim = c(10, 10, 3))
 
 res = NormalizeObject(x)
 

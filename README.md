@@ -217,7 +217,7 @@ to access the Rstudio console in order to give your username and password.
 
 ### **Citation:**
 
-If you use the code of this repository in your paper or research please cite both **OpenImageR** and the **original articles / software** [https://cran.r-project.org/web/packages/OpenImageR/citation.html](https://cran.r-project.org/web/packages/OpenImageR/citation.html):
+If you use the code of this repository in your paper or research please cite both **OpenImageR** and the **original articles / software** `https://CRAN.R-project.org/package=OpenImageR`:
 
 <br>
 

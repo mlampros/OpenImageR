@@ -37,7 +37,7 @@ res = convolution(image_matrix, x, "same")
 
 
 # array
-image_array = array(runif(100), dim = c(10, 10, 3))
+image_array = array(runif(300), dim = c(10, 10, 3))
 
 res = convolution(image_array, x, "same")
 

@@ -1,4 +1,10 @@
 
+
+## OpenImageR 1.1.9
+
+* I fixed the error in the CRAN results due to mistakes in creation of matrices and arrays in the test (testthat) files.
+
+
 ## OpenImageR 1.1.8
 
 * I've added the *CITATION* file in the *inst* directory
