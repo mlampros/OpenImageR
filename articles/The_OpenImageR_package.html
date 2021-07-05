@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Functionality of the OpenImageR package</h1>
                         <h4 class="author">Lampros Mouselimis</h4>
             
-            <h4 class="date">2021-07-04</h4>
+            <h4 class="date">2021-07-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/master/vignettes/The_OpenImageR_package.Rmd"><code>vignettes/The_OpenImageR_package.Rmd</code></a></small>
       <div class="hidden name"><code>The_OpenImageR_package.Rmd</code></div>
@@ -342,7 +342,7 @@
                     
                     zca_epsilon <span class="op">=</span> <span class="fl">0.1</span>, image_thresh <span class="op">=</span> <span class="fl">0.0</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
-## time to complete : 0.1266851 secs</code></pre>
+## time to complete : 0.1184492 secs</code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">augm</span><span class="op">)</span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-23-1.png" width="96"><br><br></p>
@@ -445,7 +445,7 @@
 
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../reference/HOG_apply.html">HOG_apply</a></span><span class="op">(</span><span class="va">tmp_arr</span>, cells <span class="op">=</span> <span class="fl">2</span>, orientations <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
-## time to complete : 0.01510215 secs</code></pre>
+## time to complete : 0.01505685 secs</code></pre>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span></code></pre></div>
 <pre><code>##            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
@@ -595,7 +595,7 @@
 
 <span class="va">hapl_hash</span> <span class="op">=</span> <span class="fu"><a href="../reference/hash_apply.html">hash_apply</a></span><span class="op">(</span><span class="va">path</span>, hash_size <span class="op">=</span> <span class="fl">6</span>, method <span class="op">=</span> <span class="st">"dhash"</span>, mode <span class="op">=</span> <span class="st">"hash"</span>, threads <span class="op">=</span> <span class="fl">1</span>,  resize <span class="op">=</span> <span class="st">"nearest"</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
-## time to complete : 0.01385808 secs</code></pre>
+## time to complete : 0.01263499 secs</code></pre>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hapl_hash</span>                <span class="co"># returns both the names of the images and the hash values</span></code></pre></div>
 <pre><code>## $files
@@ -610,7 +610,7 @@
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hapl_bin</span> <span class="op">=</span> <span class="fu"><a href="../reference/hash_apply.html">hash_apply</a></span><span class="op">(</span><span class="va">path</span>, hash_size <span class="op">=</span> <span class="fl">6</span>, method <span class="op">=</span> <span class="st">"dhash"</span>, mode <span class="op">=</span> <span class="st">"binary"</span>, threads <span class="op">=</span> <span class="fl">1</span>,  resize <span class="op">=</span> <span class="st">"nearest"</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
-## time to complete : 0.01224494 secs</code></pre>
+## time to complete : 0.01125503 secs</code></pre>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hapl_bin</span><span class="op">$</span><span class="va">files</span>             <span class="co"># names of the images</span></code></pre></div>
 <pre><code>##  [1] "2_1.png" "2_2.png" "2_3.png" "4_1.png" "4_2.png" "4_3.png" "5_1.png"
