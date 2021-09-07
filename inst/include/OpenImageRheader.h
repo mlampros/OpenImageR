@@ -281,23 +281,30 @@ namespace oimageR {
       arma::mat resize_nearest_rcpp(arma::mat image, double width, double height) {
 
         double scale_rows = width/image.n_rows;
-
         double scale_cols = height/image.n_cols;
 
         int new_row_size = floor(scale_rows * image.n_rows);
-
         int new_col_size = floor(scale_cols * image.n_cols);
 
-        arma::uvec row_index = arma::conv_to< arma::uvec >::from(floor(((seq_rcpp(new_row_size) - 0.5) / scale_rows ) + 0.5));
+        if (new_row_size != width) {
+          std::string warn_message = "When resizing the 'width' becomes " + std::to_string(new_row_size) + " therefore we have to adjust it to the input width parameter of " + std::to_string(width) + " !";
+          new_row_size = ((new_row_size != width) ? (width) : new_row_size);
+          Rcpp::warning(warn_message);
+        }
 
+        if (new_col_size != height) {
+          std::string warn_message = "When resizing the 'height' becomes " + std::to_string(new_col_size) + " therefore we have to adjust it to the input height parameter of " + std::to_string(height) + " !";
+          new_col_size = ((new_col_size != height) ? (height) : new_col_size);
+          Rcpp::warning(warn_message);
+        }
+
+        arma::uvec row_index = arma::conv_to< arma::uvec >::from(floor(((seq_rcpp(new_row_size) - 0.5) / scale_rows ) + 0.5));
         arma::uvec col_index = arma::conv_to< arma::uvec >::from(floor(((seq_rcpp(new_col_size) - 0.5) / scale_cols ) + 0.5));
 
         double row_index_max = row_index.max();
-
         double col_index_max = col_index.max();
 
         row_index.transform( [row_index_max](double val) { return (val == row_index_max) ? (row_index_max - 1) : val;} );     // if row_index greater than the maximum row-index subtract 1 from row-index
-
         col_index.transform( [col_index_max](double val) { return (val == col_index_max) ? (col_index_max - 1) : val;} );      // if col_index greater than the maximum col-index subtract 1 from col-index
 
         arma::mat tmp_im = image(row_index, col_index);

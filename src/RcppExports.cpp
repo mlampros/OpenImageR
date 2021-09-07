@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // Gabor_Filter_Bank
 Rcpp::List Gabor_Filter_Bank(int u, int v, int m, int n, bool plot_data);
 RcppExport SEXP _OpenImageR_Gabor_Filter_Bank(SEXP uSEXP, SEXP vSEXP, SEXP mSEXP, SEXP nSEXP, SEXP plot_dataSEXP) {
