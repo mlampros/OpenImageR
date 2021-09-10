@@ -439,7 +439,7 @@ mean(acc_fit_gab_hog)
 
 * [https://github.com/mhaghighat/gabor](https://github.com/mhaghighat/gabor)
 * [Gabor feature extraction Stackoverflow question](https://stackoverflow.com/questions/20608458/gabor-feature-extraction)
-* [Features Extraction using a Gabor Filter Family](https://www.actapress.com/PaperInfo.aspx?PaperID=18070&reason=500)
+* **Features Extraction using a Gabor Filter Family** `(http://www.paper.edu.cn/scholar/showpdf/NUz2MN4IMTD0kxeQh)`
 * [Gabor Feature Based Unsupervised Change Detection of Multitemporal SAR Images Based on Two-Level Clustering](https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering)
 
 <br><br>

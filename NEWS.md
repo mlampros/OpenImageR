@@ -2,7 +2,7 @@
 
 ## OpenImageR 1.2.0
 
-* I've modified the *resize_nearest_rcpp()* function in the *inst/include/OpenImageRheader.h* file by adding a warning in case that the input parameters *width* and *height* do not match with the output *width* and *height*. See the [issue 21](https://github.com/mlampros/OpenImageR/issues/21) in the OpenImageR Github repository
+* I've modified the *resize_nearest_rcpp()* function in the *inst/include/OpenImageRheader.h* file by adding a warning in case that the input parameters *width* and *height* do not match with the output *width* and *height*. See the [issue 21](https://github.com/mlampros/OpenImageR/issues/21) in the OpenImageR Github repository. Moreover, I've added tests for the case that the *resizeImage(method = "nearest")* function gives a warning.
 
 
 ## OpenImageR 1.1.9
