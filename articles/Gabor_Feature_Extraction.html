@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Gabor Feature extraction</h1>
                         <h4 class="author">Lampros Mouselimis</h4>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 class="date">2021-10-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/master/vignettes/Gabor_Feature_Extraction.Rmd"><code>vignettes/Gabor_Feature_Extraction.Rmd</code></a></small>
       <div class="hidden name"><code>Gabor_Feature_Extraction.Rmd</code></div>
@@ -323,7 +323,7 @@
 <code class="sourceCode R">
 <span class="va">svd_irlb</span> <span class="op">=</span> <span class="fu">irlba</span><span class="fu">::</span><span class="fu">irlba</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span>, nv <span class="op">=</span> <span class="fl">100</span>, nu <span class="op">=</span> <span class="fl">100</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
 
-<span class="va">new_x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">svd_irlb</span><span class="op">$</span><span class="va">v</span>
+<span class="va">new_x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">svd_irlb</span><span class="op">$</span><span class="va">v</span>
 </code></pre></div>
 <p><br></p>
 <p>and I’ll create a centered-scaled matrix of the reduced <em>magnitude</em> and the <em>energy-aptitude</em> data,</p>

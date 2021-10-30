@@ -202,14 +202,15 @@ the rows of the output matrix), the 2nd sublist is a matrix (if mode = 'binary')
     <p>This function calculates the binary hash or the hexadecimal hash for various types of objects.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>path</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"tmp_images"</span>, <span class='st'>"same_type"</span>, package <span class='op'>=</span> <span class='st'>"OpenImageR"</span><span class='op'>)</span>, <span class='st'>'/'</span><span class='op'>)</span>
-
-<span class='va'>res_phash</span> <span class='op'>=</span> <span class='fu'>hash_apply</span><span class='op'>(</span><span class='va'>path</span>, method <span class='op'>=</span> <span class='st'>'phash'</span>, mode <span class='op'>=</span> <span class='st'>'binary'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; time to complete : 0.004947901 secs 
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>path</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"tmp_images"</span>, <span class='st'>"same_type"</span>, package <span class='op'>=</span> <span class='st'>"OpenImageR"</span><span class='op'>)</span>, <span class='st'>'/'</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>res_phash</span> <span class='op'>=</span> <span class='fu'>hash_apply</span><span class='op'>(</span><span class='va'>path</span>, method <span class='op'>=</span> <span class='st'>'phash'</span>, mode <span class='op'>=</span> <span class='st'>'binary'</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> time to complete : 0.005212069 secs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

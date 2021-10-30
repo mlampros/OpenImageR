@@ -377,86 +377,88 @@ Gabor Feature Extraction" />
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/mlampros/OpenImageR'>OpenImageR</a></span><span class='op'>)</span>
-
-<span class='va'>init_gb</span> <span class='op'>=</span> <span class='va'>GaborFeatureExtract</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># gabor-filter-bank</span>
-<span class='co'>#------------------</span>
-
-<span class='va'>gb_f</span> <span class='op'>=</span> <span class='va'>init_gb</span><span class='op'>$</span><span class='fu'>gabor_filter_bank</span><span class='op'>(</span>scales <span class='op'>=</span> <span class='fl'>5</span>, orientations <span class='op'>=</span> <span class='fl'>8</span>, gabor_rows <span class='op'>=</span> <span class='fl'>39</span>,
-
-                                 gabor_columns <span class='op'>=</span> <span class='fl'>39</span>, plot_data <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-
-<span class='co'># plot gabor-filter-bank</span>
-<span class='co'>#-----------------------</span>
-
-<span class='va'>plt_f</span> <span class='op'>=</span> <span class='va'>init_gb</span><span class='op'>$</span><span class='fu'>plot_gabor</span><span class='op'>(</span>real_matrices <span class='op'>=</span> <span class='va'>gb_f</span><span class='op'>$</span><span class='va'>gabor_real</span>, margin_btw_plots <span class='op'>=</span> <span class='fl'>0.65</span>,
-
-                           thresholding <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='img'><img src='GaborFeatureExtract-1.png' alt='' width='700' height='433' /></div><div class='input'>
-
-<span class='co'># read image</span>
-<span class='co'>#-----------</span>
-
-<span class='va'>pth_im</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"tmp_images"</span>, <span class='st'>"car.png"</span>, package <span class='op'>=</span> <span class='st'>"OpenImageR"</span><span class='op'>)</span>
-
-<span class='va'>im</span> <span class='op'>=</span> <span class='fu'><a href='readImage.html'>readImage</a></span><span class='op'>(</span><span class='va'>pth_im</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>255</span>
-
-
-<span class='co'># gabor-feature-extract</span>
-<span class='co'>#----------------------</span>
-
-<span class='co'># gb_im = init_gb$gabor_feature_extraction(image = im, scales = 5, orientations = 8,</span>
-
-<span class='co'>#                                          downsample_gabor = TRUE, downsample_rows = 3,</span>
-
-<span class='co'>#                                          downsample_cols = 3, gabor_rows = 39, gabor_columns = 39,</span>
-
-<span class='co'>#                                          plot_data = TRUE, normalize_features = FALSE,</span>
-
-<span class='co'>#                                          threads = 6)</span>
-
-
-<span class='co'># plot real data of gabor-feature-extract</span>
-<span class='co'>#----------------------------------------</span>
-
-<span class='co'># plt_im = init_gb$plot_gabor(real_matrices = gb_im$gabor_features_real, margin_btw_plots = 0.65,</span>
-
-<span class='co'>#                             thresholding = FALSE)</span>
-
-
-<span class='co'># feature generation for a matrix of images (such as the mnist data set)</span>
-<span class='co'>#-----------------------------------------------------------------------</span>
-
-<span class='va'>ROWS</span> <span class='op'>=</span> <span class='fl'>13</span>; <span class='va'>COLS</span> <span class='op'>=</span> <span class='fl'>13</span>; <span class='va'>SCAL</span> <span class='op'>=</span> <span class='fl'>3</span>; <span class='va'>ORIEN</span> <span class='op'>=</span> <span class='fl'>5</span>; <span class='va'>nrow_mt</span> <span class='op'>=</span> <span class='fl'>500</span>; <span class='va'>im_width</span> <span class='op'>=</span> <span class='fl'>12</span>; <span class='va'>im_height</span> <span class='op'>=</span> <span class='fl'>15</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>im_mt</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>255</span>, <span class='va'>nrow_mt</span> <span class='op'>*</span> <span class='va'>im_width</span> <span class='op'>*</span> <span class='va'>im_height</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='va'>nrow_mt</span>,
-
-                      ncol <span class='op'>=</span> <span class='va'>im_width</span> <span class='op'>*</span> <span class='va'>im_height</span><span class='op'>)</span>
-
-<span class='co'># gb_ex = init_gb$gabor_feature_engine(img_data = im_mt, img_nrow = im_width, img_ncol = im_height,</span>
-
-<span class='co'>#                                      scales = SCAL, orientations = ORIEN, gabor_rows = ROWS,</span>
-
-<span class='co'>#                                      gabor_columns = COLS, downsample_gabor = FALSE,</span>
-
-<span class='co'>#                                      downsample_rows = NULL, downsample_cols = NULL,</span>
-
-<span class='co'>#                                      normalize_features = TRUE, threads = 1, verbose = FALSE)</span>
-
-
-<span class='co'># plot of multiple image in same figure</span>
-<span class='co'>#---------------------------------------</span>
-
-<span class='va'>list_images</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>im</span>, <span class='va'>im</span>, <span class='va'>im</span><span class='op'>)</span>
-
-<span class='va'>plt_multi</span> <span class='op'>=</span> <span class='va'>init_gb</span><span class='op'>$</span><span class='fu'>plot_multi_images</span><span class='op'>(</span><span class='va'>list_images</span>, par_ROWS <span class='op'>=</span> <span class='fl'>2</span>, par_COLS <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-
-</div><div class='img'><img src='GaborFeatureExtract-2.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/mlampros/OpenImageR'>OpenImageR</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>init_gb</span> <span class='op'>=</span> <span class='va'>GaborFeatureExtract</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># gabor-filter-bank</span></span>
+<span class='r-in'><span class='co'>#------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>gb_f</span> <span class='op'>=</span> <span class='va'>init_gb</span><span class='op'>$</span><span class='fu'>gabor_filter_bank</span><span class='op'>(</span>scales <span class='op'>=</span> <span class='fl'>5</span>, orientations <span class='op'>=</span> <span class='fl'>8</span>, gabor_rows <span class='op'>=</span> <span class='fl'>39</span>,</span>
+<span class='r-in'></span>
+<span class='r-in'>                                 gabor_columns <span class='op'>=</span> <span class='fl'>39</span>, plot_data <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># plot gabor-filter-bank</span></span>
+<span class='r-in'><span class='co'>#-----------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>plt_f</span> <span class='op'>=</span> <span class='va'>init_gb</span><span class='op'>$</span><span class='fu'>plot_gabor</span><span class='op'>(</span>real_matrices <span class='op'>=</span> <span class='va'>gb_f</span><span class='op'>$</span><span class='va'>gabor_real</span>, margin_btw_plots <span class='op'>=</span> <span class='fl'>0.65</span>,</span>
+<span class='r-in'></span>
+<span class='r-in'>                           thresholding <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='GaborFeatureExtract-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># read image</span></span>
+<span class='r-in'><span class='co'>#-----------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>pth_im</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"tmp_images"</span>, <span class='st'>"car.png"</span>, package <span class='op'>=</span> <span class='st'>"OpenImageR"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>im</span> <span class='op'>=</span> <span class='fu'><a href='readImage.html'>readImage</a></span><span class='op'>(</span><span class='va'>pth_im</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>255</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># gabor-feature-extract</span></span>
+<span class='r-in'><span class='co'>#----------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># gb_im = init_gb$gabor_feature_extraction(image = im, scales = 5, orientations = 8,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                                          downsample_gabor = TRUE, downsample_rows = 3,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                                          downsample_cols = 3, gabor_rows = 39, gabor_columns = 39,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                                          plot_data = TRUE, normalize_features = FALSE,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                                          threads = 6)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># plot real data of gabor-feature-extract</span></span>
+<span class='r-in'><span class='co'>#----------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># plt_im = init_gb$plot_gabor(real_matrices = gb_im$gabor_features_real, margin_btw_plots = 0.65,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                             thresholding = FALSE)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># feature generation for a matrix of images (such as the mnist data set)</span></span>
+<span class='r-in'><span class='co'>#-----------------------------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>ROWS</span> <span class='op'>=</span> <span class='fl'>13</span>; <span class='va'>COLS</span> <span class='op'>=</span> <span class='fl'>13</span>; <span class='va'>SCAL</span> <span class='op'>=</span> <span class='fl'>3</span>; <span class='va'>ORIEN</span> <span class='op'>=</span> <span class='fl'>5</span>; <span class='va'>nrow_mt</span> <span class='op'>=</span> <span class='fl'>500</span>; <span class='va'>im_width</span> <span class='op'>=</span> <span class='fl'>12</span>; <span class='va'>im_height</span> <span class='op'>=</span> <span class='fl'>15</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>im_mt</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>255</span>, <span class='va'>nrow_mt</span> <span class='op'>*</span> <span class='va'>im_width</span> <span class='op'>*</span> <span class='va'>im_height</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='va'>nrow_mt</span>,</span>
+<span class='r-in'></span>
+<span class='r-in'>                      ncol <span class='op'>=</span> <span class='va'>im_width</span> <span class='op'>*</span> <span class='va'>im_height</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># gb_ex = init_gb$gabor_feature_engine(img_data = im_mt, img_nrow = im_width, img_ncol = im_height,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                                      scales = SCAL, orientations = ORIEN, gabor_rows = ROWS,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                                      gabor_columns = COLS, downsample_gabor = FALSE,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                                      downsample_rows = NULL, downsample_cols = NULL,</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#                                      normalize_features = TRUE, threads = 1, verbose = FALSE)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># plot of multiple image in same figure</span></span>
+<span class='r-in'><span class='co'>#---------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>list_images</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>im</span>, <span class='va'>im</span>, <span class='va'>im</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>plt_multi</span> <span class='op'>=</span> <span class='va'>init_gb</span><span class='op'>$</span><span class='fu'>plot_multi_images</span><span class='op'>(</span><span class='va'>list_images</span>, par_ROWS <span class='op'>=</span> <span class='fl'>2</span>, par_COLS <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-plt img'><img src='GaborFeatureExtract-2.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
