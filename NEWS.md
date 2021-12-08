@@ -1,4 +1,8 @@
 
+## OpenImageR 1.2.1
+
+* I've fixed an mistake in the code of the *RGB_to_HSV()* function in the *inst/include/OpenImageRheader.h* file related to an [StackOverflow issue](https://stackoverflow.com/q/70183472)
+
 
 ## OpenImageR 1.2.0
 

@@ -1481,7 +1481,7 @@ namespace oimageR {
             s_val = B(i);
           }
 
-          S(i) = 1.0 - (3.0 * s_val) * (R(i) + G(i) + B(i));
+          S(i) = 1.0 - (3.0 * s_val) / (R(i) + G(i) + B(i));
           V(i) = (1.0 / 3.0) * (R(i) + G(i) + B(i));
         }
 
