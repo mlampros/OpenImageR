@@ -2,6 +2,7 @@
 ## OpenImageR 1.2.1
 
 * I've fixed an mistake in the code of the *RGB_to_HSV()* function in the *inst/include/OpenImageRheader.h* file related to an [StackOverflow issue](https://stackoverflow.com/q/70183472)
+* I've added the *'normalize_pixels'* parameter to the *'resizeImage()'* function and I've set it to FALSE so that output pixel values are not normalized by default
 
 
 ## OpenImageR 1.2.0

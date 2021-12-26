@@ -178,7 +178,7 @@ path = file.path(getwd(), 'vignette_1', 'image2.jpg')
 
 im = readImage(path)
 
-intBl = resizeImage(im, width = 100, height = 100, method = 'bilinear')
+intBl = resizeImage(im, width = 100, height = 100, method = 'bilinear', normalize_pixels = TRUE)
 
 imageShow(intBl)
 
@@ -462,8 +462,8 @@ path_im2 = file.path(getwd(), 'vignette_1', 'image2.jpg')
 tmp_im1 = readImage(path_im1)
 tmp_im2 = readImage(path_im2)
 
-tmp_im1 = resizeImage(tmp_im1, 200, 200)
-tmp_im2 = resizeImage(tmp_im2, 200, 200)
+tmp_im1 = resizeImage(tmp_im1, 200, 200, normalize_pixels = TRUE)
+tmp_im2 = resizeImage(tmp_im2, 200, 200, normalize_pixels = TRUE)
 
 tmp_gray1 = rgb_2gray(tmp_im1)
 tmp_gray2 = rgb_2gray(tmp_im2)

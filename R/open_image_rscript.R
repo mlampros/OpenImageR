@@ -735,6 +735,7 @@ sec_resiz_array = function(image, flag = T) {
 #' @param width a number specifying the new width of the image. Corresponds to the image-rows.
 #' @param height a number specifying the new height of the image. Corresponds to the image-columns.
 #' @param method one of 'nearest', 'bilinear'
+#' @param normalize_pixels a boolean. If TRUE, then the output pixel values will be divided by 255.0
 #' @return depending on the input, either a matrix or an array
 #' @author Lampros Mouselimis
 #' @details
@@ -749,7 +750,7 @@ sec_resiz_array = function(image, flag = T) {
 #' resiz = resizeImage(image, width = 32, height = 32, method = 'nearest')
 #'
 
-resizeImage = function(image, width, height, method = 'nearest') {
+resizeImage = function(image, width, height, method = 'nearest', normalize_pixels = FALSE) {
 
   if (inherits(image, 'data.frame')) image = as.matrix(image)
   if (width < 1.0) stop("width should be at least 1.0")
@@ -789,7 +790,9 @@ resizeImage = function(image, width, height, method = 'nearest') {
     stop('invalid type of image, use either a matrix, data frame or array')
   }
 
-  return(out/255.0)
+  if (normalize_pixels) out = out / 255.0
+
+  return(out)
 }
 
 

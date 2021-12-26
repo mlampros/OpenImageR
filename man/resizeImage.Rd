@@ -4,7 +4,7 @@
 \alias{resizeImage}
 \title{resize an image using the 'nearest neighbors' or the 'bilinear' method}
 \usage{
-resizeImage(image, width, height, method = "nearest")
+resizeImage(image, width, height, method = "nearest", normalize_pixels = FALSE)
 }
 \arguments{
 \item{image}{matrix or 3-dimensional array}
@@ -14,6 +14,8 @@ resizeImage(image, width, height, method = "nearest")
 \item{height}{a number specifying the new height of the image. Corresponds to the image-columns.}
 
 \item{method}{one of 'nearest', 'bilinear'}
+
+\item{normalize_pixels}{a boolean. If TRUE, then the output pixel values will be divided by 255.0}
 }
 \value{
 depending on the input, either a matrix or an array
