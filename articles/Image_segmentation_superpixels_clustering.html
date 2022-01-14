@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -70,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mlampros/OpenImageR/">
+  <a href="https://github.com/mlampros/OpenImageR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,25 +85,25 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Image segmentation based on Superpixels and Clustering</h1>
-                        <h4 class="author">Lampros Mouselimis</h4>
+                        <h4 data-toc-skip class="author">Lampros Mouselimis</h4>
             
-            <h4 class="date">2021-11-30</h4>
+            <h4 data-toc-skip class="date">2022-01-14</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/master/vignettes/Image_segmentation_superpixels_clustering.Rmd"><code>vignettes/Image_segmentation_superpixels_clustering.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/vignettes/Image_segmentation_superpixels_clustering.Rmd" class="external-link"><code>vignettes/Image_segmentation_superpixels_clustering.Rmd</code></a></small>
       <div class="hidden name"><code>Image_segmentation_superpixels_clustering.Rmd</code></div>
 
     </div>
 
     
     
-<p>In this vignette, I’ll explain the new functionality of the OpenImageR package, <a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/">SLIC and SLICO superpixels</a> (Simple Linear Iterative Clustering) and their applicability based on <a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf">an IJSR article</a>. The author of the article uses superpixel (SLIC) and Clustering (Affinity Propagation) to perform image segmentation (the article was reproduced using the latest versions of the <a href="https://github.com/mlampros/OpenImageR">OpenImageR</a> and <a href="https://github.com/mlampros/ClusterR">ClusterR</a> packages).</p>
+<p>In this vignette, I’ll explain the new functionality of the OpenImageR package, <a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/" class="external-link">SLIC and SLICO superpixels</a> (Simple Linear Iterative Clustering) and their applicability based on <a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf" class="external-link">an IJSR article</a>. The author of the article uses superpixel (SLIC) and Clustering (Affinity Propagation) to perform image segmentation (the article was reproduced using the latest versions of the <a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a> and <a href="https://github.com/mlampros/ClusterR" class="external-link">ClusterR</a> packages).</p>
 <p><br></p>
-<div id="superpixels" class="section level3">
-<h3 class="hasAnchor">
-<a href="#superpixels" class="anchor"></a>Superpixels</h3>
-<p>“Introduced by Ren and Malik in 2003, superpixels group pixels similar in color and other low-level properties. In this respect, superpixels address two problems inherent to the processing of digital images: firstly, pixels are merely a result of discretization; and secondly, the high number of pixels in large images prevents many algorithms from being computationally feasible. Ren and Malik introduce superpixels as more natural entities - grouping pixels which perceptually belong together while heavily reducing the number of primitives for subsequent algorithms.” You can read more about superpixels in <a href="https://arxiv.org/pdf/1612.01601.pdf">this arxiv article</a>.</p>
+<div class="section level3">
+<h3 id="superpixels">Superpixels<a class="anchor" aria-label="anchor" href="#superpixels"></a>
+</h3>
+<p>“Introduced by Ren and Malik in 2003, superpixels group pixels similar in color and other low-level properties. In this respect, superpixels address two problems inherent to the processing of digital images: firstly, pixels are merely a result of discretization; and secondly, the high number of pixels in large images prevents many algorithms from being computationally feasible. Ren and Malik introduce superpixels as more natural entities - grouping pixels which perceptually belong together while heavily reducing the number of primitives for subsequent algorithms.” You can read more about superpixels in <a href="https://arxiv.org/pdf/1612.01601.pdf" class="external-link">this arxiv article</a>.</p>
 <p><br></p>
-<p>The <em>superpixels()</em> function of the <em>OpenImageR</em> package is based on the open source C++ code of the <a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/">IMAGE AND VISUAL REPRESENTATION LAB IVRL</a> and allows users to receive <em>labels</em> and <em>output slic images</em>. The following code chunk illustrates how this can be done using either the “slic” or the “slico” method,</p>
+<p>The <em>superpixels()</em> function of the <em>OpenImageR</em> package is based on the open source C++ code of the <a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/" class="external-link">IMAGE AND VISUAL REPRESENTATION LAB IVRL</a> and allows users to receive <em>labels</em> and <em>output slic images</em>. The following code chunk illustrates how this can be done using either the “slic” or the “slico” method,</p>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(OpenImageR)</span>
@@ -162,40 +158,40 @@
 <span class="co"># plot both "slic" and "slico"</span>
 <span class="co">#-----------------------------</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">plot_slic</span> <span class="op">=</span> <span class="fu">OpenImageR</span><span class="fu">::</span><span class="fu"><a href="../reference/NormalizeObject.html">NormalizeObject</a></span><span class="op">(</span><span class="va">res_slic</span><span class="op">$</span><span class="va">slic_data</span><span class="op">)</span>
-<span class="va">plot_slic</span> <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">plot_slic</span><span class="op">)</span>
-<span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">plot_slic</span><span class="op">)</span>
+<span class="va">plot_slic</span> <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html" class="external-link">as.raster</a></span><span class="op">(</span><span class="va">plot_slic</span><span class="op">)</span>
+<span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">plot_slic</span><span class="op">)</span>
 
 <span class="va">plot_slico</span> <span class="op">=</span> <span class="fu">OpenImageR</span><span class="fu">::</span><span class="fu"><a href="../reference/NormalizeObject.html">NormalizeObject</a></span><span class="op">(</span><span class="va">res_slico</span><span class="op">$</span><span class="va">slic_data</span><span class="op">)</span>
-<span class="va">plot_slico</span> <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">plot_slico</span><span class="op">)</span>
-<span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">plot_slico</span><span class="op">)</span>
+<span class="va">plot_slico</span> <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html" class="external-link">as.raster</a></span><span class="op">(</span><span class="va">plot_slico</span><span class="op">)</span>
+<span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">plot_slico</span><span class="op">)</span>
 </code></pre></div>
 <p><br></p>
 <p><img src="vignette_3/slic_vs_slico.png"></p>
 <p><br></p>
-<p>According to the <a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/">authors of the slic method</a>, “<em>SLIC uses the same compactness parameter (chosen by user) for all superpixels in the image. If the image is smooth in certain regions but highly textured in others, SLIC produces smooth regular-sized superpixels in the smooth regions and highly irregular superpixels in the textured regions. So, it becomes tricky choosing the right parameter for each image. SLICO does away with this problem completely. The user no longer has to set the compactness parameter or try different values of it. SLICO adaptively chooses the compactness parameter for each superpixel differently. This generates regular shaped superpixels in both textured and non textured regions alike. The improvement comes with hardly any compromise on the computational efficiency – SLICO continues to be as fast as SLIC</em>.”</p>
+<p>According to the <a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/" class="external-link">authors of the slic method</a>, “<em>SLIC uses the same compactness parameter (chosen by user) for all superpixels in the image. If the image is smooth in certain regions but highly textured in others, SLIC produces smooth regular-sized superpixels in the smooth regions and highly irregular superpixels in the textured regions. So, it becomes tricky choosing the right parameter for each image. SLICO does away with this problem completely. The user no longer has to set the compactness parameter or try different values of it. SLICO adaptively chooses the compactness parameter for each superpixel differently. This generates regular shaped superpixels in both textured and non textured regions alike. The improvement comes with hardly any compromise on the computational efficiency – SLICO continues to be as fast as SLIC</em>.”</p>
 <p><br></p>
 <p>More information about the parameters of the <em>superpixels()</em> function can be found in the package documentation.</p>
 <p><br></p>
 </div>
-<div id="image-segmentation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#image-segmentation" class="anchor"></a>Image segmentation</h3>
-<p>“In computer vision, image segmentation is the process of partitioning a digital image into multiple segments (sets of pixels, also known as super-pixels). The goal of segmentation is to simplify and/or change the representation of an image into something that is more meaningful and easier to analyze. Image segmentation is typically used to locate objects and boundaries (lines, curves, etc.) in images. More precisely, image segmentation is the process of assigning a label to every pixel in an image such that pixels with the same label share certain characteristics.” You can read more about image segmentation in this <a href="https://en.wikipedia.org/wiki/Image_segmentation">wikipedia article</a>.</p>
+<div class="section level3">
+<h3 id="image-segmentation">Image segmentation<a class="anchor" aria-label="anchor" href="#image-segmentation"></a>
+</h3>
+<p>“In computer vision, image segmentation is the process of partitioning a digital image into multiple segments (sets of pixels, also known as super-pixels). The goal of segmentation is to simplify and/or change the representation of an image into something that is more meaningful and easier to analyze. Image segmentation is typically used to locate objects and boundaries (lines, curves, etc.) in images. More precisely, image segmentation is the process of assigning a label to every pixel in an image such that pixels with the same label share certain characteristics.” You can read more about image segmentation in this <a href="https://en.wikipedia.org/wiki/Image_segmentation" class="external-link">wikipedia article</a>.</p>
 <p><br></p>
 </div>
-<div id="affinity-propagation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#affinity-propagation" class="anchor"></a>Affinity Propagation</h3>
+<div class="section level3">
+<h3 id="affinity-propagation">Affinity Propagation<a class="anchor" aria-label="anchor" href="#affinity-propagation"></a>
+</h3>
 <p>“Affinity propagation is a new algorithm that takes as input measures of similarity between pairs of data points and simultaneously considers all data points as potential exemplars. Real-valued messages are exchanged between data points until a high-quality set of exemplars and corresponding clusters gradually emerges. We have used affinity propagation to solve a variety of clustering problems and we found that it uniformly found clusters with much lower error than those found by other methods, and it did so in less than one-hundredth the amount of time. Because of its simplicity, general applicability, and performance, we believe affinity propagation will prove to be of broad value in science and engineering.” The Affinity Propagation algorithm is explained in detail in the <em>“authors web page”</em> ( www.psi.toronto.edu/index.php?q=affinity%20propagation ).</p>
 <p><br></p>
 </div>
-<div id="image-segmentation-based-on-superpixels-slic-slico-and-affinity-propagation-ap" class="section level3">
-<h3 class="hasAnchor">
-<a href="#image-segmentation-based-on-superpixels-slic-slico-and-affinity-propagation-ap" class="anchor"></a>Image segmentation based on superpixels (SLIC, SLICO) and Affinity Propagation (AP)</h3>
-<p>The <a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf">author of the article</a>, that I mentioned earlier, uses a method named <strong>SLICAP</strong> (SLIC + AP) to perform image segmentation. The methodology is the following:</p>
+<div class="section level3">
+<h3 id="image-segmentation-based-on-superpixels-slic-slico-and-affinity-propagation-ap">Image segmentation based on superpixels (SLIC, SLICO) and Affinity Propagation (AP)<a class="anchor" aria-label="anchor" href="#image-segmentation-based-on-superpixels-slic-slico-and-affinity-propagation-ap"></a>
+</h3>
+<p>The <a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf" class="external-link">author of the article</a>, that I mentioned earlier, uses a method named <strong>SLICAP</strong> (SLIC + AP) to perform image segmentation. The methodology is the following:</p>
 <ul>
 <li>First, the SLICAP technique uses the SLIC superpixel algorithm to form an over-segmentation of an image</li>
 <li>Then, a similarity is constructed based on the features of superpixels</li>
@@ -210,21 +206,21 @@
 <p><br></p>
 <p>The author of the article utilizes,</p>
 <ul>
-<li>the <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">CIELAB colour space</a> which is designed to be perceptually uniform with respect to human color vision</li>
+<li>the <a href="https://en.wikipedia.org/wiki/CIELAB_color_space" class="external-link">CIELAB colour space</a> which is designed to be perceptually uniform with respect to human color vision</li>
 <li>the <em>negative Euclidean distance</em> (although the author uses 3 different similarity measures (page 1526), I’ll use the first one in my code because it gives better results)</li>
 <li>
 <em>weights for the 3 colour channels</em> (wL, wA, wB) because they keep balance so as to be consistent with human perception</li>
 <li>a <em>colorradius</em> to adjust the number of clusters. If its value is low, the number of targets would increase, which leads to more detailed segmentation results</li>
-<li>the <a href="https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html">Berkeley Segmentation Database (BSD)</a> (it can be downloaded also from my <a href="https://github.com/mlampros/DataSets">Github repository</a>)</li>
+<li>the <a href="https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html" class="external-link">Berkeley Segmentation Database (BSD)</a> (it can be downloaded also from my <a href="https://github.com/mlampros/DataSets" class="external-link">Github repository</a>)</li>
 </ul>
 <p><br></p>
-<p>I bundled the code in an R package, <a href="https://github.com/mlampros/SuperpixelImageSegmentation">SuperpixelImageSegmentation</a>, which can be downloaded from Github (consult the README.md file of the package for more information). The following code snippet first reads the input image and then performs image segmentation based on SLIC superpixels and AP clustering,</p>
+<p>I bundled the code in an R package, <a href="https://github.com/mlampros/SuperpixelImageSegmentation" class="external-link">SuperpixelImageSegmentation</a>, which can be downloaded from Github (consult the README.md file of the package for more information). The following code snippet first reads the input image and then performs image segmentation based on SLIC superpixels and AP clustering,</p>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/SuperpixelImageSegmentation">SuperpixelImageSegmentation</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/SuperpixelImageSegmentation" class="external-link">SuperpixelImageSegmentation</a></span><span class="op">)</span>
 
-<span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"images"</span>, <span class="st">"BSR_bsds500_image.jpg"</span>, package <span class="op">=</span> <span class="st">"SuperpixelImageSegmentation"</span><span class="op">)</span>
+<span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"images"</span>, <span class="st">"BSR_bsds500_image.jpg"</span>, package <span class="op">=</span> <span class="st">"SuperpixelImageSegmentation"</span><span class="op">)</span>
 
 <span class="va">im</span> <span class="op">=</span> <span class="fu">OpenImageR</span><span class="fu">::</span><span class="fu"><a href="../reference/readImage.html">readImage</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></code></pre></div>
 <p><br></p>
@@ -274,14 +270,14 @@
 <p>Decreasing the number of superpixels (from 600 to 200) or modifying the colorradius (from 10 to 20) will affect the quality of the output image, but it will also reduce the computation time.</p>
 <p><br></p>
 </div>
-<div id="superpixels-ap-and-kmeans-or-mini-batch-kmeans" class="section level3">
-<h3 class="hasAnchor">
-<a href="#superpixels-ap-and-kmeans-or-mini-batch-kmeans" class="anchor"></a>Superpixels, AP and Kmeans (or Mini-Batch-Kmeans)</h3>
+<div class="section level3">
+<h3 id="superpixels-ap-and-kmeans-or-mini-batch-kmeans">Superpixels, AP and Kmeans (or Mini-Batch-Kmeans)<a class="anchor" aria-label="anchor" href="#superpixels-ap-and-kmeans-or-mini-batch-kmeans"></a>
+</h3>
 <p>As a follow-up to the author’s method, one might take advantage of the automatic way the AP algorithm determines the number of clusters in order to perform vector quantization using kmeans (this will give qualitative better results at the cost of increasing computation time). I included additional parameters in the <em>spixel_segmentation()</em> method of the <em>Image_Segmentation</em> R6-class for this purpose and I’ll use the following image, which appears also in the article,</p>
 <p><br></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="va">path_km</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"images"</span>, <span class="st">"airplane.jpg"</span>, package <span class="op">=</span> <span class="st">"SuperpixelImageSegmentation"</span><span class="op">)</span>
+<span class="va">path_km</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"images"</span>, <span class="st">"airplane.jpg"</span>, package <span class="op">=</span> <span class="st">"SuperpixelImageSegmentation"</span><span class="op">)</span>
 
 <span class="va">im_km</span> <span class="op">=</span> <span class="fu">OpenImageR</span><span class="fu">::</span><span class="fu"><a href="../reference/readImage.html">readImage</a></span><span class="op">(</span><span class="va">path_km</span><span class="op">)</span>
 
@@ -399,12 +395,12 @@
 <li>
 <em>colour_type</em> (“RGB”, “LAB” or “HSV”)</li>
 </ul>
-<p>More details can be found in the <a href="https://github.com/mlampros/SuperpixelImageSegmentation">SuperpixelImageSegmentation</a> R package documentation.</p>
+<p>More details can be found in the <a href="https://github.com/mlampros/SuperpixelImageSegmentation" class="external-link">SuperpixelImageSegmentation</a> R package documentation.</p>
 <p><br></p>
 </div>
-<div id="image-masks" class="section level3">
-<h3 class="hasAnchor">
-<a href="#image-masks" class="anchor"></a>Image Masks</h3>
+<div class="section level3">
+<h3 id="image-masks">Image Masks<a class="anchor" aria-label="anchor" href="#image-masks"></a>
+</h3>
 <p>The <em>spixel_masks_show()</em> method in combination with the <em>adjust_centroids_and_return_masks</em> parameter (set to TRUE), allows users to also plot the masks belonging to each separate cluster,</p>
 <p><br></p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a></span>
@@ -464,19 +460,19 @@
 <p><br><br></p>
 <p><strong>References :</strong></p>
 <ul>
-<li><a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf">Image Segmentation using SLIC Superpixels and Affinity Propagation Clustering, Bao Zhou, 2013</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Image_segmentation">Image segmentation, wikipedia</a></li>
-<li><a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/">SLIC Superpixels</a></li>
-<li><a href="https://arxiv.org/pdf/1612.01601.pdf">Superpixels: An Evaluation of the State-of-the-Art, David Stutz, Alexander Hermans, Bastian Leibe, 2016</a></li>
+<li><a href="https://www.ijsr.net/archive/v4i4/SUB152869.pdf" class="external-link">Image Segmentation using SLIC Superpixels and Affinity Propagation Clustering, Bao Zhou, 2013</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Image_segmentation" class="external-link">Image segmentation, wikipedia</a></li>
+<li><a href="https://www.epfl.ch/labs/ivrl/research/slic-superpixels/" class="external-link">SLIC Superpixels</a></li>
+<li><a href="https://arxiv.org/pdf/1612.01601.pdf" class="external-link">Superpixels: An Evaluation of the State-of-the-Art, David Stutz, Alexander Hermans, Bastian Leibe, 2016</a></li>
 <li>
 <strong>Affinity Propagation</strong> ( www.psi.toronto.edu/index.php?q=affinity%20propagation )</li>
 <li>
 <strong>Clustering by Passing Messages Between Data Points, Brendan J. Frey and Delbert Dueck, University of Toronto, Science 315, 972-976, February 2007</strong> ( www.psi.toronto.edu/affinitypropagation/FreyDueckScience07.pdf )</li>
-<li><a href="https://en.wikipedia.org/wiki/CIELAB_color_space">CIELAB colour space</a></li>
-<li><a href="https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html">Berkeley Segmentation Database (BSD)</a></li>
-<li><a href="https://github.com/mlampros/OpenImageR">OpenImageR package</a></li>
-<li><a href="https://github.com/mlampros/ClusterR">ClusterR package</a></li>
-<li><a href="https://github.com/mlampros/SuperpixelImageSegmentation">SuperpixelImageSegmentation package</a></li>
+<li><a href="https://en.wikipedia.org/wiki/CIELAB_color_space" class="external-link">CIELAB colour space</a></li>
+<li><a href="https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html" class="external-link">Berkeley Segmentation Database (BSD)</a></li>
+<li><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR package</a></li>
+<li><a href="https://github.com/mlampros/ClusterR" class="external-link">ClusterR package</a></li>
+<li><a href="https://github.com/mlampros/SuperpixelImageSegmentation" class="external-link">SuperpixelImageSegmentation package</a></li>
 </ul>
 </div>
   </div>
@@ -490,11 +486,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Lampros Mouselimis.</p>
+  <p></p>
+<p>Developed by Lampros Mouselimis.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -502,6 +500,8 @@
 
   
 
+
+  
 
   </body>
 </html>

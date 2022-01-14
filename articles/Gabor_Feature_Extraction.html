@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -70,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mlampros/OpenImageR/">
+  <a href="https://github.com/mlampros/OpenImageR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,18 +85,18 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Gabor Feature extraction</h1>
-                        <h4 class="author">Lampros Mouselimis</h4>
+                        <h4 data-toc-skip class="author">Lampros Mouselimis</h4>
             
-            <h4 class="date">2021-11-30</h4>
+            <h4 data-toc-skip class="date">2022-01-14</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/master/vignettes/Gabor_Feature_Extraction.Rmd"><code>vignettes/Gabor_Feature_Extraction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/vignettes/Gabor_Feature_Extraction.Rmd" class="external-link"><code>vignettes/Gabor_Feature_Extraction.Rmd</code></a></small>
       <div class="hidden name"><code>Gabor_Feature_Extraction.Rmd</code></div>
 
     </div>
 
     
     
-<p>In this Vignette, I’ll illustrate the new functionality of the OpenImageR package (<em>Gabor Feature Extraction</em>). The Gabor features have been used extensively in <a href="https://en.wikipedia.org/wiki/Gabor_filter">image analysis and processing</a> (Character and Face recognition). <a href="https://en.wikipedia.org/wiki/Dennis_Gabor">Gabor</a> (Nobel prize winner, an electrical engineer, and physicist) used the following wording which I think it’s worth mentioning in this Vignette, <em>“You can’t predict the future, but you can invent it.”</em> (<a href="https://www.it.lut.fi/project/gabor/">source</a>).</p>
+<p>In this Vignette, I’ll illustrate the new functionality of the OpenImageR package (<em>Gabor Feature Extraction</em>). The Gabor features have been used extensively in <a href="https://en.wikipedia.org/wiki/Gabor_filter" class="external-link">image analysis and processing</a> (Character and Face recognition). <a href="https://en.wikipedia.org/wiki/Dennis_Gabor" class="external-link">Gabor</a> (Nobel prize winner, an electrical engineer, and physicist) used the following wording which I think it’s worth mentioning in this Vignette, <em>“You can’t predict the future, but you can invent it.”</em> (<a href="https://www.it.lut.fi/project/gabor/" class="external-link">source</a>).</p>
 <p>In the following lines I’ll describe the <em>GaborFeatureExtract</em> R6 class which includes the following methods,</p>
 <table class="table">
 <thead><tr class="header">
@@ -121,25 +117,25 @@
 </tr>
 </tbody>
 </table>
-<p>These methods are based on the Matlab code <em><a href="https://github.com/mhaghighat/gabor">Gabor Feature Extraction</a></em> of the paper <em>M. Haghighat, S. Zonouz, M. Abdel-Mottaleb, “CloudID: Trustworthy cloud-based and cross-enterprise biometric identification,” Expert Systems with Applications, vol. 42, no. 21, pp. 7905-7916, 2015</em>, <a href="http://dx.doi.org/10.1016/j.eswa.2015.06.025" class="uri">http://dx.doi.org/10.1016/j.eswa.2015.06.025</a>. The initial Matlab code was modified (I added the <strong>Magnitude</strong> feature and the <strong>gabor_feature_engine()</strong> method) and parallelized using Rcpp wherever it was possible.</p>
+<p>These methods are based on the Matlab code <em><a href="https://github.com/mhaghighat/gabor" class="external-link">Gabor Feature Extraction</a></em> of the paper <em>M. Haghighat, S. Zonouz, M. Abdel-Mottaleb, “CloudID: Trustworthy cloud-based and cross-enterprise biometric identification,” Expert Systems with Applications, vol. 42, no. 21, pp. 7905-7916, 2015</em>, <a href="http://dx.doi.org/10.1016/j.eswa.2015.06.025" class="external-link uri">http://dx.doi.org/10.1016/j.eswa.2015.06.025</a>. The initial Matlab code was modified (I added the <strong>Magnitude</strong> feature and the <strong>gabor_feature_engine()</strong> method) and parallelized using Rcpp wherever it was possible.</p>
 <p><br></p>
-<div id="gabor-features" class="section level3">
-<h3 class="hasAnchor">
-<a href="#gabor-features" class="anchor"></a>Gabor Features</h3>
+<div class="section level3">
+<h3 id="gabor-features">Gabor Features<a class="anchor" aria-label="anchor" href="#gabor-features"></a>
+</h3>
 <p><br></p>
-<p>I came across the Gabor Features last month when I had to process images and I needed an additional function besides the already existing <a href="https://www.rdocumentation.org/packages/OpenImageR/versions/1.0.8/topics/HOG">HoG features</a>. I did the regular search on CRAN (Comprehensive R Archive Network) but I couldn’t find anything related to Gabor Feature Extraction (as of August 2018), therefore I decided to port the Matlab code into R. There are many resources on the web if someone intends to deepen his / her knowledge on the subject and I’ll add some of these that I found useful at the end of the Vignette (References). I’ll explain the methods of the <em>GaborFeatureExtract</em> R6 class using an image found on a <a href="https://stackoverflow.com/a/20610474/8302386">Stackoverflow question</a>.</p>
+<p>I came across the Gabor Features last month when I had to process images and I needed an additional function besides the already existing <a href="https://www.rdocumentation.org/packages/OpenImageR/versions/1.0.8/topics/HOG" class="external-link">HoG features</a>. I did the regular search on CRAN (Comprehensive R Archive Network) but I couldn’t find anything related to Gabor Feature Extraction (as of August 2018), therefore I decided to port the Matlab code into R. There are many resources on the web if someone intends to deepen his / her knowledge on the subject and I’ll add some of these that I found useful at the end of the Vignette (References). I’ll explain the methods of the <em>GaborFeatureExtract</em> R6 class using an image found on a <a href="https://stackoverflow.com/a/20610474/8302386" class="external-link">Stackoverflow question</a>.</p>
 <p><br></p>
 <p><img src="vignette_2/car.png"></p>
 </div>
-<div id="gabor_filter_bank" class="section level3">
-<h3 class="hasAnchor">
-<a href="#gabor_filter_bank" class="anchor"></a>gabor_filter_bank</h3>
+<div class="section level3">
+<h3 id="gabor_filter_bank">gabor_filter_bank<a class="anchor" aria-label="anchor" href="#gabor_filter_bank"></a>
+</h3>
 <p><br></p>
-<p>The <strong>gabor_filter_bank</strong> method <em>“… generates a custom-sized Gabor filter bank. It creates a UxV cell array, whose elements are MxN matrices; each matrix being a 2-D Gabor filter”</em> according to the <a href="https://github.com/mhaghighat/gabor">author of the Matlab</a> code. The following code chunk shows how this works in R,</p>
+<p>The <strong>gabor_filter_bank</strong> method <em>“… generates a custom-sized Gabor filter bank. It creates a UxV cell array, whose elements are MxN matrices; each matrix being a 2-D Gabor filter”</em> according to the <a href="https://github.com/mhaghighat/gabor" class="external-link">author of the Matlab</a> code. The following code chunk shows how this works in R,</p>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR">OpenImageR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span>
 
 
 <span class="va">init_gb</span> <span class="op">=</span> <span class="va"><a href="../reference/GaborFeatureExtract.html">GaborFeatureExtract</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
@@ -195,11 +191,11 @@
 <p>The documentation includes more details for each of the parameters used.</p>
 <p><br></p>
 </div>
-<div id="gabor_feature_extraction" class="section level3">
-<h3 class="hasAnchor">
-<a href="#gabor_feature_extraction" class="anchor"></a>gabor_feature_extraction</h3>
+<div class="section level3">
+<h3 id="gabor_feature_extraction">gabor_feature_extraction<a class="anchor" aria-label="anchor" href="#gabor_feature_extraction"></a>
+</h3>
 <p><br></p>
-<p>The <strong>gabor_feature_extraction</strong> method extracts the Gabor Features of the image. This method is modified in comparison to the initial Matlab code to give users the option to downsample the image or to normalize the features. Moreover, I added the <strong>Magnitude</strong> feature because according to <a href="https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering">literature</a> it improves predictability.</p>
+<p>The <strong>gabor_feature_extraction</strong> method extracts the Gabor Features of the image. This method is modified in comparison to the initial Matlab code to give users the option to downsample the image or to normalize the features. Moreover, I added the <strong>Magnitude</strong> feature because according to <a href="https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering" class="external-link">literature</a> it improves predictability.</p>
 <p>Based on the previously mentioned <em>car.png</em> image,</p>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -207,7 +203,7 @@
 <span class="co"># read image</span>
 <span class="co">#-----------</span>
 
-<span class="va">pth_im</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"tmp_images"</span>, <span class="st">"car.png"</span>, package <span class="op">=</span> <span class="st">"OpenImageR"</span><span class="op">)</span>
+<span class="va">pth_im</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tmp_images"</span>, <span class="st">"car.png"</span>, package <span class="op">=</span> <span class="st">"OpenImageR"</span><span class="op">)</span>
 
 <span class="va">im</span> <span class="op">=</span> <span class="fu"><a href="../reference/readImage.html">readImage</a></span><span class="op">(</span><span class="va">pth_im</span><span class="op">)</span> <span class="op">*</span> <span class="fl">255</span>
 
@@ -270,9 +266,9 @@
 <p><img src="vignette_2/gabor_car_thresholding.png"></p>
 <p><br></p>
 </div>
-<div id="gabor_feature_engine" class="section level3">
-<h3 class="hasAnchor">
-<a href="#gabor_feature_engine" class="anchor"></a>gabor_feature_engine</h3>
+<div class="section level3">
+<h3 id="gabor_feature_engine">gabor_feature_engine<a class="anchor" aria-label="anchor" href="#gabor_feature_engine"></a>
+</h3>
 <p><br></p>
 <p>The <em>gabor_feature_engine</em> method is an extension of the initial Matlab code and allows the user to extract gabor features from multiple images. This method works in the same way as the <em>HOG_apply</em> method, which takes a matrix of images - such as the mnist data set - and after processing it returns the features. The following example illustrates how to use the <em>gabor_feature_engine</em> method with the mnist data set,</p>
 <p><br></p>
@@ -317,13 +313,13 @@
 <span id="cb8-4"><a href="#cb8-4"></a> <span class="op">$</span><span class="st"> </span>magnitude      <span class="op">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">70000</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3136</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
 <span id="cb8-5"><a href="#cb8-5"></a> <span class="op">$</span><span class="st"> </span>energy_aptitude<span class="op">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">70000</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">64</span>] <span class="dv">2682</span> <span class="dv">2576</span> <span class="dv">1399</span> <span class="dv">1178</span> <span class="dv">2240</span> ...</span></code></pre></div>
 <p><br></p>
-<p>The <em>dat</em> object is a list of length 2. The first sublist corresponds to <em>magnitude</em> whereas the second sublist to <em>local-energy</em> and <em>mean-aptitude</em>. The first thing to do before calculating the accuracy for the mnist data is to reduce the dimensionality of the <em>magnitude</em> feature (I’ll use the <a href="https://github.com/bwlewis/irlba">irlba</a> package for this purpose),</p>
+<p>The <em>dat</em> object is a list of length 2. The first sublist corresponds to <em>magnitude</em> whereas the second sublist to <em>local-energy</em> and <em>mean-aptitude</em>. The first thing to do before calculating the accuracy for the mnist data is to reduce the dimensionality of the <em>magnitude</em> feature (I’ll use the <a href="https://github.com/bwlewis/irlba" class="external-link">irlba</a> package for this purpose),</p>
 <p><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="va">svd_irlb</span> <span class="op">=</span> <span class="fu">irlba</span><span class="fu">::</span><span class="fu">irlba</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span>, nv <span class="op">=</span> <span class="fl">100</span>, nu <span class="op">=</span> <span class="fl">100</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
+<span class="va">svd_irlb</span> <span class="op">=</span> <span class="fu">irlba</span><span class="fu">::</span><span class="fu">irlba</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span>, nv <span class="op">=</span> <span class="fl">100</span>, nu <span class="op">=</span> <span class="fl">100</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
 
-<span class="va">new_x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">svd_irlb</span><span class="op">$</span><span class="va">v</span>
+<span class="va">new_x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">svd_irlb</span><span class="op">$</span><span class="va">v</span>
 </code></pre></div>
 <p><br></p>
 <p>and I’ll create a centered-scaled matrix of the reduced <em>magnitude</em> and the <em>energy-aptitude</em> data,</p>
@@ -408,7 +404,7 @@
 <span id="cb14-11"><a href="#cb14-11"></a></span>
 <span id="cb14-12"><a href="#cb14-12"></a>[<span class="dv">1</span>] <span class="fl">0.9787429</span></span></code></pre></div>
 <p><br></p>
-<p>By averaging both the <em>gabor</em> and the <em>HoG</em> features the mean accuracy increases to 98.34 % which is very close to the score of the <a href="http://mlampros.github.io/2016/07/10/KernelKnn/">HoG + brute force method of KernelKnn</a> (98.4), <br></p>
+<p>By averaging both the <em>gabor</em> and the <em>HoG</em> features the mean accuracy increases to 98.34 % which is very close to the score of the <a href="http://mlampros.github.io/2016/07/10/KernelKnn/" class="external-link">HoG + brute force method of KernelKnn</a> (98.4), <br></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a></span>
 <span id="cb15-2"><a href="#cb15-2"></a>acc_fit_gab_hog =<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(fit_gab<span class="op">$</span>preds),</span>
 <span id="cb15-3"><a href="#cb15-3"></a>                                </span>
@@ -426,12 +422,12 @@
 <p><br><br></p>
 <p><em>References :</em></p>
 <ul>
-<li><a href="https://github.com/mhaghighat/gabor">https://github.com/mhaghighat/gabor</a></li>
-<li><a href="https://stackoverflow.com/questions/20608458/gabor-feature-extraction">Gabor feature extraction Stackoverflow question</a></li>
+<li><a href="https://github.com/mhaghighat/gabor" class="external-link">https://github.com/mhaghighat/gabor</a></li>
+<li><a href="https://stackoverflow.com/questions/20608458/gabor-feature-extraction" class="external-link">Gabor feature extraction Stackoverflow question</a></li>
 <li>
 <strong>Features Extraction using a Gabor Filter Family</strong> <code>(http://www.paper.edu.cn/scholar/showpdf/NUz2MN4IMTD0kxeQh)</code>
 </li>
-<li><a href="https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering">Gabor Feature Based Unsupervised Change Detection of Multitemporal SAR Images Based on Two-Level Clustering</a></li>
+<li><a href="https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering" class="external-link">Gabor Feature Based Unsupervised Change Detection of Multitemporal SAR Images Based on Two-Level Clustering</a></li>
 </ul>
 <p><br><br></p>
 </div>
@@ -446,11 +442,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Lampros Mouselimis.</p>
+  <p></p>
+<p>Developed by Lampros Mouselimis.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -458,6 +456,8 @@
 
   
 
+
+  
 
   </body>
 </html>
