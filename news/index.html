@@ -71,16 +71,13 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.2.0" id="openimager-120">OpenImageR 1.2.0<small>2021-09-10</small><a class="anchor" aria-label="anchor" href="#openimager-120"></a></h2>
-<ul><li>I’ve modified the <em>resize_nearest_rcpp()</em> function in the <em>inst/include/OpenImageRheader.h</em> file by adding a warning in case that the input parameters <em>width</em> and <em>height</em> do not match with the output <em>width</em> and <em>height</em>. See the <a href="https://github.com/mlampros/OpenImageR/issues/21" class="external-link">issue 21</a> in the OpenImageR Github repository. Moreover, I’ve added tests for the case that the <em>resizeImage(method = “nearest”)</em> function gives a warning.</li>
-</ul></div>
+<ul><li>I’ve modified the <em>resize_nearest_rcpp()</em> function in the <em>inst/include/OpenImageRheader.h</em> file by adding a warning in case that the input parameters <em>width</em> and <em>height</em> do not match with the output <em>width</em> and <em>height</em>. See the <a href="https://github.com/mlampros/OpenImageR/issues/21" class="external-link">issue 21</a> in the OpenImageR Github repository. Moreover, I’ve added tests for the case that the <em>resizeImage(method = “nearest”)</em> function gives a warning.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.9" id="openimager-119">OpenImageR 1.1.9<small>2021-05-21</small><a class="anchor" aria-label="anchor" href="#openimager-119"></a></h2>
-<ul><li>I fixed the error in the CRAN results due to mistakes in creation of matrices and arrays in the test (testthat) files.</li>
-</ul></div>
+<ul><li>I fixed the error in the CRAN results due to mistakes in creation of matrices and arrays in the test (testthat) files.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.8" id="openimager-118">OpenImageR 1.1.8<small>2021-05-04</small><a class="anchor" aria-label="anchor" href="#openimager-118"></a></h2>
-<ul><li>I’ve added the <em>CITATION</em> file in the <em>inst</em> directory</li>
-</ul></div>
+<ul><li>I’ve added the <em>CITATION</em> file in the <em>inst</em> directory</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.7" id="openimager-117">OpenImageR 1.1.7<small>2020-06-18</small><a class="anchor" aria-label="anchor" href="#openimager-117"></a></h2>
 <ul><li>I fixed an error in the <em>‘equal_spaced’</em> version of the <em>crop_image_secondary()</em> function</li>
@@ -101,16 +98,13 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.5" id="openimager-115">OpenImageR 1.1.5<small>2019-02-10</small><a class="anchor" aria-label="anchor" href="#openimager-115"></a></h2>
-<ul><li>I renamed the internal function <em>norm_range_gauss</em> to <em>norm_matrix_range</em>. Now, the <em>norm_matrix_range</em> function is accessible when loading the OpenImageR package. Moreover, I excluded rounding [ round() ], which occured by default in the <em>norm_range_gauss</em> function.</li>
-</ul></div>
+<ul><li>I renamed the internal function <em>norm_range_gauss</em> to <em>norm_matrix_range</em>. Now, the <em>norm_matrix_range</em> function is accessible when loading the OpenImageR package. Moreover, I excluded rounding [ round() ], which occured by default in the <em>norm_range_gauss</em> function.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.4" id="openimager-114">OpenImageR 1.1.4<small>2019-01-07</small><a class="anchor" aria-label="anchor" href="#openimager-114"></a></h2>
-<ul><li>I fixed the duplicated vignette title warning</li>
-</ul></div>
+<ul><li>I fixed the duplicated vignette title warning</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.3" id="openimager-113">OpenImageR 1.1.3<small>2018-12-09</small><a class="anchor" aria-label="anchor" href="#openimager-113"></a></h2>
-<ul><li>I fixed a documentation error as suggested in <a href="https://github.com/mlampros/OpenImageR/issues/11" class="external-link">issue 11</a> of the OpenImageR Github repository (converted radians to degrees in all scripts of the OpenImageR package).</li>
-</ul></div>
+<ul><li>I fixed a documentation error as suggested in <a href="https://github.com/mlampros/OpenImageR/issues/11" class="external-link">issue 11</a> of the OpenImageR Github repository (converted radians to degrees in all scripts of the OpenImageR package).</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.2" id="openimager-112">OpenImageR 1.1.2<small>2018-11-08</small><a class="anchor" aria-label="anchor" href="#openimager-112"></a></h2>
 <ul><li>I converted the OpenImageR package to a header-only package, so that Rcpp functions can be called from another R package.</li>
@@ -122,8 +116,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.1" id="openimager-111">OpenImageR 1.1.1<small>2018-08-22</small><a class="anchor" aria-label="anchor" href="#openimager-111"></a></h2>
-<ul><li>I modified the <em>rotate_nearest_bilinear</em> Rcpp function in the <em>utils.cpp</em> file to fix the ASAN-gcc error.</li>
-</ul></div>
+<ul><li>I modified the <em>rotate_nearest_bilinear</em> Rcpp function in the <em>utils.cpp</em> file to fix the ASAN-gcc error.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.0" id="openimager-110">OpenImageR 1.1.0<small>2018-08-07</small><a class="anchor" aria-label="anchor" href="#openimager-110"></a></h2>
 <ul><li>I fixed the ASAN-gcc error.</li>
@@ -162,10 +155,8 @@
 <h2 class="page-header" data-toc-text="1.0.2" id="openimager-102">OpenImageR 1.0.2<small>2016-07-11</small><a class="anchor" aria-label="anchor" href="#openimager-102"></a></h2>
 <p>I did OpenMP optional for all cpp files due to the fact that the OSX OS does not currently support openMP ( r-devel-osx-x86_64-clang )</p>
 <p>I removed the floor() function from the lines 45, 46 of the hog_features.cpp, because otherwise Solaris OS throws the following error:</p>
-<ul><li>error: call of overloaded ‘floor(int)’ is ambiguous</li>
-</ul><p>I can not fix the following error in the hog_features.cpp file for the r-oldrel-windows platform as it has either to do with the RcppArmadillo version or is GCC specific,</p>
-<ul><li>error: could not convert ‘{{-0x00000000000000001, 0, 1}, {-0x00000000000000002, 0, 2}, {-0x00000000000000001, 0, 1}}’ from ‘<brace-enclosed initializer list>’ to ‘arma::mat {aka arma::Mat<double>}’</double></brace-enclosed></li>
-</ul><p>Platforms, which support newer versions of GCC (GCC &gt;= 4.9.0) and a recent version of RcppArmadillo (&gt;= 0.7) do not throw such an error.</p>
+<ul><li>error: call of overloaded ‘floor(int)’ is ambiguous</li></ul><p>I can not fix the following error in the hog_features.cpp file for the r-oldrel-windows platform as it has either to do with the RcppArmadillo version or is GCC specific,</p>
+<ul><li>error: could not convert ‘{{-0x00000000000000001, 0, 1}, {-0x00000000000000002, 0, 2}, {-0x00000000000000001, 0, 1}}’ from ‘<brace-enclosed initializer list>’ to ‘arma::mat {aka arma::Mat<double>}’</double></brace-enclosed></li></ul><p>Platforms, which support newer versions of GCC (GCC &gt;= 4.9.0) and a recent version of RcppArmadillo (&gt;= 0.7) do not throw such an error.</p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.1" id="openimager-101">OpenImageR 1.0.1<small>2016-07-09</small><a class="anchor" aria-label="anchor" href="#openimager-101"></a></h2>
@@ -175,9 +166,7 @@
 <li>r-patched-solaris-x86</li>
 <li>r-oldrel-windows-ix86+x86_64</li>
 </ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.0" id="openimager-100">OpenImageR 1.0.0<a class="anchor" aria-label="anchor" href="#openimager-100"></a></h2>
-</div>
+    <div class="section level2"><h2 class="page-header" data-toc-text="1.0.0" id="openimager-100">OpenImageR 1.0.0<a class="anchor" aria-label="anchor" href="#openimager-100"></a></h2></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -192,7 +181,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>
