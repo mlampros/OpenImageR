@@ -88,33 +88,56 @@
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>a 2-dimensional matrix or data frame (only gray-scale images are valid)</p></dd>
+
+
 <dt>new_image</dt>
 <dd><p>a new image to be compared with the previous input image</p></dd>
+
+
 <dt>method</dt>
 <dd><p>one of 'phash', 'average_hash', 'dhash'</p></dd>
+
+
 <dt>mode</dt>
 <dd><p>one of 'binary', 'hash'</p></dd>
+
+
 <dt>hash_size</dt>
 <dd><p>an integer specifying the hash size.  IF method = 'phash' : the hash_size * highfreq_factor should be less than number of floor(rows * 0.8) or floor(columns * 0.8) of the gray_image
 IF method = 'dhash' or 'average_hash' :  the hash_size should be less than number of floor(rows * 0.8) or floor(columns * 0.8) of the gray_image</p></dd>
+
+
 <dt>highfreq_factor</dt>
 <dd><p>an integer specyfing the highfrequency factor (IF method = 'phash' : the hash_size * highfreq_factor should be less than number of floor(rows * 0.8) or 
 floor(columns * 0.8) of the gray_image)</p></dd>
+
+
 <dt>resize</dt>
 <dd><p>corresponds to one of 'nearest', 'bilinear' (resizing method)</p></dd>
+
+
 <dt>flip</dt>
 <dd><p>if TRUE the new_image will be flipped both horizontal and vertical</p></dd>
+
+
 <dt>rotate</dt>
 <dd><p>if TRUE the new_image will be rotated for a specified angle (see angle_bidirectional)</p></dd>
+
+
 <dt>angle_bidirectional</dt>
 <dd><p>a float specifying the angle that the images should be rotated in both directions. For instance, if angle_bidirectional = 10 then the image will be rotated for 10 and 
 350 (360-10) degrees.</p></dd>
+
+
 <dt>crop</dt>
 <dd><p>if TRUE the new_image will be cropped 10 or 20 percent (equally spaced horizontally and vertically)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If flip, rotate and crop are all FALSE then the function returns either the hamming distance (if mode = 'binary') or the levenshtein distance (if mode = 'hash') for the two images. 
+    
+
+<p>If flip, rotate and crop are all FALSE then the function returns either the hamming distance (if mode = 'binary') or the levenshtein distance (if mode = 'hash') for the two images. 
 If any of the flip, rotate, crop is TRUE then it returns the MIN, MAX of the hamming distance (if mode = 'binary') or the MIN,MAX of the levenshtein distance (if mode = 'hash').</p>
     </div>
     <div id="details">
@@ -154,7 +177,7 @@ crops an image (no-crop, 10-percent-crop, 20-percent-crop). Depending on the typ
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

@@ -93,40 +93,73 @@
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>a matrix, data frame, array or list of 3-dimensional arrays</p></dd>
+
+
 <dt>flip_mode</dt>
 <dd><p>a character string ('horizontal', 'vertical')</p></dd>
+
+
 <dt>crop_width</dt>
 <dd><p>an integer specifying the new width of the image, after the image is cropped. Corresponds to the image-rows.</p></dd>
+
+
 <dt>crop_height</dt>
 <dd><p>an integer specifying the new height of the image, after the image is cropped. Corresponds to the image-columns.</p></dd>
+
+
 <dt>resiz_width</dt>
 <dd><p>an integer specifying the new width of the image, after the image is resized. Corresponds to the image-rows.</p></dd>
+
+
 <dt>resiz_height</dt>
 <dd><p>an integer specifying the new height of the image, after the image is resized. Corresponds to the image-columns.</p></dd>
+
+
 <dt>resiz_method</dt>
 <dd><p>a string specifying the interpolation method when resizing an image ('nearest', 'bilinear')</p></dd>
+
+
 <dt>shift_rows</dt>
 <dd><p>a positive or negative integer specifying the direction that the rows should be shifted</p></dd>
+
+
 <dt>shift_cols</dt>
 <dd><p>a positive or negative integer specifying the direction that the columns should be shifted</p></dd>
+
+
 <dt>rotate_angle</dt>
 <dd><p>an integer specifying the rotation angle of the image</p></dd>
+
+
 <dt>rotate_method</dt>
 <dd><p>a string specifying the interpolation method when rotating an image ('nearest', 'bilinear')</p></dd>
+
+
 <dt>zca_comps</dt>
 <dd><p>an integer specifying the number of components to keep by zca whitening, when svd is performed</p></dd>
+
+
 <dt>zca_epsilon</dt>
 <dd><p>a float specifying the regularization parameter by zca whitening</p></dd>
+
+
 <dt>image_thresh</dt>
 <dd><p>the threshold parameter, by image thresholding, should be between 0 and 1 if the data is normalized or between 0-255 otherwise</p></dd>
+
+
 <dt>padded_value</dt>
 <dd><p>either a numeric value or a numeric vector of length equal to N of an N-dimensional array. If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value. Applies only to the shift_rows and shift_cols parameters.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>a boolean (TRUE, FALSE). If TRUE, then the total time of the preprocessing task will be printed.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>the output is of the same type with the input (in case of a data frame it returns a matrix)</p>
+    
+
+<p>the output is of the same type with the input (in case of a data frame it returns a matrix)</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -180,7 +213,7 @@ is : 1st flip image, 2nd crop image, 3rd resize image, 4th shift rows or columns
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

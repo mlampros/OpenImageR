@@ -86,27 +86,46 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>a matrix, a data frame, a 3-dimensional array or a path to a folder of files (images)</p></dd>
+
+
 <dt>rows</dt>
 <dd><p>a number specifying the number of rows of the matrix</p></dd>
+
+
 <dt>columns</dt>
 <dd><p>a number specifying the number of columns of the matrix</p></dd>
+
+
 <dt>hash_size</dt>
 <dd><p>an integer specifying the hash size.  IF method = 'phash' : the hash_size * highfreq_factor should be less than number of rows or columns of the gray_image.
 IF method = 'dhash' or 'average_hash' :  the hash_size should be less than number of rows or columns of the gray_image</p></dd>
+
+
 <dt>highfreq_factor</dt>
 <dd><p>an integer specyfing the highfrequency factor (IF method = 'phash' : the hash_size * highfreq_factor should be less than number of rows or columns of the gray_image)</p></dd>
+
+
 <dt>method</dt>
 <dd><p>one of 'phash', 'average_hash', 'dhash'</p></dd>
+
+
 <dt>mode</dt>
 <dd><p>one of 'binary', 'hash'</p></dd>
+
+
 <dt>threads</dt>
 <dd><p>the number of cores to run in parallel</p></dd>
+
+
 <dt>resize</dt>
 <dd><p>corresponds to one of 'nearest', 'bilinear' (resizing method)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If the input is a matrix, data frame or array this function returns a matrix (if mode = 'binary') or a character vector (if mode = 'hex_hash'). If the input is a path to
+    
+
+<p>If the input is a matrix, data frame or array this function returns a matrix (if mode = 'binary') or a character vector (if mode = 'hex_hash'). If the input is a path to
 a folder the function returns a list of length 2, the 1st sublist is a vector with the names of the image files (the order of the files in the vector corresponds to the order of 
 the rows of the output matrix), the 2nd sublist is a matrix (if mode = 'binary') or a character vector (if mode = 'hex_hash').</p>
     </div>
@@ -122,7 +141,7 @@ the rows of the output matrix), the 2nd sublist is a matrix (if mode = 'binary')
 <span class="r-in"></span>
 <span class="r-in"><span class="va">res_phash</span> <span class="op">=</span> <span class="fu">hash_apply</span><span class="op">(</span><span class="va">path</span>, method <span class="op">=</span> <span class="st">'phash'</span>, mode <span class="op">=</span> <span class="st">'binary'</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time to complete : 0.005084038 secs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time to complete : 0.005464792 secs </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 </code></pre></div>
@@ -139,7 +158,7 @@ the rows of the output matrix), the 2nd sublist is a matrix (if mode = 'binary')
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>
