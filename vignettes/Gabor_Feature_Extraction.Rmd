@@ -10,7 +10,7 @@ vignette: >
 ---
 
 
-In this Vignette, I'll illustrate the new functionality of the OpenImageR package (*Gabor Feature Extraction*). The Gabor features have been used extensively in [image analysis and processing](https://en.wikipedia.org/wiki/Gabor_filter) (Character and Face recognition). [Gabor](https://en.wikipedia.org/wiki/Dennis_Gabor) (Nobel prize winner, an electrical engineer, and physicist) used the following wording which I think it's worth mentioning in this Vignette, *"You can't predict the future, but you can invent it."* ([source](https://www.it.lut.fi/project/gabor/)).
+In this Vignette, I'll illustrate the new functionality of the OpenImageR package (*Gabor Feature Extraction*). The Gabor features have been used extensively in [image analysis and processing](https://en.wikipedia.org/wiki/Gabor_filter) (Character and Face recognition). [Gabor](https://en.wikipedia.org/wiki/Dennis_Gabor) (Nobel prize winner, an electrical engineer, and physicist) used the following wording which I think it's worth mentioning in this Vignette, *"You can't predict the future, but you can invent it."* (source: `https://www.it.lut.fi/project/gabor/`).
 
 In the following lines I'll describe the *GaborFeatureExtract* R6 class which includes the following methods,
 

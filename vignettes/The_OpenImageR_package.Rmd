@@ -479,7 +479,7 @@ res
 ```
 
 
-### [image hashing](http://www.hackerfactor.com/blog/?/archives/432-Looks-Like-It.html)
+### [image hashing](https://www.hackerfactor.com/blog/?/archives/432-Looks-Like-It.html)
 
 The image hashing functions (*average_hash*, *dhash*, *phash*, *invariant_hash*, *hash_apply*) of the OpenImageR package are implemented in the way **perceptual hashing** works. Perceptual hashing is the use of an algorithm that produces a fingerprint of images (in OpenImageR those fingerprints are *binary features* or *hexadecimal hashes*). The difference between cryptographic and image hashing is that the latter tries to find similar and not exact matches. In cryptographic hashing small differences of the hashes lead to entirely different output, which is not the case for perceptual hashing. A practical application of image hashing would be to compare a database of already created image hashes with a new hash (image) to find similar images in the database.
 
@@ -535,7 +535,7 @@ as.vector(ph_bin)
 <br>
 
 
-###### [dhash](http://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html)
+###### [dhash](https://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html)
 
 
 In comparison to average_hash and phash, the **dhash** algorithm takes into consideration the difference between adjacent pixels. In the same way as with the average_hash, the resulting hash won't change if the image is scaled or the aspect ratio changes. Increasing or decreasing the brightness or contrast, or even altering the colors won't dramatically change the hash value. Even complex adjustments like gamma corrections and color profiles won't impact the result,

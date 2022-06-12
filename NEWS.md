@@ -1,4 +1,9 @@
 
+## OpenImageR 1.2.2
+
+* I've modified the *'plot_multi_images()'* method of the *GaborFeatureExtract* R6 class by adding the *titles* and the *axes* parameters.
+
+
 ## OpenImageR 1.2.1
 
 * I've fixed an mistake in the code of the *RGB_to_HSV()* function in the *inst/include/OpenImageRheader.h* file related to an [StackOverflow issue](https://stackoverflow.com/q/70183472)

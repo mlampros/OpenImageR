@@ -25,6 +25,8 @@
 #' @param list_images a list containing the images to plot  ( plot_multi_images function )
 #' @param par_ROWS a numeric value specifying the number of rows of the plot-grid  ( plot_multi_images function )
 #' @param par_COLS a numeric value specifying the number of columns of the plot-grid  ( plot_multi_images function )
+#' @param axes a boolean. If TRUE then the X- and Y-range of values (axes) will appear in the output images  ( plot_multi_images function )
+#' @param titles either NULL or a character vector specifying the main-titles of the output images. The length of this vector must be the same as the length of the input 'list_images' parameter  ( plot_multi_images function )
 #'
 #' @export
 #' @details
@@ -376,17 +378,27 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
                                      # plot images using a list of images
                                      #-----------------------------------
 
-                                     plot_multi_images = function(list_images, par_ROWS, par_COLS) {
+                                     plot_multi_images = function(list_images, par_ROWS, par_COLS, axes = FALSE, titles = NULL) {
 
+                                       if (!is.null(titles)) {
+                                         if (!is.vector(titles, mode = 'character')) {
+                                           stop("The 'titles' parameter must be of type character!", call. = F)
+                                         }
+                                         if (length(list_images) != length(titles)) {
+                                           stop("The length of the input 'list_images' parameter must be the same as the 'titles' parameter!", call. = F)
+                                         }
+                                       }
                                        graphics::par(mfrow = c(par_ROWS, par_COLS))
 
-                                       out = lapply(list_images, function(x) {
+                                       out = lapply(seq_along(list_images), function(x) {
 
-                                         gpl = NormalizeObject(x)                          # normalize so that negative values will be pushed between [0,1]
+                                         gpl = OpenImageR::NormalizeObject(list_images[[x]])           # normalize so that negative values will be pushed between [0,1]
+                                         gpl = OpenImageR::rotateFixed(gpl, angle = 90)                # rotate image 90 degrees
 
-                                         gpl = rotateFixed(gpl, angle = 90)                # rotate image 90 degrees
-
-                                         graphics::image(gpl, axes = FALSE, col = grey(seq(0, 1, length = 256)))
+                                         graphics::image(gpl, axes = axes, col = grey(seq(0, 1, length = 256)))
+                                         if (!is.null(titles)) {
+                                           graphics::title(main = titles[x], font.main = 4)
+                                         }
                                        })
                                      }
 

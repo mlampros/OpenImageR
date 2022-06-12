@@ -325,7 +325,13 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 \if{latex}{\out{\hypertarget{method-plot_multi_images}{}}}
 \subsection{Method \code{plot_multi_images()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$plot_multi_images(list_images, par_ROWS, par_COLS)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$plot_multi_images(
+  list_images,
+  par_ROWS,
+  par_COLS,
+  axes = FALSE,
+  titles = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -336,6 +342,10 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 \item{\code{par_ROWS}}{a numeric value specifying the number of rows of the plot-grid  ( plot_multi_images function )}
 
 \item{\code{par_COLS}}{a numeric value specifying the number of columns of the plot-grid  ( plot_multi_images function )}
+
+\item{\code{axes}}{a boolean. If TRUE then the X- and Y-range of values (axes) will appear in the output images  ( plot_multi_images function )}
+
+\item{\code{titles}}{either NULL or a character vector specifying the main-titles of the output images. The length of this vector must be the same as the length of the input 'list_images' parameter  ( plot_multi_images function )}
 }
 \if{html}{\out{</div>}}
 }
