@@ -99,23 +99,23 @@
 <strong>1st.</strong> install the <em>OpenImageR</em> package to take advantage of the new functionality either from CRAN using,</li></ul>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"OpenImageR"</span><span class="op">)</span>
- </code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"OpenImageR"</span><span class="op">)</span></span>
+<span> </span></code></pre></div>
 <p><br></p>
 <p>or download the latest version from Github using the <em>devtools</em> package,</p>
 <p><br></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'mlampros/OpenImageR'</span><span class="op">)</span>
- </code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'mlampros/OpenImageR'</span><span class="op">)</span></span>
+<span> </span></code></pre></div>
 <p><br></p>
 <ul><li>
 <strong>2nd.</strong> update the <strong>DESCRIPTION</strong> file of ‘PackageA’ and especially the <em>LinkingTo</em> field by adding the <em>OpenImageR</em> package (besides any other packages),</li></ul>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">LinkingTo</span><span class="op">:</span> <span class="va">OpenImageR</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="va">LinkingTo</span><span class="op">:</span> <span class="va">OpenImageR</span></span></code></pre></div>
 <p><br></p>
 <ul><li>
 <strong>3rd.</strong> open a <strong>new C++ file</strong> (for instance in Rstudio) and at the top of the file add the following ‘headers’, ‘depends’ and ‘plugins’,</li></ul>
@@ -151,15 +151,15 @@
 <p>Then, by opening an R file a user can call the <em>rgb_2gray_exp</em> function using,</p>
 <p><br></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/sourceCpp.html" class="external-link">sourceCpp</a></span><span class="op">(</span><span class="st">'example.cpp'</span><span class="op">)</span>              <span class="co"># assuming that the previous Rcpp code is included in 'example.cpp' </span>
-             
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="va">im_rgb</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">30000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">im_grey</span> <span class="op">=</span> <span class="fu">rgb_2gray_exp</span><span class="op">(</span><span class="va">im_rgb</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">im_grey</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/sourceCpp.html" class="external-link">sourceCpp</a></span><span class="op">(</span><span class="st">'example.cpp'</span><span class="op">)</span>              <span class="co"># assuming that the previous Rcpp code is included in 'example.cpp' </span></span>
+<span>             </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">im_rgb</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">30000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">im_grey</span> <span class="op">=</span> <span class="fu">rgb_2gray_exp</span><span class="op">(</span><span class="va">im_rgb</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">im_grey</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>Use the following link to report bugs/issues, <br><br></p>
 <p><a href="https://github.com/mlampros/OpenImageR/issues" class="external-link">https://github.com/mlampros/OpenImageR/issues</a></p>

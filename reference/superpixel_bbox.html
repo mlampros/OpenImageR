@@ -69,7 +69,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">superpixel_bbox</span><span class="op">(</span><span class="va">superpixel_labels</span>, non_overlapping_superpixels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">superpixel_bbox</span><span class="op">(</span><span class="va">superpixel_labels</span>, non_overlapping_superpixels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,55 +94,55 @@ intends to use an algorithm and the separability of superpixel-segments is of im
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#-----------</span></span>
-<span class="r-in"><span class="co"># read image</span></span>
-<span class="r-in"><span class="co">#-----------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tmp_images"</span>, <span class="st">"slic_im.png"</span>, package <span class="op">=</span> <span class="st">"OpenImageR"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">im</span> <span class="op">=</span> <span class="fu"><a href="readImage.html">readImage</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">im</span> <span class="op">=</span> <span class="va">im</span><span class="op">[</span>,, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--------------------</span></span>
-<span class="r-in"><span class="co"># compute superpixels</span></span>
-<span class="r-in"><span class="co">#--------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="superpixels.html">superpixels</a></span><span class="op">(</span>input_image <span class="op">=</span> <span class="va">im</span>, method <span class="op">=</span> <span class="st">"slic"</span>, superpixel <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in"></span>
-<span class="r-in">                  compactness <span class="op">=</span> <span class="fl">20</span>, return_labels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#-----------</span></span></span>
+<span class="r-in"><span><span class="co"># read image</span></span></span>
+<span class="r-in"><span><span class="co">#-----------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tmp_images"</span>, <span class="st">"slic_im.png"</span>, package <span class="op">=</span> <span class="st">"OpenImageR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">im</span> <span class="op">=</span> <span class="fu"><a href="readImage.html">readImage</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">im</span> <span class="op">=</span> <span class="va">im</span><span class="op">[</span>,, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#--------------------</span></span></span>
+<span class="r-in"><span><span class="co"># compute superpixels</span></span></span>
+<span class="r-in"><span><span class="co">#--------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="superpixels.html">superpixels</a></span><span class="op">(</span>input_image <span class="op">=</span> <span class="va">im</span>, method <span class="op">=</span> <span class="st">"slic"</span>, superpixel <span class="op">=</span> <span class="fl">200</span>,</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>                  compactness <span class="op">=</span> <span class="fl">20</span>, return_labels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The input data has values between 0.094118 and 1.000000. The image-data will be multiplied by the value: 255!</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#-------------------------</span></span>
-<span class="r-in"><span class="co"># compute the bounding box</span></span>
-<span class="r-in"><span class="co">#-------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">bbox</span> <span class="op">=</span> <span class="fu">superpixel_bbox</span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">labels</span>, non_overlapping_superpixels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#-------------------------------------------</span></span>
-<span class="r-in"><span class="co"># plot the bounding boxes of the superpixels ( for illustration purposes )</span></span>
-<span class="r-in"><span class="co">#-------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, type<span class="op">=</span><span class="st">'n'</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/rasterImage.html" class="external-link">rasterImage</a></span><span class="op">(</span> <span class="fu"><a href="flipImage.html">flipImage</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">bbox</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># the order of the bounding box is c('xmin', 'ymin', 'xmax', 'ymax')</span></span>
-<span class="r-in">  <span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/rect.html" class="external-link">rect</a></span><span class="op">(</span><span class="va">bbox</span><span class="op">[</span><span class="va">i</span>,<span class="fl">3</span><span class="op">]</span>, <span class="va">bbox</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">bbox</span><span class="op">[</span><span class="va">i</span>,<span class="fl">4</span><span class="op">]</span>, <span class="va">bbox</span><span class="op">[</span><span class="va">i</span>,<span class="fl">2</span><span class="op">]</span>, border <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#-------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># compute the bounding box</span></span></span>
+<span class="r-in"><span><span class="co">#-------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">bbox</span> <span class="op">=</span> <span class="fu">superpixel_bbox</span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">labels</span>, non_overlapping_superpixels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#-------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># plot the bounding boxes of the superpixels ( for illustration purposes )</span></span></span>
+<span class="r-in"><span><span class="co">#-------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, type<span class="op">=</span><span class="st">'n'</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/rasterImage.html" class="external-link">rasterImage</a></span><span class="op">(</span> <span class="fu"><a href="flipImage.html">flipImage</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">bbox</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># the order of the bounding box is c('xmin', 'ymin', 'xmax', 'ymax')</span></span></span>
+<span class="r-in"><span>  <span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/rect.html" class="external-link">rect</a></span><span class="op">(</span><span class="va">bbox</span><span class="op">[</span><span class="va">i</span>,<span class="fl">3</span><span class="op">]</span>, <span class="va">bbox</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">bbox</span><span class="op">[</span><span class="va">i</span>,<span class="fl">4</span><span class="op">]</span>, <span class="va">bbox</span><span class="op">[</span><span class="va">i</span>,<span class="fl">2</span><span class="op">]</span>, border <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="superpixel_bbox-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

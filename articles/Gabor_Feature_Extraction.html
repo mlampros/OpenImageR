@@ -87,7 +87,7 @@
       <h1 data-toc-skip>Gabor Feature extraction</h1>
                         <h4 data-toc-skip class="author">Lampros Mouselimis</h4>
             
-            <h4 data-toc-skip class="date">2022-06-24</h4>
+            <h4 data-toc-skip class="date">2022-07-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/vignettes/Gabor_Feature_Extraction.Rmd" class="external-link"><code>vignettes/Gabor_Feature_Extraction.Rmd</code></a></small>
       <div class="hidden name"><code>Gabor_Feature_Extraction.Rmd</code></div>
@@ -134,29 +134,28 @@
 <p>The <strong>gabor_filter_bank</strong> method <em>“… generates a custom-sized Gabor filter bank. It creates a UxV cell array, whose elements are MxN matrices; each matrix being a 2-D Gabor filter”</em> according to the <a href="https://github.com/mhaghighat/gabor" class="external-link">author of the Matlab</a> code. The following code chunk shows how this works in R,</p>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span>
-
-
-<span class="va">init_gb</span> <span class="op">=</span> <span class="va"><a href="../reference/GaborFeatureExtract.html">GaborFeatureExtract</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co">#------------------</span>
-<span class="co"># gabor-filter-bank</span>
-<span class="co">#------------------</span>
-
-<span class="va">gb_f</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">gabor_filter_bank</span><span class="op">(</span>scales <span class="op">=</span> <span class="fl">5</span>, orientations <span class="op">=</span> <span class="fl">8</span>, gabor_rows <span class="op">=</span> <span class="fl">39</span>,
-
-                                 gabor_columns <span class="op">=</span> <span class="fl">39</span>, plot_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-
-<span class="co">#-----------------------------------------------</span>
-<span class="co"># plot of the real part of the gabor-filter-bank</span>
-<span class="co">#-----------------------------------------------</span>
-
-<span class="va">plt_f</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">plot_gabor</span><span class="op">(</span>real_matrices <span class="op">=</span> <span class="va">gb_f</span><span class="op">$</span><span class="va">gabor_real</span>, margin_btw_plots <span class="op">=</span> <span class="fl">0.65</span>,
-
-                           thresholding <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-</code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">init_gb</span> <span class="op">=</span> <span class="va"><a href="../reference/GaborFeatureExtract.html">GaborFeatureExtract</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#------------------</span></span>
+<span><span class="co"># gabor-filter-bank</span></span>
+<span><span class="co">#------------------</span></span>
+<span></span>
+<span><span class="va">gb_f</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">gabor_filter_bank</span><span class="op">(</span>scales <span class="op">=</span> <span class="fl">5</span>, orientations <span class="op">=</span> <span class="fl">8</span>, gabor_rows <span class="op">=</span> <span class="fl">39</span>,</span>
+<span></span>
+<span>                                 gabor_columns <span class="op">=</span> <span class="fl">39</span>, plot_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#-----------------------------------------------</span></span>
+<span><span class="co"># plot of the real part of the gabor-filter-bank</span></span>
+<span><span class="co">#-----------------------------------------------</span></span>
+<span></span>
+<span><span class="va">plt_f</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">plot_gabor</span><span class="op">(</span>real_matrices <span class="op">=</span> <span class="va">gb_f</span><span class="op">$</span><span class="va">gabor_real</span>, margin_btw_plots <span class="op">=</span> <span class="fl">0.65</span>,</span>
+<span></span>
+<span>                           thresholding <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p><img src="vignette_2/gabor_filter_bank.png"></p>
 <p><br></p>
@@ -199,27 +198,27 @@
 <p>Based on the previously mentioned <em>car.png</em> image,</p>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># read image</span>
-<span class="co">#-----------</span>
-
-<span class="va">pth_im</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tmp_images"</span>, <span class="st">"car.png"</span>, package <span class="op">=</span> <span class="st">"OpenImageR"</span><span class="op">)</span>
-
-<span class="va">im</span> <span class="op">=</span> <span class="fu"><a href="../reference/readImage.html">readImage</a></span><span class="op">(</span><span class="va">pth_im</span><span class="op">)</span> <span class="op">*</span> <span class="fl">255</span>
-
-
-<span class="co"># gabor-feature-extract</span>
-<span class="co">#----------------------</span>
-
-<span class="va">gb_im</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">gabor_feature_extraction</span><span class="op">(</span>image <span class="op">=</span> <span class="va">im</span>, scales <span class="op">=</span> <span class="fl">5</span>, orientations <span class="op">=</span> <span class="fl">8</span>,
-
-                                         downsample_gabor <span class="op">=</span> <span class="cn">FALSE</span>, downsample_rows <span class="op">=</span> <span class="cn">NULL</span>,
-
-                                          downsample_cols <span class="op">=</span> <span class="cn">NULL</span>, gabor_rows <span class="op">=</span> <span class="fl">39</span>, 
-                                          
-                                          gabor_columns <span class="op">=</span> <span class="fl">39</span>, plot_data <span class="op">=</span> <span class="cn">TRUE</span>, 
-                                          
-                                          normalize_features <span class="op">=</span> <span class="cn">FALSE</span>, threads <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># read image</span></span>
+<span><span class="co">#-----------</span></span>
+<span></span>
+<span><span class="va">pth_im</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tmp_images"</span>, <span class="st">"car.png"</span>, package <span class="op">=</span> <span class="st">"OpenImageR"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">im</span> <span class="op">=</span> <span class="fu"><a href="../reference/readImage.html">readImage</a></span><span class="op">(</span><span class="va">pth_im</span><span class="op">)</span> <span class="op">*</span> <span class="fl">255</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># gabor-feature-extract</span></span>
+<span><span class="co">#----------------------</span></span>
+<span></span>
+<span><span class="va">gb_im</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">gabor_feature_extraction</span><span class="op">(</span>image <span class="op">=</span> <span class="va">im</span>, scales <span class="op">=</span> <span class="fl">5</span>, orientations <span class="op">=</span> <span class="fl">8</span>,</span>
+<span></span>
+<span>                                         downsample_gabor <span class="op">=</span> <span class="cn">FALSE</span>, downsample_rows <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span></span>
+<span>                                          downsample_cols <span class="op">=</span> <span class="cn">NULL</span>, gabor_rows <span class="op">=</span> <span class="fl">39</span>, </span>
+<span>                                          </span>
+<span>                                          gabor_columns <span class="op">=</span> <span class="fl">39</span>, plot_data <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                                          </span>
+<span>                                          normalize_features <span class="op">=</span> <span class="cn">FALSE</span>, threads <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>This function again returns a list of length 3,</p>
 <p><br></p>
@@ -245,23 +244,23 @@
 <p>where <em>gaborFeatures</em> are the extracted features with number of rows equal to nrow(im) x ncol(im) (or 166 x 249) and number of columns equal to scales x orientations (or 5 x 8). The second and third sublists are the imaginary and real part of the image resulted after the convolution with the gabor filters. The following code chunk allows the user to plot the different <em>scales</em> and <em>orientations</em> of the image,</p>
 <p><br></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">plt_im</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">plot_gabor</span><span class="op">(</span>real_matrices <span class="op">=</span> <span class="va">gb_im</span><span class="op">$</span><span class="va">gabor_features_real</span>,
-
-                            margin_btw_plots <span class="op">=</span> <span class="fl">0.65</span>, thresholding <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="va">plt_im</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">plot_gabor</span><span class="op">(</span>real_matrices <span class="op">=</span> <span class="va">gb_im</span><span class="op">$</span><span class="va">gabor_features_real</span>,</span>
+<span></span>
+<span>                            margin_btw_plots <span class="op">=</span> <span class="fl">0.65</span>, thresholding <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p><img src="vignette_2/gabor_car.png"></p>
 <p><br></p>
 <p>By thresholding the <em>gb_im$gabor_features_real</em> object (scales, orientations) to [0,1] the images can be visually explored,</p>
 <p><br></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># thresholding parameter is set to TRUE</span>
-<span class="co">#--------------------------------------</span>
-
-<span class="va">plt_im_thresh</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">plot_gabor</span><span class="op">(</span>real_matrices <span class="op">=</span> <span class="va">gb_im</span><span class="op">$</span><span class="va">gabor_features_real</span>,
-
-                                   margin_btw_plots <span class="op">=</span> <span class="fl">0.65</span>, thresholding <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># thresholding parameter is set to TRUE</span></span>
+<span><span class="co">#--------------------------------------</span></span>
+<span></span>
+<span><span class="va">plt_im_thresh</span> <span class="op">=</span> <span class="va">init_gb</span><span class="op">$</span><span class="fu">plot_gabor</span><span class="op">(</span>real_matrices <span class="op">=</span> <span class="va">gb_im</span><span class="op">$</span><span class="va">gabor_features_real</span>,</span>
+<span></span>
+<span>                                   margin_btw_plots <span class="op">=</span> <span class="fl">0.65</span>, thresholding <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p><img src="vignette_2/gabor_car_thresholding.png"></p>
 <p><br></p>
@@ -316,11 +315,10 @@
 <p>The <em>dat</em> object is a list of length 2. The first sublist corresponds to <em>magnitude</em> whereas the second sublist to <em>local-energy</em> and <em>mean-aptitude</em>. The first thing to do before calculating the accuracy for the mnist data is to reduce the dimensionality of the <em>magnitude</em> feature (I’ll use the <a href="https://github.com/bwlewis/irlba" class="external-link">irlba</a> package for this purpose),</p>
 <p><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">svd_irlb</span> <span class="op">=</span> <span class="fu">irlba</span><span class="fu">::</span><span class="fu">irlba</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span>, nv <span class="op">=</span> <span class="fl">100</span>, nu <span class="op">=</span> <span class="fl">100</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
-
-<span class="va">new_x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">svd_irlb</span><span class="op">$</span><span class="va">v</span>
-</code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="va">svd_irlb</span> <span class="op">=</span> <span class="fu">irlba</span><span class="fu">::</span><span class="fu">irlba</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span>, nv <span class="op">=</span> <span class="fl">100</span>, nu <span class="op">=</span> <span class="fl">100</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">new_x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">svd_irlb</span><span class="op">$</span><span class="va">v</span></span></code></pre></div>
 <p><br></p>
 <p>and I’ll create a centered-scaled matrix of the reduced <em>magnitude</em> and the <em>energy-aptitude</em> data,</p>
 <p><br></p>

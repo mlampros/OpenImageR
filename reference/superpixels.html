@@ -69,17 +69,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">superpixels</span><span class="op">(</span>
-  <span class="va">input_image</span>,
-  method <span class="op">=</span> <span class="st">"slic"</span>,
-  superpixel <span class="op">=</span> <span class="fl">200</span>,
-  compactness <span class="op">=</span> <span class="fl">20</span>,
-  return_slic_data <span class="op">=</span> <span class="cn">FALSE</span>,
-  return_lab_data <span class="op">=</span> <span class="cn">FALSE</span>,
-  return_labels <span class="op">=</span> <span class="cn">FALSE</span>,
-  write_slic <span class="op">=</span> <span class="st">""</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">superpixels</span><span class="op">(</span></span>
+<span>  <span class="va">input_image</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"slic"</span>,</span>
+<span>  superpixel <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  compactness <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  return_slic_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_lab_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  write_slic <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -127,35 +127,35 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#-------------------</span></span>
-<span class="r-in"><span class="co"># 3-dimensional data</span></span>
-<span class="r-in"><span class="co">#-------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tmp_images"</span>, <span class="st">"slic_im.png"</span>, package <span class="op">=</span> <span class="st">"OpenImageR"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">im</span> <span class="op">=</span> <span class="fu"><a href="readImage.html">readImage</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res</span> <span class="op">=</span> <span class="fu">superpixels</span><span class="op">(</span>input_image <span class="op">=</span> <span class="va">im</span>, method <span class="op">=</span> <span class="st">"slic"</span>, superpixel <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in"></span>
-<span class="r-in">                  compactness <span class="op">=</span> <span class="fl">20</span>, return_slic_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#-------------------</span></span></span>
+<span class="r-in"><span><span class="co"># 3-dimensional data</span></span></span>
+<span class="r-in"><span><span class="co">#-------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tmp_images"</span>, <span class="st">"slic_im.png"</span>, package <span class="op">=</span> <span class="st">"OpenImageR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">im</span> <span class="op">=</span> <span class="fu"><a href="readImage.html">readImage</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">superpixels</span><span class="op">(</span>input_image <span class="op">=</span> <span class="va">im</span>, method <span class="op">=</span> <span class="st">"slic"</span>, superpixel <span class="op">=</span> <span class="fl">200</span>,</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>                  compactness <span class="op">=</span> <span class="fl">20</span>, return_slic_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The input data has more than 3 dimensions. The dimensions were reduced from 4 to 3!</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The input data has values between 0.094118 and 1.000000. The image-data will be multiplied by the value: 255!</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#-------------------</span></span>
-<span class="r-in"><span class="co"># 2-dimensional data</span></span>
-<span class="r-in"><span class="co">#-------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">im_2d</span> <span class="op">=</span> <span class="va">im</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res_mt</span> <span class="op">=</span> <span class="fu">superpixels</span><span class="op">(</span>input_image <span class="op">=</span> <span class="va">im_2d</span>, method <span class="op">=</span> <span class="st">"slic"</span>, superpixel <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in"></span>
-<span class="r-in">                     compactness <span class="op">=</span> <span class="fl">20</span>, return_slic_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#-------------------</span></span></span>
+<span class="r-in"><span><span class="co"># 2-dimensional data</span></span></span>
+<span class="r-in"><span><span class="co">#-------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">im_2d</span> <span class="op">=</span> <span class="va">im</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res_mt</span> <span class="op">=</span> <span class="fu">superpixels</span><span class="op">(</span>input_image <span class="op">=</span> <span class="va">im_2d</span>, method <span class="op">=</span> <span class="st">"slic"</span>, superpixel <span class="op">=</span> <span class="fl">200</span>,</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>                     compactness <span class="op">=</span> <span class="fl">20</span>, return_slic_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The input data has values between 0.149020 and 1.000000. The image-data will be multiplied by the value: 255!</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
