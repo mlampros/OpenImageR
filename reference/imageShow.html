@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.3</span>
       </span>
     </div>
 
@@ -39,6 +39,9 @@
     </li>
     <li>
       <a href="../articles/The_OpenImageR_package.html">Functionality of the OpenImageR package</a>
+    </li>
+    <li>
+      <a href="../articles/Warp_Affine.html">Warp Affine using R</a>
     </li>
   </ul></li>
 <li>
@@ -69,13 +72,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">imageShow</span><span class="op">(</span><span class="va">file_path</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">imageShow</span><span class="op">(</span><span class="va">file_path</span>, clear_viewer <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>file_path</dt>
 <dd><p>if file_path is a character string, then a shiny application is utilized. If file_path is a matrix, data.frame OR a 3-dimensional array then the grid.raster function of the base grid package is used.</p></dd>
+
+
+<dt>clear_viewer</dt>
+<dd><p>a boolean. If TRUE then the previous image will be removed in the viewer before displaying the next one</p></dd>
 
 </dl></div>
     <div id="value">
