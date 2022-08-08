@@ -752,14 +752,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // pad_matrix
-Rcpp::List pad_matrix(arma::mat& x, int new_rows, int new_cols, double fill_value);
+Rcpp::List pad_matrix(arma::mat& x, arma::uword new_rows, arma::uword new_cols, double fill_value);
 RcppExport SEXP _OpenImageR_pad_matrix(SEXP xSEXP, SEXP new_rowsSEXP, SEXP new_colsSEXP, SEXP fill_valueSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< int >::type new_rows(new_rowsSEXP);
-    Rcpp::traits::input_parameter< int >::type new_cols(new_colsSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type new_rows(new_rowsSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type new_cols(new_colsSEXP);
     Rcpp::traits::input_parameter< double >::type fill_value(fill_valueSEXP);
     rcpp_result_gen = Rcpp::wrap(pad_matrix(x, new_rows, new_cols, fill_value));
     return rcpp_result_gen;
@@ -774,6 +774,47 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< std::string >::type write_slic(write_slicSEXP);
     Rcpp::traits::input_parameter< std::string >::type type(typeSEXP);
     rcpp_result_gen = Rcpp::wrap(LOAD_data(write_slic, type));
+    return rcpp_result_gen;
+END_RCPP
+}
+// get_affine_transform
+arma::mat get_affine_transform(arma::mat& original_points, arma::mat& transformed_points);
+RcppExport SEXP _OpenImageR_get_affine_transform(SEXP original_pointsSEXP, SEXP transformed_pointsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type original_points(original_pointsSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type transformed_points(transformed_pointsSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_affine_transform(original_points, transformed_points));
+    return rcpp_result_gen;
+END_RCPP
+}
+// warpAffine_2d
+arma::mat warpAffine_2d(arma::mat& img, arma::mat& M, arma::uword R, arma::uword C, int threads);
+RcppExport SEXP _OpenImageR_warpAffine_2d(SEXP imgSEXP, SEXP MSEXP, SEXP RSEXP, SEXP CSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type img(imgSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type M(MSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type R(RSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type C(CSEXP);
+    Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(warpAffine_2d(img, M, R, C, threads));
+    return rcpp_result_gen;
+END_RCPP
+}
+// warp_affine_3d
+arma::cube warp_affine_3d(arma::cube& img, arma::mat& M, arma::uword R, arma::uword C);
+RcppExport SEXP _OpenImageR_warp_affine_3d(SEXP imgSEXP, SEXP MSEXP, SEXP RSEXP, SEXP CSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::cube& >::type img(imgSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type M(MSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type R(RSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type C(CSEXP);
+    rcpp_result_gen = Rcpp::wrap(warp_affine_3d(img, M, R, C));
     return rcpp_result_gen;
 END_RCPP
 }

@@ -1,4 +1,13 @@
 
+## OpenImageR 1.2.3
+
+* I've added the *getAffineTransform()* and *warpAffine()* functions
+* I've added the *Warp_Affine* vignette explaining the functionality of the included functions
+* I've added tests for the *getAffineTransform()* and *warpAffine()* functions
+* I updated the *COPYRIGHTS* and *CITATION* files
+* I modified the *imageShow()* function by adding the *clear_viewer* parameter. If this parameter is TRUE then the previous image will be removed in the viewer before displaying the next one
+
+
 ## OpenImageR 1.2.2
 
 * I've modified the *'plot_multi_images()'* method of the *GaborFeatureExtract* R6 class by adding the *titles* and the *axes* parameters.

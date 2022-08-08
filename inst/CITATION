@@ -68,3 +68,11 @@ bibentry(
   number       = "149300",
   year         = "2010"
 )
+
+bibentry(
+  bibtype = "Manual",
+  title   = "{ImageTransformations}: Implementation of OpenCV methods for affine and perspective transformation",
+  author  = person("Oleh", "Onyshchak"),
+  year    = "2019",
+  url     = "https://github.com/OlehOnyshchak"
+)

@@ -1,0 +1,95 @@
+---
+title: "Warp Affine using R"
+author: "Lampros Mouselimis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Warp Affine using R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+The **getAffineTransform()** and **warpAffine()** functions of the OpenImageR package is an RcppArmadillo re-implementation of [existing Python Code](https://github.com/OlehOnyshchak/ImageTransformations/blob/master/AffineTransformation.ipynb) and this vignette shows how these functions can be used from within R based on the [author's .ipynb](https://github.com/OlehOnyshchak/ImageTransformations/blob/master/AffineTransformation.ipynb) file
+
+<br>
+
+```{r, eval = T}
+
+require(OpenImageR)
+
+path = system.file('tmp_images', 'landscape.jpg', package = "OpenImageR")
+
+img = readImage(path)
+print(dim(img))
+
+```
+
+<br>
+
+```{r, out.width = "65%", out.height = "50%", fig.align = 'center', fig.cap = "Input Image", fig.alt="Input Image", echo = F, eval = T}
+
+knitr::include_graphics(path)
+
+```
+
+<br>
+
+```{r, eval = T}
+
+r = ncol(img)
+c = nrow(img)
+offset = 50
+
+original_points = matrix(data = c(0, 0, r, 0, 0, c),
+                         nrow = 3,
+                         ncol = 2,
+                         byrow = TRUE)
+
+transformed_points = matrix(data = c(offset, 0, r, offset, 0, c-offset),
+                            nrow = 3,
+                            ncol = 2,
+                            byrow = TRUE)
+
+M_aff = getAffineTransform(original_points = original_points,
+                           transformed_points = transformed_points)
+
+```
+
+<br>
+
+The following is the Affine transformation matrix,
+
+```{r, eval = T}
+
+print(M_aff)
+
+```
+
+<br>
+
+The Affine transformation matrix can be used as input in the *warpAffine()* function,
+
+```{r, eval = T}
+
+res_3d = warpAffine(img = img,
+                    M = M_aff,
+                    R = r,
+                    C = c,
+                    verbose = TRUE)
+
+str(res_3d)
+
+```
+
+<br>
+
+The next image shows the output based on the input data and parameters,
+
+```{r, out.width = "65%", out.height = "50%", fig.align = 'center', fig.cap = "Output of Warp Affine function", fig.alt="Output of Warp Affine function", echo = T, eval = T}
+
+imageShow(res_3d, clear_viewer = FALSE)
+
+```
+
+<br>

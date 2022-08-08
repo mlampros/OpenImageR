@@ -217,3 +217,15 @@ LOAD_data <- function(write_slic, type = "2d") {
     .Call(`_OpenImageR_LOAD_data`, write_slic, type)
 }
 
+get_affine_transform <- function(original_points, transformed_points) {
+    .Call(`_OpenImageR_get_affine_transform`, original_points, transformed_points)
+}
+
+warpAffine_2d <- function(img, M, R, C, threads = 1L) {
+    .Call(`_OpenImageR_warpAffine_2d`, img, M, R, C, threads)
+}
+
+warp_affine_3d <- function(img, M, R, C) {
+    .Call(`_OpenImageR_warp_affine_3d`, img, M, R, C)
+}
+

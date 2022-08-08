@@ -24,7 +24,7 @@
  * https://github.com/mhaghighat/gabor
  *
  *
- * [ for the reimplementation of the "Gabor Features" code in Rcpp see the lines 1662 - 2197 of this file ]
+ * [ for the reimplementation of the "Gabor Features" code in Rcpp see the lines 1684 - 2223 of this file ]
  *
  **/
 
@@ -38,7 +38,7 @@
  * https://github.com/sightmachine/SimpleCV
  *
  *
- * [ for the reimplementation of the "HoG Features" code in Rcpp see the lines 2202 - 2391 of this file ]
+ * [ for the reimplementation of the "HoG Features" code in Rcpp see the lines 2224 - 2418 of this file ]
  *
  **/
 
@@ -52,10 +52,23 @@
  * https://github.com/JohannesBuchner/imagehash
  *
  *
- * [ for the reimplementation of the "Image Hashing" code in Rcpp see the lines 2397 - 3107 of this file ]
+ * [ for the reimplementation of the "Image Hashing" code in Rcpp see the lines 2419 - 3132 of this file ]
  *
  **/
 
+
+
+/**
+ * Copyright (c) 2019, Oleh Onyshchak
+ *
+ * All rights reserved.
+ *
+ * https://github.com/OlehOnyshchak/ImageTransformations
+ *
+ *
+ * [ for the reimplementation of the "WarpAffine" code in Rcpp see the lines 3133 - 3324 of this file ]
+ *
+ **/
 
 
 namespace oimageR {
@@ -566,7 +579,7 @@ namespace oimageR {
       // padding of new rows / cols based on the 'new_rows' and 'new_cols' parameters
       //
 
-      Rcpp::List pad_matrix(arma::mat &x, int new_rows, int new_cols, double fill_value = 0.0) {
+      Rcpp::List pad_matrix(arma::mat &x, arma::uword new_rows, arma::uword new_cols, double fill_value = 0.0) {
 
         if (new_rows < x.n_rows) {
           Rcpp::stop("The 'new_rows' should be greater than the rows of the input data");
@@ -3116,6 +3129,197 @@ namespace oimageR {
 
       ~Image_Hashing() { }
 
+  };
+
+
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Warp Affine
+
+
+  class Warp_Affine {
+
+    public:
+
+      Warp_Affine() { }
+
+
+      // Affine transformation function
+      //
+
+      arma::mat getAffineTransform(arma::mat& original_points,
+                                   arma::mat& transformed_points) {
+
+        arma::uword NROWS = original_points.n_rows;
+        arma::uword NCOLS = original_points.n_cols;
+        if ((NROWS != transformed_points.n_rows) & (NCOLS != transformed_points.n_cols)) Rcpp::stop("The rows and columns of the input 'original_points' and 'transformed_points' must match!");
+        arma::mat p(NROWS, NCOLS + 1);
+
+        for (arma::uword k = 0; k < NROWS; k++) {
+          arma::rowvec orig_row = original_points.row(k);
+          arma::rowvec iter_vec = {orig_row(0), orig_row(1), 1.0};
+          p.row(k) = iter_vec;
+        }
+
+        return arma::solve(p, transformed_points).t();
+      }
+
+
+      // change the image representation from "horizontal" to "vertical"  [ 3-dimensional ]
+      //
+
+      arma::cube to_mtx(arma::cube& img) {
+
+        arma::uword H = img.n_rows;
+        arma::uword V = img.n_cols;
+        arma::uword C = img.n_slices;
+
+        arma::cube mtr = arma::zeros(V,H,C);
+        for (arma::uword i = 0; i < H; i++) {
+          mtr.col(i) = arma::reshape(img.row(i), V, 1, C);
+        }
+
+        return mtr;
+      }
+
+
+      // change the image representation from "horizontal" to "vertical"  [ 2-dimensional ]
+      //
+
+      arma::mat to_mtx_2d(arma::mat& img) {
+
+        arma::uword H = img.n_rows;
+        arma::uword V = img.n_cols;
+
+        arma::mat mtr = arma::zeros(V,H);
+        for (arma::uword i = 0; i < H; i++) {
+          mtr.col(i) = arma::reshape(img.row(i), V, 1);
+        }
+
+        return mtr;
+      }
+
+
+      // change the image representation from "vertical" to "horizontal"  [ 3-dimensional ]
+      //
+
+      arma::cube to_img(arma::cube& mtr) {
+
+        arma::uword V = mtr.n_rows;
+        arma::uword H = mtr.n_cols;
+        arma::uword C = mtr.n_slices;
+
+        arma::cube img = arma::zeros(H,V,C);
+        for (arma::uword i = 0; i < V; i++) {
+          img.col(i) = arma::reshape(mtr.row(i), H, 1, C);
+        }
+
+        return img;
+      }
+
+
+      // change the image representation from "vertical" to "horizontal"  [ 2-dimensional ]
+      //
+
+      arma::mat to_img_2d(arma::mat& mtr) {
+
+        arma::uword V = mtr.n_rows;
+        arma::uword H = mtr.n_cols;
+
+        arma::mat img = arma::zeros(H,V);
+        for (arma::uword i = 0; i < V; i++) {
+          img.col(i) = arma::reshape(mtr.row(i), H, 1);
+        }
+
+        return img;
+      }
+
+
+      // warpAffine transformation  [ 3-dimensional ]
+      //
+
+      arma::cube warpAffine(arma::cube& img,
+                            arma::mat& M,
+                            arma::uword R,
+                            arma::uword C) {
+
+        arma::cube mtr = to_mtx(img);
+
+        arma::uword H = mtr.n_rows;
+        arma::uword V = mtr.n_cols;
+        arma::uword SLICES = mtr.n_slices;
+
+        arma::cube dst = arma::zeros(R, C, SLICES);
+
+        for (arma::uword i = 0; i < H; i++) {
+          for (arma::uword j = 0; j < V; j++) {
+
+            double i_inp = i;
+            double j_inp = j;
+
+            arma::vec iter_vec({i_inp, j_inp});
+            arma::vec dot_vec = arma::affmul(M, iter_vec);
+
+            arma::uword i_dst = dot_vec(0);                   // "i_dist" and "j_dist" are unsigned integers thus no need to specify "i_dst >= 0" and "j_dst >= 0"
+            arma::uword j_dst = dot_vec(1);
+
+            if ((i_dst < R) & (j_dst < C)) {
+              dst.tube(i_dst, j_dst) = mtr.tube(i,j);
+            }
+          }
+        }
+
+        return to_img(dst);
+      }
+
+
+      // warpAffine transformation  [ 2-dimensional ]
+      //
+
+      arma::mat warpAffine_2d(arma::mat& img,
+                              arma::mat& M,
+                              arma::uword R,
+                              arma::uword C,
+                              int threads = 1) {
+        #ifdef _OPENMP
+        omp_set_num_threads(threads);
+        #endif
+
+        arma::mat mtr = to_mtx_2d(img);
+
+        arma::uword H = mtr.n_rows;
+        arma::uword V = mtr.n_cols;
+
+        arma::mat dst = arma::zeros(R, C);
+        arma::uword i,j;
+
+        #ifdef _OPENMP
+        #pragma omp parallel for schedule(auto) shared(M, R, C, H, V, dst, mtr) private(i,j) collapse(2)
+        #endif
+        for (i = 0; i < H; i++) {
+          for (j = 0; j < V; j++) {
+
+            double i_inp = i;
+            double j_inp = j;
+
+            arma::vec iter_vec({i_inp, j_inp});
+            arma::vec dot_vec = arma::affmul(M, iter_vec);
+
+            arma::uword i_dst = dot_vec(0);                   // "i_dist" and "j_dist" are unsigned integers thus no need to specify "i_dst >= 0" and "j_dst >= 0"
+            arma::uword j_dst = dot_vec(1);
+
+            if ((i_dst < R) & (j_dst < C)) {
+              #ifdef _OPENMP
+              #pragma omp atomic write
+              #endif
+              dst(i_dst, j_dst) = mtr(i,j);
+            }
+          }
+        }
+
+        return to_img_2d(dst);
+      }
+
+
+      ~Warp_Affine() { }
   };
 
 }

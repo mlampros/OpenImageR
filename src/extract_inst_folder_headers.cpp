@@ -802,7 +802,7 @@ std::vector<int> spix_bbox_vector(arma::mat& spix_labels, arma::rowvec spix_labe
 //
 
 // [[Rcpp::export]]
-Rcpp::List pad_matrix(arma::mat &x, int new_rows, int new_cols, double fill_value = 0.0) {
+Rcpp::List pad_matrix(arma::mat &x, arma::uword new_rows, arma::uword new_cols, double fill_value = 0.0) {
 
   oimageR::Utility_functions UTLF;
   return UTLF.pad_matrix(x, new_rows, new_cols, fill_value);
@@ -835,5 +835,47 @@ Rcpp::List LOAD_data(std::string write_slic, std::string type = "2d") {    // ty
   return out;
 }
 
+
+//---------------------------------------------------------------------------------------------------------------------------- Warp Affine
+
+// get affine transformation
+//
+
+// [[Rcpp::export]]
+arma::mat get_affine_transform(arma::mat& original_points,
+                               arma::mat& transformed_points) {
+
+  oimageR::Warp_Affine warp;
+  return warp.getAffineTransform(original_points, transformed_points);
+}
+
+
+// warpAffine transformation  [ 2-dimensional ]
+//
+
+// [[Rcpp::export]]
+arma::mat warpAffine_2d(arma::mat& img,
+                        arma::mat& M,
+                        arma::uword R,
+                        arma::uword C,
+                        int threads = 1) {
+
+  oimageR::Warp_Affine warp;
+  return warp.warpAffine_2d(img, M, R, C, threads);
+}
+
+
+// warpAffine transformation  [ 3-dimensional ]
+//
+
+// [[Rcpp::export]]
+arma::cube warp_affine_3d(arma::cube& img,
+                          arma::mat& M,
+                          arma::uword R,
+                          arma::uword C) {
+
+  oimageR::Warp_Affine warp;
+  return warp.warpAffine(img, M, R, C);
+}
 
 //----------------------------------------------------------------------------------------------------------------------------

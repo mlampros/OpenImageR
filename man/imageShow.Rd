@@ -4,10 +4,12 @@
 \alias{imageShow}
 \title{display an image}
 \usage{
-imageShow(file_path)
+imageShow(file_path, clear_viewer = FALSE)
 }
 \arguments{
 \item{file_path}{if file_path is a character string, then a shiny application is utilized. If file_path is a matrix, data.frame OR a 3-dimensional array then the grid.raster function of the base grid package is used.}
+
+\item{clear_viewer}{a boolean. If TRUE then the previous image will be removed in the viewer before displaying the next one}
 }
 \value{
 displays an image

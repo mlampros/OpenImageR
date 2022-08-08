@@ -25,6 +25,7 @@ extern SEXP _OpenImageR_diate_erode_cube(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_Gabor_export_Features(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_Gabor_Filter_Bank(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_Gabor_generate(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _OpenImageR_get_affine_transform(SEXP, SEXP);
 extern SEXP _OpenImageR_hash_image(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_hash_image_cube(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_hash_image_cube_hex(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -60,6 +61,8 @@ extern SEXP _OpenImageR_rotate_rcpp(SEXP, SEXP);
 extern SEXP _OpenImageR_spix_bbox(SEXP, SEXP);
 extern SEXP _OpenImageR_spix_bbox_vector(SEXP, SEXP);
 extern SEXP _OpenImageR_translation_mat(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _OpenImageR_warpAffine_2d(SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _OpenImageR_warp_affine_3d(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_zca_whiten_cube(SEXP, SEXP, SEXP);
 extern SEXP _OpenImageR_zca_whitening(SEXP, SEXP, SEXP);
 
@@ -81,6 +84,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_OpenImageR_Gabor_export_Features",              (DL_FUNC) &_OpenImageR_Gabor_export_Features,              12},
     {"_OpenImageR_Gabor_Filter_Bank",                  (DL_FUNC) &_OpenImageR_Gabor_Filter_Bank,                   5},
     {"_OpenImageR_Gabor_generate",                     (DL_FUNC) &_OpenImageR_Gabor_generate,                     12},
+    {"_OpenImageR_get_affine_transform",               (DL_FUNC) &_OpenImageR_get_affine_transform,                2},
     {"_OpenImageR_hash_image",                         (DL_FUNC) &_OpenImageR_hash_image,                          8},
     {"_OpenImageR_hash_image_cube",                    (DL_FUNC) &_OpenImageR_hash_image_cube,                     6},
     {"_OpenImageR_hash_image_cube_hex",                (DL_FUNC) &_OpenImageR_hash_image_cube_hex,                 6},
@@ -116,6 +120,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_OpenImageR_spix_bbox",                          (DL_FUNC) &_OpenImageR_spix_bbox,                           2},
     {"_OpenImageR_spix_bbox_vector",                   (DL_FUNC) &_OpenImageR_spix_bbox_vector,                    2},
     {"_OpenImageR_translation_mat",                    (DL_FUNC) &_OpenImageR_translation_mat,                     4},
+    {"_OpenImageR_warpAffine_2d",                      (DL_FUNC) &_OpenImageR_warpAffine_2d,                       5},
+    {"_OpenImageR_warp_affine_3d",                     (DL_FUNC) &_OpenImageR_warp_affine_3d,                      4},
     {"_OpenImageR_zca_whiten_cube",                    (DL_FUNC) &_OpenImageR_zca_whiten_cube,                     3},
     {"_OpenImageR_zca_whitening",                      (DL_FUNC) &_OpenImageR_zca_whitening,                       3},
     {NULL, NULL, 0}
