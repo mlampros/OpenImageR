@@ -18,11 +18,12 @@ RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update && \
  R -e "install.packages('devtools', dependencies = TRUE, repos = 'https://cloud.r-project.org/')" && \
  R -e "install.packages(c( 'Rcpp', 'graphics', 'grDevices', 'grid', 'shiny', 'jpeg', 'png', 'tiff', 'R6', 'RcppArmadillo', 'testthat', 'knitr', 'rmarkdown', 'covr', 'remotes' ), repos =  'https://cloud.r-project.org/' )"
 
+ ADD http://www.random.org/strings/?num=10&len=8&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new uuid
  ARG BUILD_DATE
 
  RUN echo "$BUILD_DATE"
- R -e "remotes::install_github('mlampros/OpenImageR', upgrade = 'never', dependencies = FALSE, repos = 'https://cloud.r-project.org/')" && \
- apt-get autoremove -y && \
- apt-get clean
+ RUN R -e "remotes::install_github('mlampros/OpenImageR', upgrade = 'never', dependencies = FALSE, repos = 'https://cloud.r-project.org/')" && \
+  apt-get autoremove -y && \
+  apt-get clean
 
 ENV USER rstudio
