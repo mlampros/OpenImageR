@@ -18,7 +18,7 @@ jobs:
     - name: docker login
       env:
         DOCKER_USER: ${{ github.repository_owner }}
-        DOCKER_PASSWORD: ${{ secrets.TIC_DEPLOY_KEY }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
