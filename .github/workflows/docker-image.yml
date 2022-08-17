@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - id: pkgname
+      - id: string
         uses: ASzc/change-string-case-action@v1
         with:
-          pkgname: ${{ github.event.repository.name }}
+          string: ${{ github.event.repository.name }}
 
       - name: Check Out Repo
         uses: actions/checkout@v2
@@ -44,6 +44,6 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ github.repository_owner }}/${{ steps.pkgname.outputs.lowercase }}:rstudiodev
-          cache-from: type=registry,ref=${{ github.repository_owner }}/${{ steps.pkgname.outputs.lowercase }}:buildcache
-          cache-to: type=registry,ref=${{ github.repository_owner }}/${{ steps.pkgname.outputs.lowercase }}:buildcache,mode=max
+          tags: ${{ github.repository_owner }}/${{ steps.string.outputs.lowercase }}:rstudiodev
+          cache-from: type=registry,ref=${{ github.repository_owner }}/${{ steps.string.outputs.lowercase }}:buildcache
+          cache-to: type=registry,ref=${{ github.repository_owner }}/${{ steps.string.outputs.lowercase }}:buildcache,mode=max
