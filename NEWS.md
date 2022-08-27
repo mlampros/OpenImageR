@@ -1,4 +1,9 @@
 
+## OpenImageR 1.2.5
+
+* I fixed the (debian, fedora) *clang14* warning: "use of bitwise '&' with boolean operands"
+
+
 ## OpenImageR 1.2.4
 
 * I fixed a *clang-UBSAN* warning related to the *warpAffine()* and *warpAffine_2d()* functions of the *OpenImageRheader.h* file (this warning was visible in the checks of the *fastGLCM* R package)

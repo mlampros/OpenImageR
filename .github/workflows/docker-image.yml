@@ -3,7 +3,9 @@
 # build, push and cache the docker image. I have to adjust the following in case of a different repository:
 #        - I have to add the 'BUILD_DATE' arg in the Dockerfile
 #        - I have to create a DOCKER_PASSWORD (use the docker token) in the 'Settings' tab of the repository
-# See also: https://github.com/mlampros/IceSat2R/blob/master/.github/workflows/docker_image.yml
+# References:
+#        - https://github.com/mlampros/IceSat2R/blob/master/.github/workflows/docker_image.yml
+#        - https://github.com/orgs/community/discussions/25768#discussioncomment-3249184
 #..........................................................................................................
 
 on:

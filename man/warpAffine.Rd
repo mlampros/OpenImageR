@@ -64,7 +64,7 @@ res_2d = warpAffine(img = img_2d,
                     M = M_aff,
                     R = r,
                     C = c,
-                    threads = 4,
+                    threads = 1,
                     verbose = TRUE)
 
 # imageShow(res_2d)

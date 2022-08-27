@@ -86,7 +86,7 @@ getAffineTransform = function(original_points, transformed_points) {
 #'                     M = M_aff,
 #'                     R = r,
 #'                     C = c,
-#'                     threads = 4,
+#'                     threads = 1,
 #'                     verbose = TRUE)
 #'
 #' # imageShow(res_2d)

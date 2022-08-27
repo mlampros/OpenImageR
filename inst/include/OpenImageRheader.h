@@ -3258,10 +3258,10 @@ namespace oimageR {
             arma::vec iter_vec({i_inp, j_inp});
             arma::vec dot_vec = arma::affmul(M, iter_vec);
 
-            if ((dot_vec(0) >= 0.0) & (dot_vec(0) < R)) {
-              if ((dot_vec(1) >= 0.0) & (dot_vec(1) < C)) {
+            if ((dot_vec(0) >= 0.0) && (dot_vec(0) < R)) {     // double '&&' to avoid the clang-warning:  "use of bitwise '&' with boolean operands"
+              if ((dot_vec(1) >= 0.0) && (dot_vec(1) < C)) {
 
-                arma::uword i_dst = dot_vec(0);              // if I don't have an unsigned integer then this leads to an 'Undefined Behavior' (UBSAN on Clang), thus the previous 'if' conditions are necessary
+                arma::uword i_dst = dot_vec(0);                // if I don't have an unsigned integer then this leads to an 'Undefined Behavior' (UBSAN on Clang), thus the previous 'if' conditions are necessary
                 arma::uword j_dst = dot_vec(1);
 
                 dst.tube(i_dst, j_dst) = mtr.tube(i,j);
@@ -3306,8 +3306,8 @@ namespace oimageR {
             arma::vec iter_vec({i_inp, j_inp});
             arma::vec dot_vec = arma::affmul(M, iter_vec);
 
-            if ((dot_vec(0) >= 0.0) & (dot_vec(0) < R)) {
-              if ((dot_vec(1) >= 0.0) & (dot_vec(1) < C)) {
+            if ((dot_vec(0) >= 0.0) && (dot_vec(0) < R)) {
+              if ((dot_vec(1) >= 0.0) && (dot_vec(1) < C)) {
 
                 arma::uword i_dst = dot_vec(0);            // if I don't have an unsigned integer then this leads to an 'Undefined Behavior' (UBSAN on Clang), thus the previous 'if' conditions are necessary
                 arma::uword j_dst = dot_vec(1);
