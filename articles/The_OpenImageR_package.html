@@ -90,7 +90,7 @@
       <h1 data-toc-skip>Functionality of the OpenImageR package</h1>
                         <h4 data-toc-skip class="author">Lampros Mouselimis</h4>
             
-            <h4 data-toc-skip class="date">2022-09-25</h4>
+            <h4 data-toc-skip class="date">2022-09-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/vignettes/The_OpenImageR_package.Rmd" class="external-link"><code>vignettes/The_OpenImageR_package.Rmd</code></a></small>
       <div class="hidden name"><code>The_OpenImageR_package.Rmd</code></div>
@@ -341,7 +341,7 @@
 <span>                    </span>
 <span>                    zca_epsilon <span class="op">=</span> <span class="fl">0.1</span>, image_thresh <span class="op">=</span> <span class="fl">0.0</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.1225939 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.1329899 secs</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">augm</span><span class="op">)</span></span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-23-1.png" width="96"><br><br></p>
@@ -444,7 +444,7 @@
 <span></span>
 <span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../reference/HOG_apply.html">HOG_apply</a></span><span class="op">(</span><span class="va">tmp_arr</span>, cells <span class="op">=</span> <span class="fl">2</span>, orientations <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.01497316 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.01646304 secs</span></span></code></pre>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]</span></span>
@@ -600,7 +600,7 @@
 <span></span>
 <span><span class="va">hapl_hash</span> <span class="op">=</span> <span class="fu"><a href="../reference/hash_apply.html">hash_apply</a></span><span class="op">(</span><span class="va">path</span>, hash_size <span class="op">=</span> <span class="fl">6</span>, method <span class="op">=</span> <span class="st">"dhash"</span>, mode <span class="op">=</span> <span class="st">"hash"</span>, threads <span class="op">=</span> <span class="fl">1</span>,  resize <span class="op">=</span> <span class="st">"nearest"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.01475596 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.01320291 secs</span></span></code></pre>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_hash</span>                <span class="co"># returns both the names of the images and the hash values</span></span></code></pre></div>
 <pre><code><span><span class="co">## $files</span></span>
@@ -615,7 +615,7 @@
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_bin</span> <span class="op">=</span> <span class="fu"><a href="../reference/hash_apply.html">hash_apply</a></span><span class="op">(</span><span class="va">path</span>, hash_size <span class="op">=</span> <span class="fl">6</span>, method <span class="op">=</span> <span class="st">"dhash"</span>, mode <span class="op">=</span> <span class="st">"binary"</span>, threads <span class="op">=</span> <span class="fl">1</span>,  resize <span class="op">=</span> <span class="st">"nearest"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.01360106 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.01159286 secs</span></span></code></pre>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_bin</span><span class="op">$</span><span class="va">files</span>             <span class="co"># names of the images</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "2_1.png" "2_2.png" "2_3.png" "4_1.png" "4_2.png" "4_3.png" "5_1.png"</span></span>
