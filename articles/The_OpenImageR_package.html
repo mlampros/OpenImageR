@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>Functionality of the OpenImageR package</h1>
                         <h4 data-toc-skip class="author">Lampros Mouselimis</h4>
             
-            <h4 data-toc-skip class="date">2022-10-01</h4>
+            <h4 data-toc-skip class="date">2022-10-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/vignettes/The_OpenImageR_package.Rmd" class="external-link"><code>vignettes/The_OpenImageR_package.Rmd</code></a></small>
       <div class="hidden name"><code>The_OpenImageR_package.Rmd</code></div>
@@ -305,16 +305,16 @@
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-20-1.png" width="96"><br><br></p>
 </div>
 <div class="section level4">
-<h4 id="delationerosion">delationErosion<a class="anchor" aria-label="anchor" href="#delationerosion"></a>
+<h4 id="dilationerosion">dilationErosion<a class="anchor" aria-label="anchor" href="#dilationerosion"></a>
 </h4>
 <p><a href="https://www.mathworks.com/help/images/morphological-dilation-and-erosion.html" class="external-link"><strong>Dilation</strong> and <strong>erosion</strong></a> are the most basic morphological operations. Dilation adds pixels to the boundaries of objects in an image, while erosion removes pixels on object boundaries,</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res_delate</span> <span class="op">=</span> <span class="fu"><a href="../reference/delationErosion.html">delationErosion</a></span><span class="op">(</span><span class="va">im</span>, Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">'delation'</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">res_delate</span> <span class="op">=</span> <span class="fu"><a href="../reference/dilationErosion.html">dilationErosion</a></span><span class="op">(</span><span class="va">im</span>, Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">'dilation'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">res_delate</span><span class="op">)</span></span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-21-1.png" width="96"><br><br></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res_erosion</span> <span class="op">=</span> <span class="fu"><a href="../reference/delationErosion.html">delationErosion</a></span><span class="op">(</span><span class="va">im</span>, Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">'erosion'</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">res_erosion</span> <span class="op">=</span> <span class="fu"><a href="../reference/dilationErosion.html">dilationErosion</a></span><span class="op">(</span><span class="va">im</span>, Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">'erosion'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">res_erosion</span><span class="op">)</span></span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-22-1.png" width="96"><br><br></p>
@@ -341,7 +341,7 @@
 <span>                    </span>
 <span>                    zca_epsilon <span class="op">=</span> <span class="fl">0.1</span>, image_thresh <span class="op">=</span> <span class="fl">0.0</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.1203609 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.1206741 secs</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">augm</span><span class="op">)</span></span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-23-1.png" width="96"><br><br></p>
@@ -444,7 +444,7 @@
 <span></span>
 <span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../reference/HOG_apply.html">HOG_apply</a></span><span class="op">(</span><span class="va">tmp_arr</span>, cells <span class="op">=</span> <span class="fl">2</span>, orientations <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.0143652 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.0144608 secs</span></span></code></pre>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]</span></span>
@@ -600,7 +600,7 @@
 <span></span>
 <span><span class="va">hapl_hash</span> <span class="op">=</span> <span class="fu"><a href="../reference/hash_apply.html">hash_apply</a></span><span class="op">(</span><span class="va">path</span>, hash_size <span class="op">=</span> <span class="fl">6</span>, method <span class="op">=</span> <span class="st">"dhash"</span>, mode <span class="op">=</span> <span class="st">"hash"</span>, threads <span class="op">=</span> <span class="fl">1</span>,  resize <span class="op">=</span> <span class="st">"nearest"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.01314998 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.01391196 secs</span></span></code></pre>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_hash</span>                <span class="co"># returns both the names of the images and the hash values</span></span></code></pre></div>
 <pre><code><span><span class="co">## $files</span></span>
@@ -615,7 +615,7 @@
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_bin</span> <span class="op">=</span> <span class="fu"><a href="../reference/hash_apply.html">hash_apply</a></span><span class="op">(</span><span class="va">path</span>, hash_size <span class="op">=</span> <span class="fl">6</span>, method <span class="op">=</span> <span class="st">"dhash"</span>, mode <span class="op">=</span> <span class="st">"binary"</span>, threads <span class="op">=</span> <span class="fl">1</span>,  resize <span class="op">=</span> <span class="st">"nearest"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.01147604 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.01197505 secs</span></span></code></pre>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_bin</span><span class="op">$</span><span class="va">files</span>             <span class="co"># names of the images</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "2_1.png" "2_2.png" "2_3.png" "4_1.png" "4_2.png" "4_3.png" "5_1.png"</span></span>
