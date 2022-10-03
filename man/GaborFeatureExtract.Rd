@@ -140,18 +140,18 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{GaborFeatureExtract$new()}}
-\item \href{#method-gabor_filter_bank}{\code{GaborFeatureExtract$gabor_filter_bank()}}
-\item \href{#method-gabor_feature_extraction}{\code{GaborFeatureExtract$gabor_feature_extraction()}}
-\item \href{#method-gabor_feature_engine}{\code{GaborFeatureExtract$gabor_feature_engine()}}
-\item \href{#method-plot_gabor}{\code{GaborFeatureExtract$plot_gabor()}}
-\item \href{#method-plot_multi_images}{\code{GaborFeatureExtract$plot_multi_images()}}
-\item \href{#method-clone}{\code{GaborFeatureExtract$clone()}}
+\item \href{#method-GaborFeatureExtract-new}{\code{GaborFeatureExtract$new()}}
+\item \href{#method-GaborFeatureExtract-gabor_filter_bank}{\code{GaborFeatureExtract$gabor_filter_bank()}}
+\item \href{#method-GaborFeatureExtract-gabor_feature_extraction}{\code{GaborFeatureExtract$gabor_feature_extraction()}}
+\item \href{#method-GaborFeatureExtract-gabor_feature_engine}{\code{GaborFeatureExtract$gabor_feature_engine()}}
+\item \href{#method-GaborFeatureExtract-plot_gabor}{\code{GaborFeatureExtract$plot_gabor()}}
+\item \href{#method-GaborFeatureExtract-plot_multi_images}{\code{GaborFeatureExtract$plot_multi_images()}}
+\item \href{#method-GaborFeatureExtract-clone}{\code{GaborFeatureExtract$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-GaborFeatureExtract-new"></a>}}
+\if{latex}{\out{\hypertarget{method-GaborFeatureExtract-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$new()}\if{html}{\out{</div>}}
@@ -159,8 +159,8 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gabor_filter_bank"></a>}}
-\if{latex}{\out{\hypertarget{method-gabor_filter_bank}{}}}
+\if{html}{\out{<a id="method-GaborFeatureExtract-gabor_filter_bank"></a>}}
+\if{latex}{\out{\hypertarget{method-GaborFeatureExtract-gabor_filter_bank}{}}}
 \subsection{Method \code{gabor_filter_bank()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$gabor_filter_bank(
@@ -189,8 +189,8 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gabor_feature_extraction"></a>}}
-\if{latex}{\out{\hypertarget{method-gabor_feature_extraction}{}}}
+\if{html}{\out{<a id="method-GaborFeatureExtract-gabor_feature_extraction"></a>}}
+\if{latex}{\out{\hypertarget{method-GaborFeatureExtract-gabor_feature_extraction}{}}}
 \subsection{Method \code{gabor_feature_extraction()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$gabor_feature_extraction(
@@ -243,8 +243,8 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gabor_feature_engine"></a>}}
-\if{latex}{\out{\hypertarget{method-gabor_feature_engine}{}}}
+\if{html}{\out{<a id="method-GaborFeatureExtract-gabor_feature_engine"></a>}}
+\if{latex}{\out{\hypertarget{method-GaborFeatureExtract-gabor_feature_engine}{}}}
 \subsection{Method \code{gabor_feature_engine()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$gabor_feature_engine(
@@ -297,8 +297,8 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot_gabor"></a>}}
-\if{latex}{\out{\hypertarget{method-plot_gabor}{}}}
+\if{html}{\out{<a id="method-GaborFeatureExtract-plot_gabor"></a>}}
+\if{latex}{\out{\hypertarget{method-GaborFeatureExtract-plot_gabor}{}}}
 \subsection{Method \code{plot_gabor()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$plot_gabor(
@@ -321,8 +321,8 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot_multi_images"></a>}}
-\if{latex}{\out{\hypertarget{method-plot_multi_images}{}}}
+\if{html}{\out{<a id="method-GaborFeatureExtract-plot_multi_images"></a>}}
+\if{latex}{\out{\hypertarget{method-GaborFeatureExtract-plot_multi_images}{}}}
 \subsection{Method \code{plot_multi_images()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GaborFeatureExtract$plot_multi_images(
@@ -351,8 +351,8 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-GaborFeatureExtract-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-GaborFeatureExtract-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

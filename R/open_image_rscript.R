@@ -898,6 +898,10 @@ ZCAwhiten = function(image, k, epsilon) {
 
 #' Delation or Erosion of an image
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function was deprecated because I realized that the name of the function does not correspond to the name of the algorithm (delation -> dilation)
 #'
 #' this function performs delation or erosion to a 2- or 3- dimensional image
 #' @param image a matrix, data frame or 3-dimensional array
@@ -908,6 +912,7 @@ ZCAwhiten = function(image, k, epsilon) {
 #' @details
 #' This function utilizes a kernel to perform delation or erosion. The first value of the vector indicates the number of rows of the kernel, whereas
 #' the second value indicates the number of columns.
+#' @keywords internal
 #' @export
 #' @examples
 #'
@@ -919,9 +924,17 @@ ZCAwhiten = function(image, k, epsilon) {
 #'
 #' res_erode = delationErosion(image, Filter = c(5,5), method = 'erosion')
 #'
+#' # ->
+#'
+#' res_dilate = dilationErosion(image, Filter = c(3,3), method = 'dilation')
+#'
+#' res_erode = dilationErosion(image, Filter = c(5,5), method = 'erosion')
+#'
 
 
 delationErosion = function(image, Filter, method = 'delation', threads = 1) {
+
+  lifecycle::deprecate_warn("1.2.5", "delationErosion()", "dilationErosion()")
 
   if (inherits(image, 'data.frame')) image = as.matrix(image)
   if (!inherits(image, c('matrix', 'array'))) stop('invalid type of image, use either array or matrix')
@@ -949,6 +962,58 @@ delationErosion = function(image, Filter, method = 'delation', threads = 1) {
   return(res)
 }
 
+
+#' Dilation or Erosion of an image
+#'
+#' this function performs dilation or erosion to a 2- or 3- dimensional image
+#' @param image a matrix, data frame or 3-dimensional array
+#' @param Filter a vector specifying the dimensions of the kernel, which will be used to perform either dilation or erosion, such as c(3,3)
+#' @param method one of 'dilation', 'erosion'
+#' @param threads number of cores to run in parallel ( > 1 should be used if image high dimensional )
+#' @return a matrix or 3-dimensional array
+#' @details
+#' This function utilizes a kernel to perform dilation or erosion. The first value of the vector indicates the number of rows of the kernel, whereas
+#' the second value indicates the number of columns.
+#' @export
+#' @examples
+#'
+#' path = system.file("tmp_images", "1.png", package = "OpenImageR")
+#'
+#' image = readImage(path)
+#'
+#' res_dilate = dilationErosion(image, Filter = c(3,3), method = 'dilation')
+#'
+#' res_erode = dilationErosion(image, Filter = c(5,5), method = 'erosion')
+#'
+
+
+dilationErosion = function(image, Filter, method = 'dilation', threads = 1) {
+
+  if (inherits(image, 'data.frame')) image = as.matrix(image)
+  if (!inherits(image, c('matrix', 'array'))) stop('invalid type of image, use either array or matrix')
+  if (threads < 1) stop('theads should be at least 1')
+  if (!method %in% c('dilation', 'erosion')) stop("invalid method, choose one of 'dilation', 'erosion'")
+  if (length(Filter) != 2 || Filter[1] < 1 || Filter[2] < 1 || Filter[1] > nrow(image) - 1 || Filter[2] > ncol(image) - 1 || (!inherits(Filter, 'numeric')))
+    stop('Filter should be a numeric vector, such as c(3,3), where each value of the vector is greater than 1 and less than the number of
+         rows and columns of the image')
+
+  if (method == 'dilation') {
+    method = 1}
+  if (method == 'erosion') {
+    method = 2
+  }
+
+  if (inherits(image, 'matrix')) {
+
+    res = diate_erode(image, Filter, method, threads)
+  }
+  if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
+
+    res = diate_erode_cube(image, Filter, method, threads)
+  }
+
+  return(res)
+}
 
 
 #' image translation

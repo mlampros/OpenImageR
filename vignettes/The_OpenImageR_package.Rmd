@@ -319,13 +319,13 @@ imageShow(res)
 <br><br>
 
 
-#### delationErosion
+#### dilationErosion
 
 [**Dilation** and **erosion**](https://www.mathworks.com/help/images/morphological-dilation-and-erosion.html) are the most basic morphological operations. Dilation adds pixels to the boundaries of objects in an image, while erosion removes pixels on object boundaries,
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-res_delate = delationErosion(im, Filter = c(8,8), method = 'delation')
+res_delate = dilationErosion(im, Filter = c(8,8), method = 'dilation')
 
 imageShow(res_delate)
 
@@ -334,7 +334,7 @@ imageShow(res_delate)
 
 ```{r fig.width = 1.0, fig.height = 1.0, echo = T, eval = T}
 
-res_erosion = delationErosion(im, Filter = c(8,8), method = 'erosion')
+res_erosion = dilationErosion(im, Filter = c(8,8), method = 'erosion')
 
 imageShow(res_erosion)
 

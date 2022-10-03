@@ -19,6 +19,10 @@ delationErosion(image, Filter, method = "delation", threads = 1)
 a matrix or 3-dimensional array
 }
 \description{
+`r lifecycle::badge("deprecated")`
+
+This function was deprecated because I realized that the name of the function does not correspond to the name of the algorithm (delation -> dilation)
+
 this function performs delation or erosion to a 2- or 3- dimensional image
 }
 \details{
@@ -35,4 +39,11 @@ res_delate = delationErosion(image, Filter = c(3,3), method = 'delation')
 
 res_erode = delationErosion(image, Filter = c(5,5), method = 'erosion')
 
+# ->
+
+res_dilate = dilationErosion(image, Filter = c(3,3), method = 'dilation')
+
+res_erode = dilationErosion(image, Filter = c(5,5), method = 'erosion')
+
 }
+\keyword{internal}
