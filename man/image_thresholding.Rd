@@ -7,7 +7,7 @@
 image_thresholding(image, thresh)
 }
 \arguments{
-\item{image}{matrix or 3-dimensional array}
+\item{image}{matrix or 3-dimensional array where the third dimension is equal to 3}
 
 \item{thresh}{the threshold parameter should be between 0 and 1 if the data is normalized or between 0-255 otherwise}
 }
@@ -18,7 +18,7 @@ a matrix
 image thresholding
 }
 \details{
-This function applies thresholding to a matrix or to a 3-dimensional array.
+This function applies thresholding to a matrix or to a 3-dimensional array where the third dimension is equal to 3.
 }
 \examples{
 

@@ -7,7 +7,7 @@
 delationErosion(image, Filter, method = "delation", threads = 1)
 }
 \arguments{
-\item{image}{a matrix, data frame or 3-dimensional array}
+\item{image}{a matrix, data frame or 3-dimensional array where the third dimension is equal to 3}
 
 \item{Filter}{a vector specifying the dimensions of the kernel, which will be used to perform either delation or erosion, such as c(3,3)}
 
@@ -16,7 +16,7 @@ delationErosion(image, Filter, method = "delation", threads = 1)
 \item{threads}{number of cores to run in parallel ( > 1 should be used if image high dimensional )}
 }
 \value{
-a matrix or 3-dimensional array
+a matrix or 3-dimensional array where the third dimension is equal to 3
 }
 \description{
 `r lifecycle::badge("deprecated")`

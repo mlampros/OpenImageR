@@ -18,7 +18,7 @@
 #' @param img_data a numeric matrix specifying the input data (gabor_feature_engine function)
 #' @param img_nrow an integer specifying the number of rows of the input matrix (gabor_feature_engine function)
 #' @param img_ncol an integer specifying the number of columns of the input matrix (gabor_feature_engine function)
-#' @param real_matrices a list of 3-dimensional arrays. These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )
+#' @param real_matrices a list of 3-dimensional arrays (where the third dimension is equal to 3). These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )
 #' @param margin_btw_plots a float between 0.0 and 1.0 specifying the margin between the multiple output plots      ( plot_gabor function )
 #' @param thresholding either TRUE or FALSE. If TRUE then a threshold of 0.5 will be used to push values above 0.5 to 1.0 ( similar to otsu-thresholding )      ( plot_gabor function )
 #' @param verbose either TRUE or FALSE. If TRUE then information will be printed in the console    ( gabor_feature_extraction, gabor_feature_engine functions )
@@ -31,7 +31,7 @@
 #' @export
 #' @details
 #'
-#' In case of an RGB image (3-dimensional) one can use the \emph{rgb_2gray()} to convert the image to a 2-dimensional one
+#' In case of an RGB image (3-dimensional where the third dimension is equal to 3) one can use the \emph{rgb_2gray()} to convert the image to a 2-dimensional one
 #'
 #' I added the option \emph{downsample_gabor} to the original matlab code based on the following question on stackoverflow : \emph{https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filters}
 #'

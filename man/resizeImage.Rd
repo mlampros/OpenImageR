@@ -7,7 +7,7 @@
 resizeImage(image, width, height, method = "nearest", normalize_pixels = FALSE)
 }
 \arguments{
-\item{image}{matrix or 3-dimensional array}
+\item{image}{matrix or 3-dimensional array where the third dimension is equal to 3}
 
 \item{width}{a number specifying the new width of the image. Corresponds to the image-rows.}
 

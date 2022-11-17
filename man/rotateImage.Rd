@@ -7,7 +7,7 @@
 rotateImage(image, angle, method = "nearest", mode = "same", threads = 1)
 }
 \arguments{
-\item{image}{matrix, data frame or 3-dimensional array}
+\item{image}{matrix, data frame or 3-dimensional array where the third dimension is equal to 3}
 
 \item{angle}{specifies the number of degrees}
 

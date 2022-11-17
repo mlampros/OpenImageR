@@ -1,9 +1,9 @@
 
-#' This function writes 2- or 3-dimensional image data to a file
+#' This function writes 2- or 3-dimensional image (where the third dimension is equal to 3) data to a file
 #'
-#' This function writes 2- or 3-dimensional image data to a file. Supported types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)
+#' This function writes 2- or 3-dimensional image (where the third dimension is equal to 3) data to a file. Supported types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)
 #'
-#' @param data a 2- or 3-dimensional object (matrix, data frame or array)
+#' @param data a 2- or 3-dimensional object (matrix, data frame or array where the third dimension is equal to 3)
 #' @param file_name a string specifying the name of the new file
 #' @param ... further arguments for the writePNG, writeJPEG and writeTIFF functions
 #' @return a saved image file

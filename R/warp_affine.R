@@ -37,13 +37,13 @@ getAffineTransform = function(original_points, transformed_points) {
 
 #' Warp Affine
 #'
-#' @param img either a matrix or a 3-dimensional array with a range of values between 0 and 255
+#' @param img either a matrix or a 3-dimensional array (where the third dimension is equal to 3) with a range of values between 0 and 255
 #' @param M a matrix corresponding to the transformation matrix
 #' @param R a value corresponding to the destination number of rows
 #' @param C a value corresponding to the destination number of columns
 #' @param threads an integer specifying the number of threads to run in parallel. This parameter applies only if the input "img" parameter is of type matrix.
 #' @param verbose a boolean. If TRUE then information will be printed in the console
-#' @return either a matrix or a 3-dimensional array
+#' @return either a matrix or a 3-dimensional array (where the third dimension is equal to 3)
 #' @references
 #' https://github.com/OlehOnyshchak/ImageTransformations/blob/master/AffineTransformation.ipynb
 #' @export
@@ -107,13 +107,13 @@ getAffineTransform = function(original_points, transformed_points) {
 warpAffine = function(img, M, R, C, threads = 1, verbose = FALSE) {
 
   if (verbose) t_start = Sys.time()
-  if (!inherits(img, c('matrix', 'array'))) stop("The input 'img' parameter must be either a 'matrix' or '3-dimensional array'!", call. = F)
+  if (!inherits(img, c('matrix', 'array'))) stop("The input 'img' parameter must be either a 'matrix' or '3-dimensional array' where the third dimension is equal to 3", call. = F)
 
   if (inherits(img, 'matrix')) {
     res_ = warpAffine_2d(img, M, R, C, threads)
   }
   else {
-    if (dim(img)[3] != 3) stop("In case that the input parameter 'img' is of type array it has to be 3-dimensional!", call. = F)
+    if (dim(img)[3] != 3) stop("In case that the input parameter 'img' is of type array it has to be 3-dimensional where the third dimension is equal to 3", call. = F)
     res_ = warp_affine_3d(img, M, R, C)
   }
 

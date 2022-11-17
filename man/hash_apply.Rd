@@ -17,7 +17,7 @@ hash_apply(
 )
 }
 \arguments{
-\item{object}{a matrix, a data frame, a 3-dimensional array or a path to a folder of files (images)}
+\item{object}{a matrix, a data frame, a 3-dimensional array  (where the third dimension is equal to 3) or a path to a folder of files (images)}
 
 \item{rows}{a number specifying the number of rows of the matrix}
 
@@ -38,7 +38,7 @@ IF method = 'dhash' or 'average_hash' :  the hash_size should be less than numbe
 }
 \value{
 If the input is a matrix, data frame or array this function returns a matrix (if mode = 'binary') or a character vector (if mode = 'hex_hash'). If the input is a path to
-a folder the function returns a list of length 2, the 1st sublist is a vector with the names of the image files (the order of the files in the vector corresponds to the order of 
+a folder the function returns a list of length 2, the 1st sublist is a vector with the names of the image files (the order of the files in the vector corresponds to the order of
 the rows of the output matrix), the 2nd sublist is a matrix (if mode = 'binary') or a character vector (if mode = 'hex_hash').
 }
 \description{

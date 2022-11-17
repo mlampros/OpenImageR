@@ -2,7 +2,7 @@
 #' SLIC and SLICO superpixel implementations
 #'
 #'
-#' @param input_image either a 2-dimensional or a 3-dimensional input image (the range of the pixel values should be preferably in the range 0 to 255)
+#' @param input_image either a 2-dimensional or a 3-dimensional input image where the third dimension is equal to 3 (the range of the pixel values should be preferably in the range 0 to 255)
 #' @param method a character string specifying the method to use. Either "slic" or "slico"
 #' @param superpixel a numeric value specifying the number of superpixels to use
 #' @param compactness a numeric value specifying the compactness parameter. The \emph{compactness} parameter is needed only if \emph{method} is "slic". The "slico" method adaptively chooses the compactness parameter for each superpixel differently.
@@ -138,17 +138,17 @@ superpixels = function(input_image, method = "slic", superpixel = 200, compactne
 #'
 
 superpixel_bbox = function(superpixel_labels, non_overlapping_superpixels = FALSE) {
-  
+
   if (!inherits(superpixel_labels, 'matrix')) {
     stop("The 'superpixel_labels' parameter must be of type 'matrix'!")
   }
-  
+
   mt = spix_bbox(superpixel_labels, non_overlapping_superpixels)
-  
+
   if (non_overlapping_superpixels) {
-    
+
     mt$overlapping_pixs = lapply(mt$overlapping_pixs, function(x) {
-      
+
       if (length(x) > 0) {
         as.vector(x) + 1         # adjust the indices to R
       }
@@ -156,7 +156,7 @@ superpixel_bbox = function(superpixel_labels, non_overlapping_superpixels = FALS
         as.vector(x)
       }
     })
-    
+
     mt$bbox_matrix[, 1:4] = mt$bbox_matrix[, 1:4] + 1
     colnames(mt$bbox_matrix) = c('y_min', 'y_max', 'x_min', 'x_max', 'dif_y', 'dif_x', 'superpixel_segment')
   }
@@ -165,7 +165,7 @@ superpixel_bbox = function(superpixel_labels, non_overlapping_superpixels = FALS
     mt[, 1:4] = mt[, 1:4] + 1                  # Adjust the indexing (first 4 columns only) due to the difference between C++ and R  [ avoid this inside the C++ code because it's possible that I'll utilize the C++ function somewhere else ]
     colnames(mt) = c('y_min', 'y_max', 'x_min', 'x_max', 'dif_y', 'dif_x', 'superpixel_segment')
   }
-  
+
   return(mt)
 }
 
@@ -212,20 +212,20 @@ superpixel_bbox = function(superpixel_labels, non_overlapping_superpixels = FALS
 #'
 
 superpixel_bbox_subset = function(superpixel_labels, superpixel_subset) {
-  
+
   if (!inherits(superpixel_labels, 'matrix')) {
     stop("The 'superpixel_labels' parameter should be of type 'matrix'!")
   }
   if (!inherits(superpixel_subset, c('numeric', 'integer'))) {
     stop("The 'superpixel_subset' parameter should be of type vector!")
   }
-  
+
   mt = spix_bbox_vector(superpixel_labels, superpixel_subset)
   mt = as.vector(mt)
   mt[1:4] = mt[1:4] + 1                  # Adjust indexing (first 4 columns only) due to the difference between C++ and R  [ don't do this inside C++ because it might be the case that I'll use the C++ function directly somewhere else ]
   mt = matrix(mt, nrow = 1, ncol = 6)
   colnames(mt) = c('y_min', 'y_max', 'x_min', 'x_max', 'dif_y', 'dif_x')
-  
+
   return(mt)
 }
 
@@ -234,7 +234,7 @@ superpixel_bbox_subset = function(superpixel_labels, superpixel_subset) {
 #' Padding of matrices or n-dimensional arrays with a user specified value
 #'
 #'
-#' @param input_data either a matrix or a 3-dimensional array
+#' @param input_data either a matrix or a 3-dimensional array where the third dimension is equal to 3
 #' @param new_rows an integer specifying the new rows of the output matrix or array
 #' @param new_cols an integer specifying the new columns of the output matrix or array
 #' @param fill_value a numeric value to fill the extended rows / columns of the initial input data
@@ -270,7 +270,7 @@ superpixel_bbox_subset = function(superpixel_labels, superpixel_subset) {
 #'
 
 padding = function(input_data, new_rows, new_cols, fill_value = 0.0) {
-  
+
   if (inherits(input_data, 'matrix')) {
     return(pad_matrix(input_data, new_rows, new_cols, fill_value))
   }
@@ -299,14 +299,14 @@ padding = function(input_data, new_rows, new_cols, fill_value = 0.0) {
 
 
 
-#' loads either 2- or 3-dimensional data from a binary file
+#' loads either 2- or 3-dimensional data (where the third dimension is equal to 3) from a binary file
 #'
 #'
 #' @param path a character string specifying a file path ( where the binary data is saved )
 #' @param type a character string. Either '2d' or '3d' to indicate what kind of data data will be loaded from the specified \emph{path}
 #' @details
 #'
-#' This function can be used to load either 2- or 3-dimensional data from a binary file. It is used in combination with the \emph{superpixels} function in case that the \emph{write_slic} parameter is not an empty string ("").
+#' This function can be used to load either 2- or 3-dimensional data (where the third dimension is equal to 3) from a binary file. It is used in combination with the \emph{superpixels} function in case that the \emph{write_slic} parameter is not an empty string ("").
 #'
 #' @export
 #' @examples
@@ -336,7 +336,7 @@ load_binary = function(path, type) {
 #' Conversion of RGB to Lab colour type
 #'
 #'
-#' @param input_data a 3-dimensional array (RGB image)
+#' @param input_data a 3-dimensional array (RGB image) where the third dimension is equal to 3
 #' @export
 #' @details
 #' Meaning: RGB (Red-Green-Blue) to LAB (Lightness, A-colour-dimension, B-colour-dimension) colour conversion
@@ -354,8 +354,8 @@ load_binary = function(path, type) {
 
 RGB_to_Lab = function(input_data) {
 
-  if (is.na(dim(input_data)[3])) stop("The 'input_data' parameter should be a 3-dimensional data object!", call. = F)
-  if (length(dim(input_data)) > 3) stop("The 'input_data' parameter should be a 3-dimensional data object!", call. = F)
+  if (is.na(dim(input_data)[3])) stop("The 'input_data' parameter should be a 3-dimensional data object where the third dimension is equal to 3", call. = F)
+  if (length(dim(input_data)) > 3) stop("The 'input_data' parameter should be a 3-dimensional data object where the third dimension is equal to 3", call. = F)
   return(rgbtolab(input_data))
 }
 
@@ -363,7 +363,7 @@ RGB_to_Lab = function(input_data) {
 #' Conversion of RGB to HSV colour type
 #'
 #'
-#' @param input_data a 3-dimensional array (RGB image)
+#' @param input_data a 3-dimensional array (RGB image) where the third dimension is equal to 3
 #' @export
 #' @details
 #' Meaning: RGB (Red-Green-Blue) to HSV (Hue, Saturation, Value) colour conversion
@@ -379,8 +379,8 @@ RGB_to_Lab = function(input_data) {
 
 RGB_to_HSV = function(input_data) {
 
-  if (is.na(dim(input_data)[3])) stop("The 'input_data' parameter should be a 3-dimensional data object!", call. = F)
-  if (length(dim(input_data)) > 3) stop("The 'input_data' parameter should be a 3-dimensional data object!", call. = F)
+  if (is.na(dim(input_data)[3])) stop("The 'input_data' parameter should be a 3-dimensional data object where the third dimension is equal to 3", call. = F)
+  if (length(dim(input_data)) > 3) stop("The 'input_data' parameter should be a 3-dimensional data object where the third dimension is equal to 3", call. = F)
   return(RGB_to_hsv(input_data))
 }
 

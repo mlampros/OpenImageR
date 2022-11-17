@@ -22,9 +22,9 @@ either a hash-string or a binary vector
 This function calculates the average hash of an image
 }
 \details{
-The function is a modification of the 'average_hash' function of the imagehash package [ please consult the COPYRIGHT file ]. The average hash works 
-in the following way : 1st convert to grayscale, 2nd, reduce the size of an image (for instance to an 8x8 image, to further simplify 
-the number of computations), 3rd average the resulting colors (for an 8x8 image we average 64 colors), 4th compute the bits by comparing if each color value 
+The function is a modification of the 'average_hash' function of the imagehash package [ please consult the COPYRIGHT file ]. The average hash works
+in the following way : 1st convert to grayscale, 2nd, reduce the size of an image (for instance to an 8x8 image, to further simplify
+the number of computations), 3rd average the resulting colors (for an 8x8 image we average 64 colors), 4th compute the bits by comparing if each color value
 is above or below the mean, 5th construct the hash.
 }
 \examples{

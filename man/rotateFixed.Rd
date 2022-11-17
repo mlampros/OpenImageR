@@ -7,7 +7,7 @@
 rotateFixed(image, angle)
 }
 \arguments{
-\item{image}{matrix, data frame or 3-dimensional array}
+\item{image}{matrix, data frame or 3-dimensional array where the third dimension is equal to 3}
 
 \item{angle}{one of 90, 180 and 270 degrees}
 }

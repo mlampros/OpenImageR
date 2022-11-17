@@ -7,7 +7,7 @@
 padding(input_data, new_rows, new_cols, fill_value = 0)
 }
 \arguments{
-\item{input_data}{either a matrix or a 3-dimensional array}
+\item{input_data}{either a matrix or a 3-dimensional array where the third dimension is equal to 3}
 
 \item{new_rows}{an integer specifying the new rows of the output matrix or array}
 

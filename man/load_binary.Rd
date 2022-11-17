@@ -2,7 +2,7 @@
 % Please edit documentation in R/superpixels.R
 \name{load_binary}
 \alias{load_binary}
-\title{loads either 2- or 3-dimensional data from a binary file}
+\title{loads either 2- or 3-dimensional data (where the third dimension is equal to 3) from a binary file}
 \usage{
 load_binary(path, type)
 }
@@ -12,10 +12,10 @@ load_binary(path, type)
 \item{type}{a character string. Either '2d' or '3d' to indicate what kind of data data will be loaded from the specified \emph{path}}
 }
 \description{
-loads either 2- or 3-dimensional data from a binary file
+loads either 2- or 3-dimensional data (where the third dimension is equal to 3) from a binary file
 }
 \details{
-This function can be used to load either 2- or 3-dimensional data from a binary file. It is used in combination with the \emph{superpixels} function in case that the \emph{write_slic} parameter is not an empty string ("").
+This function can be used to load either 2- or 3-dimensional data (where the third dimension is equal to 3) from a binary file. It is used in combination with the \emph{superpixels} function in case that the \emph{write_slic} parameter is not an empty string ("").
 }
 \examples{
 

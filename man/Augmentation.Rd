@@ -2,7 +2,7 @@
 % Please edit documentation in R/open_image_rscript.R
 \name{Augmentation}
 \alias{Augmentation}
-\title{image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays}
+\title{image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays (where the third dimension is equal to 3)}
 \usage{
 Augmentation(
   image,
@@ -24,7 +24,7 @@ Augmentation(
 )
 }
 \arguments{
-\item{image}{a matrix, data frame, array or list of 3-dimensional arrays}
+\item{image}{a matrix, data frame, array or list of 3-dimensional arrays where the third dimension is equal to 3}
 
 \item{flip_mode}{a character string ('horizontal', 'vertical')}
 
@@ -60,7 +60,7 @@ Augmentation(
 the output is of the same type with the input (in case of a data frame it returns a matrix)
 }
 \description{
-image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays
+image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays (where the third dimension is equal to 3)
 }
 \details{
 This function takes advantage of various methods to accomplish image augmentations. The order of the preprocessing steps, in case that all transformations are applied to an image,
@@ -88,7 +88,7 @@ object = array(0, dim = c(10, 10, 10))
 res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 20)
 
 
-# a list of 3-dimensional arrays
+# a list of 3-dimensional arrays (where the third dimension is equal to 3)
 object = list(array(0, dim = c(10, 10, 3)), array(0, dim = c(10, 10, 3)))
 
 res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 40)

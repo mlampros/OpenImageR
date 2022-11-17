@@ -7,7 +7,7 @@
 warpAffine(img, M, R, C, threads = 1, verbose = FALSE)
 }
 \arguments{
-\item{img}{either a matrix or a 3-dimensional array with a range of values between 0 and 255}
+\item{img}{either a matrix or a 3-dimensional array (where the third dimension is equal to 3) with a range of values between 0 and 255}
 
 \item{M}{a matrix corresponding to the transformation matrix}
 
@@ -20,7 +20,7 @@ warpAffine(img, M, R, C, threads = 1, verbose = FALSE)
 \item{verbose}{a boolean. If TRUE then information will be printed in the console}
 }
 \value{
-either a matrix or a 3-dimensional array
+either a matrix or a 3-dimensional array (where the third dimension is equal to 3)
 }
 \description{
 Warp Affine

@@ -16,7 +16,7 @@ a list
 minimum and maximum values of vector, matrix, data frame or array
 }
 \details{
-This helper function returns the minimum and maximum values of a vector, 2-dimensional or 3-dimensional objects. In case of a vector, matrix or data frame it returns a single value for
+This helper function returns the minimum and maximum values of a vector, 2-dimensional or 3-dimensional objects (where the third dimension is equal to 3). In case of a vector, matrix or data frame it returns a single value for
 the minimum and maximum of the object. In case of an array it returns the minimum and maximum values for each slice of the array.
 }
 \examples{

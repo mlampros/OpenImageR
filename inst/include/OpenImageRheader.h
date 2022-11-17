@@ -1531,7 +1531,7 @@ namespace oimageR {
           CHANNELS = image.n_slices;                                                        // update the image-channels after subsetting
         }
         if (CHANNELS != 3 && CHANNELS != 1) {                                               // raise an error if the image is not 3-dimensional
-          Rcpp::stop("The input image should be either a 2-dimensional (matrix) or a 3-dimensional object (RGB)!");
+          Rcpp::stop("The input image should be either a 2-dimensional (matrix) or a 3-dimensional object (RGB) where the third dimension is equal to 3");
         }
         double im_MAX = image.max();
         double im_MIN = image.min();

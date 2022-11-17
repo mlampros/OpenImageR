@@ -13,7 +13,7 @@ Gabor Feature Extraction
 Gabor Feature Extraction
 }
 \details{
-In case of an RGB image (3-dimensional) one can use the \emph{rgb_2gray()} to convert the image to a 2-dimensional one
+In case of an RGB image (3-dimensional where the third dimension is equal to 3) one can use the \emph{rgb_2gray()} to convert the image to a 2-dimensional one
 
 I added the option \emph{downsample_gabor} to the original matlab code based on the following question on stackoverflow : \emph{https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filters}
 }
@@ -311,7 +311,7 @@ https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filte
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{real_matrices}}{a list of 3-dimensional arrays. These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )}
+\item{\code{real_matrices}}{a list of 3-dimensional arrays (where the third dimension is equal to 3). These arrays correspond to the \emph{real part} of the complex output matrices      ( plot_gabor function )}
 
 \item{\code{margin_btw_plots}}{a float between 0.0 and 1.0 specifying the margin between the multiple output plots      ( plot_gabor function )}
 

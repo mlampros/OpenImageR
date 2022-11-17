@@ -2,12 +2,12 @@
 % Please edit documentation in R/write_image.R
 \name{writeImage}
 \alias{writeImage}
-\title{This function writes 2- or 3-dimensional image data to a file}
+\title{This function writes 2- or 3-dimensional image (where the third dimension is equal to 3) data to a file}
 \usage{
 writeImage(data, file_name, ...)
 }
 \arguments{
-\item{data}{a 2- or 3-dimensional object (matrix, data frame or array)}
+\item{data}{a 2- or 3-dimensional object (matrix, data frame or array where the third dimension is equal to 3)}
 
 \item{file_name}{a string specifying the name of the new file}
 
@@ -17,7 +17,7 @@ writeImage(data, file_name, ...)
 a saved image file
 }
 \description{
-This function writes 2- or 3-dimensional image data to a file. Supported types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)
+This function writes 2- or 3-dimensional image (where the third dimension is equal to 3) data to a file. Supported types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)
 }
 \details{
 This function takes as input a matrix, data frame or array and saves the data in one of the supported image types ( .png, .jpeg, .jpg, .tiff ).

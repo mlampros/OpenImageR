@@ -7,12 +7,12 @@
 flipImage(image, mode = "horizontal")
 }
 \arguments{
-\item{image}{a matrix, data frame or 3-dimensional array}
+\item{image}{a matrix, data frame or 3-dimensional array where the third dimension is equal to 3}
 
 \item{mode}{one of 'horizontal', 'vertical'}
 }
 \value{
-a matrix or 3-dimensional array
+a matrix or 3-dimensional array where the third dimension is equal to 3
 }
 \description{
 flip an image row-wise (horizontally) or column-wise (vertically)

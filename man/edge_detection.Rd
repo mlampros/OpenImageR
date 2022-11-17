@@ -16,7 +16,7 @@ edge_detection(
 )
 }
 \arguments{
-\item{image}{matrix or 3-dimensional array}
+\item{image}{matrix or 3-dimensional array and the third dimension must be equal to 3}
 
 \item{method}{the method should be one of 'Frei_chen', 'LoG' (Laplacian of Gaussian), 'Prewitt', 'Roberts_cross', 'Scharr', 'Sobel'}
 
@@ -39,7 +39,7 @@ depending on the input, either a matrix or an array
 edge detection (Frei_chen, LoG, Prewitt, Roberts_cross, Scharr, Sobel)
 }
 \details{
-This function takes either a matrix or a 3-dimensional array and it performs edge detection using one of the following filters : 'Frei_chen', 'LoG' (Laplacian of Gaussian),
+This function takes either a matrix or a 3-dimensional array (where the third dimension is equal to 3) and it performs edge detection using one of the following filters : 'Frei_chen', 'LoG' (Laplacian of Gaussian),
 'Prewitt', 'Roberts_cross', 'Scharr', 'Sobel'
 }
 \examples{

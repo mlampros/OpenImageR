@@ -1,4 +1,9 @@
 
+## OpenImageR 1.2.7
+
+* I updated the output error message in all cases of 3-dimensional images where the third dimension had to be equal to 3
+
+
 ## OpenImageR 1.2.6
 
 * The "delationErosion" function will be replaced with the "dilationErosion" function in version 1.3.0, because the name of the algorithm was wrong ('delation' actually corresponds to 'dilation'). See issue https://github.com/mlampros/OpenImageR/issues/24

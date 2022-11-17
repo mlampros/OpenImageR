@@ -7,7 +7,7 @@
 cropImage(image, new_width, new_height, type = "equal_spaced")
 }
 \arguments{
-\item{image}{matrix or 3-dimensional array}
+\item{image}{matrix or 3-dimensional array where the third dimension is equal to 3}
 
 \item{new_width}{Corresponds to the image-rows. If 'equal_spaced' then the new_width should be numeric of length 1. If 'user_defined' then the new_width should be a sequence of numeric values.}
 

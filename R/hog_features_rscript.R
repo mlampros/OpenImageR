@@ -6,12 +6,12 @@
 #' The function takes either an RGB (it will be converted to gray) or a gray image and returns a vector of the HOG descriptors.
 #' The main purpose of the function is to create a vector of features, which can be used in classification tasks.
 #'
-#' @param image matrix or 3-dimensional array
+#' @param image matrix or 3-dimensional array where the third dimension is equal to 3
 #' @param cells the number of divisions ( cells )
 #' @param orientations number of orientation bins
 #' @return a numeric vector
 #' @details
-#' This function takes either a matrix, a data frame or a 3-dimensional array and returns a vector with the HOG-descriptors (histogram of oriented gradients).
+#' This function takes either a matrix, a data frame or a 3-dimensional array (where the third dimension is equal to 3) and returns a vector with the HOG-descriptors (histogram of oriented gradients).
 #' @export
 #' @examples
 #'
@@ -40,7 +40,7 @@ HOG = function(image, cells = 3, orientations = 6) {
   }
   else {
 
-    stop('valid types of input are matrix, data frame and 3-dimensional array')
+    stop('valid types of input are matrix, data frame and 3-dimensional array where the third dimension is equal to 3')
   }
 
   return(as.vector(res))
@@ -89,7 +89,7 @@ func_transform = function(image, folder_path, flag_type, RGB_2gray = F) {
 
 #' calculate the HOG (Histogram of oriented gradients) for a matrix, array or a folder of images
 #'
-#' @param object a matrix, a data frame, a 3-dimensional array or a path to a folder of files (images)
+#' @param object a matrix, a data frame, a 3-dimensional array (where the third dimension is equal to 3) or a path to a folder of files (images)
 #' @param cells the number of divisions ( cells )
 #' @param orientations number of orientation bins
 #' @param rows a value specifying the number of rows of each image-row of the matrix (required if object is a matrix)
@@ -99,7 +99,7 @@ func_transform = function(image, folder_path, flag_type, RGB_2gray = F) {
 #' the 1st sublist is a vector with the names of the image files (the order of the files in the vector corresponds to the order of the rows of the output matrix),
 #' the 2nd sublist is the matrix of the hog descriptors.
 #' @details
-#' This function takes as input either a matrix, a data frame, a 3-dimensional array or a character path to a folder of files (images). It returns the HOG-descriptors
+#' This function takes as input either a matrix, a data frame, a 3-dimensional array (where the third dimension is equal to 3) or a character path to a folder of files (images). It returns the HOG-descriptors
 #' (histogram of oriented gradients) for each row (if matrix or data frame), for each array-slice (if array) or for each file (if path to a folder of images).
 #' @export
 #' @examples

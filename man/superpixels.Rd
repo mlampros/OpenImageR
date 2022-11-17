@@ -17,7 +17,7 @@ superpixels(
 )
 }
 \arguments{
-\item{input_image}{either a 2-dimensional or a 3-dimensional input image (the range of the pixel values should be preferably in the range 0 to 255)}
+\item{input_image}{either a 2-dimensional or a 3-dimensional input image where the third dimension is equal to 3 (the range of the pixel values should be preferably in the range 0 to 255)}
 
 \item{method}{a character string specifying the method to use. Either "slic" or "slico"}
 

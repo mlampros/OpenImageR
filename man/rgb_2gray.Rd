@@ -7,7 +7,7 @@
 rgb_2gray(RGB_image)
 }
 \arguments{
-\item{RGB_image}{a 3-dimensional array}
+\item{RGB_image}{a 3-dimensional array where the third dimension is equal to 3}
 }
 \value{
 a matrix

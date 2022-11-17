@@ -172,7 +172,7 @@ func_chech_range = function(image) {
 
 #' edge detection (Frei_chen, LoG, Prewitt, Roberts_cross, Scharr, Sobel)
 #'
-#' @param image matrix or 3-dimensional array
+#' @param image matrix or 3-dimensional array and the third dimension must be equal to 3
 #' @param method the method should be one of 'Frei_chen', 'LoG' (Laplacian of Gaussian), 'Prewitt', 'Roberts_cross', 'Scharr', 'Sobel'
 #' @param conv_mode the convolution mode should be one of 'same', 'full'
 #' @param approx if TRUE, approximate calculation of gradient (applies to all filters except for 'LoG')
@@ -183,7 +183,7 @@ func_chech_range = function(image) {
 #' @return depending on the input, either a matrix or an array
 #' @author Lampros Mouselimis
 #' @details
-#' This function takes either a matrix or a 3-dimensional array and it performs edge detection using one of the following filters : 'Frei_chen', 'LoG' (Laplacian of Gaussian),
+#' This function takes either a matrix or a 3-dimensional array (where the third dimension is equal to 3) and it performs edge detection using one of the following filters : 'Frei_chen', 'LoG' (Laplacian of Gaussian),
 #' 'Prewitt', 'Roberts_cross', 'Scharr', 'Sobel'
 #' @export
 #' @examples
@@ -220,8 +220,7 @@ edge_detection = function(image, method = NULL, conv_mode = 'same', approx = F, 
       new_image_vertical = conv2d(image, res_kernel$G_vert, conv_mode)
     }
     else {
-
-      stop("the 'image' parameter can be either a matrix or a 3-dimensional array")
+      stop("the 'image' parameter can be either a matrix or a 3-dimensional array where the third dimension is equal to 3")
     }
 
     if (approx) {
@@ -249,7 +248,7 @@ edge_detection = function(image, method = NULL, conv_mode = 'same', approx = F, 
       new_LoG = conv2d(image, res_kernel, mode = conv_mode)
     }
     else {
-      stop("the 'new_LoG' parameter can be either a matrix or a 3-dimensional array")
+      stop("the 'new_LoG' parameter can be either a matrix or a 3-dimensional array where the third dimension is equal to 3")
     }
 
     new_LoG = func_chech_range(new_LoG)
@@ -267,13 +266,13 @@ edge_detection = function(image, method = NULL, conv_mode = 'same', approx = F, 
 
 #' uniform filter (convolution with uniform kernel)
 #'
-#' @param image matrix or 3-dimensional array
+#' @param image matrix or 3-dimensional array where the third dimension is equal to 3
 #' @param size a 2-item vector specifying the horizontal and vertical dimensions of the uniform kernel, e.g. c(3,3)
 #' @param conv_mode the convolution mode should be one of 'same', 'full'
 #' @return depending on the input, either a matrix or an array
 #' @author Lampros Mouselimis
 #' @details
-#' This function applies a uniform filter to a matrix or to a 3-dimensional array
+#' This function applies a uniform filter to a matrix or to a 3-dimensional array where the third dimension is equal to 3
 #' @export
 #' @examples
 #'
@@ -311,12 +310,12 @@ uniform_filter = function(image, size, conv_mode = 'same') {
 
 #' image thresholding
 #'
-#' @param image matrix or 3-dimensional array
+#' @param image matrix or 3-dimensional array where the third dimension is equal to 3
 #' @param thresh the threshold parameter should be between 0 and 1 if the data is normalized or between 0-255 otherwise
 #' @return a matrix
 #' @author Lampros Mouselimis
 #' @details
-#' This function applies thresholding to a matrix or to a 3-dimensional array.
+#' This function applies thresholding to a matrix or to a 3-dimensional array where the third dimension is equal to 3.
 #' @export
 #' @examples
 #'
@@ -343,8 +342,7 @@ image_thresholding = function(image, thresh) {
     image_out = ifelse(image > thresh, 1, 0)
   }
   else {
-
-    stop('the image should be either a matrix or a 3-dimensional array')
+    stop('the image should be either a matrix or a 3-dimensional array where the third dimension is equal to 3')
   }
 
   return(image_out)
@@ -354,12 +352,12 @@ image_thresholding = function(image, thresh) {
 
 #' Gamma correction
 #'
-#' @param image matrix or 3-dimensional array
+#' @param image matrix or 3-dimensional array where the third dimension is equal to 3
 #' @param gamma a positive value
 #' @return depending on the input, either a matrix or an array
 #' @author Lampros Mouselimis
 #' @details
-#' This function applies gamma correction to a matrix or to a 3-dimensional array. The gamma correction controls the overall brightness of an image.
+#' This function applies gamma correction to a matrix or to a 3-dimensional array where the third dimension is equal to 3. The gamma correction controls the overall brightness of an image.
 #' @export
 #' @examples
 #'
@@ -404,7 +402,7 @@ sec_gaus_bl = function(image, factor, sigma, range_gauss) {
 
 #' downsampling an image ( by a factor ) using gaussian blur
 #'
-#' @param image matrix or 3-dimensional array
+#' @param image matrix or 3-dimensional array where the third dimension is equal to 3
 #' @param factor a positive number greater or equal to 1.0
 #' @param gaussian_blur a boolean (TRUE,FALSE) specifying if gaussian blur should be applied when downsampling
 #' @param gauss_sigma float parameter sigma for the gaussian filter
@@ -517,7 +515,7 @@ crop_image_secondary = function(image, new_width, new_height) {         # reduce
 
 #' crop an image
 #'
-#' @param image matrix or 3-dimensional array
+#' @param image matrix or 3-dimensional array where the third dimension is equal to 3
 #' @param new_width Corresponds to the image-rows. If 'equal_spaced' then the new_width should be numeric of length 1. If 'user_defined' then the new_width should be a sequence of numeric values.
 #' @param new_height Corresponds to the image-columns. If 'equal_spaced' then the new_height should be numeric of length 1. If 'user_defined' then the new_height should be a sequence of numeric values.
 #' @param type a string specifying the type ('equal_spaced' or 'user_defined'). If 'equal_spaced' the image will be cropped towards the center (equal distances horizontaly and verticaly). If 'user_defined' the user specifies the cropped region.
@@ -601,7 +599,7 @@ cropImage = function(image, new_width, new_height, type = 'equal_spaced') {
 #'
 #' Rotate an image by angle using the 'nearest' or 'bilinear' method
 #'
-#' @param image matrix, data frame or 3-dimensional array
+#' @param image matrix, data frame or 3-dimensional array where the third dimension is equal to 3
 #' @param angle specifies the number of degrees
 #' @param method a string specifying the interpolation method when rotating an image ( 'nearest', 'bilinear' )
 #' @param mode one of 'full', 'same' (same indicates that the ouput image will have the same dimensions with initial image)
@@ -656,7 +654,7 @@ rotateImage = function(image, angle, method = 'nearest', mode = 'same', threads 
 
 #' Rotate an image by 90, 180, 270 degrees
 #'
-#' @param image matrix, data frame or 3-dimensional array
+#' @param image matrix, data frame or 3-dimensional array where the third dimension is equal to 3
 #' @param angle one of 90, 180 and 270 degrees
 #' @return depending on the input, either a matrix or an array
 #' @details
@@ -731,7 +729,7 @@ sec_resiz_array = function(image, flag = T) {
 
 #' resize an image using the 'nearest neighbors' or the 'bilinear' method
 #'
-#' @param image matrix or 3-dimensional array
+#' @param image matrix or 3-dimensional array where the third dimension is equal to 3
 #' @param width a number specifying the new width of the image. Corresponds to the image-rows.
 #' @param height a number specifying the new height of the image. Corresponds to the image-columns.
 #' @param method one of 'nearest', 'bilinear'
@@ -801,9 +799,9 @@ resizeImage = function(image, width, height, method = 'nearest', normalize_pixel
 #'
 #' flip an image row-wise (horizontally) or column-wise (vertically)
 #'
-#' @param image a matrix, data frame or 3-dimensional array
+#' @param image a matrix, data frame or 3-dimensional array where the third dimension is equal to 3
 #' @param mode one of 'horizontal', 'vertical'
-#' @return a matrix or 3-dimensional array
+#' @return a matrix or 3-dimensional array where the third dimension is equal to 3
 #' @details
 #' This function flips an image row-wise or column-wise
 #' @export
@@ -839,7 +837,7 @@ flipImage = function(image, mode = 'horizontal') {
   }
   else {
 
-    stop('valid types of input are matrix, data frame and 3-dimensional array')
+    stop('valid types of input are matrix, data frame and 3-dimensional array where the third dimension is equal to 3')
   }
 
   return(res)
@@ -851,10 +849,10 @@ flipImage = function(image, mode = 'horizontal') {
 #'
 #'
 #' this function performs zca-whitening to a 2- or 3- dimensional image
-#' @param image a matrix, data frame or 3-dimensional array
+#' @param image a matrix, data frame or 3-dimensional array where the third dimension is equal to 3
 #' @param k an integer specifying the number of components to keep when svd is performed (reduced dimension representation of the data)
 #' @param epsilon a float specifying the regularization parameter
-#' @return a matrix or 3-dimensional array
+#' @return a matrix or 3-dimensional array where the third dimension is equal to 3
 #' @details
 #' Whitening (or sphering) is the preprocessing needed for some algorithms. If we are training on images, the raw input is redundant, since adjacent
 #' pixel values are highly correlated. When using whitening the features become less correlated and all features have the same variance.
@@ -887,8 +885,7 @@ ZCAwhiten = function(image, k, epsilon) {
     res = zca_whiten_cube(image, k, epsilon)
   }
   else {
-
-    stop('valid types of input are matrix, data frame and 3-dimensional array')
+    stop('valid types of input are matrix, data frame and 3-dimensional array where the third dimension is equal to 3')
   }
 
   return(res)
@@ -904,11 +901,11 @@ ZCAwhiten = function(image, k, epsilon) {
 #' This function was deprecated because I realized that the name of the function does not correspond to the name of the algorithm (delation -> dilation)
 #'
 #' this function performs delation or erosion to a 2- or 3- dimensional image
-#' @param image a matrix, data frame or 3-dimensional array
+#' @param image a matrix, data frame or 3-dimensional array where the third dimension is equal to 3
 #' @param Filter a vector specifying the dimensions of the kernel, which will be used to perform either delation or erosion, such as c(3,3)
 #' @param method one of 'delation', 'erosion'
 #' @param threads number of cores to run in parallel ( > 1 should be used if image high dimensional )
-#' @return a matrix or 3-dimensional array
+#' @return a matrix or 3-dimensional array where the third dimension is equal to 3
 #' @details
 #' This function utilizes a kernel to perform delation or erosion. The first value of the vector indicates the number of rows of the kernel, whereas
 #' the second value indicates the number of columns.
@@ -966,11 +963,11 @@ delationErosion = function(image, Filter, method = 'delation', threads = 1) {
 #' Dilation or Erosion of an image
 #'
 #' this function performs dilation or erosion to a 2- or 3- dimensional image
-#' @param image a matrix, data frame or 3-dimensional array
+#' @param image a matrix, data frame or 3-dimensional array where the third dimension is equal to 3
 #' @param Filter a vector specifying the dimensions of the kernel, which will be used to perform either dilation or erosion, such as c(3,3)
 #' @param method one of 'dilation', 'erosion'
 #' @param threads number of cores to run in parallel ( > 1 should be used if image high dimensional )
-#' @return a matrix or 3-dimensional array
+#' @return a matrix or 3-dimensional array where the third dimension is equal to 3
 #' @details
 #' This function utilizes a kernel to perform dilation or erosion. The first value of the vector indicates the number of rows of the kernel, whereas
 #' the second value indicates the number of columns.
@@ -1020,11 +1017,11 @@ dilationErosion = function(image, Filter, method = 'dilation', threads = 1) {
 #'
 #'
 #' shift the position of an image by adding/subtracting a value to/from the X or Y coordinates
-#' @param image a matrix, data frame or 3-dimensional array
+#' @param image a matrix, data frame or 3-dimensional array where the third dimension is equal to 3
 #' @param shift_rows a positive or negative integer specifying the direction that the rows should be shifted
 #' @param shift_cols a positive or negative integer specifying the direction that the columns should be shifted
 #' @param padded_value either a numeric value or a numeric vector of length 3 (corresponding to RGB). If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value
-#' @return a matrix or 3-dimensional array
+#' @return a matrix or 3-dimensional array where the third dimension is equal to 3
 #' @details
 #' If shift_rows is not zero then the image will be sifted row-wise (upsides or downsides depending on the sign). If shift_cols is not zero then
 #' the image will be sifted column-wise (right or left depending on the sign).
@@ -1058,7 +1055,7 @@ translation = function(image, shift_rows = 0, shift_cols = 0, padded_value = 0) 
 
     if (length(padded_value) == 1) {
 
-      padded_value = rep(padded_value, 3)                                               # here by default arrays are 3-dimensional (padded_value vector of length 3)
+      padded_value = rep(padded_value, 3)                                               # here by default arrays are 3-dimensional (padded_value vector of length 3) where the third dimension is equal to 3
     }
     else {
 
@@ -1130,10 +1127,10 @@ List_2_Array = function(data, verbose = FALSE) {
 
 
 
-#' image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays
+#' image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays (where the third dimension is equal to 3)
 #'
 #'
-#' @param image a matrix, data frame, array or list of 3-dimensional arrays
+#' @param image a matrix, data frame, array or list of 3-dimensional arrays where the third dimension is equal to 3
 #' @param flip_mode a character string ('horizontal', 'vertical')
 #' @param crop_width an integer specifying the new width of the image, after the image is cropped. Corresponds to the image-rows.
 #' @param crop_height an integer specifying the new height of the image, after the image is cropped. Corresponds to the image-columns.
@@ -1177,7 +1174,7 @@ List_2_Array = function(data, verbose = FALSE) {
 #' res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 20)
 #'
 #'
-#' # a list of 3-dimensional arrays
+#' # a list of 3-dimensional arrays (where the third dimension is equal to 3)
 #' object = list(array(0, dim = c(10, 10, 3)), array(0, dim = c(10, 10, 3)))
 #'
 #' res = Augmentation(object, resiz_width = 8, resiz_height = 8, rotate_angle = 40)
@@ -1245,7 +1242,7 @@ Augmentation = function(image, flip_mode = NULL, crop_width = NULL, crop_height 
 
   if (inherits(image, 'list')) {
 
-    if ( sum(unlist(lapply(image, function(x) inherits(x, 'array') && dim(x)[3] == 3))) != length(image) ) stop('the list should consist of 3-dimensional arrays')
+    if ( sum(unlist(lapply(image, function(x) inherits(x, 'array') && dim(x)[3] == 3))) != length(image) ) stop('the list should consist of 3-dimensional arrays where the third dimension is equal to 3')
     if ( sum(unlist(lapply(image, function(x) nrow(x) <= length(crop_width)))) ) stop('the length of the crop_width sequence should be less than or equal to the initial width of each of the images')
     if ( sum(unlist(lapply(image, function(x) ncol(x) <= length(crop_height)))) ) stop('the length of the crop_height sequence should be less than or equal to the initial height of each of the images')
 
@@ -1345,7 +1342,7 @@ NormalizeObject = function(x) {
 #' @return a list
 #' @author Lampros Mouselimis
 #' @details
-#' This helper function returns the minimum and maximum values of a vector, 2-dimensional or 3-dimensional objects. In case of a vector, matrix or data frame it returns a single value for
+#' This helper function returns the minimum and maximum values of a vector, 2-dimensional or 3-dimensional objects (where the third dimension is equal to 3). In case of a vector, matrix or data frame it returns a single value for
 #' the minimum and maximum of the object. In case of an array it returns the minimum and maximum values for each slice of the array.
 #' @export
 #' @examples
@@ -1458,7 +1455,7 @@ convolution = function(image, kernel, mode = "same") {
 
 #' convert an RGB image to Gray
 #'
-#' @param RGB_image a 3-dimensional array
+#' @param RGB_image a 3-dimensional array where the third dimension is equal to 3
 #' @return a matrix
 #' @author Lampros Mouselimis
 #' @details
@@ -1474,7 +1471,7 @@ convolution = function(image, kernel, mode = "same") {
 #'
 
 rgb_2gray = function(RGB_image) {
-  if (!all(c(inherits(RGB_image, 'array'), !is.na(dim(RGB_image)[3]), dim(RGB_image)[3] == 3))) stop("The 'RGB_image' parameter must be a 3-dimensional array!")
+  if (!all(c(inherits(RGB_image, 'array'), !is.na(dim(RGB_image)[3]), dim(RGB_image)[3] == 3))) stop("The 'RGB_image' parameter must be a 3-dimensional array where the third dimension is equal to 3")
 
   return(Rgb_2gray(RGB_image))
 }

@@ -7,7 +7,7 @@
 RGB_to_HSV(input_data)
 }
 \arguments{
-\item{input_data}{a 3-dimensional array (RGB image)}
+\item{input_data}{a 3-dimensional array (RGB image) where the third dimension is equal to 3}
 }
 \description{
 Conversion of RGB to HSV colour type

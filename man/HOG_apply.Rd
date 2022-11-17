@@ -14,7 +14,7 @@ HOG_apply(
 )
 }
 \arguments{
-\item{object}{a matrix, a data frame, a 3-dimensional array or a path to a folder of files (images)}
+\item{object}{a matrix, a data frame, a 3-dimensional array (where the third dimension is equal to 3) or a path to a folder of files (images)}
 
 \item{cells}{the number of divisions ( cells )}
 
@@ -35,7 +35,7 @@ the 2nd sublist is the matrix of the hog descriptors.
 calculate the HOG (Histogram of oriented gradients) for a matrix, array or a folder of images
 }
 \details{
-This function takes as input either a matrix, a data frame, a 3-dimensional array or a character path to a folder of files (images). It returns the HOG-descriptors
+This function takes as input either a matrix, a data frame, a 3-dimensional array (where the third dimension is equal to 3) or a character path to a folder of files (images). It returns the HOG-descriptors
 (histogram of oriented gradients) for each row (if matrix or data frame), for each array-slice (if array) or for each file (if path to a folder of images).
 }
 \examples{

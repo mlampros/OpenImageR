@@ -34,7 +34,7 @@ dim(im)
 
 #### imageShow
 
-The *imageShow* function utilizes either a shiny application (if the image is a character path) or the grid.raster function of the base grid package (if the image is a 2- or 3-dimensional object) to display images,
+The *imageShow* function utilizes either a shiny application (if the image is a character path) or the grid.raster function of the base grid package (if the image is a 2- or 3-dimensional object where the third dimension is equal to 3) to display images,
 <br>
 <br>
 
@@ -48,7 +48,7 @@ imageShow(im)
 
 #### writeImage
 
-The *writeImage* function writes a 2- or 3-dimensional object (matrix, data frame or array) in a user specified image format. The supported types are .png, .jpeg, .jpg, .tiff.
+The *writeImage* function writes a 2- or 3-dimensional object (matrix, data frame or array where the third dimension is equal to 3) in a user specified image format. The supported types are .png, .jpeg, .jpg, .tiff.
 <br>
 <br>
 ```{r, eval = F}
@@ -85,7 +85,7 @@ imageShow(r2g)
 
 #### cropImage
 
-The *cropImage* function reduces the size of the image horizontally and vertically. The function takes four arguments : *image* (2- or 3-dimensional object), *new_width* (the desired new width), *new_height* (the desired new height) and *type*. While the type  *'equal_spaced'* crops the image equally in both directions (horizontal, vertical) towards the center of the image, the type *'user_defined'* allows the user to specify which regions of the image should be kept
+The *cropImage* function reduces the size of the image horizontally and vertically. The function takes four arguments : *image* (2- or 3-dimensional object where the third dimension is equal to 3), *new_width* (the desired new width), *new_height* (the desired new height) and *type*. While the type  *'equal_spaced'* crops the image equally in both directions (horizontal, vertical) towards the center of the image, the type *'user_defined'* allows the user to specify which regions of the image should be kept
 <br>
 <br>
 

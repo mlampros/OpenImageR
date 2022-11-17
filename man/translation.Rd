@@ -7,7 +7,7 @@
 translation(image, shift_rows = 0, shift_cols = 0, padded_value = 0)
 }
 \arguments{
-\item{image}{a matrix, data frame or 3-dimensional array}
+\item{image}{a matrix, data frame or 3-dimensional array where the third dimension is equal to 3}
 
 \item{shift_rows}{a positive or negative integer specifying the direction that the rows should be shifted}
 
@@ -16,7 +16,7 @@ translation(image, shift_rows = 0, shift_cols = 0, padded_value = 0)
 \item{padded_value}{either a numeric value or a numeric vector of length 3 (corresponding to RGB). If it's not equal to 0 then the values of the shifted rows or columns will be filled with the user-defined padded_value}
 }
 \value{
-a matrix or 3-dimensional array
+a matrix or 3-dimensional array where the third dimension is equal to 3
 }
 \description{
 shift the position of an image by adding/subtracting a value to/from the X or Y coordinates

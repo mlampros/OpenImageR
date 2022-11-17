@@ -7,14 +7,14 @@
 ZCAwhiten(image, k, epsilon)
 }
 \arguments{
-\item{image}{a matrix, data frame or 3-dimensional array}
+\item{image}{a matrix, data frame or 3-dimensional array where the third dimension is equal to 3}
 
 \item{k}{an integer specifying the number of components to keep when svd is performed (reduced dimension representation of the data)}
 
 \item{epsilon}{a float specifying the regularization parameter}
 }
 \value{
-a matrix or 3-dimensional array
+a matrix or 3-dimensional array where the third dimension is equal to 3
 }
 \description{
 this function performs zca-whitening to a 2- or 3- dimensional image

@@ -7,7 +7,7 @@
 uniform_filter(image, size, conv_mode = "same")
 }
 \arguments{
-\item{image}{matrix or 3-dimensional array}
+\item{image}{matrix or 3-dimensional array where the third dimension is equal to 3}
 
 \item{size}{a 2-item vector specifying the horizontal and vertical dimensions of the uniform kernel, e.g. c(3,3)}
 
@@ -20,7 +20,7 @@ depending on the input, either a matrix or an array
 uniform filter (convolution with uniform kernel)
 }
 \details{
-This function applies a uniform filter to a matrix or to a 3-dimensional array
+This function applies a uniform filter to a matrix or to a 3-dimensional array where the third dimension is equal to 3
 }
 \examples{
 

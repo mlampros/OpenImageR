@@ -30,7 +30,7 @@ either a hash-string or a binary vector
 This function calculates the phash of an image
 }
 \details{
-The function is a modification of the 'phash' function of the imagehash package [ please consult the COPYRIGHT file ]. The phash algorithm 
+The function is a modification of the 'phash' function of the imagehash package [ please consult the COPYRIGHT file ]. The phash algorithm
 extends the average_hash by using the discrete cosine transform.
 }
 \examples{

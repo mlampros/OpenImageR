@@ -7,7 +7,7 @@
 gamma_correction(image, gamma)
 }
 \arguments{
-\item{image}{matrix or 3-dimensional array}
+\item{image}{matrix or 3-dimensional array where the third dimension is equal to 3}
 
 \item{gamma}{a positive value}
 }
@@ -18,7 +18,7 @@ depending on the input, either a matrix or an array
 Gamma correction
 }
 \details{
-This function applies gamma correction to a matrix or to a 3-dimensional array. The gamma correction controls the overall brightness of an image.
+This function applies gamma correction to a matrix or to a 3-dimensional array where the third dimension is equal to 3. The gamma correction controls the overall brightness of an image.
 }
 \examples{
 

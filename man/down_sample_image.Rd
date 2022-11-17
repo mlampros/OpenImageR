@@ -13,7 +13,7 @@ down_sample_image(
 )
 }
 \arguments{
-\item{image}{matrix or 3-dimensional array}
+\item{image}{matrix or 3-dimensional array where the third dimension is equal to 3}
 
 \item{factor}{a positive number greater or equal to 1.0}
 

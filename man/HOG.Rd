@@ -7,7 +7,7 @@
 HOG(image, cells = 3, orientations = 6)
 }
 \arguments{
-\item{image}{matrix or 3-dimensional array}
+\item{image}{matrix or 3-dimensional array where the third dimension is equal to 3}
 
 \item{cells}{the number of divisions ( cells )}
 
@@ -22,7 +22,7 @@ The function takes either an RGB (it will be converted to gray) or a gray image 
 The main purpose of the function is to create a vector of features, which can be used in classification tasks.
 }
 \details{
-This function takes either a matrix, a data frame or a 3-dimensional array and returns a vector with the HOG-descriptors (histogram of oriented gradients).
+This function takes either a matrix, a data frame or a 3-dimensional array (where the third dimension is equal to 3) and returns a vector with the HOG-descriptors (histogram of oriented gradients).
 }
 \examples{
 
