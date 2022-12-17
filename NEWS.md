@@ -1,4 +1,9 @@
 
+## OpenImageR 1.2.8
+
+* I added the *'verify_image_extension()'* function to verify that the image path file extensions are supported from the OpenImageR package (see issue: https://github.com/mlampros/OpenImageR/issues/25) 
+
+
 ## OpenImageR 1.2.7
 
 * I updated the output error message in all cases of 3-dimensional images where the third dimension had to be equal to 3

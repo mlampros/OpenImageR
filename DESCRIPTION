@@ -1,8 +1,8 @@
 Package: OpenImageR
 Type: Package
 Title: An Image Processing Toolkit
-Version: 1.2.7
-Date: 2022-11-17
+Version: 1.2.8
+Date: 2022-12-17
 Authors@R: c( person("Lampros", "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "https://orcid.org/0000-0002-8024-1546")), person("Sight", "Machine", role = "cph", comment = "findHOGFeatures function of the SimpleCV computer vision platform"), person("Johannes", "Buchner", role = "cph", comment = "average_hash, dhash and phash functions of the ImageHash python library"), person("Mohammad", "Haghighat", email = "haghighat@ieee.org", role = "cph", comment = "Gabor Feature Extraction"), person("Radhakrishna", "Achanta", email = "Radhakrishna.Achanta@epfl.ch", role = "cph", comment = "Author of the C++ code of the SLIC and SLICO algorithms (for commercial use please contact the author)"), person("Oleh", "Onyshchak", role = "cph", comment = "Author of the Python code of the WarpAffine function") )
 Maintainer: Lampros Mouselimis <mouselimislampros@gmail.com>
 BugReports: https://github.com/mlampros/OpenImageR/issues
@@ -24,7 +24,8 @@ Imports:
     png, 
     tiff, 
     R6,
-    lifecycle
+    lifecycle,
+    tools
 LinkingTo: 
     Rcpp, 
     RcppArmadillo (>= 0.8.0)
@@ -33,5 +34,5 @@ Suggests:
     knitr,
     rmarkdown,    
     covr
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr

@@ -16,7 +16,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update && \
  apt-get install -y libtiff5-dev  && \
  apt-get install -y libxml2-dev libssh2-1-dev zlib1g-dev git-core && \
  R -e "install.packages('devtools', dependencies = TRUE, repos = 'https://cloud.r-project.org/')" && \
- R -e "install.packages(c( 'Rcpp', 'graphics', 'grDevices', 'grid', 'shiny', 'jpeg', 'png', 'tiff', 'R6', 'RcppArmadillo', 'testthat', 'knitr', 'rmarkdown', 'covr', 'remotes' ), repos =  'https://cloud.r-project.org/' )"
+ R -e "install.packages(c( 'Rcpp', 'graphics', 'grDevices', 'grid', 'shiny', 'jpeg', 'png', 'tiff', 'R6', 'RcppArmadillo', 'testthat', 'knitr', 'rmarkdown', 'covr', 'tools', 'remotes' ), repos =  'https://cloud.r-project.org/' )"
 
  ADD http://www.random.org/strings/?num=10&len=8&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new uuid
  ARG BUILD_DATE

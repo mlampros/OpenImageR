@@ -7,7 +7,7 @@
 readImage(path, ...)
 }
 \arguments{
-\item{path}{a string specifying the path to the saved image}
+\item{path}{a character string specifying the path to the saved image}
 
 \item{...}{further arguments for the readPNG, readJPEG and readTIFF functions}
 }
