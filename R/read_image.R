@@ -84,7 +84,7 @@ readImage = function(path, ...) {
     img = tiff::readTIFF(path, ...)
   }
   else {
-    stop('supported image types are .png, .jpeg, .jpg, .tiff (or .tif, .TIFF, .TIF)')
+    stop('supported image types are .png, .jpeg, .jpg, .tif or .tiff (case insensitive)!', call. = F)
   }
 
   return(img)
