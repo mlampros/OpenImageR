@@ -18,7 +18,7 @@ Gabor Feature Extraction"><!-- mathjax --><script src="https://cdnjs.cloudflare.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -79,7 +79,7 @@ Gabor Feature Extraction"><!-- mathjax --><script src="https://cdnjs.cloudflare.
 
     <div id="details">
     <h2>Details</h2>
-    <p>In case of an RGB image (3-dimensional) one can use the <em>rgb_2gray()</em> to convert the image to a 2-dimensional one</p>
+    <p>In case of an RGB image (3-dimensional where the third dimension is equal to 3) one can use the <em>rgb_2gray()</em> to convert the image to a 2-dimensional one</p>
 <p>I added the option <em>downsample_gabor</em> to the original matlab code based on the following question on stackoverflow : <em>https://stackoverflow.com/questions/49119991/feature-extraction-with-gabor-filters</em></p>
     </div>
     <div id="methods">
@@ -378,7 +378,7 @@ Gabor Feature Extraction"><!-- mathjax --><script src="https://cdnjs.cloudflare.
 <div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>real_matrices</code></dt>
-<dd><p>a list of 3-dimensional arrays. These arrays correspond to the <em>real part</em> of the complex output matrices      ( plot_gabor function )</p></dd>
+<dd><p>a list of 3-dimensional arrays (where the third dimension is equal to 3). These arrays correspond to the <em>real part</em> of the complex output matrices      ( plot_gabor function )</p></dd>
 
 
 <dt><code>margin_btw_plots</code></dt>
@@ -548,7 +548,7 @@ Gabor Feature Extraction"><!-- mathjax --><script src="https://cdnjs.cloudflare.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -84,13 +84,14 @@
 
       
 
-      </header><script src="The_OpenImageR_package_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Functionality of the OpenImageR package</h1>
-                        <h4 data-toc-skip class="author">Lampros Mouselimis</h4>
+                        <h4 data-toc-skip class="author">Lampros
+Mouselimis</h4>
             
-            <h4 data-toc-skip class="date">2022-10-19</h4>
+            <h4 data-toc-skip class="date">2023-01-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/vignettes/The_OpenImageR_package.Rmd" class="external-link"><code>vignettes/The_OpenImageR_package.Rmd</code></a></small>
       <div class="hidden name"><code>The_OpenImageR_package.Rmd</code></div>
@@ -99,14 +100,16 @@
 
     
     
-<p>The following notes and examples illustrate the image processing functions of the OpenImageR package.</p>
+<p>The following notes and examples illustrate the image processing
+functions of the OpenImageR package.</p>
 <div class="section level2">
 <h2 id="basic-functions">Basic functions<a class="anchor" aria-label="anchor" href="#basic-functions"></a>
 </h2>
 <div class="section level4">
 <h4 id="readimage">readImage<a class="anchor" aria-label="anchor" href="#readimage"></a>
 </h4>
-<p>The <em>readImage</em> function reads images from a variety of types such as ‘png’, ‘jpeg’, ‘jpg’ or ‘tiff’,</p>
+<p>The <em>readImage</em> function reads images from a variety of types
+such as ‘png’, ‘jpeg’, ‘jpg’ or ‘tiff’,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span></span>
 <span></span>
@@ -120,7 +123,10 @@
 <div class="section level4">
 <h4 id="imageshow">imageShow<a class="anchor" aria-label="anchor" href="#imageshow"></a>
 </h4>
-<p>The <em>imageShow</em> function utilizes either a shiny application (if the image is a character path) or the grid.raster function of the base grid package (if the image is a 2- or 3-dimensional object) to display images, <br><br></p>
+<p>The <em>imageShow</em> function utilizes either a shiny application
+(if the image is a character path) or the grid.raster function of the
+base grid package (if the image is a 2- or 3-dimensional object where
+the third dimension is equal to 3) to display images, <br><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span></span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-2-1.png" width="96"><br><br></p>
@@ -128,7 +134,10 @@
 <div class="section level4">
 <h4 id="writeimage">writeImage<a class="anchor" aria-label="anchor" href="#writeimage"></a>
 </h4>
-<p>The <em>writeImage</em> function writes a 2- or 3-dimensional object (matrix, data frame or array) in a user specified image format. The supported types are .png, .jpeg, .jpg, .tiff. <br><br></p>
+<p>The <em>writeImage</em> function writes a 2- or 3-dimensional object
+(matrix, data frame or array where the third dimension is equal to 3) in
+a user specified image format. The supported types are .png, .jpeg,
+.jpg, .tiff. <br><br></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/writeImage.html">writeImage</a></span><span class="op">(</span><span class="va">im</span>, file_name <span class="op">=</span> <span class="st">'my_image.jpeg'</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
@@ -136,7 +145,9 @@
 <div class="section level4">
 <h4 id="rgb_2gray">rgb_2gray<a class="anchor" aria-label="anchor" href="#rgb_2gray"></a>
 </h4>
-<p>To convert an image from RGB to gray one can use the <em>rgb_2gray</em> function, which takes a single argument (matrix, data frame or array), <br><br></p>
+<p>To convert an image from RGB to gray one can use the
+<em>rgb_2gray</em> function, which takes a single argument (matrix, data
+frame or array), <br><br></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image2.jpg'</span><span class="op">)</span></span>
 <span></span>
@@ -153,7 +164,15 @@
 <div class="section level4">
 <h4 id="cropimage">cropImage<a class="anchor" aria-label="anchor" href="#cropimage"></a>
 </h4>
-<p>The <em>cropImage</em> function reduces the size of the image horizontally and vertically. The function takes four arguments : <em>image</em> (2- or 3-dimensional object), <em>new_width</em> (the desired new width), <em>new_height</em> (the desired new height) and <em>type</em>. While the type <em>‘equal_spaced’</em> crops the image equally in both directions (horizontal, vertical) towards the center of the image, the type <em>‘user_defined’</em> allows the user to specify which regions of the image should be kept <br><br></p>
+<p>The <em>cropImage</em> function reduces the size of the image
+horizontally and vertically. The function takes four arguments :
+<em>image</em> (2- or 3-dimensional object where the third dimension is
+equal to 3), <em>new_width</em> (the desired new width),
+<em>new_height</em> (the desired new height) and <em>type</em>. While
+the type <em>‘equal_spaced’</em> crops the image equally in both
+directions (horizontal, vertical) towards the center of the image, the
+type <em>‘user_defined’</em> allows the user to specify which regions of
+the image should be kept <br><br></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq_sp</span> <span class="op">=</span> <span class="fu"><a href="../reference/cropImage.html">cropImage</a></span><span class="op">(</span><span class="va">im</span>, new_width <span class="op">=</span> <span class="fl">200</span>, new_height <span class="op">=</span> <span class="fl">200</span>, type <span class="op">=</span> <span class="st">'equal_spaced'</span><span class="op">)</span></span>
 <span></span>
@@ -168,7 +187,11 @@
 <div class="section level4">
 <h4 id="flipimage">flipImage<a class="anchor" aria-label="anchor" href="#flipimage"></a>
 </h4>
-<p>A <a href="https://en.wikipedia.org/wiki/Flipped_image" class="external-link">flipped image</a> (or reversed image) is a static or moving image that is generated by a mirror-reversal of an original across a horizontal axis (a flopped image is mirrored across the vertical axis). The first image shows the original image and the second one a horizontal flip, <br><br></p>
+<p>A <a href="https://en.wikipedia.org/wiki/Flipped_image" class="external-link">flipped
+image</a> (or reversed image) is a static or moving image that is
+generated by a mirror-reversal of an original across a horizontal axis
+(a flopped image is mirrored across the vertical axis). The first image
+shows the original image and the second one a horizontal flip, <br><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image1.jpeg'</span><span class="op">)</span></span>
 <span></span>
@@ -185,7 +208,10 @@
 <div class="section level4">
 <h4 id="rotatefixed">rotateFixed<a class="anchor" aria-label="anchor" href="#rotatefixed"></a>
 </h4>
-<p>The <em>rotateFixed</em> function rotates an image by specific angles (90, 180, 270). I added this function (besides the <em>rotateImage</em> function) in the package, because it takes less time to return the output, <br><br></p>
+<p>The <em>rotateFixed</em> function rotates an image by specific angles
+(90, 180, 270). I added this function (besides the <em>rotateImage</em>
+function) in the package, because it takes less time to return the
+output, <br><br></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r270</span> <span class="op">=</span> <span class="fu"><a href="../reference/rotateFixed.html">rotateFixed</a></span><span class="op">(</span><span class="va">im</span>, <span class="fl">270</span><span class="op">)</span></span>
 <span></span>
@@ -195,7 +221,10 @@
 <div class="section level4">
 <h4 id="rotateimage">rotateImage<a class="anchor" aria-label="anchor" href="#rotateimage"></a>
 </h4>
-<p>The <em>rotateImage</em> function is more flexible in comparison to the <em>rotateFixed</em> function. It allows the user to rotate an image by a specific angle (between 0 and 360 degrees) using either the ‘nearest’ or the ‘bilinear’ interpolation method, <br><br></p>
+<p>The <em>rotateImage</em> function is more flexible in comparison to
+the <em>rotateFixed</em> function. It allows the user to rotate an image
+by a specific angle (between 0 and 360 degrees) using either the
+‘nearest’ or the ‘bilinear’ interpolation method, <br><br></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r45</span> <span class="op">=</span> <span class="fu"><a href="../reference/rotateImage.html">rotateImage</a></span><span class="op">(</span><span class="va">im</span>, <span class="fl">45</span>, threads <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
@@ -205,7 +234,9 @@
 <div class="section level4">
 <h4 id="resizeimage">resizeImage<a class="anchor" aria-label="anchor" href="#resizeimage"></a>
 </h4>
-<p>The <em>resizeImage</em> function takes advantage of two different interpolation methods ( nearest neighbors, bilinear ) to either down- or upsample an image, <br><br></p>
+<p>The <em>resizeImage</em> function takes advantage of two different
+interpolation methods ( nearest neighbors, bilinear ) to either down- or
+upsample an image, <br><br></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image2.jpg'</span><span class="op">)</span></span>
 <span></span>
@@ -215,19 +246,25 @@
 <span></span>
 <span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">intBl</span><span class="op">)</span></span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-12-1.png" width="96"><br><br></p>
-<p>It is known that resizing an image using bilinear interpolation gives better results, however the nearest neighbors method is faster. <br></p>
-<p>A further option to resize an image is by using <em>gaussian_blur</em> ( down-sampling gives better results than up-sampling that’s why is the only option in the OpenImageR package ), <br></p>
+<p>It is known that resizing an image using bilinear interpolation gives
+better results, however the nearest neighbors method is faster. <br></p>
+<p>A further option to resize an image is by using
+<em>gaussian_blur</em> ( down-sampling gives better results than
+up-sampling that’s why is the only option in the OpenImageR package ),
+<br></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intGbl</span> <span class="op">=</span> <span class="fu"><a href="../reference/down_sample_image.html">down_sample_image</a></span><span class="op">(</span><span class="va">im</span>, factor <span class="op">=</span> <span class="fl">2.5</span>, gaussian_blur <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">intGbl</span><span class="op">)</span></span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-13-1.png" width="96"><br></p>
-<p>The factor of the function applies equally to the horizontal and vertical dimensions of the image. <br><br></p>
+<p>The factor of the function applies equally to the horizontal and
+vertical dimensions of the image. <br><br></p>
 </div>
 <div class="section level4">
 <h4 id="translation">translation<a class="anchor" aria-label="anchor" href="#translation"></a>
 </h4>
-<p><strong>translation</strong> is the shifting of an object’s location by adding/subtracting a value to/from the X or Y coordinates,</p>
+<p><strong>translation</strong> is the shifting of an object’s location
+by adding/subtracting a value to/from the X or Y coordinates,</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tr</span> <span class="op">=</span> <span class="fu"><a href="../reference/translation.html">translation</a></span><span class="op">(</span><span class="va">im</span>, shift_rows <span class="op">=</span> <span class="fl">50</span>, shift_cols <span class="op">=</span> <span class="op">-</span><span class="fl">50</span><span class="op">)</span></span>
 <span></span>
@@ -241,7 +278,13 @@
 <div class="section level4">
 <h4 id="edge_detection">edge_detection<a class="anchor" aria-label="anchor" href="#edge_detection"></a>
 </h4>
-<p>According to Wikipedia, edge detection is the name for a set of mathematical methods which aim at identifying points in a digital image at which the image brightness changes sharply or, more formally, has discontinuities. The <em>edge_detection</em> function uses one of the <em>Frei_chen</em>, <em>LoG (Laplacian of Gaussian)</em>, <em>Prewitt</em>, <em>Roberts_cross</em>, <em>Scharr</em> or <em>Sobel</em> filters to perform edge detection, <br></p>
+<p>According to Wikipedia, edge detection is the name for a set of
+mathematical methods which aim at identifying points in a digital image
+at which the image brightness changes sharply or, more formally, has
+discontinuities. The <em>edge_detection</em> function uses one of the
+<em>Frei_chen</em>, <em>LoG (Laplacian of Gaussian)</em>,
+<em>Prewitt</em>, <em>Roberts_cross</em>, <em>Scharr</em> or
+<em>Sobel</em> filters to perform edge detection, <br></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image1.jpeg'</span><span class="op">)</span></span>
 <span></span>
@@ -255,7 +298,8 @@
 <div class="section level4">
 <h4 id="uniform_filter">uniform_filter<a class="anchor" aria-label="anchor" href="#uniform_filter"></a>
 </h4>
-<p>In a <em>uniform filter</em> all the values within the filter (kernel) have the same weight,</p>
+<p>In a <em>uniform filter</em> all the values within the filter
+(kernel) have the same weight,</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kernel_size</span> <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span></span>
 <span></span>
@@ -273,7 +317,9 @@
 <div class="section level4">
 <h4 id="image_thresholding">image_thresholding<a class="anchor" aria-label="anchor" href="#image_thresholding"></a>
 </h4>
-<p>According to Wikipedia, <em>thresholding</em> is the simplest method of image segmentation. From a grayscale image, thresholding can be used to create binary images,</p>
+<p>According to Wikipedia, <em>thresholding</em> is the simplest method
+of image segmentation. From a grayscale image, thresholding can be used
+to create binary images,</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image2.jpg'</span><span class="op">)</span></span>
 <span></span>
@@ -287,7 +333,9 @@
 <div class="section level4">
 <h4 id="gamma_correction">gamma_correction<a class="anchor" aria-label="anchor" href="#gamma_correction"></a>
 </h4>
-<p><em>Gamma correction</em>, or often simply gamma, is the name of a nonlinear operation used to encode and decode luminance or tristimulus values in video or still image systems (Wikipedia),</p>
+<p><em>Gamma correction</em>, or often simply gamma, is the name of a
+nonlinear operation used to encode and decode luminance or tristimulus
+values in video or still image systems (Wikipedia),</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gcor</span> <span class="op">=</span> <span class="fu"><a href="../reference/gamma_correction.html">gamma_correction</a></span><span class="op">(</span><span class="va">im</span>, gamma <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>        <span class="co"># show image with gamma correction </span></span>
 <span></span>
@@ -297,7 +345,12 @@
 <div class="section level4">
 <h4 id="zcawhiten">ZCAwhiten<a class="anchor" aria-label="anchor" href="#zcawhiten"></a>
 </h4>
-<p><a href="http://ufldl.stanford.edu/wiki/index.php/Whitening" class="external-link"><strong>Whitening</strong> (or sphering)</a> is the preprocessing needed for some algorithms. If we are training on images, the raw input is redundant, since adjacent pixel values are highly correlated. The purpose of whitening is to reduce the correlation between features and to return features with the same variance,</p>
+<p><a href="http://ufldl.stanford.edu/wiki/index.php/Whitening" class="external-link"><strong>Whitening</strong>
+(or sphering)</a> is the preprocessing needed for some algorithms. If we
+are training on images, the raw input is redundant, since adjacent pixel
+values are highly correlated. The purpose of whitening is to reduce the
+correlation between features and to return features with the same
+variance,</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../reference/ZCAwhiten.html">ZCAwhiten</a></span><span class="op">(</span><span class="va">im</span>, k <span class="op">=</span> <span class="fl">20</span>, epsilon <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
 <span></span>
@@ -307,7 +360,10 @@
 <div class="section level4">
 <h4 id="dilationerosion">dilationErosion<a class="anchor" aria-label="anchor" href="#dilationerosion"></a>
 </h4>
-<p><a href="https://www.mathworks.com/help/images/morphological-dilation-and-erosion.html" class="external-link"><strong>Dilation</strong> and <strong>erosion</strong></a> are the most basic morphological operations. Dilation adds pixels to the boundaries of objects in an image, while erosion removes pixels on object boundaries,</p>
+<p><a href="https://www.mathworks.com/help/images/morphological-dilation-and-erosion.html" class="external-link"><strong>Dilation</strong>
+and <strong>erosion</strong></a> are the most basic morphological
+operations. Dilation adds pixels to the boundaries of objects in an
+image, while erosion removes pixels on object boundaries,</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_delate</span> <span class="op">=</span> <span class="fu"><a href="../reference/dilationErosion.html">dilationErosion</a></span><span class="op">(</span><span class="va">im</span>, Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">'dilation'</span><span class="op">)</span></span>
 <span></span>
@@ -322,7 +378,11 @@
 <div class="section level4">
 <h4 id="augmentation">Augmentation<a class="anchor" aria-label="anchor" href="#augmentation"></a>
 </h4>
-<p>Augmentations are specific transformations applied to an image. The <strong>Augmentation</strong> function allows the user to <em>flip</em>, <em>crop</em>, <em>resize</em>, <em>shift</em>, <em>rotate</em>, <em>zca-whiten</em> and <em>threshold</em> an image. It either returns a single image,</p>
+<p>Augmentations are specific transformations applied to an image. The
+<strong>Augmentation</strong> function allows the user to <em>flip</em>,
+<em>crop</em>, <em>resize</em>, <em>shift</em>, <em>rotate</em>,
+<em>zca-whiten</em> and <em>threshold</em> an image. It either returns a
+single image,</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image1.jpeg'</span><span class="op">)</span></span>
 <span></span>
@@ -341,11 +401,12 @@
 <span>                    </span>
 <span>                    zca_epsilon <span class="op">=</span> <span class="fl">0.1</span>, image_thresh <span class="op">=</span> <span class="fl">0.0</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.118474 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.115644 secs</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">augm</span><span class="op">)</span></span></code></pre></div>
 <p><img src="The_OpenImageR_package_files/figure-html/unnamed-chunk-23-1.png" width="96"><br><br></p>
-<p>or multiple transformed images using either pre-specified or random parameters (here I utilized the lapply function),</p>
+<p>or multiple transformed images using either pre-specified or random
+parameters (here I utilized the lapply function),</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># random rotations</span></span>
 <span><span class="va">samp_rot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">90</span>, <span class="fl">30</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">270</span>, <span class="fl">350</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span>, <span class="fl">3</span>, replace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
@@ -390,9 +451,21 @@
 <div class="section level4">
 <h4 id="hog-histogram-of-oriented-gradients">HOG ( histogram of oriented gradients )<a class="anchor" aria-label="anchor" href="#hog-histogram-of-oriented-gradients"></a>
 </h4>
-<p>The histogram of oriented gradients (HOG) is a feature descriptor used in computer vision and image processing for the purpose of object detection. The technique counts occurrences of gradient orientation in localized portions of an image. This method is similar to that of edge orientation histograms, scale-invariant feature transform descriptors, and shape contexts, but differs in that it is computed on a dense grid of uniformly spaced cells and uses overlapping local contrast normalization for improved accuracy (Wikipedia). <br></p>
-<p>The <em>HOG</em> function of the OpenImageR package is a modification and extention of the <a href="https://github.com/lastlegion/SimpleCV/blob/develop/SimpleCV/ImageClass.py" class="external-link">findHOGFeatures</a> function ( SimpleCV computer vision platform ), please, consult the COPYRIGHT file. <br><br></p>
-<p>The purpose of the function is to create a vector of HOG descriptors, which can be used in classification tasks. It takes either RGB (they will be converted to gray) or gray images as input,</p>
+<p>The histogram of oriented gradients (HOG) is a feature descriptor
+used in computer vision and image processing for the purpose of object
+detection. The technique counts occurrences of gradient orientation in
+localized portions of an image. This method is similar to that of edge
+orientation histograms, scale-invariant feature transform descriptors,
+and shape contexts, but differs in that it is computed on a dense grid
+of uniformly spaced cells and uses overlapping local contrast
+normalization for improved accuracy (Wikipedia). <br></p>
+<p>The <em>HOG</em> function of the OpenImageR package is a modification
+and extention of the <a href="https://github.com/lastlegion/SimpleCV/blob/develop/SimpleCV/ImageClass.py" class="external-link">findHOGFeatures</a>
+function ( SimpleCV computer vision platform ), please, consult the
+COPYRIGHT file. <br><br></p>
+<p>The purpose of the function is to create a vector of HOG descriptors,
+which can be used in classification tasks. It takes either RGB (they
+will be converted to gray) or gray images as input,</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image2.jpg'</span><span class="op">)</span></span>
 <span></span>
@@ -416,13 +489,19 @@
 <div class="section level4">
 <h4 id="hog_apply">HOG_apply<a class="anchor" aria-label="anchor" href="#hog_apply"></a>
 </h4>
-<p>The <em>HOG_apply</em> function uses the previous mentioned HOG function to return the HOG-descriptors for the following objects :</p>
+<p>The <em>HOG_apply</em> function uses the previous mentioned HOG
+function to return the HOG-descriptors for the following objects :</p>
 <ul>
-<li>a <strong>matrix</strong> of images such as the mnist data set, where each row represents a different digit (28 x 28 image)</li>
-<li>an <strong>array</strong>, where each slice represents a different image</li>
-<li>a <strong>folder of images</strong> where each file is a different image</li>
+<li>a <strong>matrix</strong> of images such as the mnist data set,
+where each row represents a different digit (28 x 28 image)</li>
+<li>an <strong>array</strong>, where each slice represents a different
+image</li>
+<li>a <strong>folder of images</strong> where each file is a different
+image</li>
 </ul>
-<p>In the following code chunk I’ll apply the HOG function to an array of images. The result is a matrix, where each row respresents the HOG-descriptors for each array slice (image),</p>
+<p>In the following code chunk I’ll apply the HOG function to an array
+of images. The result is a matrix, where each row respresents the
+HOG-descriptors for each array slice (image),</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_im1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image1.jpeg'</span><span class="op">)</span></span>
 <span><span class="va">path_im2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'image2.jpg'</span><span class="op">)</span></span>
@@ -444,7 +523,7 @@
 <span></span>
 <span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../reference/HOG_apply.html">HOG_apply</a></span><span class="op">(</span><span class="va">tmp_arr</span>, cells <span class="op">=</span> <span class="fl">2</span>, orientations <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.01383805 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.01510692 secs</span></span></code></pre>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]</span></span>
@@ -456,14 +535,36 @@
 </div>
 <div class="section level3">
 <h3 id="image-hashing">
-<a href="https://www.hackerfactor.com/blog/?/archives/432-Looks-Like-It.html" class="external-link">image hashing</a><a class="anchor" aria-label="anchor" href="#image-hashing"></a>
+<a href="https://www.hackerfactor.com/blog/?/archives/432-Looks-Like-It.html" class="external-link">image
+hashing</a><a class="anchor" aria-label="anchor" href="#image-hashing"></a>
 </h3>
-<p>The image hashing functions (<em>average_hash</em>, <em>dhash</em>, <em>phash</em>, <em>invariant_hash</em>, <em>hash_apply</em>) of the OpenImageR package are implemented in the way <strong>perceptual hashing</strong> works. Perceptual hashing is the use of an algorithm that produces a fingerprint of images (in OpenImageR those fingerprints are <em>binary features</em> or <em>hexadecimal hashes</em>). The difference between cryptographic and image hashing is that the latter tries to find similar and not exact matches. In cryptographic hashing small differences of the hashes lead to entirely different output, which is not the case for perceptual hashing. A practical application of image hashing would be to compare a database of already created image hashes with a new hash (image) to find similar images in the database.</p>
-<p>The <em>average_hash</em>, <em>dhash</em> and <em>phash</em> functions of the OpenImageR package are modifications and extentions of the <a href="https://github.com/JohannesBuchner/imagehash" class="external-link">ImageHash</a> python library, please, consult the COPYRIGHT file. <br><br></p>
+<p>The image hashing functions (<em>average_hash</em>, <em>dhash</em>,
+<em>phash</em>, <em>invariant_hash</em>, <em>hash_apply</em>) of the
+OpenImageR package are implemented in the way <strong>perceptual
+hashing</strong> works. Perceptual hashing is the use of an algorithm
+that produces a fingerprint of images (in OpenImageR those fingerprints
+are <em>binary features</em> or <em>hexadecimal hashes</em>). The
+difference between cryptographic and image hashing is that the latter
+tries to find similar and not exact matches. In cryptographic hashing
+small differences of the hashes lead to entirely different output, which
+is not the case for perceptual hashing. A practical application of image
+hashing would be to compare a database of already created image hashes
+with a new hash (image) to find similar images in the database.</p>
+<p>The <em>average_hash</em>, <em>dhash</em> and <em>phash</em>
+functions of the OpenImageR package are modifications and extentions of
+the <a href="https://github.com/JohannesBuchner/imagehash" class="external-link">ImageHash</a>
+python library, please, consult the COPYRIGHT file. <br><br></p>
 <div class="section level6">
 <h6 id="average_hash">average_hash<a class="anchor" aria-label="anchor" href="#average_hash"></a>
 </h6>
-<p>The <strong>average hash</strong> algorithm of the OpenImageR package works in the following way : 1st we convert to grayscale, 2nd we reduce the size of an image (for instance to an 8x8 image), 3rd we average the resulting colors (for an 8x8 image we average 64 colors), 4th we compute the bits by comparing if each color value is above or below the mean and 5th we construct the hash. The result of the <em>average_hash</em> function can be either a <strong>hexadecimal hash</strong> (string) or <strong>binary features</strong>,</p>
+<p>The <strong>average hash</strong> algorithm of the OpenImageR package
+works in the following way : 1st we convert to grayscale, 2nd we reduce
+the size of an image (for instance to an 8x8 image), 3rd we average the
+resulting colors (for an 8x8 image we average 64 colors), 4th we compute
+the bits by comparing if each color value is above or below the mean and
+5th we construct the hash. The result of the <em>average_hash</em>
+function can be either a <strong>hexadecimal hash</strong> (string) or
+<strong>binary features</strong>,</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'view1.jpg'</span><span class="op">)</span></span>
 <span></span>
@@ -487,7 +588,10 @@
 <div class="section level6">
 <h6 id="phash">phash<a class="anchor" aria-label="anchor" href="#phash"></a>
 </h6>
-<p>While the average_hash is fast, it can generate false-misses if there is a gamma correction or a color histogram is applied to the image. The <strong>phash</strong> algorithm extends the average_hash by using the <em>discrete cosine transform</em> to reduce the frequencies,</p>
+<p>While the average_hash is fast, it can generate false-misses if there
+is a gamma correction or a color histogram is applied to the image. The
+<strong>phash</strong> algorithm extends the average_hash by using the
+<em>discrete cosine transform</em> to reduce the frequencies,</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'view2.jpg'</span><span class="op">)</span></span>
 <span></span>
@@ -512,7 +616,14 @@
 <h6 id="dhash">
 <a href="https://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html" class="external-link">dhash</a><a class="anchor" aria-label="anchor" href="#dhash"></a>
 </h6>
-<p>In comparison to average_hash and phash, the <strong>dhash</strong> algorithm takes into consideration the difference between adjacent pixels. In the same way as with the average_hash, the resulting hash won’t change if the image is scaled or the aspect ratio changes. Increasing or decreasing the brightness or contrast, or even altering the colors won’t dramatically change the hash value. Even complex adjustments like gamma corrections and color profiles won’t impact the result,</p>
+<p>In comparison to average_hash and phash, the <strong>dhash</strong>
+algorithm takes into consideration the difference between adjacent
+pixels. In the same way as with the average_hash, the resulting hash
+won’t change if the image is scaled or the aspect ratio changes.
+Increasing or decreasing the brightness or contrast, or even altering
+the colors won’t dramatically change the hash value. Even complex
+adjustments like gamma corrections and color profiles won’t impact the
+result,</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'vignette_1'</span>, <span class="st">'view3.jpg'</span><span class="op">)</span></span>
 <span></span>
@@ -532,7 +643,8 @@
 <pre><code><span><span class="co">##  [1] 1 1 1 0 1 0 1 0 0 0 1 0 1 0 1 1 0 0 1 0 1 0 0 1 1 0 0 1 0 0 1 0 0 1 0 0 0 1</span></span>
 <span><span class="co">## [39] 0 1 1 1 1 0 1 0 1 1 1 0 1 1 1 0 0 0 0 1 0 1 0 1 1 0</span></span></code></pre>
 <p><br></p>
-<p>By adding a gamma correction we can check if the hash value or the binary features of the <em>view3.jpg</em> will be altered,</p>
+<p>By adding a gamma correction we can check if the hash value or the
+binary features of the <em>view3.jpg</em> will be altered,</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tmp_image3</span> <span class="op">=</span> <span class="fu"><a href="../reference/gamma_correction.html">gamma_correction</a></span><span class="op">(</span><span class="va">image3</span>, gamma <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span></span>
@@ -554,8 +666,20 @@
 <div class="section level6">
 <h6 id="invariant_hash">invariant_hash<a class="anchor" aria-label="anchor" href="#invariant_hash"></a>
 </h6>
-<p><strong>invariant_hash</strong> is an extension function for image hashing. It takes two images as input (image1, image2) and by altering one of those (random flipping, rotating and cropping) it calculates the <em>hamming distance</em> (if the mode is ‘binary’) or the <em>levenshtein distance</em> if (the mode is ‘hash’). If any of the <em>flip</em>, <em>rotate</em>, <em>crop</em> equals TRUE then the function returns the MIN,MAX similarity between the two images. If, on the other hand all <em>flip</em>, <em>rotate</em>, <em>crop</em> equal FALSE then a single similarity value is returned meaning no random transformations of the second image are performed. <br><br></p>
-<p>Although, in the previous example the gamma correction doesn’t influence the dhash of the <em>view3.jpg</em>, a <em>horizontal flip</em> of the image would change both the hash value and the binary features considerably,</p>
+<p><strong>invariant_hash</strong> is an extension function for image
+hashing. It takes two images as input (image1, image2) and by altering
+one of those (random flipping, rotating and cropping) it calculates the
+<em>hamming distance</em> (if the mode is ‘binary’) or the
+<em>levenshtein distance</em> if (the mode is ‘hash’). If any of the
+<em>flip</em>, <em>rotate</em>, <em>crop</em> equals TRUE then the
+function returns the MIN,MAX similarity between the two images. If, on
+the other hand all <em>flip</em>, <em>rotate</em>, <em>crop</em> equal
+FALSE then a single similarity value is returned meaning no random
+transformations of the second image are performed. <br><br></p>
+<p>Although, in the previous example the gamma correction doesn’t
+influence the dhash of the <em>view3.jpg</em>, a <em>horizontal
+flip</em> of the image would change both the hash value and the binary
+features considerably,</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">image3b</span> <span class="op">=</span> <span class="fu"><a href="../reference/flipImage.html">flipImage</a></span><span class="op">(</span><span class="va">image3</span>, mode <span class="op">=</span> <span class="st">"horizontal"</span><span class="op">)</span></span>
 <span></span>
@@ -573,7 +697,10 @@
 <pre><code><span><span class="co">##  [1] 0 1 0 1 0 0 0 0 0 1 0 1 0 1 0 0 1 1 0 1 0 1 1 0 0 1 1 0 1 1 0 0 1 0 1 1 1 0</span></span>
 <span><span class="co">## [39] 1 0 0 1 0 1 1 0 0 1 1 1 0 0 0 1 0 0 0 0 1 0 1 0 1 1</span></span></code></pre>
 <p><br></p>
-<p>By using the <em>invariant hash</em> in this case with all the available transformations (at the cost of computational time) we can obtain minimum and maximum values for the hamming or the levenshtein distance,</p>
+<p>By using the <em>invariant hash</em> in this case with all the
+available transformations (at the cost of computational time) we can
+obtain minimum and maximum values for the hamming or the levenshtein
+distance,</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">inv_hash</span> <span class="op">=</span> <span class="fu"><a href="../reference/invariant_hash.html">invariant_hash</a></span><span class="op">(</span><span class="va">image3a</span>, <span class="va">image3b</span>, mode <span class="op">=</span> <span class="st">'binary'</span>, flip <span class="op">=</span> <span class="cn">T</span>, rotate <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                          </span>
@@ -588,19 +715,29 @@
 <span><span class="va">inv_bin</span></span></code></pre></div>
 <pre><code><span><span class="co">##   min max</span></span>
 <span><span class="co">## 1   0  15</span></span></code></pre>
-<p>In both cases (hash, binary) a minimum value of 0 indicates perfect matches between the two images among the transfomations.</p>
+<p>In both cases (hash, binary) a minimum value of 0 indicates perfect
+matches between the two images among the transfomations.</p>
 </div>
 <div class="section level6">
 <h6 id="hash_apply">hash_apply<a class="anchor" aria-label="anchor" href="#hash_apply"></a>
 </h6>
-<p>The <strong>hash_apply</strong> function applies the single <em>average_hash</em>, <em>phash</em>, <em>dhash</em> to either a matrix, array or folder of images. This function is practical in case of a matrix of images such as the mnist, or the cifar_10 data sets, where each line of the matrix corresponds to an image. Furthermore, if a folder includes many images, then the <em>hexadecimal hash mode</em> should be prefered, as it doesn’t require as much storage space as the binary mode. The following example illustrates how <em>hash values</em> and <em>binary features</em> can be computed from a folder of images,</p>
+<p>The <strong>hash_apply</strong> function applies the single
+<em>average_hash</em>, <em>phash</em>, <em>dhash</em> to either a
+matrix, array or folder of images. This function is practical in case of
+a matrix of images such as the mnist, or the cifar_10 data sets, where
+each line of the matrix corresponds to an image. Furthermore, if a
+folder includes many images, then the <em>hexadecimal hash mode</em>
+should be prefered, as it doesn’t require as much storage space as the
+binary mode. The following example illustrates how <em>hash values</em>
+and <em>binary features</em> can be computed from a folder of
+images,</p>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'/TEST_hash/'</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="va">hapl_hash</span> <span class="op">=</span> <span class="fu"><a href="../reference/hash_apply.html">hash_apply</a></span><span class="op">(</span><span class="va">path</span>, hash_size <span class="op">=</span> <span class="fl">6</span>, method <span class="op">=</span> <span class="st">"dhash"</span>, mode <span class="op">=</span> <span class="st">"hash"</span>, threads <span class="op">=</span> <span class="fl">1</span>,  resize <span class="op">=</span> <span class="st">"nearest"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.01337886 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.013273 secs</span></span></code></pre>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_hash</span>                <span class="co"># returns both the names of the images and the hash values</span></span></code></pre></div>
 <pre><code><span><span class="co">## $files</span></span>
@@ -615,7 +752,7 @@
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_bin</span> <span class="op">=</span> <span class="fu"><a href="../reference/hash_apply.html">hash_apply</a></span><span class="op">(</span><span class="va">path</span>, hash_size <span class="op">=</span> <span class="fl">6</span>, method <span class="op">=</span> <span class="st">"dhash"</span>, mode <span class="op">=</span> <span class="st">"binary"</span>, threads <span class="op">=</span> <span class="fl">1</span>,  resize <span class="op">=</span> <span class="st">"nearest"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## time to complete : 0.01152015 secs</span></span></code></pre>
+<span><span class="co">## time to complete : 0.01196814 secs</span></span></code></pre>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hapl_bin</span><span class="op">$</span><span class="va">files</span>             <span class="co"># names of the images</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "2_1.png" "2_2.png" "2_3.png" "4_1.png" "4_2.png" "4_3.png" "5_1.png"</span></span>
@@ -670,7 +807,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

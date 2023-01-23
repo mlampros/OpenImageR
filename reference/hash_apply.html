@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
-<dd><p>a matrix, a data frame, a 3-dimensional array or a path to a folder of files (images)</p></dd>
+<dd><p>a matrix, a data frame, a 3-dimensional array  (where the third dimension is equal to 3) or a path to a folder of files (images)</p></dd>
 
 
 <dt>rows</dt>
@@ -129,7 +129,7 @@ IF method = 'dhash' or 'average_hash' :  the hash_size should be less than numbe
     
 
 <p>If the input is a matrix, data frame or array this function returns a matrix (if mode = 'binary') or a character vector (if mode = 'hex_hash'). If the input is a path to
-a folder the function returns a list of length 2, the 1st sublist is a vector with the names of the image files (the order of the files in the vector corresponds to the order of 
+a folder the function returns a list of length 2, the 1st sublist is a vector with the names of the image files (the order of the files in the vector corresponds to the order of
 the rows of the output matrix), the 2nd sublist is a matrix (if mode = 'binary') or a character vector (if mode = 'hex_hash').</p>
     </div>
     <div id="details">
@@ -144,7 +144,7 @@ the rows of the output matrix), the 2nd sublist is a matrix (if mode = 'binary')
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">res_phash</span> <span class="op">=</span> <span class="fu">hash_apply</span><span class="op">(</span><span class="va">path</span>, method <span class="op">=</span> <span class="st">'phash'</span>, mode <span class="op">=</span> <span class="st">'binary'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time to complete : 0.005140066 secs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time to complete : 0.004801035 secs </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -161,7 +161,7 @@ the rows of the output matrix), the 2nd sublist is a matrix (if mode = 'binary')
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

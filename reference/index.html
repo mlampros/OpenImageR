@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -72,7 +72,7 @@
       </tr></tbody><tbody><tr><td>
           <p><code><a href="Augmentation.html">Augmentation()</a></code> </p>
         </td>
-        <td><p>image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays</p></td>
+        <td><p>image augmentations of a matrix, data frame, array or a list of 3-dimensional arrays (where the third dimension is equal to 3)</p></td>
       </tr><tr><td>
           <p><code><a href="GaborFeatureExtract.html">GaborFeatureExtract</a></code> </p>
         </td>
@@ -168,7 +168,7 @@
       </tr><tr><td>
           <p><code><a href="load_binary.html">load_binary()</a></code> </p>
         </td>
-        <td><p>loads either 2- or 3-dimensional data from a binary file</p></td>
+        <td><p>loads either 2- or 3-dimensional data (where the third dimension is equal to 3) from a binary file</p></td>
       </tr><tr><td>
           <p><code><a href="norm_matrix_range.html">norm_matrix_range()</a></code> </p>
         </td>
@@ -222,13 +222,17 @@
         </td>
         <td><p>uniform filter (convolution with uniform kernel)</p></td>
       </tr><tr><td>
+          <p><code><a href="verify_image_extension.html">verify_image_extension()</a></code> </p>
+        </td>
+        <td><p>Verify that the input image extension is valid</p></td>
+      </tr><tr><td>
           <p><code><a href="warpAffine.html">warpAffine()</a></code> </p>
         </td>
         <td><p>Warp Affine</p></td>
       </tr><tr><td>
           <p><code><a href="writeImage.html">writeImage()</a></code> </p>
         </td>
-        <td><p>This function writes 2- or 3-dimensional image data to a file</p></td>
+        <td><p>This function writes 2- or 3-dimensional image (where the third dimension is equal to 3) data to a file</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -242,7 +246,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

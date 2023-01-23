@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -84,13 +84,14 @@
 
       
 
-      </header><script src="Warp_Affine_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Warp Affine using R</h1>
-                        <h4 data-toc-skip class="author">Lampros Mouselimis</h4>
+                        <h4 data-toc-skip class="author">Lampros
+Mouselimis</h4>
             
-            <h4 data-toc-skip class="date">2022-10-19</h4>
+            <h4 data-toc-skip class="date">2023-01-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/vignettes/Warp_Affine.Rmd" class="external-link"><code>vignettes/Warp_Affine.Rmd</code></a></small>
       <div class="hidden name"><code>Warp_Affine.Rmd</code></div>
@@ -99,7 +100,12 @@
 
     
     
-<p>The <strong>getAffineTransform()</strong> and <strong>warpAffine()</strong> functions of the OpenImageR package is an RcppArmadillo re-implementation of <a href="https://github.com/OlehOnyshchak/ImageTransformations/blob/master/AffineTransformation.ipynb" class="external-link">existing Python Code</a> and this vignette shows how these functions can be used from within R based on the <a href="https://github.com/OlehOnyshchak/ImageTransformations/blob/master/AffineTransformation.ipynb" class="external-link">author’s .ipynb</a> file</p>
+<p>The <strong>getAffineTransform()</strong> and
+<strong>warpAffine()</strong> functions of the OpenImageR package is an
+RcppArmadillo re-implementation of <a href="https://github.com/OlehOnyshchak/ImageTransformations/blob/master/AffineTransformation.ipynb" class="external-link">existing
+Python Code</a> and this vignette shows how these functions can be used
+from within R based on the <a href="https://github.com/OlehOnyshchak/ImageTransformations/blob/master/AffineTransformation.ipynb" class="external-link">author’s
+.ipynb</a> file</p>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a></span><span class="op">)</span></span></code></pre></div>
@@ -112,7 +118,7 @@
 <pre><code><span><span class="co">## [1] 600 600   3</span></span></code></pre>
 <p><br></p>
 <div class="figure" style="text-align: center">
-<img src="../../../../../../private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpDq5BL7/temp_libpath5df65444c21b/OpenImageR/tmp_images/landscape.jpg" alt="Input Image" width="65%" height="50%"><p class="caption">
+<img src="../../../../../../private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp3m7Srj/temp_libpath5b9a22be1b8e/OpenImageR/tmp_images/landscape.jpg" alt="Input Image" width="65%" height="50%"><p class="caption">
 Input Image
 </p>
 </div>
@@ -142,19 +148,21 @@ Input Image
 <span><span class="co">## [1,] 0.91666667 -0.08333333   50</span></span>
 <span><span class="co">## [2,] 0.08333333  0.91666667    0</span></span></code></pre>
 <p><br></p>
-<p>The Affine transformation matrix can be used as input in the <em>warpAffine()</em> function,</p>
+<p>The Affine transformation matrix can be used as input in the
+<em>warpAffine()</em> function,</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_3d</span> <span class="op">=</span> <span class="fu"><a href="../reference/warpAffine.html">warpAffine</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>,</span>
 <span>                    M <span class="op">=</span> <span class="va">M_aff</span>,</span>
 <span>                    R <span class="op">=</span> <span class="va">r</span>,</span>
 <span>                    C <span class="op">=</span> <span class="va">c</span>,</span>
 <span>                    verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## time to complete : 0.094 secs</span></span></code></pre>
+<pre><code><span><span class="co">## time to complete : 0.1154 secs</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">res_3d</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  num [1:600, 1:600, 1:3] 0 0 0 0 0 0 0 0 0 0 ...</span></span></code></pre>
 <p><br></p>
-<p>The next image shows the output based on the input data and parameters,</p>
+<p>The next image shows the output based on the input data and
+parameters,</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/imageShow.html">imageShow</a></span><span class="op">(</span><span class="va">res_3d</span>, clear_viewer <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -180,7 +188,7 @@ Output of Warp Affine function
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

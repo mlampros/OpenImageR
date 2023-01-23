@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -84,13 +84,14 @@
 
       
 
-      </header><script src="Gabor_Feature_Extraction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Gabor Feature extraction</h1>
-                        <h4 data-toc-skip class="author">Lampros Mouselimis</h4>
+                        <h4 data-toc-skip class="author">Lampros
+Mouselimis</h4>
             
-            <h4 data-toc-skip class="date">2022-10-19</h4>
+            <h4 data-toc-skip class="date">2023-01-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/vignettes/Gabor_Feature_Extraction.Rmd" class="external-link"><code>vignettes/Gabor_Feature_Extraction.Rmd</code></a></small>
       <div class="hidden name"><code>Gabor_Feature_Extraction.Rmd</code></div>
@@ -99,8 +100,16 @@
 
     
     
-<p>In this Vignette, I’ll illustrate the new functionality of the OpenImageR package (<em>Gabor Feature Extraction</em>). The Gabor features have been used extensively in <a href="https://en.wikipedia.org/wiki/Gabor_filter" class="external-link">image analysis and processing</a> (Character and Face recognition). <a href="https://en.wikipedia.org/wiki/Dennis_Gabor" class="external-link">Gabor</a> (Nobel prize winner, an electrical engineer, and physicist) used the following wording which I think it’s worth mentioning in this Vignette, <em>“You can’t predict the future, but you can invent it.”</em> (source: <code>https://www.it.lut.fi/project/gabor/</code>).</p>
-<p>In the following lines I’ll describe the <em>GaborFeatureExtract</em> R6 class which includes the following methods,</p>
+<p>In this Vignette, I’ll illustrate the new functionality of the
+OpenImageR package (<em>Gabor Feature Extraction</em>). The Gabor
+features have been used extensively in <a href="https://en.wikipedia.org/wiki/Gabor_filter" class="external-link">image analysis and
+processing</a> (Character and Face recognition). <a href="https://en.wikipedia.org/wiki/Dennis_Gabor" class="external-link">Gabor</a> (Nobel prize
+winner, an electrical engineer, and physicist) used the following
+wording which I think it’s worth mentioning in this Vignette, <em>“You
+can’t predict the future, but you can invent it.”</em> (source:
+<code>https://www.it.lut.fi/project/gabor/</code>).</p>
+<p>In the following lines I’ll describe the <em>GaborFeatureExtract</em>
+R6 class which includes the following methods,</p>
 <table class="table">
 <thead><tr class="header">
 <th align="center">GaborFeatureExtract</th>
@@ -120,13 +129,31 @@
 </tr>
 </tbody>
 </table>
-<p>These methods are based on the Matlab code <em><a href="https://github.com/mhaghighat/gabor" class="external-link">Gabor Feature Extraction</a></em> of the paper <em>M. Haghighat, S. Zonouz, M. Abdel-Mottaleb, “CloudID: Trustworthy cloud-based and cross-enterprise biometric identification,” Expert Systems with Applications, vol. 42, no. 21, pp. 7905-7916, 2015</em>, <a href="http://dx.doi.org/10.1016/j.eswa.2015.06.025" class="external-link uri">http://dx.doi.org/10.1016/j.eswa.2015.06.025</a>. The initial Matlab code was modified (I added the <strong>Magnitude</strong> feature and the <strong>gabor_feature_engine()</strong> method) and parallelized using Rcpp wherever it was possible.</p>
+<p>These methods are based on the Matlab code <em><a href="https://github.com/mhaghighat/gabor" class="external-link">Gabor Feature
+Extraction</a></em> of the paper <em>M. Haghighat, S. Zonouz, M.
+Abdel-Mottaleb, “CloudID: Trustworthy cloud-based and cross-enterprise
+biometric identification,” Expert Systems with Applications, vol. 42,
+no. 21, pp. 7905-7916, 2015</em>, <a href="http://dx.doi.org/10.1016/j.eswa.2015.06.025" class="external-link uri">http://dx.doi.org/10.1016/j.eswa.2015.06.025</a>. The
+initial Matlab code was modified (I added the <strong>Magnitude</strong>
+feature and the <strong>gabor_feature_engine()</strong> method) and
+parallelized using Rcpp wherever it was possible.</p>
 <p><br></p>
 <div class="section level3">
 <h3 id="gabor-features">Gabor Features<a class="anchor" aria-label="anchor" href="#gabor-features"></a>
 </h3>
 <p><br></p>
-<p>I came across the Gabor Features last month when I had to process images and I needed an additional function besides the already existing <a href="https://www.rdocumentation.org/packages/OpenImageR/versions/1.0.8/topics/HOG" class="external-link">HoG features</a>. I did the regular search on CRAN (Comprehensive R Archive Network) but I couldn’t find anything related to Gabor Feature Extraction (as of August 2018), therefore I decided to port the Matlab code into R. There are many resources on the web if someone intends to deepen his / her knowledge on the subject and I’ll add some of these that I found useful at the end of the Vignette (References). I’ll explain the methods of the <em>GaborFeatureExtract</em> R6 class using an image found on a <a href="https://stackoverflow.com/a/20610474/8302386" class="external-link">Stackoverflow question</a>.</p>
+<p>I came across the Gabor Features last month when I had to process
+images and I needed an additional function besides the already existing
+<a href="https://www.rdocumentation.org/packages/OpenImageR/versions/1.0.8/topics/HOG" class="external-link">HoG
+features</a>. I did the regular search on CRAN (Comprehensive R Archive
+Network) but I couldn’t find anything related to Gabor Feature
+Extraction (as of August 2018), therefore I decided to port the Matlab
+code into R. There are many resources on the web if someone intends to
+deepen his / her knowledge on the subject and I’ll add some of these
+that I found useful at the end of the Vignette (References). I’ll
+explain the methods of the <em>GaborFeatureExtract</em> R6 class using
+an image found on a <a href="https://stackoverflow.com/a/20610474/8302386" class="external-link">Stackoverflow
+question</a>.</p>
 <p><br></p>
 <p><img src="vignette_2/car.png"></p>
 </div>
@@ -134,7 +161,12 @@
 <h3 id="gabor_filter_bank">gabor_filter_bank<a class="anchor" aria-label="anchor" href="#gabor_filter_bank"></a>
 </h3>
 <p><br></p>
-<p>The <strong>gabor_filter_bank</strong> method <em>“… generates a custom-sized Gabor filter bank. It creates a UxV cell array, whose elements are MxN matrices; each matrix being a 2-D Gabor filter”</em> according to the <a href="https://github.com/mhaghighat/gabor" class="external-link">author of the Matlab</a> code. The following code chunk shows how this works in R,</p>
+<p>The <strong>gabor_filter_bank</strong> method <em>“… generates a
+custom-sized Gabor filter bank. It creates a UxV cell array, whose
+elements are MxN matrices; each matrix being a 2-D Gabor filter”</em>
+according to the <a href="https://github.com/mhaghighat/gabor" class="external-link">author of
+the Matlab</a> code. The following code chunk shows how this works in
+R,</p>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -162,42 +194,55 @@
 <p><br></p>
 <p><img src="vignette_2/gabor_filter_bank.png"></p>
 <p><br></p>
-<p>For the <em>gabor_filter_bank</em> I use 5 <em>scales</em> and 8 <em>orientations</em> to build filters of size 39 x 39. The output of the method is a list of length 3,</p>
+<p>For the <em>gabor_filter_bank</em> I use 5 <em>scales</em> and 8
+<em>orientations</em> to build filters of size 39 x 39. The output of
+the method is a list of length 3,</p>
 <p><br></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">str</span>(gb_f)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>List of <span class="dv">3</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a> <span class="op">$</span><span class="st"> </span>gaborArray     <span class="op">:</span>List of <span class="dv">40</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>cplx [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">-1.58e-12-0.00</span>i <span class="fl">0.00-5.02e-12</span>i <span class="fl">1.50e-11-0.00</span>i ...</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>cplx [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">4.86e-08-3.96e-08</span>i <span class="fl">1.02e-07+4.63e-08</span>i <span class="fl">6.31e-09+1.93e-07</span>i ...</span>
-<span id="cb2-7"><a href="#cb2-7"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>cplx [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">6.24e-06-6.24e-06</span>i <span class="fl">1.18e-05+0.00</span>i <span class="fl">1.10e-05+1.10e-05</span>i ...</span>
-<span id="cb2-8"><a href="#cb2-8"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>cplx [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">-6.69e-05-3.18e-05</span>i <span class="fl">-4.63e-05-7.20e-05</span>i <span class="fl">-1.60e-06-9.81e-05</span>i ...</span>
-<span id="cb2-9"><a href="#cb2-9"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>cplx [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">1.40e-04+5.81e-05</span>i <span class="fl">1.15e-04+1.15e-04</span>i <span class="fl">6.68e-05+1.61e-04</span>i ...</span>
-<span id="cb2-10"><a href="#cb2-10"></a>.......</span>
-<span id="cb2-11"><a href="#cb2-11"></a> <span class="op">$</span><span class="st"> </span>gabor_imaginary<span class="op">:</span>List of <span class="dv">40</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">-4.65e-27</span> <span class="fl">-5.02e-12</span> <span class="fl">-1.10e-26</span> <span class="fl">4.21e-11</span> <span class="fl">-2.99e-25</span> ...</span>
-<span id="cb2-13"><a href="#cb2-13"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">-3.96e-08</span> <span class="fl">4.63e-08</span> <span class="fl">1.93e-07</span> <span class="fl">1.53e-07</span> <span class="fl">-3.04e-07</span> ...</span>
-<span id="cb2-14"><a href="#cb2-14"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">-6.24e-06</span> <span class="fl">4.84e-20</span> <span class="fl">1.10e-05</span> <span class="fl">2.01e-05</span> <span class="fl">1.81e-05</span> ...</span>
-<span id="cb2-15"><a href="#cb2-15"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">-3.18e-05</span> <span class="fl">-7.20e-05</span> <span class="fl">-9.81e-05</span> <span class="fl">-9.58e-05</span> <span class="fl">-5.78e-05</span> ...</span>
-<span id="cb2-16"><a href="#cb2-16"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">5.81e-05</span> <span class="fl">1.15e-04</span> <span class="fl">1.61e-04</span> <span class="fl">1.86e-04</span> <span class="fl">1.83e-04</span> ...</span>
-<span id="cb2-17"><a href="#cb2-17"></a>.......</span>
-<span id="cb2-18"><a href="#cb2-18"></a> <span class="op">$</span><span class="st"> </span>gabor_real     <span class="op">:</span>List of <span class="dv">40</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">-1.58e-12</span> <span class="fl">5.54e-27</span> <span class="fl">1.50e-11</span> <span class="fl">-4.12e-26</span> <span class="fl">-1.11e-10</span> ...</span>
-<span id="cb2-20"><a href="#cb2-20"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">4.86e-08</span> <span class="fl">1.02e-07</span> <span class="fl">6.31e-09</span> <span class="fl">-2.85e-07</span> <span class="fl">-4.28e-07</span> ...</span>
-<span id="cb2-21"><a href="#cb2-21"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">6.24e-06</span> <span class="fl">1.18e-05</span> <span class="fl">1.10e-05</span> <span class="fl">-8.11e-20</span> <span class="fl">-1.81e-05</span> ...</span>
-<span id="cb2-22"><a href="#cb2-22"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">-6.69e-05</span> <span class="fl">-4.63e-05</span> <span class="fl">-1.60e-06</span> <span class="fl">5.73e-05</span> <span class="fl">1.12e-04</span> ...</span>
-<span id="cb2-23"><a href="#cb2-23"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>] <span class="fl">1.40e-04</span> <span class="fl">1.15e-04</span> <span class="fl">6.68e-05</span> <span class="fl">-3.77e-19</span> <span class="fl">-7.57e-05</span> ...</span>
-<span id="cb2-24"><a href="#cb2-24"></a>.......</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gb_f)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>List of <span class="dv">3</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> gaborArray     <span class="sc">:</span>List of <span class="dv">40</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> cplx [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="sc">-</span><span class="fl">1.58e-12-0.00</span>i <span class="fl">0.00-5.02e-12</span>i <span class="fl">1.50e-11-0.00</span>i ...</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> cplx [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="fl">4.86e-08-3.96e-08</span>i <span class="fl">1.02e-07+4.63e-08</span>i <span class="fl">6.31e-09+1.93e-07</span>i ...</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> cplx [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="fl">6.24e-06-6.24e-06</span>i <span class="fl">1.18e-05+0.00</span>i <span class="fl">1.10e-05+1.10e-05</span>i ...</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> cplx [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="sc">-</span><span class="fl">6.69e-05-3.18e-05</span>i <span class="sc">-</span><span class="fl">4.63e-05-7.20e-05</span>i <span class="sc">-</span><span class="fl">1.60e-06-9.81e-05</span>i ...</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> cplx [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="fl">1.40e-04+5.81e-05</span>i <span class="fl">1.15e-04+1.15e-04</span>i <span class="fl">6.68e-05+1.61e-04</span>i ...</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>.......</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> gabor_imaginary<span class="sc">:</span>List of <span class="dv">40</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="sc">-</span><span class="fl">4.65e-27</span> <span class="sc">-</span><span class="fl">5.02e-12</span> <span class="sc">-</span><span class="fl">1.10e-26</span> <span class="fl">4.21e-11</span> <span class="sc">-</span><span class="fl">2.99e-25</span> ...</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="sc">-</span><span class="fl">3.96e-08</span> <span class="fl">4.63e-08</span> <span class="fl">1.93e-07</span> <span class="fl">1.53e-07</span> <span class="sc">-</span><span class="fl">3.04e-07</span> ...</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="sc">-</span><span class="fl">6.24e-06</span> <span class="fl">4.84e-20</span> <span class="fl">1.10e-05</span> <span class="fl">2.01e-05</span> <span class="fl">1.81e-05</span> ...</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="sc">-</span><span class="fl">3.18e-05</span> <span class="sc">-</span><span class="fl">7.20e-05</span> <span class="sc">-</span><span class="fl">9.81e-05</span> <span class="sc">-</span><span class="fl">9.58e-05</span> <span class="sc">-</span><span class="fl">5.78e-05</span> ...</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="fl">5.81e-05</span> <span class="fl">1.15e-04</span> <span class="fl">1.61e-04</span> <span class="fl">1.86e-04</span> <span class="fl">1.83e-04</span> ...</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>.......</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> gabor_real     <span class="sc">:</span>List of <span class="dv">40</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="sc">-</span><span class="fl">1.58e-12</span> <span class="fl">5.54e-27</span> <span class="fl">1.50e-11</span> <span class="sc">-</span><span class="fl">4.12e-26</span> <span class="sc">-</span><span class="fl">1.11e-10</span> ...</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="fl">4.86e-08</span> <span class="fl">1.02e-07</span> <span class="fl">6.31e-09</span> <span class="sc">-</span><span class="fl">2.85e-07</span> <span class="sc">-</span><span class="fl">4.28e-07</span> ...</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="fl">6.24e-06</span> <span class="fl">1.18e-05</span> <span class="fl">1.10e-05</span> <span class="sc">-</span><span class="fl">8.11e-20</span> <span class="sc">-</span><span class="fl">1.81e-05</span> ...</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="sc">-</span><span class="fl">6.69e-05</span> <span class="sc">-</span><span class="fl">4.63e-05</span> <span class="sc">-</span><span class="fl">1.60e-06</span> <span class="fl">5.73e-05</span> <span class="fl">1.12e-04</span> ...</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="fl">1.40e-04</span> <span class="fl">1.15e-04</span> <span class="fl">6.68e-05</span> <span class="sc">-</span><span class="fl">3.77e-19</span> <span class="sc">-</span><span class="fl">7.57e-05</span> ...</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>.......</span></code></pre></div>
 <p><br></p>
-<p>The first sublist (<em>gaborArray</em>) consists of 40 matrices (5 scales x 8 orientations) of type complex, where each matix is of dimension 39 x 39 (gabor filter). The second sublist (<em>gabor_imaginary</em>) is the imaginary part (numeric) whereas the third sublist is the real part (<em>gabor_real</em>). The real part (numeric) is used to plot the gabor filters.</p>
-<p>The documentation includes more details for each of the parameters used.</p>
+<p>The first sublist (<em>gaborArray</em>) consists of 40 matrices (5
+scales x 8 orientations) of type complex, where each matix is of
+dimension 39 x 39 (gabor filter). The second sublist
+(<em>gabor_imaginary</em>) is the imaginary part (numeric) whereas the
+third sublist is the real part (<em>gabor_real</em>). The real part
+(numeric) is used to plot the gabor filters.</p>
+<p>The documentation includes more details for each of the parameters
+used.</p>
 <p><br></p>
 </div>
 <div class="section level3">
 <h3 id="gabor_feature_extraction">gabor_feature_extraction<a class="anchor" aria-label="anchor" href="#gabor_feature_extraction"></a>
 </h3>
 <p><br></p>
-<p>The <strong>gabor_feature_extraction</strong> method extracts the Gabor Features of the image. This method is modified in comparison to the initial Matlab code to give users the option to downsample the image or to normalize the features. Moreover, I added the <strong>Magnitude</strong> feature because according to <a href="https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering" class="external-link">literature</a> it improves predictability.</p>
+<p>The <strong>gabor_feature_extraction</strong> method extracts the
+Gabor Features of the image. This method is modified in comparison to
+the initial Matlab code to give users the option to downsample the image
+or to normalize the features. Moreover, I added the
+<strong>Magnitude</strong> feature because according to <a href="https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering" class="external-link">literature</a>
+it improves predictability.</p>
 <p>Based on the previously mentioned <em>car.png</em> image,</p>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -225,26 +270,32 @@
 <p><br></p>
 <p>This function again returns a list of length 3,</p>
 <p><br></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">str</span>(gb_im)</span>
-<span id="cb4-3"><a href="#cb4-3"></a>List of <span class="dv">3</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a> <span class="op">$</span><span class="st"> </span>gaborFeatures           <span class="op">:</span>List of <span class="dv">2</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>  ..<span class="op">$</span><span class="st"> </span>magnitude      <span class="op">:</span><span class="st"> </span>num [<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">206670</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-6"><a href="#cb4-6"></a>  ..<span class="op">$</span><span class="st"> </span>energy_aptitude<span class="op">:</span><span class="st"> </span>num [<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">80</span>] <span class="dv">115823</span> <span class="dv">27566</span> <span class="dv">33289</span> <span class="dv">20074</span> <span class="dv">26918</span> ...</span>
-<span id="cb4-7"><a href="#cb4-7"></a> <span class="op">$</span><span class="st"> </span>gabor_features_imaginary<span class="op">:</span>List of <span class="dv">5</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-9"><a href="#cb4-9"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-10"><a href="#cb4-10"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-11"><a href="#cb4-11"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-12"><a href="#cb4-12"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-13"><a href="#cb4-13"></a> <span class="op">$</span><span class="st"> </span>gabor_features_real     <span class="op">:</span>List of <span class="dv">5</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-15"><a href="#cb4-15"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-16"><a href="#cb4-16"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-17"><a href="#cb4-17"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb4-18"><a href="#cb4-18"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gb_im)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>List of <span class="dv">3</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> gaborFeatures           <span class="sc">:</span>List of <span class="dv">2</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> magnitude      <span class="sc">:</span> num [<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">206670</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> energy_aptitude<span class="sc">:</span> num [<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">80</span>] <span class="dv">115823</span> <span class="dv">27566</span> <span class="dv">33289</span> <span class="dv">20074</span> <span class="dv">26918</span> ...</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> gabor_features_imaginary<span class="sc">:</span>List of <span class="dv">5</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> gabor_features_real     <span class="sc">:</span>List of <span class="dv">5</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> <span class="er">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">166</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">249</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span></code></pre></div>
 <p><br></p>
-<p>where <em>gaborFeatures</em> are the extracted features with number of rows equal to nrow(im) x ncol(im) (or 166 x 249) and number of columns equal to scales x orientations (or 5 x 8). The second and third sublists are the imaginary and real part of the image resulted after the convolution with the gabor filters. The following code chunk allows the user to plot the different <em>scales</em> and <em>orientations</em> of the image,</p>
+<p>where <em>gaborFeatures</em> are the extracted features with number
+of rows equal to nrow(im) x ncol(im) (or 166 x 249) and number of
+columns equal to scales x orientations (or 5 x 8). The second and third
+sublists are the imaginary and real part of the image resulted after the
+convolution with the gabor filters. The following code chunk allows the
+user to plot the different <em>scales</em> and <em>orientations</em> of
+the image,</p>
 <p><br></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -254,7 +305,8 @@
 <p><br></p>
 <p><img src="vignette_2/gabor_car.png"></p>
 <p><br></p>
-<p>By thresholding the <em>gb_im$gabor_features_real</em> object (scales, orientations) to [0,1] the images can be visually explored,</p>
+<p>By thresholding the <em>gb_im$gabor_features_real</em> object
+(scales, orientations) to [0,1] the images can be visually explored,</p>
 <p><br></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -272,50 +324,61 @@
 <h3 id="gabor_feature_engine">gabor_feature_engine<a class="anchor" aria-label="anchor" href="#gabor_feature_engine"></a>
 </h3>
 <p><br></p>
-<p>The <em>gabor_feature_engine</em> method is an extension of the initial Matlab code and allows the user to extract gabor features from multiple images. This method works in the same way as the <em>HOG_apply</em> method, which takes a matrix of images - such as the mnist data set - and after processing it returns the features. The following example illustrates how to use the <em>gabor_feature_engine</em> method with the mnist data set,</p>
+<p>The <em>gabor_feature_engine</em> method is an extension of the
+initial Matlab code and allows the user to extract gabor features from
+multiple images. This method works in the same way as the
+<em>HOG_apply</em> method, which takes a matrix of images - such as the
+mnist data set - and after processing it returns the features. The
+following example illustrates how to use the
+<em>gabor_feature_engine</em> method with the mnist data set,</p>
 <p><br></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># for instance downloading of the mnist data on a linux OS</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#----------------------------------------------------------</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="kw">system</span>(<span class="st">"wget https://raw.githubusercontent.com/mlampros/DataSets/master/mnist.zip"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co"># or just navigate to "https://github.com/mlampros/DataSets/blob/master/mnist.zip" and click the download button</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#-------------------------------------------------------------------------------------------</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a></span>
-<span id="cb7-11"><a href="#cb7-11"></a></span>
-<span id="cb7-12"><a href="#cb7-12"></a>mnist &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">unz</span>(<span class="st">"mnist.zip"</span>, <span class="st">"mnist.csv"</span>), <span class="dt">nrows =</span> <span class="dv">70000</span>, <span class="dt">header =</span> T, </span>
-<span id="cb7-13"><a href="#cb7-13"></a>                    </span>
-<span id="cb7-14"><a href="#cb7-14"></a>                    <span class="dt">quote =</span> <span class="st">"</span><span class="ch">\"</span><span class="st">"</span>, <span class="dt">sep =</span> <span class="st">","</span>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a>                    </span>
-<span id="cb7-16"><a href="#cb7-16"></a>mnist =<span class="st"> </span><span class="kw">as.matrix</span>(mnist)</span>
-<span id="cb7-17"><a href="#cb7-17"></a></span>
-<span id="cb7-18"><a href="#cb7-18"></a>x =<span class="st"> </span>mnist[, <span class="op">-</span><span class="kw">ncol</span>(mnist)]</span>
-<span id="cb7-19"><a href="#cb7-19"></a></span>
-<span id="cb7-20"><a href="#cb7-20"></a>y =<span class="st"> </span>mnist[, <span class="kw">ncol</span>(mnist)] <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a></span>
-<span id="cb7-22"><a href="#cb7-22"></a>dat =<span class="st"> </span>init_gb<span class="op">$</span><span class="kw">gabor_feature_engine</span>(<span class="dt">img_data =</span> x, <span class="dt">img_nrow =</span> <span class="dv">28</span>, <span class="dt">img_ncol =</span> <span class="dv">28</span>,</span>
-<span id="cb7-23"><a href="#cb7-23"></a></span>
-<span id="cb7-24"><a href="#cb7-24"></a>                                    <span class="dt">scales =</span> <span class="dv">4</span>, <span class="dt">orientations =</span> <span class="dv">8</span>, <span class="dt">gabor_rows =</span> <span class="dv">13</span>,</span>
-<span id="cb7-25"><a href="#cb7-25"></a></span>
-<span id="cb7-26"><a href="#cb7-26"></a>                                    <span class="dt">gabor_columns =</span> <span class="dv">13</span>, <span class="dt">downsample_gabor =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb7-27"><a href="#cb7-27"></a></span>
-<span id="cb7-28"><a href="#cb7-28"></a>                                    <span class="dt">downsample_rows =</span> <span class="ot">NULL</span>, <span class="dt">downsample_cols =</span> <span class="ot">NULL</span>,</span>
-<span id="cb7-29"><a href="#cb7-29"></a></span>
-<span id="cb7-30"><a href="#cb7-30"></a>                                    <span class="dt">normalize_features =</span> <span class="ot">FALSE</span>, <span class="dt">threads =</span> <span class="dv">6</span>, </span>
-<span id="cb7-31"><a href="#cb7-31"></a>                                    </span>
-<span id="cb7-32"><a href="#cb7-32"></a>                                    <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb7-33"><a href="#cb7-33"></a></span>
-<span id="cb7-34"><a href="#cb7-34"></a>Time to complete <span class="op">:</span><span class="st"> </span><span class="fl">4.111672</span> mins </span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for instance downloading of the mnist data on a linux OS</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#----------------------------------------------------------</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"wget https://raw.githubusercontent.com/mlampros/DataSets/master/mnist.zip"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># or just navigate to "https://github.com/mlampros/DataSets/blob/master/mnist.zip" and click the download button</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------------------</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>mnist <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="fu">unz</span>(<span class="st">"mnist.zip"</span>, <span class="st">"mnist.csv"</span>), <span class="at">nrows =</span> <span class="dv">70000</span>, <span class="at">header =</span> T, </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                    </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                    </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>mnist <span class="ot">=</span> <span class="fu">as.matrix</span>(mnist)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> mnist[, <span class="sc">-</span><span class="fu">ncol</span>(mnist)]</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> mnist[, <span class="fu">ncol</span>(mnist)] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> init_gb<span class="sc">$</span><span class="fu">gabor_feature_engine</span>(<span class="at">img_data =</span> x, <span class="at">img_nrow =</span> <span class="dv">28</span>, <span class="at">img_ncol =</span> <span class="dv">28</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">scales =</span> <span class="dv">4</span>, <span class="at">orientations =</span> <span class="dv">8</span>, <span class="at">gabor_rows =</span> <span class="dv">13</span>,</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">gabor_columns =</span> <span class="dv">13</span>, <span class="at">downsample_gabor =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">downsample_rows =</span> <span class="cn">NULL</span>, <span class="at">downsample_cols =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">normalize_features =</span> <span class="cn">FALSE</span>, <span class="at">threads =</span> <span class="dv">6</span>, </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                                    </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>Time to complete <span class="sc">:</span> <span class="fl">4.111672</span> mins </span></code></pre></div>
 <p><br></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(dat)</span>
-<span id="cb8-3"><a href="#cb8-3"></a>List of <span class="dv">2</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a> <span class="op">$</span><span class="st"> </span>magnitude      <span class="op">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">70000</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3136</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb8-5"><a href="#cb8-5"></a> <span class="op">$</span><span class="st"> </span>energy_aptitude<span class="op">:</span><span class="st"> </span>num [<span class="dv">1</span><span class="op">:</span><span class="dv">70000</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">64</span>] <span class="dv">2682</span> <span class="dv">2576</span> <span class="dv">1399</span> <span class="dv">1178</span> <span class="dv">2240</span> ...</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(dat)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>List of <span class="dv">2</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> magnitude      <span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">70000</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3136</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> energy_aptitude<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">70000</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">64</span>] <span class="dv">2682</span> <span class="dv">2576</span> <span class="dv">1399</span> <span class="dv">1178</span> <span class="dv">2240</span> ...</span></code></pre></div>
 <p><br></p>
-<p>The <em>dat</em> object is a list of length 2. The first sublist corresponds to <em>magnitude</em> whereas the second sublist to <em>local-energy</em> and <em>mean-aptitude</em>. The first thing to do before calculating the accuracy for the mnist data is to reduce the dimensionality of the <em>magnitude</em> feature (I’ll use the <a href="https://github.com/bwlewis/irlba" class="external-link">irlba</a> package for this purpose),</p>
+<p>The <em>dat</em> object is a list of length 2. The first sublist
+corresponds to <em>magnitude</em> whereas the second sublist to
+<em>local-energy</em> and <em>mean-aptitude</em>. The first thing to do
+before calculating the accuracy for the mnist data is to reduce the
+dimensionality of the <em>magnitude</em> feature (I’ll use the <a href="https://github.com/bwlewis/irlba" class="external-link">irlba</a> package for this
+purpose),</p>
 <p><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -323,112 +386,121 @@
 <span></span>
 <span><span class="va">new_x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">magnitude</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">svd_irlb</span><span class="op">$</span><span class="va">v</span></span></code></pre></div>
 <p><br></p>
-<p>and I’ll create a centered-scaled matrix of the reduced <em>magnitude</em> and the <em>energy-aptitude</em> data,</p>
+<p>and I’ll create a centered-scaled matrix of the reduced
+<em>magnitude</em> and the <em>energy-aptitude</em> data,</p>
 <p><br></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a></span>
-<span id="cb10-2"><a href="#cb10-2"></a>dat =<span class="st"> </span>ClusterR<span class="op">::</span><span class="kw">center_scale</span>(<span class="kw">cbind</span>(new_x, dat<span class="op">$</span>energy_aptitude))</span>
-<span id="cb10-3"><a href="#cb10-3"></a></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="kw">dim</span>(dat)</span>
-<span id="cb10-5"><a href="#cb10-5"></a></span>
-<span id="cb10-6"><a href="#cb10-6"></a>[<span class="dv">1</span>] <span class="dv">70000</span>   <span class="dv">164</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> ClusterR<span class="sc">::</span><span class="fu">center_scale</span>(<span class="fu">cbind</span>(new_x, dat<span class="sc">$</span>energy_aptitude))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dat)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">70000</span>   <span class="dv">164</span></span></code></pre></div>
 <p><br></p>
-<p>then I’ll utilize the <em>nmslibR</em> library (approximate method ‘hnsw’) to calculate the accuracy for the mnist data,</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a></span>
-<span id="cb11-2"><a href="#cb11-2"></a>M =<span class="st"> </span><span class="dv">30</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>efC =<span class="st"> </span><span class="dv">100</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>num_threads =<span class="st"> </span><span class="dv">6</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a></span>
-<span id="cb11-6"><a href="#cb11-6"></a>index_params =<span class="st"> </span><span class="kw">list</span>(<span class="st">'M'</span>=<span class="st"> </span>M, <span class="st">'indexThreadQty'</span> =<span class="st"> </span>num_threads, <span class="st">'efConstruction'</span> =<span class="st"> </span>efC,</span>
-<span id="cb11-7"><a href="#cb11-7"></a>                    </span>
-<span id="cb11-8"><a href="#cb11-8"></a>                    <span class="st">'post'</span> =<span class="st"> </span><span class="dv">0</span>, <span class="st">'skip_optimized_index'</span> =<span class="st"> </span><span class="dv">1</span> )</span>
-<span id="cb11-9"><a href="#cb11-9"></a></span>
-<span id="cb11-10"><a href="#cb11-10"></a></span>
-<span id="cb11-11"><a href="#cb11-11"></a>efS =<span class="st"> </span><span class="dv">100</span></span>
-<span id="cb11-12"><a href="#cb11-12"></a></span>
-<span id="cb11-13"><a href="#cb11-13"></a>query_time_params =<span class="st"> </span><span class="kw">list</span>(<span class="st">'efSearch'</span> =<span class="st"> </span>efS)</span>
-<span id="cb11-14"><a href="#cb11-14"></a></span>
-<span id="cb11-15"><a href="#cb11-15"></a></span>
-<span id="cb11-16"><a href="#cb11-16"></a>fit_gab =<span class="st"> </span>nmslibR<span class="op">::</span><span class="kw">KernelKnnCV_nmslib</span>(dat, y, <span class="dt">k =</span> <span class="dv">20</span>, <span class="dt">folds =</span> <span class="dv">4</span>, <span class="dt">h =</span> <span class="dv">1</span>,</span>
-<span id="cb11-17"><a href="#cb11-17"></a>                                      <span class="dt">weights_function =</span> <span class="st">'biweight_triangular_tricube_MULT'</span>,</span>
-<span id="cb11-18"><a href="#cb11-18"></a>                                      <span class="dt">Levels =</span> <span class="kw">sort</span>(<span class="kw">unique</span>(y)), <span class="dt">Index_Params =</span> index_params,</span>
-<span id="cb11-19"><a href="#cb11-19"></a>                                      <span class="dt">Time_Params =</span> query_time_params, <span class="dt">space =</span> <span class="st">"cosinesimil"</span>,</span>
-<span id="cb11-20"><a href="#cb11-20"></a>                                      <span class="dt">space_params =</span> <span class="ot">NULL</span>, <span class="dt">method =</span> <span class="st">"hnsw"</span>, </span>
-<span id="cb11-21"><a href="#cb11-21"></a>                                      <span class="dt">data_type =</span> <span class="st">"DENSE_VECTOR"</span>, <span class="dt">dtype =</span> <span class="st">"FLOAT"</span>, </span>
-<span id="cb11-22"><a href="#cb11-22"></a>                                      <span class="dt">index_filepath =</span> <span class="ot">NULL</span>, <span class="dt">print_progress =</span> T,</span>
-<span id="cb11-23"><a href="#cb11-23"></a>                                      <span class="dt">num_threads =</span> <span class="dv">6</span>, <span class="dt">seed_num =</span> <span class="dv">1</span>)</span>
-<span id="cb11-24"><a href="#cb11-24"></a></span>
-<span id="cb11-25"><a href="#cb11-25"></a>time to complete <span class="op">:</span><span class="st"> </span><span class="fl">30.82252</span> secs</span></code></pre></div>
+<p>then I’ll utilize the <em>nmslibR</em> library (approximate method
+‘hnsw’) to calculate the accuracy for the mnist data,</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">=</span> <span class="dv">30</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>efC <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>num_threads <span class="ot">=</span> <span class="dv">6</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>index_params <span class="ot">=</span> <span class="fu">list</span>(<span class="st">'M'</span><span class="ot">=</span> M, <span class="st">'indexThreadQty'</span> <span class="ot">=</span> num_threads, <span class="st">'efConstruction'</span> <span class="ot">=</span> efC,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                    </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'post'</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">'skip_optimized_index'</span> <span class="ot">=</span> <span class="dv">1</span> )</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>efS <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>query_time_params <span class="ot">=</span> <span class="fu">list</span>(<span class="st">'efSearch'</span> <span class="ot">=</span> efS)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>fit_gab <span class="ot">=</span> nmslibR<span class="sc">::</span><span class="fu">KernelKnnCV_nmslib</span>(dat, y, <span class="at">k =</span> <span class="dv">20</span>, <span class="at">folds =</span> <span class="dv">4</span>, <span class="at">h =</span> <span class="dv">1</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">weights_function =</span> <span class="st">'biweight_triangular_tricube_MULT'</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">Levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(y)), <span class="at">Index_Params =</span> index_params,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">Time_Params =</span> query_time_params, <span class="at">space =</span> <span class="st">"cosinesimil"</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">space_params =</span> <span class="cn">NULL</span>, <span class="at">method =</span> <span class="st">"hnsw"</span>, </span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">data_type =</span> <span class="st">"DENSE_VECTOR"</span>, <span class="at">dtype =</span> <span class="st">"FLOAT"</span>, </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">index_filepath =</span> <span class="cn">NULL</span>, <span class="at">print_progress =</span> T,</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">num_threads =</span> <span class="dv">6</span>, <span class="at">seed_num =</span> <span class="dv">1</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>time to complete <span class="sc">:</span> <span class="fl">30.82252</span> secs</span></code></pre></div>
 <p><br></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a></span>
-<span id="cb12-2"><a href="#cb12-2"></a>acc_fit_gab =<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(fit_gab<span class="op">$</span>preds),</span>
-<span id="cb12-3"><a href="#cb12-3"></a>                            </span>
-<span id="cb12-4"><a href="#cb12-4"></a>                            <span class="cf">function</span>(x) { </span>
-<span id="cb12-5"><a href="#cb12-5"></a>                              </span>
-<span id="cb12-6"><a href="#cb12-6"></a>                              <span class="kw">mean</span>(y[fit_gab<span class="op">$</span>folds[[x]]] <span class="op">==</span><span class="st"> </span><span class="kw">max.col</span>( </span>
-<span id="cb12-7"><a href="#cb12-7"></a>                                </span>
-<span id="cb12-8"><a href="#cb12-8"></a>                                fit_gab<span class="op">$</span>preds[[x]], <span class="dt">ties.method =</span> <span class="st">'random'</span>)) }))</span>
-<span id="cb12-9"><a href="#cb12-9"></a></span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="kw">mean</span>(acc_fit_gab)</span>
-<span id="cb12-11"><a href="#cb12-11"></a></span>
-<span id="cb12-12"><a href="#cb12-12"></a>[<span class="dv">1</span>] <span class="fl">0.9752714</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>acc_fit_gab <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fit_gab<span class="sc">$</span>preds),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">function</span>(x) { </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                              </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">mean</span>(y[fit_gab<span class="sc">$</span>folds[[x]]] <span class="sc">==</span> <span class="fu">max.col</span>( </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                                </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                                fit_gab<span class="sc">$</span>preds[[x]], <span class="at">ties.method =</span> <span class="st">'random'</span>)) }))</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(acc_fit_gab)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.9752714</span></span></code></pre></div>
 <p><br></p>
 <p>I’ll do the same using the <em>HOG_apply</em> function,</p>
 <p><br></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co"># hog-features for the mnist data</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="co">#--------------------------------</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a></span>
-<span id="cb13-5"><a href="#cb13-5"></a>hog =<span class="st"> </span>OpenImageR<span class="op">::</span><span class="kw">HOG_apply</span>(x, <span class="dt">cells =</span> <span class="dv">6</span>, <span class="dt">orientations =</span> <span class="dv">9</span>, <span class="dt">rows =</span> <span class="dv">28</span>, <span class="dt">columns =</span> <span class="dv">28</span>, <span class="dt">threads =</span> <span class="dv">6</span>)</span>
-<span id="cb13-6"><a href="#cb13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7"></a></span>
-<span id="cb13-8"><a href="#cb13-8"></a>fit_hog =<span class="st"> </span>nmslibR<span class="op">::</span><span class="kw">KernelKnnCV_nmslib</span>(hog, y, <span class="dt">k =</span> <span class="dv">20</span>, <span class="dt">folds =</span> <span class="dv">4</span>, <span class="dt">h =</span> <span class="dv">1</span>,</span>
-<span id="cb13-9"><a href="#cb13-9"></a>                                      <span class="dt">weights_function =</span> <span class="st">'biweight_triangular_tricube_MULT'</span>,</span>
-<span id="cb13-10"><a href="#cb13-10"></a>                                      <span class="dt">Levels =</span> <span class="kw">sort</span>(<span class="kw">unique</span>(y)), <span class="dt">Index_Params =</span> index_params,</span>
-<span id="cb13-11"><a href="#cb13-11"></a>                                      <span class="dt">Time_Params =</span> query_time_params, <span class="dt">space =</span> <span class="st">"cosinesimil"</span>,</span>
-<span id="cb13-12"><a href="#cb13-12"></a>                                      <span class="dt">space_params =</span> <span class="ot">NULL</span>, <span class="dt">method =</span> <span class="st">"hnsw"</span>, </span>
-<span id="cb13-13"><a href="#cb13-13"></a>                                      <span class="dt">data_type =</span> <span class="st">"DENSE_VECTOR"</span>, <span class="dt">dtype =</span> <span class="st">"FLOAT"</span>, </span>
-<span id="cb13-14"><a href="#cb13-14"></a>                                      <span class="dt">index_filepath =</span> <span class="ot">NULL</span>, <span class="dt">print_progress =</span> T,</span>
-<span id="cb13-15"><a href="#cb13-15"></a>                                      <span class="dt">num_threads =</span> <span class="dv">6</span>, <span class="dt">seed_num =</span> <span class="dv">1</span>)</span>
-<span id="cb13-16"><a href="#cb13-16"></a></span>
-<span id="cb13-17"><a href="#cb13-17"></a>time to complete <span class="op">:</span><span class="st"> </span><span class="fl">41.00309</span> secs</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># hog-features for the mnist data</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#--------------------------------</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>hog <span class="ot">=</span> OpenImageR<span class="sc">::</span><span class="fu">HOG_apply</span>(x, <span class="at">cells =</span> <span class="dv">6</span>, <span class="at">orientations =</span> <span class="dv">9</span>, <span class="at">rows =</span> <span class="dv">28</span>, <span class="at">columns =</span> <span class="dv">28</span>, <span class="at">threads =</span> <span class="dv">6</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>fit_hog <span class="ot">=</span> nmslibR<span class="sc">::</span><span class="fu">KernelKnnCV_nmslib</span>(hog, y, <span class="at">k =</span> <span class="dv">20</span>, <span class="at">folds =</span> <span class="dv">4</span>, <span class="at">h =</span> <span class="dv">1</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">weights_function =</span> <span class="st">'biweight_triangular_tricube_MULT'</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">Levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(y)), <span class="at">Index_Params =</span> index_params,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">Time_Params =</span> query_time_params, <span class="at">space =</span> <span class="st">"cosinesimil"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">space_params =</span> <span class="cn">NULL</span>, <span class="at">method =</span> <span class="st">"hnsw"</span>, </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">data_type =</span> <span class="st">"DENSE_VECTOR"</span>, <span class="at">dtype =</span> <span class="st">"FLOAT"</span>, </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">index_filepath =</span> <span class="cn">NULL</span>, <span class="at">print_progress =</span> T,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">num_threads =</span> <span class="dv">6</span>, <span class="at">seed_num =</span> <span class="dv">1</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>time to complete <span class="sc">:</span> <span class="fl">41.00309</span> secs</span></code></pre></div>
 <p><br></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a></span>
-<span id="cb14-2"><a href="#cb14-2"></a>acc_fit_hog =<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(fit_hog<span class="op">$</span>preds), </span>
-<span id="cb14-3"><a href="#cb14-3"></a>                            </span>
-<span id="cb14-4"><a href="#cb14-4"></a>                            <span class="cf">function</span>(x) { </span>
-<span id="cb14-5"><a href="#cb14-5"></a>                              </span>
-<span id="cb14-6"><a href="#cb14-6"></a>                              <span class="kw">mean</span>(y[fit_hog<span class="op">$</span>folds[[x]]] <span class="op">==</span><span class="st"> </span><span class="kw">max.col</span>( </span>
-<span id="cb14-7"><a href="#cb14-7"></a>                                </span>
-<span id="cb14-8"><a href="#cb14-8"></a>                                fit_hog<span class="op">$</span>preds[[x]], <span class="dt">ties.method =</span> <span class="st">'random'</span>)) }))</span>
-<span id="cb14-9"><a href="#cb14-9"></a></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="kw">mean</span>(acc_fit_hog)</span>
-<span id="cb14-11"><a href="#cb14-11"></a></span>
-<span id="cb14-12"><a href="#cb14-12"></a>[<span class="dv">1</span>] <span class="fl">0.9787429</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>acc_fit_hog <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fit_hog<span class="sc">$</span>preds), </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">function</span>(x) { </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                              </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">mean</span>(y[fit_hog<span class="sc">$</span>folds[[x]]] <span class="sc">==</span> <span class="fu">max.col</span>( </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                                </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                                fit_hog<span class="sc">$</span>preds[[x]], <span class="at">ties.method =</span> <span class="st">'random'</span>)) }))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(acc_fit_hog)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.9787429</span></span></code></pre></div>
 <p><br></p>
-<p>By averaging both the <em>gabor</em> and the <em>HoG</em> features the mean accuracy increases to 98.34 % which is very close to the score of the <a href="http://mlampros.github.io/2016/07/10/KernelKnn/" class="external-link">HoG + brute force method of KernelKnn</a> (98.4), <br></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a></span>
-<span id="cb15-2"><a href="#cb15-2"></a>acc_fit_gab_hog =<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(fit_gab<span class="op">$</span>preds),</span>
-<span id="cb15-3"><a href="#cb15-3"></a>                                </span>
-<span id="cb15-4"><a href="#cb15-4"></a>                                <span class="cf">function</span>(x) { </span>
-<span id="cb15-5"><a href="#cb15-5"></a>                                  </span>
-<span id="cb15-6"><a href="#cb15-6"></a>                                  <span class="kw">mean</span>(y[fit_gab<span class="op">$</span>folds[[x]]] <span class="op">==</span><span class="st"> </span><span class="kw">max.col</span>( </span>
-<span id="cb15-7"><a href="#cb15-7"></a>                                    </span>
-<span id="cb15-8"><a href="#cb15-8"></a>                                    (fit_gab<span class="op">$</span>preds[[x]] <span class="op">+</span><span class="st"> </span>fit_hog<span class="op">$</span>preds[[x]]) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, </span>
-<span id="cb15-9"><a href="#cb15-9"></a>                                    </span>
-<span id="cb15-10"><a href="#cb15-10"></a>                                    <span class="dt">ties.method =</span> <span class="st">'random'</span>)) }))</span>
-<span id="cb15-11"><a href="#cb15-11"></a></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="kw">mean</span>(acc_fit_gab_hog)</span>
-<span id="cb15-13"><a href="#cb15-13"></a></span>
-<span id="cb15-14"><a href="#cb15-14"></a>[<span class="dv">1</span>] <span class="fl">0.9833857</span></span></code></pre></div>
+<p>By averaging both the <em>gabor</em> and the <em>HoG</em> features
+the mean accuracy increases to 98.34 % which is very close to the score
+of the <a href="http://mlampros.github.io/2016/07/10/KernelKnn/" class="external-link">HoG +
+brute force method of KernelKnn</a> (98.4), <br></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>acc_fit_gab_hog <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fit_gab<span class="sc">$</span>preds),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                                <span class="cf">function</span>(x) { </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                                  </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">mean</span>(y[fit_gab<span class="sc">$</span>folds[[x]]] <span class="sc">==</span> <span class="fu">max.col</span>( </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                                    </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                                    (fit_gab<span class="sc">$</span>preds[[x]] <span class="sc">+</span> fit_hog<span class="sc">$</span>preds[[x]]) <span class="sc">/</span> <span class="dv">2</span>, </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                    </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">ties.method =</span> <span class="st">'random'</span>)) }))</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(acc_fit_gab_hog)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.9833857</span></span></code></pre></div>
 <p><br><br></p>
 <p><em>References :</em></p>
 <ul>
 <li><a href="https://github.com/mhaghighat/gabor" class="external-link">https://github.com/mhaghighat/gabor</a></li>
-<li><a href="https://stackoverflow.com/questions/20608458/gabor-feature-extraction" class="external-link">Gabor feature extraction Stackoverflow question</a></li>
+<li><a href="https://stackoverflow.com/questions/20608458/gabor-feature-extraction" class="external-link">Gabor
+feature extraction Stackoverflow question</a></li>
 <li>
-<strong>Features Extraction using a Gabor Filter Family</strong> <code>(http://www.paper.edu.cn/scholar/showpdf/NUz2MN4IMTD0kxeQh)</code>
+<strong>Features Extraction using a Gabor Filter Family</strong>
+<code>(http://www.paper.edu.cn/scholar/showpdf/NUz2MN4IMTD0kxeQh)</code>
 </li>
-<li><a href="https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering" class="external-link">Gabor Feature Based Unsupervised Change Detection of Multitemporal SAR Images Based on Two-Level Clustering</a></li>
+<li><a href="https://www.researchgate.net/publication/283539985_Gabor_Feature_Based_Unsupervised_Change_Detection_of_Multitemporal_SAR_Images_Based_on_Two-Level_Clustering" class="external-link">Gabor
+Feature Based Unsupervised Change Detection of Multitemporal SAR Images
+Based on Two-Level Clustering</a></li>
 </ul>
 <p><br><br></p>
 </div>
@@ -449,7 +521,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

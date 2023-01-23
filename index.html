@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -98,8 +98,10 @@
 <p><br></p>
 <p>Assumming that an R package (‘PackageA’) calls one of the <em>OpenImageR</em> Rcpp functions. Then the maintainer of ‘PackageA’ has to :</p>
 <p><br></p>
-<ul><li>
-<strong>1st.</strong> install the <em>OpenImageR</em> package to take advantage of the new functionality either from CRAN using,</li></ul>
+<ul>
+<li>
+<strong>1st.</strong> install the <em>OpenImageR</em> package to take advantage of the new functionality either from CRAN using,</li>
+</ul>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -113,43 +115,47 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'mlampros/OpenImageR'</span><span class="op">)</span></span>
 <span> </span></code></pre></div>
 <p><br></p>
-<ul><li>
-<strong>2nd.</strong> update the <strong>DESCRIPTION</strong> file of ‘PackageA’ and especially the <em>LinkingTo</em> field by adding the <em>OpenImageR</em> package (besides any other packages),</li></ul>
+<ul>
+<li>
+<strong>2nd.</strong> update the <strong>DESCRIPTION</strong> file of ‘PackageA’ and especially the <em>LinkingTo</em> field by adding the <em>OpenImageR</em> package (besides any other packages),</li>
+</ul>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">LinkingTo</span><span class="op">:</span> <span class="va">OpenImageR</span></span></code></pre></div>
 <p><br></p>
-<ul><li>
-<strong>3rd.</strong> open a <strong>new C++ file</strong> (for instance in Rstudio) and at the top of the file add the following ‘headers’, ‘depends’ and ‘plugins’,</li></ul>
+<ul>
+<li>
+<strong>3rd.</strong> open a <strong>new C++ file</strong> (for instance in Rstudio) and at the top of the file add the following ‘headers’, ‘depends’ and ‘plugins’,</li>
+</ul>
 <p><br></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># include &lt;RcppArmadillo.h&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># include &lt;OpenImageRheader.h&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="op">/</span><span class="er">/</span><span class="st"> </span>[[Rcpp<span class="op">::</span><span class="kw">depends</span>(<span class="st">"RcppArmadillo"</span>)]]</span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="op">/</span><span class="er">/</span><span class="st"> </span>[[Rcpp<span class="op">::</span><span class="kw">depends</span>(OpenImageR)]]</span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="op">/</span><span class="er">/</span><span class="st"> </span>[[Rcpp<span class="op">::</span><span class="kw">plugins</span>(cpp11)]]</span>
-<span id="cb4-7"><a href="#cb4-7"></a></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># include &lt;RcppArmadillo.h&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># include &lt;OpenImageRheader.h&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span><span class="fu">depends</span>(<span class="st">"RcppArmadillo"</span>)]]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span><span class="fu">depends</span>(OpenImageR)]]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span><span class="fu">plugins</span>(cpp11)]]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 <p><br></p>
 <p>The available C++ classes (<em>Utility_functions</em>, <em>Gabor_Features</em>, <em>Gabor_Features_Rcpp</em>, <em>HoG_features</em>, <em>Image_Hashing</em>) can be found in the <strong>inst/include/OpenImageRheader.h</strong> file.</p>
 <p><br></p>
 <p>A <em>complete minimal example</em> would be :</p>
 <p><br></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># include &lt;RcppArmadillo.h&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># include &lt;OpenImageRheader.h&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="op">/</span><span class="er">/</span><span class="st"> </span>[[Rcpp<span class="op">::</span><span class="kw">depends</span>(<span class="st">"RcppArmadillo"</span>)]]</span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="op">/</span><span class="er">/</span><span class="st"> </span>[[Rcpp<span class="op">::</span><span class="kw">depends</span>(OpenImageR)]]</span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="op">/</span><span class="er">/</span><span class="st"> </span>[[Rcpp<span class="op">::</span><span class="kw">plugins</span>(cpp11)]]</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="op">/</span><span class="er">/</span><span class="st"> </span>[[Rcpp<span class="op">::</span>export]]</span>
-<span id="cb5-10"><a href="#cb5-10"></a>arma<span class="op">::</span>mat <span class="kw">rgb_2gray_exp</span>(arma<span class="op">::</span>cube RGB_image) {</span>
-<span id="cb5-11"><a href="#cb5-11"></a></span>
-<span id="cb5-12"><a href="#cb5-12"></a>  oimageR<span class="op">::</span>Utility_functions UTLF;</span>
-<span id="cb5-13"><a href="#cb5-13"></a>  return <span class="kw">UTLF.rgb_2gray_rcpp</span>(RGB_image);</span>
-<span id="cb5-14"><a href="#cb5-14"></a>}</span>
-<span id="cb5-15"><a href="#cb5-15"></a></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># include &lt;RcppArmadillo.h&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># include &lt;OpenImageRheader.h&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span><span class="fu">depends</span>(<span class="st">"RcppArmadillo"</span>)]]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span><span class="fu">depends</span>(OpenImageR)]]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span><span class="fu">plugins</span>(cpp11)]]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span>export]]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>arma<span class="sc">::</span>mat <span class="fu">rgb_2gray_exp</span>(arma<span class="sc">::</span>cube RGB_image) {</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  oimageR<span class="sc">::</span>Utility_functions UTLF;</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  return <span class="fu">UTLF.rgb_2gray_rcpp</span>(RGB_image);</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 <p><br></p>
 <p>Then, by opening an R file a user can call the <em>rgb_2gray_exp</em> function using,</p>
 <p><br></p>
@@ -171,22 +177,22 @@
 <p><br></p>
 <p><strong>Docker images</strong> of the <em>OpenImageR</em> package are available to download from my <a href="https://hub.docker.com/r/mlampros/openimager" class="external-link">dockerhub</a> account. The images come with <em>Rstudio</em> and the <em>R-development</em> version (latest) installed. The whole process was tested on Ubuntu 18.04. To <strong>pull</strong> &amp; <strong>run</strong> the image do the following,</p>
 <p><br></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2"></a>docker pull mlampros<span class="op">/</span>openimager<span class="op">:</span>rstudiodev</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a>docker run <span class="op">-</span>d <span class="op">--</span>name rstudio_dev <span class="op">-</span>e USER=rstudio <span class="op">-</span>e PASSWORD=give_here_your_password <span class="op">--</span>rm <span class="op">-</span>p <span class="dv">8787</span><span class="op">:</span><span class="dv">8787</span> mlampros<span class="op">/</span>openimager<span class="op">:</span>rstudiodev</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>docker pull mlampros<span class="sc">/</span>openimager<span class="sc">:</span>rstudiodev</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>docker run <span class="sc">-</span>d <span class="sc">--</span>name rstudio_dev <span class="sc">-</span>e USER<span class="ot">=</span>rstudio <span class="sc">-</span>e PASSWORD<span class="ot">=</span>give_here_your_password <span class="sc">--</span>rm <span class="sc">-</span>p <span class="dv">8787</span><span class="sc">:</span><span class="dv">8787</span> mlampros<span class="sc">/</span>openimager<span class="sc">:</span>rstudiodev</span></code></pre></div>
 <p><br></p>
 <p>The user can also <strong>bind</strong> a home directory / folder to the image to use its files by specifying the <strong>-v</strong> command,</p>
 <p><br></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a></span>
-<span id="cb8-2"><a href="#cb8-2"></a>docker run <span class="op">-</span>d <span class="op">--</span>name rstudio_dev <span class="op">-</span>e USER=rstudio <span class="op">-</span>e PASSWORD=give_here_your_password <span class="op">--</span>rm <span class="op">-</span>p <span class="dv">8787</span><span class="op">:</span><span class="dv">8787</span> <span class="op">-</span>v <span class="op">/</span>home<span class="op">/</span>YOUR_DIR<span class="op">:</span><span class="er">/</span>home<span class="op">/</span>rstudio<span class="op">/</span>YOUR_DIR mlampros<span class="op">/</span>openimager<span class="op">:</span>rstudiodev</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="sc">-</span>d <span class="sc">--</span>name rstudio_dev <span class="sc">-</span>e USER<span class="ot">=</span>rstudio <span class="sc">-</span>e PASSWORD<span class="ot">=</span>give_here_your_password <span class="sc">--</span>rm <span class="sc">-</span>p <span class="dv">8787</span><span class="sc">:</span><span class="dv">8787</span> <span class="sc">-</span>v <span class="sc">/</span>home<span class="sc">/</span>YOUR_DIR<span class="sc">:</span><span class="er">/</span>home<span class="sc">/</span>rstudio<span class="sc">/</span>YOUR_DIR mlampros<span class="sc">/</span>openimager<span class="sc">:</span>rstudiodev</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 <p><br></p>
 <p>In the latter case you might have first give permission privileges for write access to <strong>YOUR_DIR</strong> directory (not necessarily) using,</p>
 <p><br></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a></span>
-<span id="cb9-2"><a href="#cb9-2"></a>chmod <span class="op">-</span>R <span class="dv">777</span> <span class="op">/</span>home<span class="op">/</span>YOUR_DIR</span>
-<span id="cb9-3"><a href="#cb9-3"></a></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>chmod <span class="sc">-</span>R <span class="dv">777</span> <span class="sc">/</span>home<span class="sc">/</span>YOUR_DIR</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 <p><br></p>
 <p>The <strong>USER</strong> defaults to <em>rstudio</em> but you have to give your <strong>PASSWORD</strong> of preference (see <a href="https://rocker-project.org/" class="external-link">https://rocker-project.org/</a> for more information).</p>
 <p><br></p>
@@ -194,11 +200,11 @@
 <p><br></p>
 <p><strong>1st. Option</strong> on your personal computer,</p>
 <p><br></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>http<span class="op">:</span><span class="er">//</span><span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.0</span><span class="op">:</span><span class="dv">8787</span> </span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span><span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.0</span><span class="sc">:</span><span class="dv">8787</span> </span></code></pre></div>
 <p><br></p>
 <p><strong>2nd. Option</strong> on a cloud instance,</p>
 <p><br></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>http<span class="op">:</span><span class="er">//</span>Public DNS<span class="op">:</span><span class="dv">8787</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>Public DNS<span class="sc">:</span><span class="dv">8787</span></span></code></pre></div>
 <p><br></p>
 <p>to access the Rstudio console in order to give your username and password.</p>
 <p><br></p>
@@ -208,13 +214,13 @@
 </h3>
 <p>If you use the code of this repository in your paper or research please cite both <strong>OpenImageR</strong> and the <strong>original articles / software</strong> <code>https://CRAN.R-project.org/package=OpenImageR</code>:</p>
 <p><br></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="op">@</span>Manual{,</span>
-<span id="cb12-2"><a href="#cb12-2"></a>  title =<span class="st"> </span>{{OpenImageR}<span class="op">:</span><span class="st"> </span>An Image Processing Toolkit},</span>
-<span id="cb12-3"><a href="#cb12-3"></a>  author =<span class="st"> </span>{Lampros Mouselimis},</span>
-<span id="cb12-4"><a href="#cb12-4"></a>  year =<span class="st"> </span>{<span class="dv">2022</span>},</span>
-<span id="cb12-5"><a href="#cb12-5"></a>  note =<span class="st"> </span>{R package version <span class="dv">1</span>.<span class="fl">2.6</span>},</span>
-<span id="cb12-6"><a href="#cb12-6"></a>  url =<span class="st"> </span>{https<span class="op">:</span><span class="er">//</span>CRAN.R<span class="op">-</span>project.org<span class="op">/</span>package=OpenImageR},</span>
-<span id="cb12-7"><a href="#cb12-7"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span>Manual{,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  title <span class="ot">=</span> {{OpenImageR}<span class="sc">:</span> An Image Processing Toolkit},</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  author <span class="ot">=</span> {Lampros Mouselimis},</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2022</span>},</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">1</span>.<span class="fl">2.8</span>},</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>CRAN.R<span class="sc">-</span>project.org<span class="sc">/</span>package<span class="ot">=</span>OpenImageR},</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><br></p>
 </div>
 </div>
@@ -278,7 +284,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
