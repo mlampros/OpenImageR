@@ -1,4 +1,10 @@
 
+## OpenImageR 1.2.9
+
+* I added an exception in the test-file *"test-norm_matrix_range.R"* related to Mac OSx and Power-PC (see issue: https://github.com/mlampros/OpenImageR/issues/27)
+* I removed the "CXX_STD = CXX11" from the "Makevars" files, and the "[[Rcpp::plugins(cpp11)]]" from the "extract_inst_folder_headers.cpp" file due to the following NOTE from CRAN, "NOTE Specified C++11: please drop specification unless essential" (see also: https://www.tidyverse.org/blog/2023/03/cran-checks-compiled-code/#note-regarding-systemrequirements-c11)
+
+
 ## OpenImageR 1.2.8
 
 * I added the *'verify_image_extension()'* function to verify that the image path file extensions are supported from the OpenImageR package (see issue: https://github.com/mlampros/OpenImageR/issues/25) 
