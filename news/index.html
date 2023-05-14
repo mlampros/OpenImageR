@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">OpenImageR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.9</span>
       </span>
     </div>
 
@@ -66,6 +66,11 @@
       <small>Source: <a href="https://github.com/mlampros/OpenImageR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.2.9" id="openimager-129">OpenImageR 1.2.9<a class="anchor" aria-label="anchor" href="#openimager-129"></a></h2>
+<ul><li>I added an exception in the test-file <em>“test-norm_matrix_range.R”</em> related to Mac OSx and Power-PC (see issue: <a href="https://github.com/mlampros/OpenImageR/issues/27" class="external-link uri">https://github.com/mlampros/OpenImageR/issues/27</a>)</li>
+<li>I removed the “CXX_STD = CXX11” from the “Makevars” files, and the “[[Rcpp::plugins(cpp11)]]” from the “extract_inst_folder_headers.cpp” file due to the following NOTE from CRAN, “NOTE Specified C++11: please drop specification unless essential” (see also: <a href="https://www.tidyverse.org/blog/2023/03/cran-checks-compiled-code/#note-regarding-systemrequirements-c11" class="external-link uri">https://www.tidyverse.org/blog/2023/03/cran-checks-compiled-code/#note-regarding-systemrequirements-c11</a>)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.2.8" id="openimager-128">OpenImageR 1.2.8<small>2022-12-18</small><a class="anchor" aria-label="anchor" href="#openimager-128"></a></h2>
 <ul><li>I added the <em>‘verify_image_extension()’</em> function to verify that the image path file extensions are supported from the OpenImageR package (see issue: <a href="https://github.com/mlampros/OpenImageR/issues/25" class="external-link uri">https://github.com/mlampros/OpenImageR/issues/25</a>)</li>
