@@ -39,13 +39,13 @@ install.packages("OpenImageR")
 
 <br>
 
-or download the latest version from Github using the *devtools* package,
+or download the latest version from Github using the *remotes* package,
 
 <br>
 
 ```R
 
-devtools::install_github('mlampros/OpenImageR')
+remotes::install_github('mlampros/OpenImageR')
  
 
 ```
