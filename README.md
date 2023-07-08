@@ -74,7 +74,6 @@ LinkingTo: OpenImageR
 # include <OpenImageRheader.h>
 // [[Rcpp::depends("RcppArmadillo")]]
 // [[Rcpp::depends(OpenImageR)]]
-// [[Rcpp::plugins(cpp11)]]
 
 
 ```
@@ -94,7 +93,6 @@ A *complete minimal example* would be :
 # include <OpenImageRheader.h>
 // [[Rcpp::depends("RcppArmadillo")]]
 // [[Rcpp::depends(OpenImageR)]]
-// [[Rcpp::plugins(cpp11)]]
 
 
 // [[Rcpp::export]]
@@ -226,7 +224,7 @@ If you use the code of this repository in your paper or research please cite bot
   title = {{OpenImageR}: An Image Processing Toolkit},
   author = {Lampros Mouselimis},
   year = {2023},
-  note = {R package version 1.2.9},
+  note = {R package version 1.3.0},
   url = {https://CRAN.R-project.org/package=OpenImageR},
 }
 ```

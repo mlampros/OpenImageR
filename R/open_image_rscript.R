@@ -151,20 +151,18 @@ switch_filter = function(kernel, conv_mod, gaussian_dims = 5, sigma = 1.0, lapla
 #' @keywords internal
 
 func_chech_range = function(image) {
-
-  if (inherits(image, 'matrix') && (max(image) != 1.0 || min(image) != 0.0)) {
-
-    image = Normalize_matrix(image)
-  }
-  else if (inherits(image, 'array') && (max(Array_range(image, 1)) != 1.0 || min(Array_range(image, 2)) != 0.0)) {
-
-    image = Normalize_array(image)
-  }
-  else {
-
+  
+  if (inherits(image, 'matrix')) {
+    if ((max(image) != 1.0 || min(image) != 0.0)) {
+      image = Normalize_matrix(image)
+    }
+  } else if (inherits(image, 'array') && dim(image)[3] == 3) {
+    if (max(Array_range(image, 1)) != 1.0 || min(Array_range(image, 2)) != 0.0) {
+      image = Normalize_array(image)
+    }
+  } else {
     return(image)
   }
-
   return(image)
 }
 

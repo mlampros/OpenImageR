@@ -1,4 +1,10 @@
 
+## OpenImageR 1.3.0
+
+* I updated the README.md file related to "[[Rcpp::plugins(cpp11)]]", which was removed in the previous version
+* I fixed a bug in the internal *'func_chech_range()'* function (see issue: https://github.com/mlampros/OpenImageR/issues/28)
+
+
 ## OpenImageR 1.2.9
 
 * I added an exception in the test-file *"test-norm_matrix_range.R"* related to Mac OSx and Power-PC (see issue: https://github.com/mlampros/OpenImageR/issues/27)
