@@ -2,7 +2,7 @@ testthat::test_that("'bilinear' covers the same cells as 'nearest' at any angle"
 
   flat = matrix(1, 100, 100)
 
-  for (a in c(10, 30, 45, 200)) {
+  for (a in c(10, 30, 45, 90, 180, 200, 270, 360)) {
 
     testthat::expect_equal(rotateImage(flat, a, 'bilinear', 'full') != 0, rotateImage(flat, a, 'nearest', 'full') != 0)
   }
