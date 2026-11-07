@@ -587,52 +587,22 @@ namespace oimageR {
         }
 
         unsigned int dif_rows = new_rows - x.n_rows;
-        arma::mat concat_row(1, x.n_cols);
-
-        int rows_start = 0;
-        int rows_end = 0;
-
-        if (dif_rows > 0) {
-
-          concat_row.fill(fill_value);
-
-          for (unsigned int i = 0; i < dif_rows; i++) {
-
-            if (EVEN(i)) {
-              x = arma::join_cols(x, concat_row);
-              rows_end++;
-            }
-            else {
-              x = arma::join_cols(concat_row, x);
-              rows_start++;
-            }
-          }
-        }
-
-        arma::mat concat_col(x.n_rows, 1);
         unsigned int dif_cols = new_cols - x.n_cols;
 
-        int cols_start = 0;
-        int cols_end = 0;
+        int rows_start = dif_rows / 2;                      // an odd difference puts the extra row at the end and the extra column at the right
+        int rows_end = dif_rows - rows_start;
+        int cols_start = dif_cols / 2;
+        int cols_end = dif_cols - cols_start;
 
-        if (dif_cols > 0) {
+        arma::mat out(new_rows, new_cols);
+        out.fill(fill_value);
 
-          concat_col.fill(fill_value);
+        if (!x.is_empty()) {
 
-          for (unsigned int i = 0; i < dif_cols; i++) {
-
-            if (EVEN(i)) {
-              x = arma::join_rows(x, concat_col);
-              cols_end++;
-            }
-            else {
-              x = arma::join_rows(concat_col, x);
-              cols_start++;
-            }
-          }
+          out.submat(rows_start, cols_start, rows_start + x.n_rows - 1, cols_start + x.n_cols - 1) = x;
         }
 
-        return Rcpp::List::create( Rcpp::Named("data") = x,
+        return Rcpp::List::create( Rcpp::Named("data") = out,
                                    Rcpp::Named("padded_start") = rows_start,
                                    Rcpp::Named("padded_end") = rows_end,
                                    Rcpp::Named("padded_left") = cols_start,
