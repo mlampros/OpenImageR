@@ -898,10 +898,10 @@ namespace oimageR {
 
         if (method == "nearest") {                          // http://stackoverflow.com/questions/1811372/how-to-rotate-image-by-nearest-neighbor-interpolation-using-matlab
 
-          int i = ((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
-          int j = (-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
+          int i = floor((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
+          int j = floor(-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
 
-          if ( i > 0.0 && j > 0.0 && i < n && j < m) {
+          if ( i >= 0 && j >= 0 && i < n && j < m) {
 
             im_value = image(i,j);
           }
@@ -928,9 +928,12 @@ namespace oimageR {
             m2 = m2 + 1;
           }
 
-          if (n1 >= 0.0 && n2 < n && m1 >= 0.0 && m2 < m) {
+          if (n1 >= 0.0 && n1 < n && m1 >= 0.0 && m1 < m) {
 
-            im_value = ((n2 - n0 + m2 - m0) * image(n1,m1) + (n2 - n0 + m0 - m1) * image(n1,m2) + (n0 - n1 + m2 - m0) * image(n2,m1) + (n0 - n1 + m0 - m1) * image(n2,m1)) / 4.0;
+            int n2_in = std::min(n2, n - 1);                // the weights keep n2, m2; only the pixels read stay inside the image
+            int m2_in = std::min(m2, m - 1);
+
+            im_value = ((n2 - n0 + m2 - m0) * image(n1,m1) + (n2 - n0 + m0 - m1) * image(n1,m2_in) + (n0 - n1 + m2 - m0) * image(n2_in,m1) + (n0 - n1 + m0 - m1) * image(n2_in,m1)) / 4.0;
           }
         }
 
@@ -953,6 +956,12 @@ namespace oimageR {
 
         int mm = n * sqrt(2.0);
         int nn = m * sqrt(2.0);
+
+        if (mode == "same") {                               // an even difference puts the crop of mode 'same' on whole pixels around the centre
+
+          mm += (mm - n) % 2;
+          nn += (nn - m) % 2;
+        }
 
         arma::mat im2(mm, nn, arma::fill::zeros);
 
@@ -982,35 +991,13 @@ namespace oimageR {
 
           int dif_rows = im2.n_rows - image.n_rows;
 
-          int rem_rows;
-          arma::uvec remov_rows;
-
-          if (dif_rows == 0) {
-
-            remov_rows = seq_rcpp_range(0, im2.n_rows - 1);}
-
-          else {
-
-            rem_rows = mod(dif_rows, 2);
-            remov_rows = seq_rcpp_range((floor(dif_rows/2.0) + 1), (im2.n_rows - floor(dif_rows/2.0) - rem_rows));
-          }
+          arma::uvec remov_rows = seq_rcpp_range(dif_rows / 2, dif_rows / 2 + image.n_rows - 1);
 
           // get index -- columns
 
           int dif_cols = im2.n_cols - image.n_cols;
 
-          int rem_cols;
-          arma::uvec remov_cols;
-
-          if (dif_cols == 0) {
-
-            remov_cols = seq_rcpp_range(0, im2.n_cols - 1);}
-
-          else {
-
-            rem_cols = mod(dif_cols, 2);
-            remov_cols = seq_rcpp_range((floor(dif_cols/2.0) + 1), (im2.n_cols - floor(dif_cols/2.0) - rem_cols));
-          }
+          arma::uvec remov_cols = seq_rcpp_range(dif_cols / 2, dif_cols / 2 + image.n_cols - 1);
 
           im2 = im2(remov_rows, remov_cols);
         }
