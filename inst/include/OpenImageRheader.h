@@ -686,47 +686,47 @@ namespace oimageR {
         double S_R = in_rows / width;
         double S_C = in_cols / height;
 
-        arma::mat cf = meshgrid_x(width, height) + 1;
-        arma::mat rf = meshgrid_y(width, height) + 1;
-
-        rf = rf * S_R;
-        cf = cf * S_C;
-
-        arma::mat r = floor(rf);
-        arma::mat c = floor(cf);
-
-        r = replaceVal(r, 1, 1, 2);
-        c = replaceVal(c, 1, 1, 2);
-
-        r = replaceVal(r, in_rows - 1, in_rows - 1, 1);
-        c = replaceVal(c, in_cols - 1, in_cols - 1, 1);
-
-        arma::Mat<double> delta_R = rf - r;
-        arma::Mat<double> delta_C = cf - c;
-
-        arma::rowvec in1_ind = Vectz( (c - 1) * in_rows + r );
-        arma::rowvec in2_ind = Vectz( (c - 1) * in_rows + (r + 1) );
-        arma::rowvec in3_ind = Vectz( c * in_rows + r );
-        arma::rowvec in4_ind = Vectz( c * in_rows + (r + 1) );
-
-        arma::rowvec vect_image = Vectz(image);
-
-        arma::rowvec in1_IND(in1_ind.n_elem, arma::fill::zeros);
-        arma::rowvec in2_IND(in2_ind.n_elem, arma::fill::zeros);
-        arma::rowvec in3_IND(in3_ind.n_elem, arma::fill::zeros);
-        arma::rowvec in4_IND(in4_ind.n_elem, arma::fill::zeros);
-
-        for (unsigned int i = 0; i < in1_ind.n_elem; i++) {
-
-          in1_IND(i) = vect_image(in1_ind(i) - 1);
-          in2_IND(i) = vect_image(in2_ind(i) - 1);
-          in3_IND(i) = vect_image(in3_ind(i) - 1);
-          in4_IND(i) = vect_image(in4_ind(i) - 1);
+        if (image.n_rows < 2 || image.n_cols < 2) {
+          Rcpp::stop("The 'bilinear' method needs an image of at least 2 rows and 2 columns!");
         }
 
-        arma::mat tmp_out = ( vec2mat_colwise(in1_IND, width, height) % (1.0 - delta_R) % (1.0 - delta_C) ) + ( vec2mat_colwise(in2_IND, width, height) % (delta_R) % (1.0 - delta_C) ) +
+        int out_rows = width;
+        int out_cols = height;
 
-          ( vec2mat_colwise(in3_IND, width, height) % (1.0 - delta_R) % (delta_C) ) + ( vec2mat_colwise(in4_IND, width, height) % (delta_R) % (delta_C) );
+        arma::uvec row_first(out_rows);                     // 0-based index of the upper of the 2 rows, and its distance to the sampled position
+        arma::vec delta_R(out_rows);
+
+        for (int i = 0; i < out_rows; i++) {
+
+          double rf = (i + 1.0) * S_R;
+          double r = std::min(std::max(std::floor(rf), 1.0), in_rows - 1.0);
+
+          row_first(i) = r - 1.0;
+          delta_R(i) = rf - r;
+        }
+
+        arma::mat tmp_out(out_rows, out_cols);
+
+        for (int j = 0; j < out_cols; j++) {
+
+          double cf = (j + 1.0) * S_C;
+          double c = std::min(std::max(std::floor(cf), 1.0), in_cols - 1.0);
+          double delta_C = cf - c;
+
+          const double* col_left = image.colptr(c - 1.0);
+          const double* col_right = image.colptr(c);
+          double* col_out = tmp_out.colptr(j);
+
+          for (int i = 0; i < out_rows; i++) {
+
+            arma::uword r0 = row_first(i);
+            double d_r = delta_R(i);
+
+            col_out[i] = ( col_left[r0] * (1.0 - d_r) * (1.0 - delta_C) ) + ( col_left[r0 + 1] * d_r * (1.0 - delta_C) ) +
+
+              ( col_right[r0] * (1.0 - d_r) * delta_C ) + ( col_right[r0 + 1] * d_r * delta_C );
+          }
+        }
 
         return(tmp_out);
       }
