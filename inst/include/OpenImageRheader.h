@@ -311,14 +311,12 @@ namespace oimageR {
           Rcpp::warning(warn_message);
         }
 
-        arma::uvec row_index = arma::conv_to< arma::uvec >::from(floor(((seq_rcpp(new_row_size) - 0.5) / scale_rows ) + 0.5));
-        arma::uvec col_index = arma::conv_to< arma::uvec >::from(floor(((seq_rcpp(new_col_size) - 0.5) / scale_cols ) + 0.5));
+        // floor(i / scale), written as floor(i * n / width) so that exact multiples do not round down
+        arma::vec row_pos = arma::clamp(arma::floor(seq_rcpp(new_row_size) * image.n_rows / width), 0.0, image.n_rows - 1.0);
+        arma::vec col_pos = arma::clamp(arma::floor(seq_rcpp(new_col_size) * image.n_cols / height), 0.0, image.n_cols - 1.0);
 
-        double row_index_max = row_index.max();
-        double col_index_max = col_index.max();
-
-        row_index.transform( [row_index_max](double val) { return (val == row_index_max) ? (row_index_max - 1) : val;} );     // if row_index greater than the maximum row-index subtract 1 from row-index
-        col_index.transform( [col_index_max](double val) { return (val == col_index_max) ? (col_index_max - 1) : val;} );      // if col_index greater than the maximum col-index subtract 1 from col-index
+        arma::uvec row_index = arma::conv_to< arma::uvec >::from(row_pos);
+        arma::uvec col_index = arma::conv_to< arma::uvec >::from(col_pos);
 
         arma::mat tmp_im = image(row_index, col_index);
 
@@ -1308,14 +1306,17 @@ namespace oimageR {
         if (resiz_height > 0.0) { set_cols = resiz_height; }
         if (resiz_width > 0.0) { set_rows = resiz_width; }
 
-        if (resiz_method == "nearest") {
+        if (resiz_width > 0.0 || resiz_height > 0.0) {
 
-          image = resize_nearest_rcpp(image, set_rows, set_cols);
-        }
+          if (resiz_method == "nearest") {
 
-        if (resiz_method == "bilinear") {
+            image = resize_nearest_rcpp(image, set_rows, set_cols);
+          }
 
-          image = resize_bilinear_rcpp(image, set_rows, set_cols);
+          if (resiz_method == "bilinear") {
+
+            image = resize_bilinear_rcpp(image, set_rows, set_cols);
+          }
         }
 
         if (shift_rows != 0.0 || shift_cols != 0.0) {
