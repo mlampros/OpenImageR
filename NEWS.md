@@ -1,4 +1,27 @@
 
+## OpenImageR 1.3.1
+
+### Breaking changes
+
+These functions now return different values for inputs that worked before, because the old values were wrong:
+
+* *gabor_feature_engine()* of *GaborFeatureExtract*: the first half of the columns of *energy_aptitude* now holds the local energy and the second half the mean amplitude, as in *gabor_feature_extraction()*. Before, the first half held the mean amplitude and the second half was all zeros. Recompute saved gabor feature matrices. (F1)
+* *resizeImage(method = 'nearest')*: rows and columns are now sampled evenly, floor(i / scale), and the last row and column are kept (10 -> 5 picks rows 1 3 5 7 9, before 1 2 4 6 7), and a resize to the same size returns the input unchanged. *Augmentation()* resizes only when asked to, so without arguments it returns the input. *average_hash()*, *phash()*, *dhash()*, *invariant_hash()* and *hash_apply()* with *resize = 'nearest'* change as well. Redo resized outputs and recompute stored hash values. (F2)
+* *rotateImage()*: mode 'same' is no longer shifted by one pixel, 'nearest' reads the first row and column, and 'bilinear' reads the last row and column. Rotations in *Augmentation()* and *invariant_hash()* change as well. Redo rotated outputs and recompute stored *invariant_hash()* values. (F3)
+* *RGB_to_HSV()*: black pixels now have hue 0 and saturation 0 (before, hue 1.570796 and saturation NaN). Redo saved HSV data of images with black pixels. (F24)
+
+### Bug fixes
+
+* *superpixels()*: a side of the image shorter than, or between 1.5 and 2 times, the step size left pixels outside every seed window, which crashed the R session with 'slic' and 'slico'. These inputs now return labels. Results of inputs that worked do not change: in 2304 random and fixed cases, the 888 that gave a result at version 1.3.0 have the same labels and slic data, and the 1015 that crashed do not crash now. (F41, F42)
+* *superpixels()*: a 'superpixel' value that is not a single number between 1 and the integer maximum now gives a clear R error. (F41)
+* *superpixels(method = "slico")*: the errors about the 'K' parameter and 'clustersize[k]' are gone and these inputs now return labels; the result can hold a few more superpixels than asked (523 x 645 image: 11 labels for 10, 202 labels for 200). Results of inputs that worked do not change (same 2304 cases). (F43)
+
+### Performance
+
+* *padding()*: 1024 x 1024 to 2048 x 2048 went from 11.6 - 24.1 s to 0.07 - 0.09 s (3 runs on one machine). Results do not change. (F4)
+* *resizeImage(method = 'bilinear')*: gray 1024 to 2048 went from 6.0 s to 0.2 s, RGB from 16.4 s to 0.87 s, and the peak memory of the measuring script from 1087 MB to 416 MB. Results do not change; a single-row or single-column input stays an error, with a clearer message. (F5)
+
+
 ## OpenImageR 1.3.0
 
 * I updated the README.md file related to "[[Rcpp::plugins(cpp11)]]", which was removed in the previous version
