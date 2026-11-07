@@ -686,14 +686,15 @@ namespace oimageR {
         double S_R = in_rows / width;
         double S_C = in_cols / height;
 
-        if (image.n_rows < 2 || image.n_cols < 2) {
-          Rcpp::stop("The 'bilinear' method needs an image of at least 2 rows and 2 columns!");
+        // a single row works when the first sampled column is at least 2 (1 x 6 -> 1 x 3): it reads the element before each column, as the index version of 1.3.0 did
+        if (image.n_rows < 1 || image.n_cols < 2 || (image.n_rows < 2 && std::min(std::max(std::floor(S_C), 1.0), in_cols - 1.0) < 2.0)) {
+          Rcpp::stop("The 'bilinear' method needs at least 2 rows and 2 columns, or a single row that is reduced to half its columns or less!");
         }
 
         int out_rows = width;
         int out_cols = height;
 
-        arma::uvec row_first(out_rows);                     // 0-based index of the upper of the 2 rows, and its distance to the sampled position
+        arma::Col<arma::sword> row_first(out_rows);         // 0-based index of the upper of the 2 rows, and its distance to the sampled position
         arma::vec delta_R(out_rows);
 
         for (int i = 0; i < out_rows; i++) {
@@ -719,7 +720,7 @@ namespace oimageR {
 
           for (int i = 0; i < out_rows; i++) {
 
-            arma::uword r0 = row_first(i);
+            arma::sword r0 = row_first(i);                  // -1 for a single row
             double d_r = delta_R(i);
 
             col_out[i] = ( col_left[r0] * (1.0 - d_r) * (1.0 - delta_C) ) + ( col_left[r0 + 1] * d_r * (1.0 - delta_C) ) +
