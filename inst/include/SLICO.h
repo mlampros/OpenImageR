@@ -762,10 +762,7 @@ void SLICO::GetLABXYSeeds_ForGivenK(
 
       int i = Y*m_width + X;
 
-      //_ASSERT(n < K);                   // assert is not allowed on CRAN
-      if (n >= K) {
-        Rcpp::stop("The 'K' parameter (number-of-superpixels) should be bigger than 'n' in the 'SLICO::GetLABXYSeeds_ForGivenK()' function!");
-      }
+      // the hex grid can hold a few more seeds than K; the seed vectors grow with push_back, so these seeds are kept
 
       //kseedsl[n] = m_lvec[i];
       //kseedsa[n] = m_avec[i];
@@ -961,12 +958,7 @@ void SLICO::PerformSuperpixelSegmentation_VariableSandM (
 
     {for( int k = 0; k < numk; k++ )
     {
-      //_ASSERT(clustersize[k] > 0);                   // assert is not allowed on CRAN
-      if (clustersize[k] <= 0) {
-        Rcpp::stop("The 'clustersize[k]' variable should be greater than '0' in the 'SLICO::PerformSuperpixelSegmentation_VariableSandM()' function!");
-      }
-
-      if( clustersize[k] <= 0 ) clustersize[k] = 1;
+      if( clustersize[k] <= 0 ) clustersize[k] = 1;      // a seed can end up without pixels when K is close to the number of pixels
       inv[k] = 1.0/double(clustersize[k]);//computing inverse now to multiply, than divide later
     }}
 
