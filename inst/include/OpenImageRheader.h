@@ -1454,6 +1454,11 @@ namespace oimageR {
 
           S(i) = 1.0 - (3.0 * s_val) / (R(i) + G(i) + B(i));
           V(i) = (1.0 / 3.0) * (R(i) + G(i) + B(i));
+
+          if (R(i) == 0.0 && G(i) == 0.0 && B(i) == 0.0) {                    // black has no hue or saturation (the division above is 0 / 0)
+            H(i) = 0.0;
+            S(i) = 0.0;
+          }
         }
 
         arma::cube res(x.n_rows, x.n_cols, x.n_slices);
