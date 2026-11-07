@@ -886,6 +886,10 @@ namespace oimageR {
           double n0 = ((t + 0.5 - mm / 2.0) * cos(thet) + (s + 0.5 - nn / 2.0) * sin(thet) + n / 2.0 - 0.5);
           double m0 = (-(t + 0.5 - mm / 2.0) * sin(thet) + (s + 0.5 - nn / 2.0) * cos(thet) + m / 2.0 - 0.5);
 
+          // sin(pi) and cos(pi / 2) are about 1e-16 and not 0: a whole position must not fall just below 0 (n1 = -1 gives a black pixel) or to the pixel below
+          if (std::abs(n0 - std::round(n0)) < 1e-9) n0 = std::round(n0);
+          if (std::abs(m0 - std::round(m0)) < 1e-9) m0 = std::round(m0);
+
           int n1 = floor(n0);
           int n2 = ceil(n0);
 
