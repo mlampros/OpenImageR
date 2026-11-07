@@ -1486,6 +1486,9 @@ namespace oimageR {
         if (image.empty()) {
           Rcpp::stop("The input image is empty!");
         }
+        if (num_superpixel < 1) {
+          Rcpp::stop("The 'superpixel' parameter should be at least 1!");
+        }
         int CHANNELS = image.n_slices;
         if (CHANNELS > 3) {                                                                 // in case of more than 3 slices keep the first 3 and print a warning
           image = image.slices(0,2);
