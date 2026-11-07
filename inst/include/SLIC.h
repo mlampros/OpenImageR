@@ -853,6 +853,25 @@ void SLIC::PerformSuperpixelSLIC(
       }
     }
     //-----------------------------------------------------------------
+    // A pixel can keep the label -1 when 'dist' is not finite (a compactness
+    // of NA, NaN, Inf or 1e308 gives a non-finite 'invwt'), and the label is
+    // used as an index below: give such a pixel the nearest seed.
+    //-----------------------------------------------------------------
+    for( int i = 0; i < sz; i++ )
+    {
+      if( klabels[i] >= 0 ) continue;
+
+      double x = i%m_width;
+      double y = i/m_width;
+      double best = DBL_MAX;
+
+      for( int n = 0; n < numk; n++ )
+      {
+        double d = (x - kseedsx[n])*(x - kseedsx[n]) + (y - kseedsy[n])*(y - kseedsy[n]);
+        if( d < best ) { best = d; klabels[i] = n; }
+      }
+    }
+    //-----------------------------------------------------------------
     // Recalculate the centroid and store in the seed values
     //-----------------------------------------------------------------
     //instead of reassigning memory on each iteration, just reset.
