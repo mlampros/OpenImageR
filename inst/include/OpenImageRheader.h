@@ -1975,7 +1975,7 @@ namespace oimageR {
 
         gabor_features_Magn = arma::vectorise(gabor_features_Magn).t();
 
-        return {mean_aplitude, gabor_features_Magn};
+        return {concat, gabor_features_Magn};
       }
 
 
