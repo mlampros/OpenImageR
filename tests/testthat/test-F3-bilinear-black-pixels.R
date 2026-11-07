@@ -27,5 +27,5 @@ testthat::test_that("Augmentation() with 'bilinear' keeps no black pixel at 180 
 
   flat = matrix(1, 100, 100)
 
-  testthat::expect_equal(sum(Augmentation(flat, rotate_angle = 180, resiz_method = 'bilinear') == 0), 0)
+  testthat::expect_equal(sum(Augmentation(flat, rotate_angle = 180, resiz_method = 'bilinear', rotate_method = 'bilinear') == 0), 0)
 })

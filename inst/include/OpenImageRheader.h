@@ -906,12 +906,18 @@ namespace oimageR {
             m2 = m2 + 1;
           }
 
-          if (n1 >= 0.0 && n1 < n && m1 >= 0.0 && m1 < m) {
+          // a pixel is inside the image on the same test as 'nearest': the image covers [-0.5, n - 0.5) around the pixel centres, on both sides
+          int in_n = floor(n0 + 0.5 + 1e-9);
+          int in_m = floor(m0 + 0.5 + 1e-9);
 
-            int n2_in = std::min(n2, n - 1);                // the weights keep n2, m2; only the pixels read stay inside the image
+          if (in_n >= 0 && in_n < n && in_m >= 0 && in_m < m) {
+
+            int n1_in = std::max(n1, 0);                    // the weights keep n1, n2, m1, m2; only the pixels read stay inside the image
+            int m1_in = std::max(m1, 0);
+            int n2_in = std::min(n2, n - 1);
             int m2_in = std::min(m2, m - 1);
 
-            im_value = ((n2 - n0 + m2 - m0) * image(n1,m1) + (n2 - n0 + m0 - m1) * image(n1,m2_in) + (n0 - n1 + m2 - m0) * image(n2_in,m1) + (n0 - n1 + m0 - m1) * image(n2_in,m1)) / 4.0;
+            im_value = ((n2 - n0 + m2 - m0) * image(n1_in,m1_in) + (n2 - n0 + m0 - m1) * image(n1_in,m2_in) + (n0 - n1 + m2 - m0) * image(n2_in,m1_in) + (n0 - n1 + m0 - m1) * image(n2_in,m1_in)) / 4.0;
           }
         }
 

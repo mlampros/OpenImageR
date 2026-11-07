@@ -28,7 +28,7 @@ testthat::test_that("'bilinear' at 0 degrees is not shifted and reads the last r
 
   testthat::expect_equal(rotateImage(flat, 0, 'bilinear', 'same'), flat)
 
-  # the weights of the interpolation are not exact at whole pixels (see F6), so this
+  # the weights of the interpolation are not exact at whole pixels (see F45), so this
   # bounds the error: a ramp with steps 1 and 20 gives at most (1 + 20) / 4 = 5.25
 
   m = matrix(as.numeric(1:400), 20, 20)
