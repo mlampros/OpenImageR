@@ -868,8 +868,11 @@ namespace oimageR {
 
         if (method == "nearest") {                          // http://stackoverflow.com/questions/1811372/how-to-rotate-image-by-nearest-neighbor-interpolation-using-matlab
 
-          int i = floor((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
-          int j = floor(-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
+          // rotate pixel centres, so that 90, 180 and 270 degrees are exact in mode 'same'; the 1e-9 keeps a whole position of mode 'full' (odd canvas difference) from
+          // falling to the pixel below because sin(pi) and cos(pi / 2) are about 1e-16 and not 0
+
+          int i = floor((t + 0.5 - mm / 2.0) * cos(thet) + (s + 0.5 - nn / 2.0) * sin(thet) + n / 2.0 + 1e-9);
+          int j = floor(-(t + 0.5 - mm / 2.0) * sin(thet) + (s + 0.5 - nn / 2.0) * cos(thet) + m / 2.0 + 1e-9);
 
           if ( i >= 0 && j >= 0 && i < n && j < m) {
 
@@ -879,8 +882,8 @@ namespace oimageR {
 
         if (method == "bilinear") {                        // http://www.itu.dk/people/vedrana/reports/IA_Report.pdf [ page 18, using distances rather than coefficients ]
 
-          double n0 = ((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
-          double m0 = (-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
+          double n0 = ((t + 0.5 - mm / 2.0) * cos(thet) + (s + 0.5 - nn / 2.0) * sin(thet) + n / 2.0 - 0.5);
+          double m0 = (-(t + 0.5 - mm / 2.0) * sin(thet) + (s + 0.5 - nn / 2.0) * cos(thet) + m / 2.0 - 0.5);
 
           int n1 = floor(n0);
           int n2 = ceil(n0);
