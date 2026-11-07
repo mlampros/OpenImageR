@@ -745,6 +745,9 @@ void SLICO::GetLABXYSeeds_ForGivenK(
   int xoff = step/2;
   int yoff = step/2;
 
+  if( xoff > m_width-1 )  xoff = (m_width-1)/2;       // a side shorter than step/2 would leave the grid with no seed at all
+  if( yoff > m_height-1 ) yoff = (m_height-1)/2;
+
   int n(0);int r(0);
   for( int y = 0; y < m_height; y++ )
   {
@@ -886,6 +889,34 @@ void SLICO::PerformSuperpixelSegmentation_VariableSandM (
             klabels[i]  = n;
           }
         }
+      }
+    }
+    //-----------------------------------------------------------------
+    // A pixel outside every seed window keeps the label -1, which is used
+    // as an index below: give it the nearest seed. It only happens in the
+    // first pass, afterwards such a pixel keeps the label it got here.
+    //-----------------------------------------------------------------
+    if(1 == numitr)
+    {
+      for( int i = 0; i < sz; i++ )
+      {
+        if( klabels[i] >= 0 ) continue;
+
+        double x = i%m_width;
+        double y = i/m_width;
+        double best = DBL_MAX;
+
+        for( int n = 0; n < numk; n++ )
+        {
+          double d = (x - kseedsx[n])*(x - kseedsx[n]) + (y - kseedsy[n])*(y - kseedsy[n]);
+          if( d < best ) { best = d; klabels[i] = n; }
+        }
+
+        int n = klabels[i];
+        distxy[i] = best;
+        distlab[i] = (m_lvec[i] - kseedsl[n])*(m_lvec[i] - kseedsl[n]) +
+          (m_avec[i] - kseedsa[n])*(m_avec[i] - kseedsa[n]) +
+          (m_bvec[i] - kseedsb[n])*(m_bvec[i] - kseedsb[n]);
       }
     }
     //-----------------------------------------------------------------
