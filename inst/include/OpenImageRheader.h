@@ -2418,21 +2418,36 @@ namespace oimageR {
 
         unsigned int i,j;
 
+        bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process); Armadillo errors are std::exception (no R API), raised after the loop
+        std::string err_msg;
+
         #ifdef _OPENMP
-        #pragma omp parallel for schedule(static) shared(out, width, height, x, n_bins, n_divs) private(i,j)
+        #pragma omp parallel for schedule(static) shared(out, width, height, x, n_bins, n_divs, has_err, err_msg) private(i,j)
         #endif
         for (i = 0; i < out.n_rows; i++) {
 
-          arma::rowvec tmp_hog = inner_hog_mat(x, i, height, width, n_divs, n_bins);
+          try {
 
-          for (j = 0; j < tmp_hog.n_elem; j++) {
+            arma::rowvec tmp_hog = inner_hog_mat(x, i, height, width, n_divs, n_bins);
+
+            for (j = 0; j < tmp_hog.n_elem; j++) {
+
+              #ifdef _OPENMP
+              #pragma omp atomic write
+              #endif
+              out(i,j) = tmp_hog(j);
+            }
+          }
+          catch (std::exception& e) {
 
             #ifdef _OPENMP
-            #pragma omp atomic write
+            #pragma omp critical
             #endif
-            out(i,j) = tmp_hog(j);
+            { if (!has_err) { has_err = true; err_msg = e.what(); } }
           }
         }
+
+        if (has_err) Rcpp::stop(err_msg);
 
         return(out);
       }
@@ -2463,21 +2478,36 @@ namespace oimageR {
 
         unsigned int i,j;
 
+        bool has_err = false;                     // as in HOG_matrix(): no exception may leave the parallel region
+        std::string err_msg;
+
         #ifdef _OPENMP
-        #pragma omp parallel for schedule(static) shared(out, n_bins, n_divs, x) private(i,j)
+        #pragma omp parallel for schedule(static) shared(out, n_bins, n_divs, x, has_err, err_msg) private(i,j)
         #endif
         for (i = 0; i < out.n_rows; i++) {
 
-          arma::rowvec tmp_hog = inner_hog_array(x, n_divs, n_bins, i);
+          try {
 
-          for (j = 0; j < tmp_hog.n_elem; j++) {
+            arma::rowvec tmp_hog = inner_hog_array(x, n_divs, n_bins, i);
+
+            for (j = 0; j < tmp_hog.n_elem; j++) {
+
+              #ifdef _OPENMP
+              #pragma omp atomic write
+              #endif
+              out(i,j) = tmp_hog(j);
+            }
+          }
+          catch (std::exception& e) {
 
             #ifdef _OPENMP
-            #pragma omp atomic write
+            #pragma omp critical
             #endif
-            out(i,j) = tmp_hog(j);
+            { if (!has_err) { has_err = true; err_msg = e.what(); } }
           }
         }
+
+        if (has_err) Rcpp::stop(err_msg);
 
         return(out);
       }
