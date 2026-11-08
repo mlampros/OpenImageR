@@ -8,7 +8,7 @@ testthat::test_that("HOG_apply() on an array with a NaN pixel gives an R error",
   a[5, 5, 2] = NaN
 
   for (th in c(1, 2)) {
-    testthat::expect_error(HOG_apply(a, threads = th), "out of bounds")
+    testthat::expect_error(HOG_apply(a, threads = th), "NA, NaN or infinite")
   }
 })
 
@@ -19,7 +19,7 @@ testthat::test_that("HOG_apply() on a matrix of images with a NaN pixel gives an
   m[3, 45] = NaN
 
   for (th in c(1, 2)) {
-    testthat::expect_error(HOG_apply(m, rows = 20, columns = 20, threads = th), "out of bounds")
+    testthat::expect_error(HOG_apply(m, rows = 20, columns = 20, threads = th), "NA, NaN or infinite")
   }
 })
 

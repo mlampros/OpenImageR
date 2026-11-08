@@ -2369,9 +2369,9 @@ namespace oimageR {
 
                 double angle = angles(m * cellx + i, n * celly + j);
 
-                if (angle == arma::datum::nan) {                                  // exception to avoid error : in case of NA's overwrite angle with a small value close to zero
+                if (std::isnan(angle)) {                                          // NA, NaN or Inf pixel: int(floor(NaN)) below is undefined behaviour (an out-of-range bin on x86-64, bin 0 on arm64)
 
-                  angle = 0.000001;
+                  throw std::invalid_argument("HOG: the image has NA, NaN or infinite values");     // a std::exception (no R API): HOG_matrix() / HOG_array() catch it inside their OpenMP loops
                 }
 
                 if (angle < 0) {
