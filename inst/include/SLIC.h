@@ -656,11 +656,20 @@ void SLIC::GetLABXYSeeds_ForGivenStepSize(
   int xerr = m_width  - STEP*xstrips;if(xerr < 0){xstrips--;xerr = m_width - STEP*xstrips;}
   int yerr = m_height - STEP*ystrips;if(yerr < 0){ystrips--;yerr = m_height- STEP*ystrips;}
 
+  int xoff = STEP/2;
+  int yoff = STEP/2;
+
+  // Each seed searches STEP pixels around itself and a pixel outside every window keeps the label -1, which
+  // PerformSuperpixelSLIC() uses as an index. A side shorter than STEP has no strip left, so it gets one centred
+  // seed, and a side that one strip cannot reach gets a second strip. Other sides keep their seeds.
+  if(xstrips == 1 && m_width > xoff + STEP){xstrips = 2;xerr = m_width - STEP*xstrips;}
+  if(ystrips == 1 && m_height > yoff + STEP){ystrips = 2;yerr = m_height - STEP*ystrips;}
+  if(xstrips < 1){xstrips = 1;xerr = 0;xoff = m_width/2;}
+  if(ystrips < 1){ystrips = 1;yerr = 0;yoff = m_height/2;}
+
   double xerrperstrip = double(xerr)/double(xstrips);
   double yerrperstrip = double(yerr)/double(ystrips);
 
-  int xoff = STEP/2;
-  int yoff = STEP/2;
   //-------------------------
   numseeds = xstrips*ystrips;
   //-------------------------
@@ -841,6 +850,25 @@ void SLIC::PerformSuperpixelSLIC(
             klabels[i]  = n;
           }
         }
+      }
+    }
+    //-----------------------------------------------------------------
+    // A pixel can keep the label -1 when 'dist' is not finite (a compactness
+    // of NA, NaN, Inf or 1e308 gives a non-finite 'invwt'), and the label is
+    // used as an index below: give such a pixel the nearest seed.
+    //-----------------------------------------------------------------
+    for( int i = 0; i < sz; i++ )
+    {
+      if( klabels[i] >= 0 ) continue;
+
+      double x = i%m_width;
+      double y = i/m_width;
+      double best = DBL_MAX;
+
+      for( int n = 0; n < numk; n++ )
+      {
+        double d = (x - kseedsx[n])*(x - kseedsx[n]) + (y - kseedsy[n])*(y - kseedsy[n]);
+        if( d < best ) { best = d; klabels[i] = n; }
       }
     }
     //-----------------------------------------------------------------
@@ -1143,7 +1171,7 @@ void SLIC::EnforceLabelConnectivity(
   const int dy4[4] = { 0, -1,  0,  1};
 
   const int sz = width*height;
-  const int SUPSZ = sz/K;
+  const int SUPSZ = sz/max(K, 1);                                        // K is sz / STEP^2 rounded down, 0 when STEP^2 > sz
   //nlabels.resize(sz, -1);
   for( int i = 0; i < sz; i++ ) nlabels[i] = -1;
   int label(0);
@@ -1385,7 +1413,7 @@ void SLIC::DoSuperpixelSegmentation_ForGivenSuperpixelSize(
     const double&               compactness)
 {
   //------------------------------------------------
-  const int STEP = sqrt(double(superpixelsize))+0.5;
+  const int STEP = max(1, int(sqrt(double(superpixelsize))+0.5));        // more superpixels than twice the pixels would give a step of 0
   //------------------------------------------------
   vector<double> kseedsl(0);
   vector<double> kseedsa(0);

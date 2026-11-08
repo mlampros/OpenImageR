@@ -49,6 +49,9 @@ superpixels = function(input_image, method = "slic", superpixel = 200, compactne
   if (!inherits(input_image, c('matrix', 'array'))) {
     stop("The 'superpixels' function takes either matrices or arrays as input!", call. = F)
   }
+  if (!(is.numeric(superpixel) || is.logical(superpixel)) || length(superpixel) != 1 || is.na(superpixel) || superpixel < 1 || superpixel > .Machine$integer.max) {
+    stop("The 'superpixel' parameter should be a single number between 1 and ", .Machine$integer.max, "!", call. = F)
+  }
   if (inherits(input_image, 'matrix')) {                                    # in case of a 'matrix' convert it to an array with 1 slice [ for instance dims = c(128, 128, 1) ]
     input_image = array(data = input_image, dim = c(dim(input_image), 1))
   }

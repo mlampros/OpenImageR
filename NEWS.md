@@ -1,4 +1,28 @@
 
+## OpenImageR 1.3.1
+
+### Breaking changes
+
+These functions now return different values for inputs that worked before, because the old values were wrong:
+
+* *gabor_feature_engine()* of *GaborFeatureExtract*: the first half of the columns of *energy_aptitude* now holds the local energy and the second half the mean amplitude, as in *gabor_feature_extraction()*. Before, the first half held the mean amplitude and the second half was all zeros. Recompute saved gabor feature matrices. (F1)
+* *resizeImage(method = 'nearest')*: rows and columns are now sampled evenly, floor(i / scale), and the last row and column are kept (10 -> 5 picks rows 1 3 5 7 9, before 1 2 4 6 7), and a resize to the same size keeps every pixel (a [0,1] image is still multiplied by 255 unless *normalize_pixels = TRUE*). *Augmentation()* resizes only when asked to, so without arguments it returns the input. *average_hash()*, *phash()*, *dhash()*, *invariant_hash()* and *hash_apply()* with *resize = 'nearest'* change as well. Redo resized outputs and recompute stored hash values. (F2)
+* *rotateImage()*: pixel centres are now rotated, so 'nearest' in mode 'same' is exact at 0, 90, 180, 270 and 360 degrees (0 cells differ on 8 x 8, 20 x 20 and 21 x 21 images; 20 x 20 at 180 degrees: 123 cells before), and in mode 'full' it keeps every pixel of a square image at 90, 180 and 270 degrees (8 x 8, 13 x 13, 20 x 20). 'nearest' reads the first row and column, and 'bilinear' reads the last row and column. 'bilinear' no longer leaves black pixels at these angles (100 x 100 image of ones: 0 cells equal to 0 at 90, 180, 270 and 360 degrees, before 199 at each angle). 'bilinear' is not exact at these angles: at 0 degrees it stays up to 5.25 from the input on a 20 x 20 ramp, because of its interpolation weights. Rotations in *Augmentation()* and *invariant_hash()* change as well. Redo rotated outputs and recompute stored *invariant_hash()* values. (F3)
+* *RGB_to_HSV()*: black pixels now have hue 0 and saturation 0 (before, hue 1.570796 and saturation NaN). Redo saved HSV data of images with black pixels. (F24)
+
+### Bug fixes
+
+* *superpixels()*: a side of the image shorter than, or between 1.5 and 2 times, the step size left pixels outside every seed window, which crashed the R session with 'slic' and 'slico'. These inputs now return labels. Results of inputs that worked do not change: in 2304 random and fixed cases, the 888 that gave a result at version 1.3.0 have the same labels and slic data, and the 1015 that crashed do not crash now. (F41, F42)
+* *superpixels()*: a 'superpixel' value that is not a single number between 1 and the integer maximum now gives a clear R error. (F41)
+* *superpixels(method = "slico")*: the errors about the 'K' parameter and 'clustersize[k]' are gone and these inputs now return labels; the number of superpixels can differ from the one asked (runif images, seeds 1 to 3: 523 x 645: 11 labels for 10, 202 for 200; 10 x 1200: 30 to 33 for 10; 1 x 1200 and 2 x 1200: 1 for 10; 30 x 40: 541 to 554 for 1000, 247 to 272 for 2000). Results of inputs that worked do not change (same 2304 cases). (F43)
+* *superpixels(method = "slic")*: a 'compactness' of NA, NaN, Inf or 1e308 no longer crashes the R session; these values now return labels (30 x 40 image, superpixel = 20: 15 labels). In 450 cases with other values, labels and slic data did not change. (F41)
+
+### Performance
+
+* *padding()*: 1024 x 1024 to 2048 x 2048 went from 11.6 - 24.1 s to 0.07 - 0.09 s (3 runs on one machine). Results do not change. (F4)
+* *resizeImage(method = 'bilinear')*: gray 1024 to 2048 went from 6.0 s to 0.2 s, RGB from 16.4 s to 0.87 s, and the peak memory of the measuring script from 1087 MB to 416 MB (one machine). Results do not change: 1237 cases compared with version 1.3.0 gave the same 943 results and the same 294 errors. A single row reduced to half its columns or less keeps working (1 x 6 to 1 x 3); a single column, any other single row and a 0-row image stay errors, most with a clearer message. (F5)
+
+
 ## OpenImageR 1.3.0
 
 * I updated the README.md file related to "[[Rcpp::plugins(cpp11)]]", which was removed in the previous version
