@@ -4,7 +4,10 @@
 \alias{runUI}
 \title{launcher for the shiny application}
 \usage{
-runUI()
+runUI(file_path)
+}
+\arguments{
+\item{file_path}{the normalized path of the image to display (read by the server through shiny::getShinyOption)}
 }
 \description{
 launcher for the shiny application

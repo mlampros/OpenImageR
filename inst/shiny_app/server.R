@@ -3,7 +3,7 @@ function(input, output) {
 
   output$myImage <- shiny::renderImage({
 
-    list(src = file_path,
+    list(src = shiny::getShinyOption("OpenImageR_file_path"),          # set by runUI()
 
          height = input$height_width,
 
