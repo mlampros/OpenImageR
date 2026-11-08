@@ -32,6 +32,8 @@ testthat::test_that("phash of 2000 small images is not dominated by the DCT set-
   D = cos(pi / 20 * outer(0:19, (0:19) + 0.5))           # the same 2-D DCT with a precomputed matrix, in R
   t_ref = min(sapply(1:3, function(i) system.time(for (k in 1:2000) D %*% a[1:20, 1:20, k] %*% t(D))[["elapsed"]]))
 
-  # measured on this machine under devtools::load_all(): 3.026 s / 0.062 s = 48.8 at commit 401bab4, 0.66 s / 0.064 s = 10.3 after the fix
-  testthat::expect_lt(t_pkg / t_ref, 25)
+  # measured on one machine at the parent 81749b7 of the fix: 17.97 (pkgbuild::compile_dll(debug = FALSE)) and 18.48 (debug = TRUE);
+  # after the fix (a22c8da): 1.94 and 2.06. REVIEW2_2026-11-08_1512.md: 18.15 (-O2 install) and 46.25 (-O0) before, 1.89 and 8.12 after.
+  # 12 separates all of them (25 did not fail at the parent in an -O2 build)
+  testthat::expect_lt(t_pkg / t_ref, 12)
 })
