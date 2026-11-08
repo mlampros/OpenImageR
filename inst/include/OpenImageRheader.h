@@ -2944,10 +2944,14 @@ namespace oimageR {
         bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process): keep the first message, raise it after the loop
         std::string err_msg;
 
+        if (x.n_rows > 0) {                       // image 0 on the main thread: an input error (the same for every image) is raised here as an R error,
+          out.row(0) = inner_hash_im(x, 0, new_width, new_height, method, hash_size, highfreq_factor, resize_method);     // so no Rcpp::exception is built in a worker thread (its constructor is not thread-safe)
+        }
+
         #ifdef _OPENMP
         #pragma omp parallel for schedule(static) shared(x, new_height, new_width, method, resize_method, highfreq_factor, hash_size, out, has_err, err_msg) private(i,k)
         #endif
-        for (i = 0; i < x.n_rows; i++) {
+        for (i = 1; i < x.n_rows; i++) {
 
           try {
 
@@ -3034,10 +3038,14 @@ namespace oimageR {
         bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process): keep the first message, raise it after the loop
         std::string err_msg;
 
+        if (x.n_slices > 0) {                     // image 0 on the main thread (see hash_image())
+          out.row(0) = inner_hash_im_cube(x, 0, method, hash_size, highfreq_factor, resize_method);
+        }
+
         #ifdef _OPENMP
         #pragma omp parallel for schedule(static) shared(x, method, resize_method, highfreq_factor, hash_size, out, has_err, err_msg) private(i,k)
         #endif
-        for (i = 0; i < x.n_slices; i++) {
+        for (i = 1; i < x.n_slices; i++) {
 
           try {
 
@@ -3152,10 +3160,14 @@ namespace oimageR {
         bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process): keep the first message, raise it after the loop
         std::string err_msg;
 
+        if (x.n_rows > 0) {                       // image 0 on the main thread (see hash_image())
+          out[0] = inner_hash_im_hex(x, 0, new_width, new_height, resize_method, hash_size, highfreq_factor, method);
+        }
+
         #ifdef _OPENMP
         #pragma omp parallel for schedule(static) shared(x, new_height, new_width, method, resize_method, highfreq_factor, hash_size, out, has_err, err_msg) private(i)
         #endif
-        for (i = 0; i < x.n_rows; i++) {
+        for (i = 1; i < x.n_rows; i++) {
 
           try {
 
@@ -3235,10 +3247,14 @@ namespace oimageR {
         bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process): keep the first message, raise it after the loop
         std::string err_msg;
 
+        if (x.n_slices > 0) {                     // image 0 on the main thread (see hash_image())
+          out[0] = inner_hash_im_cube_hex(x, 0, resize_method, hash_size, highfreq_factor, method);
+        }
+
         #ifdef _OPENMP
         #pragma omp parallel for schedule(static) shared(x, method, resize_method, highfreq_factor, hash_size, out, has_err, err_msg) private(i)
         #endif
-        for (i = 0; i < x.n_slices; i++) {
+        for (i = 1; i < x.n_slices; i++) {
 
           try {
 
