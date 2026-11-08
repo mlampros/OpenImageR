@@ -35,13 +35,4 @@ testthat::test_that("dilationErosion() equals the reference", {
   for (i in 1:3) testthat::expect_equal(out[, , i], morph_reference(a[, , i], 3, 3, 'erosion'))
 })
 
-testthat::test_that("dilationErosion() is faster than the shifted-matrix R reference", {
-
-  testthat::skip_on_cran()
-
-  set.seed(2); x = matrix(runif(1024 * 1024), 1024, 1024)
-  t_pkg = min(sapply(1:3, function(i) system.time(dilationErosion(x, c(3, 3), 'dilation'))[["elapsed"]]))
-  t_ref = min(sapply(1:3, function(i) system.time(morph_reference(x, 3, 3, 'dilation'))[["elapsed"]]))
-
-  testthat::expect_lt(t_pkg / t_ref, 1)
-})
+# the speed check is in test-F19-speed-optimised-build.R (threshold 0.6); a threshold of 1 here did not fail on the old code in an -O2 build
