@@ -359,7 +359,7 @@ RGB_to_Lab = function(input_data) {
 
   if (is.na(dim(input_data)[3])) stop("The 'input_data' parameter should be a 3-dimensional data object where the third dimension is equal to 3", call. = F)
   if (length(dim(input_data)) > 3) stop("The 'input_data' parameter should be a 3-dimensional data object where the third dimension is equal to 3", call. = F)
-  if (max(input_data) <= 1 && min(input_data) >= 0) {
+  if (max(input_data, na.rm = TRUE) <= 1 && min(input_data, na.rm = TRUE) >= 0) {     # NA values do not decide the range (they stay NA)
     input_data = input_data * 255                                  # a [0, 1] image (e.g. the output of readImage()) is rescaled to 0-255
   }
   else {
