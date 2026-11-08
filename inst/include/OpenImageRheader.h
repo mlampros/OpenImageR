@@ -1297,7 +1297,7 @@ namespace oimageR {
 
         if (rotate_angle > 0.0) {
 
-          image = rotate_nearest_bilinear(image, rotate_angle, resiz_method, "same", 1);
+          image = rotate_nearest_bilinear(image, rotate_angle, rotate_method, "same", 1);
         }
 
         if (zca_comps > 0 && zca_epsilon > 0.0) {
