@@ -197,7 +197,7 @@ namespace oimageR {
           for (int i = 0; i < n_r; i++) {
 
             int end = std::min(i + k_rows, n_r);
-            double val = (i + k_rows > n_r) ? replace_Val : src[i];
+            double val = (i + k_rows > n_r) ? replace_Val : (is_max ? -arma::datum::inf : arma::datum::inf);     // as arma::max()/min() of 401bab4: a NaN cell is skipped
 
             for (int k = i; k < end; k++) {
 
