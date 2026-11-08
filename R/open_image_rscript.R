@@ -102,7 +102,7 @@ switch_filter = function(kernel, conv_mod, gaussian_dims = 5, sigma = 1.0, lapla
 
   if (kernel == 'LoG') {                  # a discrete kernel approximation for laplacian of Gaussian for a sigma of 1.4, http://homepages.inf.ed.ac.uk/rbf/HIPR2/log.htm
 
-    gaus_kern = norm_matrix_range(gaussian_kernel(gaussian_dims, sigma, range_gauss = 2), 0.0, 255.0)        # pixels between 0 and 255  (by default)
+    gaus_kern = norm_matrix_range(gaussian_kernel(gaussian_dims, sigma, range_gauss = range_gauss), 0.0, 255.0)        # pixels between 0 and 255  (by default)
 
     lapl_kern = laplacian_kernels(laplacian_type)
 
