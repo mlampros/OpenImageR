@@ -538,7 +538,8 @@ arma::mat augment_transf(arma::mat& image, std::string flip_mode, arma::uvec cro
                          double image_thresh = 0.0, double pad_shift_value = 0.0) {
 
   oimageR::Utility_functions UTLF;
-  return UTLF.augment_transf(image, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols,
+  arma::mat image_copy = image;                         // 'image' can be R's own memory (arma::mat& of a double matrix), and augment_transf() writes into its argument
+  return UTLF.augment_transf(image_copy, flip_mode, crop_height, crop_width, resiz_width, resiz_height, resiz_method, shift_rows, shift_cols,
                              rotate_angle, rotate_method, zca_comps, zca_epsilon, image_thresh, pad_shift_value);
 }
 
