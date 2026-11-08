@@ -605,7 +605,8 @@ cropImage = function(image, new_width, new_height, type = 'equal_spaced') {
 #' @param threads the number of cores to run in parallel
 #' @return depending on the input, either a matrix or an array
 #' @details
-#' This function rotates an image by a user-specified angle
+#' This function rotates an image by a user-specified angle. A positive angle turns the image counter-clockwise (as displayed with the first row at the top,
+#' for instance by imageShow()), the opposite direction of rotateFixed(): rotateImage(image, 90) gives the same result as rotateFixed(image, 270) for a square image.
 #' @export
 #' @examples
 #'
@@ -658,6 +659,8 @@ rotateImage = function(image, angle, method = 'nearest', mode = 'same', threads 
 #' @return depending on the input, either a matrix or an array
 #' @details
 #' This function is faster than the rotateImage function as it rotates an image for specific angles (90, 180 or 270 degrees).
+#' It turns the image clockwise (as displayed with the first row at the top, for instance by imageShow()), the opposite direction of rotateImage():
+#' rotateFixed(image, 90) gives the same result as rotateImage(image, 270, mode = 'same') for a square image.
 #' @export
 #' @examples
 #'

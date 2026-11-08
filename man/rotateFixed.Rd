@@ -19,6 +19,8 @@ Rotate an image by 90, 180, 270 degrees
 }
 \details{
 This function is faster than the rotateImage function as it rotates an image for specific angles (90, 180 or 270 degrees).
+It turns the image clockwise (as displayed with the first row at the top, for instance by imageShow()), the opposite direction of rotateImage():
+rotateFixed(image, 90) gives the same result as rotateImage(image, 270, mode = 'same') for a square image.
 }
 \examples{
 

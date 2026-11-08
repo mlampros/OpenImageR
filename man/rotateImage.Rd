@@ -24,7 +24,8 @@ depending on the input, either a matrix or an array
 Rotate an image by angle using the 'nearest' or 'bilinear' method
 }
 \details{
-This function rotates an image by a user-specified angle
+This function rotates an image by a user-specified angle. A positive angle turns the image counter-clockwise (as displayed with the first row at the top,
+for instance by imageShow()), the opposite direction of rotateFixed(): rotateImage(image, 90) gives the same result as rotateFixed(image, 270) for a square image.
 }
 \examples{
 
