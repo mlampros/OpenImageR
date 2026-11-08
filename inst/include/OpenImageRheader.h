@@ -1307,7 +1307,7 @@ namespace oimageR {
 
         if (image_thresh > 0.0) {
 
-          image.transform( [image_thresh](double val) { return (val > image_thresh) ? double(0) : double(1); } );
+          image.transform( [image_thresh](double val) { return (val > image_thresh) ? double(1) : double(0); } );
         }
 
         return(image);
