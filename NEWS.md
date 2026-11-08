@@ -31,7 +31,7 @@ These functions now return different values for inputs that worked before, becau
 * *rotateImage()* and *rotateFixed()*: their help pages now say that they turn in opposite directions (*rotateImage()* counter-clockwise, *rotateFixed()* clockwise, as displayed with the first row at the top). Neither function changed. (F55)
 * *hash_apply()* with *threads* above 1 no longer ends the R session when a resize warns (for instance 49 x 49 images with *hash_size = 8*): the warning came from the parallel worker threads (3000 images, 2 threads: 3 of 3 processes crashed before, 0 of 3 now; one machine). Results do not change; with *threads* above 1 only the first image still warns. (F53)
 * *Augmentation()* no longer writes its result into the input matrix (after *Augmentation(y, image_thresh = 0.5)* the matrix *y* held the thresholded values). The returned value does not change; arrays and lists were not affected. (F57)
-* *HOG_apply()* of images with a NaN pixel now gives the R error "Mat::operator(): index out of bounds", as *HOG()* of one image does, instead of ending the R session (also with 1 thread). Results for images without NaN do not change. (F62)
+* *HOG_apply()* and *HOG()* of images with an NA, NaN or infinite pixel now give the R error "HOG: the image has NA, NaN or infinite values" instead of ending the R session (*HOG_apply()*, also with 1 thread) or reporting "Mat::operator(): index out of bounds" (*HOG()*). Results for finite images do not change. (F62)
 
 ### Performance
 
