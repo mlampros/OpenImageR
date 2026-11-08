@@ -297,7 +297,8 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
                                          grid_columns = ifelse(private$flag_filter_bank, private$COLS, dim(real_matrices[[1]])[3])
                                        }
 
-                                       graphics::par(mfrow = c(grid_rows, grid_columns), mar = c(margin_btw_plots, margin_btw_plots, margin_btw_plots, margin_btw_plots))
+                                       old_par = graphics::par(mfrow = c(grid_rows, grid_columns), mar = c(margin_btw_plots, margin_btw_plots, margin_btw_plots, margin_btw_plots))
+                                       on.exit(graphics::par(old_par), add = TRUE)
 
                                        if (is.null(private$flag_filter_bank)) {
 
@@ -388,7 +389,8 @@ GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
                                            stop("The length of the input 'list_images' parameter must be the same as the 'titles' parameter!", call. = F)
                                          }
                                        }
-                                       graphics::par(mfrow = c(par_ROWS, par_COLS))
+                                       old_par = graphics::par(mfrow = c(par_ROWS, par_COLS))
+                                       on.exit(graphics::par(old_par), add = TRUE)
 
                                        out = lapply(seq_along(list_images), function(x) {
 
