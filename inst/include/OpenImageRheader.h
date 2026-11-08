@@ -171,19 +171,69 @@ namespace oimageR {
 
         arma::mat tmp_filt(image.n_rows, image.n_cols, arma::fill::zeros);
 
-        unsigned int i,j;
+        if (method != 1 && method != 2) return(tmp_filt);
+
+        // the max (min) over the window from (i, j) down and right is separable: first over the 'Filter(0)' rows below each pixel, then over
+        // the 'Filter(1)' columns to the right; cells of the window outside the image count as 'replace_Val' (same result as inner_dilate_erode())
+
+        int n_r = image.n_rows;
+        int n_c = image.n_cols;
+        int k_rows = Filter(0);
+        int k_cols = Filter(1);
+        bool is_max = (method == 1);
+
+        arma::mat pass_rows(n_r, n_c);
+
+        int jj;
 
         #ifdef _OPENMP
-        #pragma omp parallel for schedule(static) shared(image, Filter, replace_Val, method, tmp_filt) private(i,j)
+        #pragma omp parallel for schedule(static) shared(image, pass_rows, n_r, n_c, k_rows, replace_Val, is_max) private(jj)
         #endif
-        for (i = 0; i < image.n_rows; i++) {
+        for (jj = 0; jj < n_c; jj++) {
 
-          for (j = 0; j < image.n_cols; j++) {
+          const double* src = image.colptr(jj);
+          double* dst = pass_rows.colptr(jj);
 
-            #ifdef _OPENMP
-            #pragma omp atomic write
-            #endif
-            tmp_filt(i,j) = inner_dilate_erode(Filter, replace_Val, i, j, method, image);
+          for (int i = 0; i < n_r; i++) {
+
+            int end = std::min(i + k_rows, n_r);
+            double val = (i + k_rows > n_r) ? replace_Val : src[i];
+
+            for (int k = i; k < end; k++) {
+
+              if (is_max ? (src[k] > val) : (src[k] < val)) val = src[k];
+            }
+
+            dst[i] = val;
+          }
+        }
+
+        #ifdef _OPENMP
+        #pragma omp parallel for schedule(static) shared(pass_rows, tmp_filt, n_r, n_c, k_cols, replace_Val, is_max) private(jj)
+        #endif
+        for (jj = 0; jj < n_c; jj++) {
+
+          double* dst = tmp_filt.colptr(jj);
+          int end = std::min(jj + k_cols, n_c);
+
+          if (jj + k_cols > n_c) {
+
+            for (int i = 0; i < n_r; i++) dst[i] = replace_Val;
+          }
+          else {
+
+            const double* first_col = pass_rows.colptr(jj);
+            for (int i = 0; i < n_r; i++) dst[i] = first_col[i];
+          }
+
+          for (int f = jj; f < end; f++) {
+
+            const double* col = pass_rows.colptr(f);
+
+            for (int i = 0; i < n_r; i++) {
+
+              if (is_max ? (col[i] > dst[i]) : (col[i] < dst[i])) dst[i] = col[i];
+            }
           }
         }
 
