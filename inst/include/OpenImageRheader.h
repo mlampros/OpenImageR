@@ -2012,8 +2012,6 @@ namespace oimageR {
 
       Gabor_Features gbf;
 
-      Rcpp::List gaborResult;
-
       Rcpp::List gabor_result_imaginary;
 
       Rcpp::List gabor_result_real;
@@ -2118,7 +2116,9 @@ namespace oimageR {
 
           arma::Mat<double> OUTER_mt(n_elem_outer, gbf.V, arma::fill::zeros), OUTER_mt_Magn(n_elem_outer, gbf.V, arma::fill::zeros);
 
-          arma::cx_cube OUTER_field(img_complex.n_rows, img_complex.n_cols, gbf.V);                     // use better arma::cube rather than arma::field to save the matrices
+          arma::cx_cube OUTER_field;                                                                    // use better arma::cube rather than arma::field to save the matrices
+
+          if (plot_data) OUTER_field.set_size(img_complex.n_rows, img_complex.n_cols, gbf.V);           // only the plots use the complex results
 
           int j;
           unsigned int f, t;
@@ -2163,8 +2163,6 @@ namespace oimageR {
           }
 
           gabor_features_Magn.col(i) = arma::mean(OUTER_mt_Magn, 1);                      // Here someone can experiment with arma::mean(), arma::max() or arma::min() of Magnitude [ arma::mean() gives slightly better results ]
-
-          gaborResult.push_back(OUTER_field);                                             // save the complex matrices
 
           if (plot_data) {
 
