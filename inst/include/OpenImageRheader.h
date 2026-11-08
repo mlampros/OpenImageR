@@ -917,7 +917,7 @@ namespace oimageR {
             int n2_in = std::min(n2, n - 1);
             int m2_in = std::min(m2, m - 1);
 
-            im_value = ((n2 - n0 + m2 - m0) * image(n1_in,m1_in) + (n2 - n0 + m0 - m1) * image(n1_in,m2_in) + (n0 - n1 + m2 - m0) * image(n2_in,m1_in) + (n0 - n1 + m0 - m1) * image(n2_in,m1_in)) / 4.0;
+            im_value = ((n2 - n0 + m2 - m0) * image(n1_in,m1_in) + (n2 - n0 + m0 - m1) * image(n1_in,m2_in) + (n0 - n1 + m2 - m0) * image(n2_in,m1_in) + (n0 - n1 + m0 - m1) * image(n2_in,m2_in)) / 4.0;
           }
         }
 
