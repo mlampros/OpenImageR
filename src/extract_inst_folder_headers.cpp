@@ -686,7 +686,7 @@ arma::cube rgbtolab(arma::cube rgb) {
 
   arma::cube res(rgb.n_rows, rgb.n_cols, rgb.n_slices);
 
-  int i; int sR, sG, sB;
+  int i; double sR, sG, sB;                // double: a [0, 1] image (rescaled to 0-255 in RGB_to_Lab()) must not be truncated to integers
   double R,G,B;
   double X,Y,Z;
   double r, g, b;

@@ -7,7 +7,7 @@
 RGB_to_Lab(input_data)
 }
 \arguments{
-\item{input_data}{a 3-dimensional array (RGB image) where the third dimension is equal to 3}
+\item{input_data}{a 3-dimensional array (RGB image) where the third dimension is equal to 3. Values either in [0, 1] (they are multiplied by 255) or in 0-255 (they are truncated to integers)}
 }
 \description{
 Conversion of RGB to Lab colour type
