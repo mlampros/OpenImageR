@@ -9,7 +9,7 @@ ZCAwhiten(image, k, epsilon)
 \arguments{
 \item{image}{a matrix, data frame or 3-dimensional array where the third dimension is equal to 3}
 
-\item{k}{an integer specifying the number of components to keep when svd is performed (reduced dimension representation of the data)}
+\item{k}{an integer specifying the number of components to keep when svd is performed (reduced dimension representation of the data), between 1 and the number of rows of the image}
 
 \item{epsilon}{a float specifying the regularization parameter}
 }

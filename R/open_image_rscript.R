@@ -848,7 +848,7 @@ flipImage = function(image, mode = 'horizontal') {
 #'
 #' this function performs zca-whitening to a 2- or 3- dimensional image
 #' @param image a matrix, data frame or 3-dimensional array where the third dimension is equal to 3
-#' @param k an integer specifying the number of components to keep when svd is performed (reduced dimension representation of the data)
+#' @param k an integer specifying the number of components to keep when svd is performed (reduced dimension representation of the data), between 1 and the number of rows of the image
 #' @param epsilon a float specifying the regularization parameter
 #' @return a matrix or 3-dimensional array where the third dimension is equal to 3
 #' @details
@@ -873,13 +873,13 @@ ZCAwhiten = function(image, k, epsilon) {
 
   if (inherits(image, 'matrix')) {
 
-    if (k < 1 || k > ncol(image)) stop('k should be greater or equal to 1 and less than ncol(image) + 1')
+    if (k < 1 || k > nrow(image)) stop('k should be greater or equal to 1 and less than nrow(image) + 1')        # the covariance is nrow x nrow
 
     res = zca_whitening(image, k, epsilon)
   }
   else if (all(c(inherits(image, 'array'), !is.na(dim(image)[3]), dim(image)[3] == 3))) {
 
-    if (k < 1 || k > ncol(image[,,1])) stop('k should be greater or equal to 1 and less than ncol(image) + 1 of each array slice')
+    if (k < 1 || k > nrow(image[,,1])) stop('k should be greater or equal to 1 and less than nrow(image) + 1 of each array slice')
     res = zca_whiten_cube(image, k, epsilon)
   }
   else {
