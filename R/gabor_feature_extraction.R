@@ -81,6 +81,7 @@
 #' @examples
 #'
 #' library(OpenImageR)
+#' \donttest{
 #'
 #' init_gb = GaborFeatureExtract$new()
 #'
@@ -158,6 +159,7 @@
 #'
 #' plt_multi = init_gb$plot_multi_images(list_images, par_ROWS = 2, par_COLS = 2)
 #'
+#' }
 
 GaborFeatureExtract <- R6::R6Class("GaborFeatureExtract",
 

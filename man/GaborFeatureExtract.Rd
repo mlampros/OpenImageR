@@ -52,6 +52,7 @@ I added the option \emph{downsample_gabor} to the original matlab code based on 
 \examples{
 
 library(OpenImageR)
+\donttest{
 
 init_gb = GaborFeatureExtract$new()
 
@@ -129,6 +130,7 @@ list_images = list(im, im, im)
 
 plt_multi = init_gb$plot_multi_images(list_images, par_ROWS = 2, par_COLS = 2)
 
+}
 }
 \references{
 https://github.com/mhaghighat/gabor

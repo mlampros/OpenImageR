@@ -1,5 +1,5 @@
 
-## OpenImageR 1.3.1
+## OpenImageR 1.4.0
 
 ### Breaking changes
 
