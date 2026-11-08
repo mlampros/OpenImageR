@@ -350,16 +350,21 @@ namespace oimageR {
         int new_row_size = floor(scale_rows * image.n_rows);
         int new_col_size = floor(scale_cols * image.n_cols);
 
+        bool in_parallel = false;                           // Rcpp::warning() calls R, which must not happen from an OpenMP worker thread (hash_apply() resizes inside a parallel loop)
+        #ifdef _OPENMP
+        in_parallel = omp_in_parallel();
+        #endif
+
         if (new_row_size != width) {
           std::string warn_message = "When resizing the 'width' becomes " + std::to_string(new_row_size) + " therefore we have to adjust it to the input width parameter of " + std::to_string(width) + " !";
           new_row_size = ((new_row_size != width) ? (width) : new_row_size);
-          Rcpp::warning(warn_message);
+          if (!in_parallel) Rcpp::warning(warn_message);
         }
 
         if (new_col_size != height) {
           std::string warn_message = "When resizing the 'height' becomes " + std::to_string(new_col_size) + " therefore we have to adjust it to the input height parameter of " + std::to_string(height) + " !";
           new_col_size = ((new_col_size != height) ? (height) : new_col_size);
-          Rcpp::warning(warn_message);
+          if (!in_parallel) Rcpp::warning(warn_message);
         }
 
         // floor(i / scale), written as floor(i * n / width) so that exact multiples do not round down
