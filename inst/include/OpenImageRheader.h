@@ -1005,6 +1005,12 @@ namespace oimageR {
         int mm = n * sqrt(2.0);
         int nn = m * sqrt(2.0);
 
+        if (mode == "full" && n != m) {                     // both sides from the diagonal, so that a rotated non-square image fits (a square image keeps n * sqrt(2))
+
+          mm = std::sqrt(static_cast<double>(n) * n + static_cast<double>(m) * m);
+          nn = mm;
+        }
+
         if (mode == "same") {                               // an even difference puts the crop of mode 'same' on whole pixels around the centre
 
           mm += (mm - n) % 2;
@@ -1075,6 +1081,12 @@ namespace oimageR {
 
         int mm = src.n_rows * sqrt(2.0);
         int nn = src.n_cols * sqrt(2.0);
+
+        if (src.n_rows != src.n_cols) {                     // the same canvas as rotate_nearest_bilinear() in mode 'full'
+
+          mm = std::sqrt(static_cast<double>(src.n_rows) * src.n_rows + static_cast<double>(src.n_cols) * src.n_cols);
+          nn = mm;
+        }
 
         arma::cube cube_out(mm, nn, 3, arma::fill::zeros);
 
