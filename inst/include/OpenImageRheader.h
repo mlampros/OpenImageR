@@ -2926,21 +2926,38 @@ namespace oimageR {
 
         unsigned int i,k;
 
+        bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process): keep the first message, raise it after the loop
+        std::string err_msg;
+
         #ifdef _OPENMP
-        #pragma omp parallel for schedule(static) shared(x, new_height, new_width, method, resize_method, highfreq_factor, hash_size, out) private(i,k)
+        #pragma omp parallel for schedule(static) shared(x, new_height, new_width, method, resize_method, highfreq_factor, hash_size, out, has_err, err_msg) private(i,k)
         #endif
         for (i = 0; i < x.n_rows; i++) {
 
-          arma::rowvec tmp_vec = inner_hash_im(x, i, new_width, new_height, method, hash_size, highfreq_factor, resize_method);
+          try {
 
-          for (k = 0; k < tmp_vec.n_elem; k++) {
+            arma::rowvec tmp_vec = inner_hash_im(x, i, new_width, new_height, method, hash_size, highfreq_factor, resize_method);
+
+            for (k = 0; k < tmp_vec.n_elem; k++) {
+
+              #ifdef _OPENMP
+              #pragma omp atomic write
+              #endif
+              out(i,k) = tmp_vec(k);
+            }
+          }
+          catch (std::exception& e) {
 
             #ifdef _OPENMP
-            #pragma omp atomic write
+            #pragma omp critical
             #endif
-            out(i,k) = tmp_vec(k);
+            {
+              if (!has_err) { has_err = true; err_msg = e.what(); }
+            }
           }
         }
+
+        if (has_err) Rcpp::stop(err_msg);
 
         return(out);
       }
@@ -2999,21 +3016,38 @@ namespace oimageR {
 
         unsigned int i,k;
 
+        bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process): keep the first message, raise it after the loop
+        std::string err_msg;
+
         #ifdef _OPENMP
-        #pragma omp parallel for schedule(static) shared(x, method, resize_method, highfreq_factor, hash_size, out) private(i,k)
+        #pragma omp parallel for schedule(static) shared(x, method, resize_method, highfreq_factor, hash_size, out, has_err, err_msg) private(i,k)
         #endif
         for (i = 0; i < x.n_slices; i++) {
 
-          arma::rowvec tmp_vec = inner_hash_im_cube(x, i, method, hash_size, highfreq_factor, resize_method);
+          try {
 
-          for (k = 0; k < tmp_vec.n_elem; k++) {
+            arma::rowvec tmp_vec = inner_hash_im_cube(x, i, method, hash_size, highfreq_factor, resize_method);
+
+            for (k = 0; k < tmp_vec.n_elem; k++) {
+
+              #ifdef _OPENMP
+              #pragma omp atomic write
+              #endif
+              out(i,k) = tmp_vec(k);
+            }
+          }
+          catch (std::exception& e) {
 
             #ifdef _OPENMP
-            #pragma omp atomic write
+            #pragma omp critical
             #endif
-            out(i,k) = tmp_vec(k);
+            {
+              if (!has_err) { has_err = true; err_msg = e.what(); }
+            }
           }
         }
+
+        if (has_err) Rcpp::stop(err_msg);
 
         return(out);
       }
@@ -3100,13 +3134,30 @@ namespace oimageR {
 
         unsigned int i;
 
+        bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process): keep the first message, raise it after the loop
+        std::string err_msg;
+
         #ifdef _OPENMP
-        #pragma omp parallel for schedule(static) shared(x, new_height, new_width, method, resize_method, highfreq_factor, hash_size, out) private(i)
+        #pragma omp parallel for schedule(static) shared(x, new_height, new_width, method, resize_method, highfreq_factor, hash_size, out, has_err, err_msg) private(i)
         #endif
         for (i = 0; i < x.n_rows; i++) {
 
-          out[i] = inner_hash_im_hex(x, i, new_width, new_height, resize_method, hash_size, highfreq_factor, method);     // each thread writes its own element, no critical section needed
+          try {
+
+            out[i] = inner_hash_im_hex(x, i, new_width, new_height, resize_method, hash_size, highfreq_factor, method);     // each thread writes its own element, no critical section needed
+          }
+          catch (std::exception& e) {
+
+            #ifdef _OPENMP
+            #pragma omp critical
+            #endif
+            {
+              if (!has_err) { has_err = true; err_msg = e.what(); }
+            }
+          }
         }
+
+        if (has_err) Rcpp::stop(err_msg);
 
         return(out);
       }
@@ -3166,13 +3217,30 @@ namespace oimageR {
 
         unsigned int i;
 
+        bool has_err = false;                     // an exception must not leave the parallel region (it ends the R process): keep the first message, raise it after the loop
+        std::string err_msg;
+
         #ifdef _OPENMP
-        #pragma omp parallel for schedule(static) shared(x, method, resize_method, highfreq_factor, hash_size, out) private(i)
+        #pragma omp parallel for schedule(static) shared(x, method, resize_method, highfreq_factor, hash_size, out, has_err, err_msg) private(i)
         #endif
         for (i = 0; i < x.n_slices; i++) {
 
-          out[i] = inner_hash_im_cube_hex(x, i, resize_method, hash_size, highfreq_factor, method);       // each thread writes its own element, no critical section needed
+          try {
+
+            out[i] = inner_hash_im_cube_hex(x, i, resize_method, hash_size, highfreq_factor, method);       // each thread writes its own element, no critical section needed
+          }
+          catch (std::exception& e) {
+
+            #ifdef _OPENMP
+            #pragma omp critical
+            #endif
+            {
+              if (!has_err) { has_err = true; err_msg = e.what(); }
+            }
+          }
         }
+
+        if (has_err) Rcpp::stop(err_msg);
 
         return(out);
       }
