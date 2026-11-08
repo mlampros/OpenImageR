@@ -11,6 +11,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string>
+# include <memory>
+# include <vector>
 
 # include "SLIC.h"
 # include "SLICO.h"
@@ -1528,8 +1530,14 @@ namespace oimageR {
         int ROWS = image.n_rows;
         int COLS = image.n_cols;
         int sz = COLS * ROWS;
-        unsigned int* pbuff = new unsigned int[sz];                                         // initialize the pointer array
-        int* klabels = new int[sz];                                                         // Initialize parameters
+        if (method != "slic" && method != "slico") {                                       // validate before allocating
+          Rcpp::stop("Invalid 'method' parameter!");
+        }
+        std::vector<unsigned int> pbuff_vec(sz);                                            // owned buffers: freed on every exit, also when an error is raised
+        std::vector<int> klabels_vec(sz);
+        unsigned int* pbuff = pbuff_vec.data();                                             // initialize the pointer array
+        int* klabels = klabels_vec.data();                                                  // Initialize parameters
+        std::unique_ptr<int[]> klabels_slic;                                                // SLIC allocates its own label buffer and points 'klabels' to it
         unsigned int blue, green, red;
         int numlabels = 0;
         arma::cube dat_cube_lab;
@@ -1561,6 +1569,7 @@ namespace oimageR {
         if (method == "slic") {
           SLIC segment_slic;                                                                // Perform SLIC on the image buffer
           segment_slic.DoSuperpixelSegmentation_ForGivenNumberOfSuperpixels(pbuff, COLS, ROWS, klabels, numlabels, num_superpixel, compactness_factor);           // Alternately one can also use the function DoSuperpixelSegmentation_ForGivenStepSize() for a desired superpixel size
+          if (klabels != klabels_vec.data()) klabels_slic.reset(klabels);                  // own the buffer SLIC allocated
           segment_slic.DrawContoursAroundSegments(pbuff, klabels, COLS, ROWS, 0xff0000);    // Draw boundaries around segments
           if (return_lab_data) {
             dat_cube_lab = segment_slic.return_lab();                                       // return the initial data in Lab-colour format
@@ -1641,8 +1650,6 @@ namespace oimageR {
           }
         }
 
-        if (pbuff) delete [] pbuff;                                                         // Clean up
-        if (klabels) delete [] klabels;
         Rcpp::List all_obj;
 
         if (CHANNELS == 1) {
