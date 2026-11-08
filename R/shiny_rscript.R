@@ -34,8 +34,7 @@ imageShow = function(file_path, clear_viewer = FALSE) {
   }
   else if (inherits(file_path, "character") && try_err_files == F){
 
-    file_path <<- normalizePath(file_path)
-    runUI()
+    runUI(normalizePath(file_path))                       # the app gets the path through a shiny option, never through the global environment
   }
   else {
     stop('invalid path or object')
