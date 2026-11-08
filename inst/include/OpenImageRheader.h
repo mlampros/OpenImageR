@@ -3037,14 +3037,7 @@ namespace oimageR {
         #endif
         for (i = 0; i < x.n_rows; i++) {
 
-          #ifdef _OPENMP
-          #pragma omp critical
-          #endif
-          {
-            std::string tmp_str = inner_hash_im_hex(x, i, new_width, new_height, resize_method, hash_size, highfreq_factor, method);
-
-            out[i] = tmp_str;
-          }
+          out[i] = inner_hash_im_hex(x, i, new_width, new_height, resize_method, hash_size, highfreq_factor, method);     // each thread writes its own element, no critical section needed
         }
 
         return(out);
@@ -3110,14 +3103,7 @@ namespace oimageR {
         #endif
         for (i = 0; i < x.n_slices; i++) {
 
-          #ifdef _OPENMP
-          #pragma omp critical
-          #endif
-          {
-            std::string tmp_str = inner_hash_im_cube_hex(x, i, resize_method, hash_size, highfreq_factor, method);
-
-            out[i] = tmp_str;
-          }
+          out[i] = inner_hash_im_cube_hex(x, i, resize_method, hash_size, highfreq_factor, method);       // each thread writes its own element, no critical section needed
         }
 
         return(out);
