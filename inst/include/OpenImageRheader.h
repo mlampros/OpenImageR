@@ -978,7 +978,10 @@ namespace oimageR {
             int n2_in = std::min(n2, n - 1);
             int m2_in = std::min(m2, m - 1);
 
-            im_value = ((n2 - n0 + m2 - m0) * image(n1_in,m1_in) + (n2 - n0 + m0 - m1) * image(n1_in,m2_in) + (n0 - n1 + m2 - m0) * image(n2_in,m1_in) + (n0 - n1 + m0 - m1) * image(n2_in,m2_in)) / 4.0;
+            double fn = n0 - n1;                            // bilinear weights (n2 = n1 + 1, m2 = m1 + 1): a whole position gives the pixel itself, so right angles do not shift
+            double fm = m0 - m1;
+
+            im_value = (1.0 - fn) * (1.0 - fm) * image(n1_in,m1_in) + (1.0 - fn) * fm * image(n1_in,m2_in) + fn * (1.0 - fm) * image(n2_in,m1_in) + fn * fm * image(n2_in,m2_in);
           }
         }
 
