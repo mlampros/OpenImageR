@@ -339,7 +339,7 @@ load_binary = function(path, type) {
 #' Conversion of RGB to Lab colour type
 #'
 #'
-#' @param input_data a 3-dimensional array (RGB image) where the third dimension is equal to 3
+#' @param input_data a 3-dimensional array (RGB image) where the third dimension is equal to 3. Values either in [0, 1] (they are multiplied by 255) or in 0-255 (they are truncated to integers)
 #' @export
 #' @details
 #' Meaning: RGB (Red-Green-Blue) to LAB (Lightness, A-colour-dimension, B-colour-dimension) colour conversion
@@ -359,6 +359,12 @@ RGB_to_Lab = function(input_data) {
 
   if (is.na(dim(input_data)[3])) stop("The 'input_data' parameter should be a 3-dimensional data object where the third dimension is equal to 3", call. = F)
   if (length(dim(input_data)) > 3) stop("The 'input_data' parameter should be a 3-dimensional data object where the third dimension is equal to 3", call. = F)
+  if (max(input_data) <= 1 && min(input_data) >= 0) {
+    input_data = input_data * 255                                  # a [0, 1] image (e.g. the output of readImage()) is rescaled to 0-255
+  }
+  else {
+    input_data = trunc(input_data)                                 # 0-255 values keep the integer truncation of earlier versions
+  }
   return(rgbtolab(input_data))
 }
 
