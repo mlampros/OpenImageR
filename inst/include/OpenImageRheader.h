@@ -786,6 +786,11 @@ namespace oimageR {
 
           double min_val = x.slice(i).min();
 
+          if (max_val == min_val) {                       // a flat slice has no range: 0 instead of a division by zero (NaN)
+            x_out.slice(i).zeros();
+            continue;
+          }
+
           x_out.slice(i) = (x.slice(i) - min_val)/(max_val - min_val);
         }
 
@@ -803,6 +808,11 @@ namespace oimageR {
         double max_val = x.max();
 
         double min_val = x.min();
+
+        if (max_val == min_val) {                         // a flat matrix has no range: 0 instead of a division by zero (NaN)
+          x_out.zeros();
+          return(x_out);
+        }
 
         x_out = (x - min_val)/(max_val - min_val);
 
