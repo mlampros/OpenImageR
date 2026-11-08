@@ -311,14 +311,12 @@ namespace oimageR {
           Rcpp::warning(warn_message);
         }
 
-        arma::uvec row_index = arma::conv_to< arma::uvec >::from(floor(((seq_rcpp(new_row_size) - 0.5) / scale_rows ) + 0.5));
-        arma::uvec col_index = arma::conv_to< arma::uvec >::from(floor(((seq_rcpp(new_col_size) - 0.5) / scale_cols ) + 0.5));
+        // floor(i / scale), written as floor(i * n / width) so that exact multiples do not round down
+        arma::vec row_pos = arma::clamp(arma::floor(seq_rcpp(new_row_size) * image.n_rows / width), 0.0, image.n_rows - 1.0);
+        arma::vec col_pos = arma::clamp(arma::floor(seq_rcpp(new_col_size) * image.n_cols / height), 0.0, image.n_cols - 1.0);
 
-        double row_index_max = row_index.max();
-        double col_index_max = col_index.max();
-
-        row_index.transform( [row_index_max](double val) { return (val == row_index_max) ? (row_index_max - 1) : val;} );     // if row_index greater than the maximum row-index subtract 1 from row-index
-        col_index.transform( [col_index_max](double val) { return (val == col_index_max) ? (col_index_max - 1) : val;} );      // if col_index greater than the maximum col-index subtract 1 from col-index
+        arma::uvec row_index = arma::conv_to< arma::uvec >::from(row_pos);
+        arma::uvec col_index = arma::conv_to< arma::uvec >::from(col_pos);
 
         arma::mat tmp_im = image(row_index, col_index);
 
@@ -589,52 +587,22 @@ namespace oimageR {
         }
 
         unsigned int dif_rows = new_rows - x.n_rows;
-        arma::mat concat_row(1, x.n_cols);
-
-        int rows_start = 0;
-        int rows_end = 0;
-
-        if (dif_rows > 0) {
-
-          concat_row.fill(fill_value);
-
-          for (unsigned int i = 0; i < dif_rows; i++) {
-
-            if (EVEN(i)) {
-              x = arma::join_cols(x, concat_row);
-              rows_end++;
-            }
-            else {
-              x = arma::join_cols(concat_row, x);
-              rows_start++;
-            }
-          }
-        }
-
-        arma::mat concat_col(x.n_rows, 1);
         unsigned int dif_cols = new_cols - x.n_cols;
 
-        int cols_start = 0;
-        int cols_end = 0;
+        int rows_start = dif_rows / 2;                      // an odd difference puts the extra row at the end and the extra column at the right
+        int rows_end = dif_rows - rows_start;
+        int cols_start = dif_cols / 2;
+        int cols_end = dif_cols - cols_start;
 
-        if (dif_cols > 0) {
+        arma::mat out(new_rows, new_cols);
+        out.fill(fill_value);
 
-          concat_col.fill(fill_value);
+        if (!x.is_empty()) {
 
-          for (unsigned int i = 0; i < dif_cols; i++) {
-
-            if (EVEN(i)) {
-              x = arma::join_rows(x, concat_col);
-              cols_end++;
-            }
-            else {
-              x = arma::join_rows(concat_col, x);
-              cols_start++;
-            }
-          }
+          out.submat(rows_start, cols_start, rows_start + x.n_rows - 1, cols_start + x.n_cols - 1) = x;
         }
 
-        return Rcpp::List::create( Rcpp::Named("data") = x,
+        return Rcpp::List::create( Rcpp::Named("data") = out,
                                    Rcpp::Named("padded_start") = rows_start,
                                    Rcpp::Named("padded_end") = rows_end,
                                    Rcpp::Named("padded_left") = cols_start,
@@ -718,47 +686,48 @@ namespace oimageR {
         double S_R = in_rows / width;
         double S_C = in_cols / height;
 
-        arma::mat cf = meshgrid_x(width, height) + 1;
-        arma::mat rf = meshgrid_y(width, height) + 1;
-
-        rf = rf * S_R;
-        cf = cf * S_C;
-
-        arma::mat r = floor(rf);
-        arma::mat c = floor(cf);
-
-        r = replaceVal(r, 1, 1, 2);
-        c = replaceVal(c, 1, 1, 2);
-
-        r = replaceVal(r, in_rows - 1, in_rows - 1, 1);
-        c = replaceVal(c, in_cols - 1, in_cols - 1, 1);
-
-        arma::Mat<double> delta_R = rf - r;
-        arma::Mat<double> delta_C = cf - c;
-
-        arma::rowvec in1_ind = Vectz( (c - 1) * in_rows + r );
-        arma::rowvec in2_ind = Vectz( (c - 1) * in_rows + (r + 1) );
-        arma::rowvec in3_ind = Vectz( c * in_rows + r );
-        arma::rowvec in4_ind = Vectz( c * in_rows + (r + 1) );
-
-        arma::rowvec vect_image = Vectz(image);
-
-        arma::rowvec in1_IND(in1_ind.n_elem, arma::fill::zeros);
-        arma::rowvec in2_IND(in2_ind.n_elem, arma::fill::zeros);
-        arma::rowvec in3_IND(in3_ind.n_elem, arma::fill::zeros);
-        arma::rowvec in4_IND(in4_ind.n_elem, arma::fill::zeros);
-
-        for (unsigned int i = 0; i < in1_ind.n_elem; i++) {
-
-          in1_IND(i) = vect_image(in1_ind(i) - 1);
-          in2_IND(i) = vect_image(in2_ind(i) - 1);
-          in3_IND(i) = vect_image(in3_ind(i) - 1);
-          in4_IND(i) = vect_image(in4_ind(i) - 1);
+        // a single row works when the first sampled column is at least 2 (1 x 6 -> 1 x 3): it reads the element before each column, as the index version of 1.3.0 did
+        if (image.n_rows < 1 || image.n_cols < 2 || (image.n_rows < 2 && std::min(std::max(std::floor(S_C), 1.0), in_cols - 1.0) < 2.0)) {
+          Rcpp::stop("The 'bilinear' method needs at least 2 rows and 2 columns, or a single row that is reduced to half its columns or less!");
         }
 
-        arma::mat tmp_out = ( vec2mat_colwise(in1_IND, width, height) % (1.0 - delta_R) % (1.0 - delta_C) ) + ( vec2mat_colwise(in2_IND, width, height) % (delta_R) % (1.0 - delta_C) ) +
+        int out_rows = width;
+        int out_cols = height;
 
-          ( vec2mat_colwise(in3_IND, width, height) % (1.0 - delta_R) % (delta_C) ) + ( vec2mat_colwise(in4_IND, width, height) % (delta_R) % (delta_C) );
+        arma::Col<arma::sword> row_first(out_rows);         // 0-based index of the upper of the 2 rows, and its distance to the sampled position
+        arma::vec delta_R(out_rows);
+
+        for (int i = 0; i < out_rows; i++) {
+
+          double rf = (i + 1.0) * S_R;
+          double r = std::min(std::max(std::floor(rf), 1.0), in_rows - 1.0);
+
+          row_first(i) = r - 1.0;
+          delta_R(i) = rf - r;
+        }
+
+        arma::mat tmp_out(out_rows, out_cols);
+
+        for (int j = 0; j < out_cols; j++) {
+
+          double cf = (j + 1.0) * S_C;
+          double c = std::min(std::max(std::floor(cf), 1.0), in_cols - 1.0);
+          double delta_C = cf - c;
+
+          const double* col_left = image.colptr(c - 1.0);
+          const double* col_right = image.colptr(c);
+          double* col_out = tmp_out.colptr(j);
+
+          for (int i = 0; i < out_rows; i++) {
+
+            arma::sword r0 = row_first(i);                  // -1 for a single row
+            double d_r = delta_R(i);
+
+            col_out[i] = ( col_left[r0] * (1.0 - d_r) * (1.0 - delta_C) ) + ( col_left[r0 + 1] * d_r * (1.0 - delta_C) ) +
+
+              ( col_right[r0] * (1.0 - d_r) * delta_C ) + ( col_right[r0 + 1] * d_r * delta_C );
+          }
+        }
 
         return(tmp_out);
       }
@@ -900,10 +869,13 @@ namespace oimageR {
 
         if (method == "nearest") {                          // http://stackoverflow.com/questions/1811372/how-to-rotate-image-by-nearest-neighbor-interpolation-using-matlab
 
-          int i = ((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
-          int j = (-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
+          // rotate pixel centres, so that 90, 180 and 270 degrees are exact in mode 'same'; the 1e-9 keeps a whole position of mode 'full' (odd canvas difference) from
+          // falling to the pixel below because sin(pi) and cos(pi / 2) are about 1e-16 and not 0
 
-          if ( i > 0.0 && j > 0.0 && i < n && j < m) {
+          int i = floor((t + 0.5 - mm / 2.0) * cos(thet) + (s + 0.5 - nn / 2.0) * sin(thet) + n / 2.0 + 1e-9);
+          int j = floor(-(t + 0.5 - mm / 2.0) * sin(thet) + (s + 0.5 - nn / 2.0) * cos(thet) + m / 2.0 + 1e-9);
+
+          if ( i >= 0 && j >= 0 && i < n && j < m) {
 
             im_value = image(i,j);
           }
@@ -911,8 +883,12 @@ namespace oimageR {
 
         if (method == "bilinear") {                        // http://www.itu.dk/people/vedrana/reports/IA_Report.pdf [ page 18, using distances rather than coefficients ]
 
-          double n0 = ((t - mm / 2.0) * cos(thet) + (s - nn / 2.0) * sin(thet) + n / 2.0);
-          double m0 = (-(t - mm / 2.0) * sin(thet) + (s - nn / 2.0) * cos(thet) + m / 2.0);
+          double n0 = ((t + 0.5 - mm / 2.0) * cos(thet) + (s + 0.5 - nn / 2.0) * sin(thet) + n / 2.0 - 0.5);
+          double m0 = (-(t + 0.5 - mm / 2.0) * sin(thet) + (s + 0.5 - nn / 2.0) * cos(thet) + m / 2.0 - 0.5);
+
+          // sin(pi) and cos(pi / 2) are about 1e-16 and not 0: a whole position must not fall just below 0 (n1 = -1 gives a black pixel) or to the pixel below
+          if (std::abs(n0 - std::round(n0)) < 1e-9) n0 = std::round(n0);
+          if (std::abs(m0 - std::round(m0)) < 1e-9) m0 = std::round(m0);
 
           int n1 = floor(n0);
           int n2 = ceil(n0);
@@ -930,9 +906,18 @@ namespace oimageR {
             m2 = m2 + 1;
           }
 
-          if (n1 >= 0.0 && n2 < n && m1 >= 0.0 && m2 < m) {
+          // a pixel is inside the image on the same test as 'nearest': the image covers [-0.5, n - 0.5) around the pixel centres, on both sides
+          int in_n = floor(n0 + 0.5 + 1e-9);
+          int in_m = floor(m0 + 0.5 + 1e-9);
 
-            im_value = ((n2 - n0 + m2 - m0) * image(n1,m1) + (n2 - n0 + m0 - m1) * image(n1,m2) + (n0 - n1 + m2 - m0) * image(n2,m1) + (n0 - n1 + m0 - m1) * image(n2,m1)) / 4.0;
+          if (in_n >= 0 && in_n < n && in_m >= 0 && in_m < m) {
+
+            int n1_in = std::max(n1, 0);                    // the weights keep n1, n2, m1, m2; only the pixels read stay inside the image
+            int m1_in = std::max(m1, 0);
+            int n2_in = std::min(n2, n - 1);
+            int m2_in = std::min(m2, m - 1);
+
+            im_value = ((n2 - n0 + m2 - m0) * image(n1_in,m1_in) + (n2 - n0 + m0 - m1) * image(n1_in,m2_in) + (n0 - n1 + m2 - m0) * image(n2_in,m1_in) + (n0 - n1 + m0 - m1) * image(n2_in,m1_in)) / 4.0;
           }
         }
 
@@ -955,6 +940,12 @@ namespace oimageR {
 
         int mm = n * sqrt(2.0);
         int nn = m * sqrt(2.0);
+
+        if (mode == "same") {                               // an even difference puts the crop of mode 'same' on whole pixels around the centre
+
+          mm += (mm - n) % 2;
+          nn += (nn - m) % 2;
+        }
 
         arma::mat im2(mm, nn, arma::fill::zeros);
 
@@ -984,35 +975,13 @@ namespace oimageR {
 
           int dif_rows = im2.n_rows - image.n_rows;
 
-          int rem_rows;
-          arma::uvec remov_rows;
-
-          if (dif_rows == 0) {
-
-            remov_rows = seq_rcpp_range(0, im2.n_rows - 1);}
-
-          else {
-
-            rem_rows = mod(dif_rows, 2);
-            remov_rows = seq_rcpp_range((floor(dif_rows/2.0) + 1), (im2.n_rows - floor(dif_rows/2.0) - rem_rows));
-          }
+          arma::uvec remov_rows = seq_rcpp_range(dif_rows / 2, dif_rows / 2 + image.n_rows - 1);
 
           // get index -- columns
 
           int dif_cols = im2.n_cols - image.n_cols;
 
-          int rem_cols;
-          arma::uvec remov_cols;
-
-          if (dif_cols == 0) {
-
-            remov_cols = seq_rcpp_range(0, im2.n_cols - 1);}
-
-          else {
-
-            rem_cols = mod(dif_cols, 2);
-            remov_cols = seq_rcpp_range((floor(dif_cols/2.0) + 1), (im2.n_cols - floor(dif_cols/2.0) - rem_cols));
-          }
+          arma::uvec remov_cols = seq_rcpp_range(dif_cols / 2, dif_cols / 2 + image.n_cols - 1);
 
           im2 = im2(remov_rows, remov_cols);
         }
@@ -1308,14 +1277,17 @@ namespace oimageR {
         if (resiz_height > 0.0) { set_cols = resiz_height; }
         if (resiz_width > 0.0) { set_rows = resiz_width; }
 
-        if (resiz_method == "nearest") {
+        if (resiz_width > 0.0 || resiz_height > 0.0) {
 
-          image = resize_nearest_rcpp(image, set_rows, set_cols);
-        }
+          if (resiz_method == "nearest") {
 
-        if (resiz_method == "bilinear") {
+            image = resize_nearest_rcpp(image, set_rows, set_cols);
+          }
 
-          image = resize_bilinear_rcpp(image, set_rows, set_cols);
+          if (resiz_method == "bilinear") {
+
+            image = resize_bilinear_rcpp(image, set_rows, set_cols);
+          }
         }
 
         if (shift_rows != 0.0 || shift_cols != 0.0) {
@@ -1496,6 +1468,11 @@ namespace oimageR {
 
           S(i) = 1.0 - (3.0 * s_val) / (R(i) + G(i) + B(i));
           V(i) = (1.0 / 3.0) * (R(i) + G(i) + B(i));
+
+          if (R(i) == 0.0 && G(i) == 0.0 && B(i) == 0.0) {                    // black has no hue or saturation (the division above is 0 / 0)
+            H(i) = 0.0;
+            S(i) = 0.0;
+          }
         }
 
         arma::cube res(x.n_rows, x.n_cols, x.n_slices);
@@ -1522,6 +1499,9 @@ namespace oimageR {
 
         if (image.empty()) {
           Rcpp::stop("The input image is empty!");
+        }
+        if (num_superpixel < 1) {
+          Rcpp::stop("The 'superpixel' parameter should be at least 1!");
         }
         int CHANNELS = image.n_slices;
         if (CHANNELS > 3) {                                                                 // in case of more than 3 slices keep the first 3 and print a warning
@@ -1975,7 +1955,7 @@ namespace oimageR {
 
         gabor_features_Magn = arma::vectorise(gabor_features_Magn).t();
 
-        return {mean_aplitude, gabor_features_Magn};
+        return {concat, gabor_features_Magn};
       }
 
 

@@ -4,3 +4,8 @@
 ^\.ccache$
 ^\.github$
 ^tic\.R$
+^CLAUDE\.md$
+^FINDINGS\.md$
+^PERF_BASELINE\.md$
+^\.claude$
+^REVIEW\.md$
