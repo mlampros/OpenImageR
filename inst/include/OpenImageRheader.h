@@ -1131,15 +1131,22 @@ namespace oimageR {
 
         arma::mat sigma = (subtr_avg * subtr_avg.t())/subtr_avg.n_cols;
 
-        arma::mat tmp_usv = svd_arma_econ(sigma);
+        arma::vec eig_val;                                       // sigma is symmetric positive semi-definite: eig_sym gives the same vectors as the svd (up to sign) at a fraction of the cost
+        arma::mat eig_vec;
 
-        arma::mat tmp_u = tmp_usv.submat(0, 0, tmp_usv.n_rows - 2, k - 1);
+        if (!arma::eig_sym(eig_val, eig_vec, sigma)) {
+          Rcpp::stop("the eigen-decomposition of the covariance matrix failed");
+        }
 
-        arma::vec tmp_d = arma::conv_to< arma::vec >::from(tmp_usv.submat(tmp_usv.n_rows - 1, 0, tmp_usv.n_rows - 1, tmp_usv.n_cols - 1));
+        arma::uword n_eig = eig_val.n_elem;                      // eig_sym sorts ascending: the k largest are the last k, reversed to the svd order
 
-        arma::mat ZCAMatrix = (tmp_u * arma::diagmat(1.0/sqrt(tmp_d.subvec(0, k - 1) + epsilon))) * tmp_u.t();
+        arma::mat tmp_u = arma::fliplr(eig_vec.cols(n_eig - k, n_eig - 1));
 
-        arma::mat data_whitening = ZCAMatrix * subtr_avg;
+        arma::vec tmp_d = arma::flipud(eig_val.subvec(n_eig - k, n_eig - 1));
+
+        // ZCAMatrix * subtr_avg with ZCAMatrix = U diag(1 / sqrt(d + epsilon)) U^T, multiplied from the right: two thin products (rows x k) instead of a rows x rows one
+
+        arma::mat data_whitening = tmp_u * (arma::diagmat(1.0/sqrt(tmp_d + epsilon)) * (tmp_u.t() * subtr_avg));
 
         return(data_whitening);
       }
