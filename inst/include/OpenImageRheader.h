@@ -309,16 +309,15 @@ namespace oimageR {
 
       arma::mat vec2mat(arma::rowvec V, int mat_rows, int mat_cols) {    // mat_rows == columns, mat_cols == rows
 
-        arma::mat out(mat_rows, mat_cols, arma::fill::zeros);
-
-        arma::mat index = indices(mat_rows, mat_cols);
-
-        for (int i = 0; i < mat_rows; i++) {
-
-          out.row(i) = arma::conv_to< arma::rowvec >::from(V(arma::conv_to< arma::uvec >::from(index.row(i))));
+        if (V.n_elem < static_cast<arma::uword>(mat_rows) * static_cast<arma::uword>(mat_cols)) {
+          Rcpp::stop("vec2mat(): the vector has fewer elements than mat_rows * mat_cols");
         }
 
-        return(out.t());
+        // element i * mat_cols + j of V goes to (j, i): a column-major copy of the first mat_rows * mat_cols elements, without an index matrix
+
+        arma::mat out(V.memptr(), mat_cols, mat_rows);
+
+        return(out);
       }
 
 
@@ -2606,9 +2605,23 @@ namespace oimageR {
 
         arma::mat out(size(x), arma::fill::zeros);
 
+        unsigned int n = x.n_cols;
+
+        std::vector<arma::vec> cos_k(n);                        // the cosine vectors of func_dct(), computed once per call instead of once per row and k
+
+        for (unsigned int k = 0; k < n; k++) {
+
+          cos_k[k] = cos(arma::datum::pi / n * (UtilF.seq_rcpp(n) + 0.5) * k);
+        }
+
         for (unsigned int i = 0; i < out.n_rows; i++) {
 
-          out.row(i) = arma::conv_to< arma::rowvec >::from(func_dct(arma::conv_to< arma::vec >::from(x.row(i))));
+          arma::vec x_i = arma::conv_to< arma::vec >::from(x.row(i));
+
+          for (unsigned int k = 0; k < n; k++) {
+
+            out(i, k) = arma::accu( x_i.t() * cos_k[k] );       // the same expression as func_dct(), so the hashes stay bit-identical
+          }
         }
 
         return(out);
