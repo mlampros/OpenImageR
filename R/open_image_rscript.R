@@ -49,7 +49,7 @@ norm_matrix_range = function(data, min_value = -1, max_value = 1) {
 
   MIN = min(data)
   RNG = max(data) - MIN
-  data = if (RNG == 0) data * 0 else (data - MIN) / RNG             # a flat matrix has no range: min_value instead of NaN
+  data = if (isTRUE(RNG == 0)) data * 0 else (data - MIN) / RNG     # a flat matrix has no range: min_value instead of NaN (NA input stays NA)
   rng = min_value - max_value
   out = min_value - data * rng
 
@@ -1318,7 +1318,7 @@ NormalizeObject = function(x) {
 
   if (is.vector(x, mode = 'numeric')) {
 
-    out = if (max(x) == min(x)) x * 0 else (x - min(x))/(max(x) - min(x))       # a flat vector has no range: 0 instead of NaN
+    out = if (isTRUE(max(x) == min(x))) x * 0 else (x - min(x))/(max(x) - min(x))       # a flat vector has no range: 0 instead of NaN (NA input stays NA)
   }
   else if (inherits(x, 'matrix')) {
 
