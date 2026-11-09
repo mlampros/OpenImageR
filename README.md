@@ -1,6 +1,6 @@
 
 [![tic](https://github.com/mlampros/OpenImageR/workflows/tic/badge.svg?branch=master)](https://github.com/mlampros/OpenImageR/actions)
-[![codecov.io](https://app.codecov.io/github/mlampros/OpenImageR/coverage.svg?branch=master)](https://codecov.io/github/mlampros/OpenImageR?branch=master)
+[![codecov.io](https://codecov.io/gh/mlampros/OpenImageR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/mlampros/OpenImageR)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/OpenImageR)](https://CRAN.R-project.org/package=OpenImageR)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/OpenImageR?color=blue)](https://www.r-pkg.org/pkg/OpenImageR)
 [![](https://img.shields.io/docker/automated/mlampros/openimager.svg)](https://hub.docker.com/r/mlampros/openimager)
