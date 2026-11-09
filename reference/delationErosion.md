@@ -1,0 +1,68 @@
+# Delation or Erosion of an image
+
+\`r lifecycle::badge("deprecated")\`
+
+This function was deprecated because I realized that the name of the
+function does not correspond to the name of the algorithm (delation -\>
+dilation)
+
+this function performs delation or erosion to a 2- or 3- dimensional
+image
+
+## Usage
+
+``` r
+delationErosion(image, Filter, method = "delation", threads = 1)
+```
+
+## Arguments
+
+- image:
+
+  a matrix, data frame or 3-dimensional array where the third dimension
+  is equal to 3
+
+- Filter:
+
+  a vector specifying the dimensions of the kernel, which will be used
+  to perform either delation or erosion, such as c(3,3)
+
+- method:
+
+  one of 'delation', 'erosion'
+
+- threads:
+
+  number of cores to run in parallel ( \> 1 should be used if image high
+  dimensional )
+
+## Value
+
+a matrix or 3-dimensional array where the third dimension is equal to 3
+
+## Details
+
+This function utilizes a kernel to perform delation or erosion. The
+first value of the vector indicates the number of rows of the kernel,
+whereas the second value indicates the number of columns.
+
+## Examples
+
+``` r
+
+path = system.file("tmp_images", "1.png", package = "OpenImageR")
+
+image = readImage(path)
+
+res_delate = delationErosion(image, Filter = c(3,3), method = 'delation')
+#> Warning: `delationErosion()` was deprecated in OpenImageR 1.2.5.
+#> ℹ Please use `dilationErosion()` instead.
+
+res_erode = delationErosion(image, Filter = c(5,5), method = 'erosion')
+
+# ->
+
+res_dilate = dilationErosion(image, Filter = c(3,3), method = 'dilation')
+
+res_erode = dilationErosion(image, Filter = c(5,5), method = 'erosion')
+```

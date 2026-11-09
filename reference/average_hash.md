@@ -1,0 +1,56 @@
+# calculation of the 'average hash' of an image
+
+This function calculates the average hash of an image
+
+## Usage
+
+``` r
+average_hash(gray_image, hash_size = 8, MODE = "hash", resize = "nearest")
+```
+
+## Arguments
+
+- gray_image:
+
+  a (2-dimensional) matrix or data frame
+
+- hash_size:
+
+  an integer specifying the hash size (should be less than number of
+  rows or columns of the gray_image)
+
+- MODE:
+
+  one of 'hash' (returns the hash of the image), 'binary' (returns
+  binary identifier of the image)
+
+- resize:
+
+  corresponds to one of 'nearest', 'bilinear' (resizing method)
+
+## Value
+
+either a hash-string or a binary vector
+
+## Details
+
+The function is a modification of the 'average_hash' function of the
+imagehash package \[ please consult the COPYRIGHT file \]. The average
+hash works in the following way : 1st convert to grayscale, 2nd, reduce
+the size of an image (for instance to an 8x8 image, to further simplify
+the number of computations), 3rd average the resulting colors (for an
+8x8 image we average 64 colors), 4th compute the bits by comparing if
+each color value is above or below the mean, 5th construct the hash.
+
+## Examples
+
+``` r
+
+image = readImage(system.file("tmp_images", "1.png", package = "OpenImageR"))
+
+image = rgb_2gray(image)
+
+res_hash = average_hash(image, hash_size = 8, MODE = 'hash')
+
+res_binary = average_hash(image, hash_size = 8, MODE = 'binary')
+```

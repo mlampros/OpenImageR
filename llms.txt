@@ -1,0 +1,350 @@
+## OpenImageR
+
+  
+
+The OpenImageR package is an image processing library. It includes
+functions for image preprocessing, filtering and image recognition. More
+details on the functionality of OpenImageR can be found in the
+[first](http://mlampros.github.io/2016/07/08/OpenImageR/),
+[second](http://mlampros.github.io/2018/08/08/Gabor_Feature_Extraction/)
+and
+[third](http://mlampros.github.io/2018/11/09/Image_Segmentation_Superpixels_Clustering/)
+blog-posts, and in the package Documentation ( *scroll down for
+information on how to use the* **docker image** )  
+  
+
+**UPDATE 06-11-2018**
+
+As of version 1.1.2 the *OpenImageR* package allows R package
+maintainers to perform **linking between packages at a C++ code (Rcpp)
+level**. This means that the Rcpp functions of the *OpenImageR* package
+can be called in the C++ files of another package. In the next lines
+I’ll give detailed explanations on how this can be done:
+
+  
+
+Assumming that an R package (‘PackageA’) calls one of the *OpenImageR*
+Rcpp functions. Then the maintainer of ‘PackageA’ has to :
+
+  
+
+- **1st.** install the *OpenImageR* package to take advantage of the new
+  functionality either from CRAN using,
+
+  
+
+``` r
+
+
+install.packages("OpenImageR")
+ 
+```
+
+  
+
+or download the latest version from Github using the *remotes* package,
+
+  
+
+``` r
+
+
+remotes::install_github('mlampros/OpenImageR')
+ 
+```
+
+  
+
+- **2nd.** update the **DESCRIPTION** file of ‘PackageA’ and especially
+  the *LinkingTo* field by adding the *OpenImageR* package (besides any
+  other packages),
+
+  
+
+``` r
+
+
+LinkingTo: OpenImageR
+```
+
+  
+
+- **3rd.** open a **new C++ file** (for instance in Rstudio) and at the
+  top of the file add the following ‘headers’, ‘depends’ and ‘plugins’,
+
+  
+
+``` r
+
+# include <RcppArmadillo.h>
+# include <OpenImageRheader.h>
+// [[Rcpp::depends("RcppArmadillo")]]
+// [[Rcpp::depends(OpenImageR)]]
+```
+
+  
+
+The available C++ classes (*Utility_functions*, *Gabor_Features*,
+*Gabor_Features_Rcpp*, *HoG_features*, *Image_Hashing*) can be found in
+the **inst/include/OpenImageRheader.h** file.
+
+  
+
+A *complete minimal example* would be :
+
+  
+
+``` r
+
+# include <RcppArmadillo.h>
+# include <OpenImageRheader.h>
+// [[Rcpp::depends("RcppArmadillo")]]
+// [[Rcpp::depends(OpenImageR)]]
+
+
+// [[Rcpp::export]]
+arma::mat rgb_2gray_exp(arma::cube RGB_image) {
+
+  oimageR::Utility_functions UTLF;
+  return UTLF.rgb_2gray_rcpp(RGB_image);
+}
+```
+
+  
+
+Then, by opening an R file a user can call the *rgb_2gray_exp* function
+using,
+
+  
+
+``` r
+
+
+Rcpp::sourceCpp('example.cpp')              # assuming that the previous Rcpp code is included in 'example.cpp' 
+             
+set.seed(1)
+im_rgb = array(runif(30000), c(100, 100, 3))
+
+im_grey = rgb_2gray_exp(im_rgb)
+
+str(im_grey)
+```
+
+  
+
+Use the following link to report bugs/issues,  
+  
+
+<https://github.com/mlampros/OpenImageR/issues>
+
+  
+
+**UPDATE 29-11-2019**
+
+  
+
+**Docker images** of the *OpenImageR* package are available to download
+from my [dockerhub](https://hub.docker.com/r/mlampros/openimager)
+account. The images come with *Rstudio* and the *R-development* version
+(latest) installed. The whole process was tested on Ubuntu 18.04. To
+**pull** & **run** the image do the following,
+
+  
+
+``` r
+
+docker pull mlampros/openimager:rstudiodev
+
+docker run -d --name rstudio_dev -e USER=rstudio -e PASSWORD=give_here_your_password --rm -p 8787:8787 mlampros/openimager:rstudiodev
+```
+
+  
+
+The user can also **bind** a home directory / folder to the image to use
+its files by specifying the **-v** command,
+
+  
+
+``` r
+
+docker run -d --name rstudio_dev -e USER=rstudio -e PASSWORD=give_here_your_password --rm -p 8787:8787 -v /home/YOUR_DIR:/home/rstudio/YOUR_DIR mlampros/openimager:rstudiodev
+```
+
+  
+
+In the latter case you might have first give permission privileges for
+write access to **YOUR_DIR** directory (not necessarily) using,
+
+  
+
+``` r
+
+chmod -R 777 /home/YOUR_DIR
+```
+
+  
+
+The **USER** defaults to *rstudio* but you have to give your
+**PASSWORD** of preference (see <https://rocker-project.org/> for more
+information).
+
+  
+
+Open your web-browser and depending where the docker image was *build /
+run* give,
+
+  
+
+**1st. Option** on your personal computer,
+
+  
+
+``` r
+http://0.0.0.0:8787 
+```
+
+  
+
+**2nd. Option** on a cloud instance,
+
+  
+
+``` r
+http://Public DNS:8787
+```
+
+  
+
+to access the Rstudio console in order to give your username and
+password.
+
+  
+
+### **Citation:**
+
+If you use the code of this repository in your paper or research please
+cite both **OpenImageR** and the **original articles / software**
+`https://CRAN.R-project.org/package=OpenImageR`:
+
+  
+
+``` r
+@Manual{,
+  title = {{OpenImageR}: An Image Processing Toolkit},
+  author = {Lampros Mouselimis},
+  year = {2026},
+  note = {R package version 1.4.0},
+  url = {https://CRAN.R-project.org/package=OpenImageR},
+}
+```
+
+  
+
+# Package index
+
+## All functions
+
+- [`Augmentation()`](https://mlampros.github.io/OpenImageR/reference/Augmentation.md)
+  : image augmentations of a matrix, data frame, array or a list of
+  3-dimensional arrays (where the third dimension is equal to 3)
+- [`GaborFeatureExtract`](https://mlampros.github.io/OpenImageR/reference/GaborFeatureExtract.md)
+  : Gabor Feature Extraction
+- [`HOG()`](https://mlampros.github.io/OpenImageR/reference/HOG.md) :
+  calculate the HOG (Histogram of oriented gradients) for an image
+- [`HOG_apply()`](https://mlampros.github.io/OpenImageR/reference/HOG_apply.md)
+  : calculate the HOG (Histogram of oriented gradients) for a matrix,
+  array or a folder of images
+- [`List_2_Array()`](https://mlampros.github.io/OpenImageR/reference/List_2_Array.md)
+  : convert a list of matrices to an array of matrices
+- [`MinMaxObject()`](https://mlampros.github.io/OpenImageR/reference/MinMaxObject.md)
+  : minimum and maximum values of vector, matrix, data frame or array
+- [`NormalizeObject()`](https://mlampros.github.io/OpenImageR/reference/NormalizeObject.md)
+  : normalize a vector, matrix or array (in the range between 0 and 1)
+- [`RGB_to_HSV()`](https://mlampros.github.io/OpenImageR/reference/RGB_to_HSV.md)
+  : Conversion of RGB to HSV colour type
+- [`RGB_to_Lab()`](https://mlampros.github.io/OpenImageR/reference/RGB_to_Lab.md)
+  : Conversion of RGB to Lab colour type
+- [`ZCAwhiten()`](https://mlampros.github.io/OpenImageR/reference/ZCAwhiten.md)
+  : zca whiten of an image
+- [`average_hash()`](https://mlampros.github.io/OpenImageR/reference/average_hash.md)
+  : calculation of the 'average hash' of an image
+- [`convolution()`](https://mlampros.github.io/OpenImageR/reference/convolution.md)
+  : convolution
+- [`cropImage()`](https://mlampros.github.io/OpenImageR/reference/cropImage.md)
+  : crop an image
+- [`dhash()`](https://mlampros.github.io/OpenImageR/reference/dhash.md)
+  : calculation of the 'dhash' of an image
+- [`dilationErosion()`](https://mlampros.github.io/OpenImageR/reference/dilationErosion.md)
+  : Dilation or Erosion of an image
+- [`down_sample_image()`](https://mlampros.github.io/OpenImageR/reference/down_sample_image.md)
+  : downsampling an image ( by a factor ) using gaussian blur
+- [`edge_detection()`](https://mlampros.github.io/OpenImageR/reference/edge_detection.md)
+  : edge detection (Frei_chen, LoG, Prewitt, Roberts_cross, Scharr,
+  Sobel)
+- [`flipImage()`](https://mlampros.github.io/OpenImageR/reference/flipImage.md)
+  : flip image horizontally or vertically
+- [`gamma_correction()`](https://mlampros.github.io/OpenImageR/reference/gamma_correction.md)
+  : Gamma correction
+- [`getAffineTransform()`](https://mlampros.github.io/OpenImageR/reference/getAffineTransform.md)
+  : Get Affine Transform
+- [`hash_apply()`](https://mlampros.github.io/OpenImageR/reference/hash_apply.md)
+  : calculate the binary or the hexadecimal hash for a matrix, array or
+  a folder of images for the average_hash, phash or dhash functions
+- [`imageShow()`](https://mlampros.github.io/OpenImageR/reference/imageShow.md)
+  : display an image
+- [`image_thresholding()`](https://mlampros.github.io/OpenImageR/reference/image_thresholding.md)
+  : image thresholding
+- [`invariant_hash()`](https://mlampros.github.io/OpenImageR/reference/invariant_hash.md)
+  : invariant hashing (caclulation of the hamming or the levenshtein
+  distance when the image is flipped, rotated or cropped)
+- [`load_binary()`](https://mlampros.github.io/OpenImageR/reference/load_binary.md)
+  : loads either 2- or 3-dimensional data (where the third dimension is
+  equal to 3) from a binary file
+- [`norm_matrix_range()`](https://mlampros.github.io/OpenImageR/reference/norm_matrix_range.md)
+  : Normalize a matrix to specific range of values
+- [`padding()`](https://mlampros.github.io/OpenImageR/reference/padding.md)
+  : Padding of matrices or n-dimensional arrays with a user specified
+  value
+- [`phash()`](https://mlampros.github.io/OpenImageR/reference/phash.md)
+  : calculation of the 'phash' of an image
+- [`readImage()`](https://mlampros.github.io/OpenImageR/reference/readImage.md)
+  : this function reads various types of images
+- [`resizeImage()`](https://mlampros.github.io/OpenImageR/reference/resizeImage.md)
+  : resize an image using the 'nearest neighbors' or the 'bilinear'
+  method
+- [`rgb_2gray()`](https://mlampros.github.io/OpenImageR/reference/rgb_2gray.md)
+  : convert an RGB image to Gray
+- [`rotateFixed()`](https://mlampros.github.io/OpenImageR/reference/rotateFixed.md)
+  : Rotate an image by 90, 180, 270 degrees
+- [`rotateImage()`](https://mlampros.github.io/OpenImageR/reference/rotateImage.md)
+  : Rotate an image using the 'nearest' or 'bilinear' method
+- [`superpixel_bbox()`](https://mlampros.github.io/OpenImageR/reference/superpixel_bbox.md)
+  : Bounding box for the superpixel labels
+- [`superpixel_bbox_subset()`](https://mlampros.github.io/OpenImageR/reference/superpixel_bbox_subset.md)
+  : Bounding box for a subset of superpixel labels
+- [`superpixels()`](https://mlampros.github.io/OpenImageR/reference/superpixels.md)
+  : SLIC and SLICO superpixel implementations
+- [`translation()`](https://mlampros.github.io/OpenImageR/reference/translation.md)
+  : image translation
+- [`uniform_filter()`](https://mlampros.github.io/OpenImageR/reference/uniform_filter.md)
+  : uniform filter (convolution with uniform kernel)
+- [`verify_image_extension()`](https://mlampros.github.io/OpenImageR/reference/verify_image_extension.md)
+  : Verify that the input image extension is valid
+- [`warpAffine()`](https://mlampros.github.io/OpenImageR/reference/warpAffine.md)
+  : Warp Affine
+- [`writeImage()`](https://mlampros.github.io/OpenImageR/reference/writeImage.md)
+  : This function writes 2- or 3-dimensional image (where the third
+  dimension is equal to 3) data to a file
+
+# Articles
+
+### All vignettes
+
+- [Gabor Feature
+  extraction](https://mlampros.github.io/OpenImageR/articles/Gabor_Feature_Extraction.md):
+- [Image segmentation based on Superpixels and
+  Clustering](https://mlampros.github.io/OpenImageR/articles/Image_segmentation_superpixels_clustering.md):
+- [Functionality of the OpenImageR
+  package](https://mlampros.github.io/OpenImageR/articles/The_OpenImageR_package.md):
+- [Warp Affine using
+  R](https://mlampros.github.io/OpenImageR/articles/Warp_Affine.md):

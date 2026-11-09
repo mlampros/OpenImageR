@@ -1,0 +1,44 @@
+# Rotate an image by 90, 180, 270 degrees
+
+Rotate an image by 90, 180, 270 degrees
+
+## Usage
+
+``` r
+rotateFixed(image, angle)
+```
+
+## Arguments
+
+- image:
+
+  matrix, data frame or 3-dimensional array where the third dimension is
+  equal to 3
+
+- angle:
+
+  one of 90, 180 and 270 degrees
+
+## Value
+
+depending on the input, either a matrix or an array
+
+## Details
+
+This function is faster than the rotateImage function as it rotates an
+image for specific angles (90, 180 or 270 degrees). It turns the image
+clockwise (as displayed with the first row at the top, for instance by
+imageShow()), the opposite direction of rotateImage():
+rotateFixed(image, 90) gives the same result as rotateImage(image, 270,
+mode = 'same') for a square image.
+
+## Examples
+
+``` r
+
+path = system.file("tmp_images", "3.jpeg", package = "OpenImageR")
+
+image = readImage(path)
+
+r = rotateFixed(image, 90)
+```
