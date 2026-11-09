@@ -1,6 +1,8 @@
 docs/
 .Rhistory
+CLAUDE
 src/*.o
 src/*.so
 src/*.dll
 .claude/
+docs

@@ -9,3 +9,7 @@
 ^PERF_BASELINE\.md$
 ^\.claude$
 ^REVIEW\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^CLAUDE$

@@ -859,7 +859,7 @@ flipImage = function(image, mode = 'horizontal') {
 #' Whitening (or sphering) is the preprocessing needed for some algorithms. If we are training on images, the raw input is redundant, since adjacent
 #' pixel values are highly correlated. When using whitening the features become less correlated and all features have the same variance.
 #' @references
-#' http://ufldl.stanford.edu/wiki/index.php/Whitening
+#' http://ufldl.stanford.edu/tutorial/unsupervised/PCAWhitening/
 #' @export
 #' @examples
 #'

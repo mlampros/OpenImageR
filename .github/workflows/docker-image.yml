@@ -3,6 +3,7 @@
 # build, push and cache the docker image. I have to adjust the following in case of a different repository:
 #        - I have to add the 'BUILD_DATE' arg in the Dockerfile
 #        - I have to create a DOCKER_PASSWORD (use the docker token) in the 'Settings' tab of the repository
+#        - This github action also updates the dockerhub readme file
 # References:
 #        - https://github.com/mlampros/IceSat2R/blob/master/.github/workflows/docker_image.yml
 #        - https://github.com/orgs/community/discussions/25768#discussioncomment-3249184
@@ -21,25 +22,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v5
+
       - id: string
-        uses: ASzc/change-string-case-action@v1
+        uses: ASzc/change-string-case-action@v6
         with:
           string: ${{ github.event.repository.name }}
 
-      - name: Check Out Repo
-        uses: actions/checkout@v2
-
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        id: buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         with:
           context: ./
           build-args: BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
@@ -49,3 +51,12 @@ jobs:
           tags: ${{ github.repository_owner }}/${{ steps.string.outputs.lowercase }}:rstudiodev
           cache-from: type=registry,ref=${{ github.repository_owner }}/${{ steps.string.outputs.lowercase }}:buildcache
           cache-to: type=registry,ref=${{ github.repository_owner }}/${{ steps.string.outputs.lowercase }}:buildcache,mode=max
+
+      - name: Update Docker Hub Description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ github.repository_owner }}/${{ steps.string.outputs.lowercase }}
+          short-description: ${{ github.event.repository.description }}
+          readme-filepath: ./README.md
