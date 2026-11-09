@@ -1,10 +1,8 @@
 
-[![tic](https://github.com/mlampros/OpenImageR/workflows/tic/badge.svg?branch=master)](https://github.com/mlampros/OpenImageR/actions)
-[![codecov.io](https://codecov.io/gh/mlampros/OpenImageR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/mlampros/OpenImageR)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/OpenImageR)](https://CRAN.R-project.org/package=OpenImageR)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/OpenImageR?color=blue)](https://www.r-pkg.org/pkg/OpenImageR)
 [![](https://img.shields.io/docker/automated/mlampros/openimager.svg)](https://hub.docker.com/r/mlampros/openimager)
-[![Dependencies](https://tinyverse.netlify.com/badge/OpenImageR)](https://CRAN.R-project.org/package=OpenImageR)
+[![status](https://tinyverse.netlify.app/badge/OpenImageR)](https://CRAN.R-project.org/package=OpenImageR)
 
 
 ## OpenImageR
@@ -222,8 +220,8 @@ If you use the code of this repository in your paper or research please cite bot
 @Manual{,
   title = {{OpenImageR}: An Image Processing Toolkit},
   author = {Lampros Mouselimis},
-  year = {2023},
-  note = {R package version 1.3.0},
+  year = {2026},
+  note = {R package version 1.4.0},
   url = {https://CRAN.R-project.org/package=OpenImageR},
 }
 ```

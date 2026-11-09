@@ -32,7 +32,7 @@ These methods are based on the Matlab code *[Gabor Feature Extraction](https://g
 <br>
 
 I came across the Gabor Features last month when I had to process images and I needed an additional function besides the already existing [HoG features](https://www.rdocumentation.org/packages/OpenImageR/versions/1.0.8/topics/HOG). I did the regular search on CRAN (Comprehensive R Archive Network) but I couldn't find anything related to Gabor Feature Extraction (as of August 2018), therefore I decided to port the Matlab code into  R.
-There are many resources on the web if someone intends to deepen his / her knowledge on the subject and I'll add some of these that I found useful at the end of the Vignette (References). I'll explain the methods of the *GaborFeatureExtract* R6 class using an image found on a [Stackoverflow question](https://stackoverflow.com/a/20610474/8302386).
+There are many resources on the web if someone intends to deepen his / her knowledge on the subject and I'll add some of these that I found useful at the end of the Vignette (References). I'll explain the methods of the *GaborFeatureExtract* R6 class using an image found on a [Stackoverflow question](https://stackoverflow.com/questions/20608458/gabor-feature-extraction/20610474#20610474).
 
 <br>
 

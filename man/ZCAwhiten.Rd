@@ -33,5 +33,5 @@ res = ZCAwhiten(image, k = 20, epsilon = 0.1)
 
 }
 \references{
-http://ufldl.stanford.edu/wiki/index.php/Whitening
+http://ufldl.stanford.edu/tutorial/unsupervised/PCAWhitening/
 }
