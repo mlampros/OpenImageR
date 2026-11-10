@@ -88,7 +88,7 @@ res_2d = warpAffine(img = img_2d,
                     C = c,
                     threads = 1,
                     verbose = TRUE)
-#> time to complete : 0.0074 secs 
+#> time to complete : 0.0044 secs 
 
 # imageShow(res_2d)
 
@@ -101,7 +101,7 @@ res_3d = warpAffine(img = img,
                     R = r,
                     C = c,
                     verbose = TRUE)
-#> time to complete : 0.03 secs 
+#> time to complete : 0.0218 secs 
 
 # imageShow(res_3d)
 ```
