@@ -84,7 +84,7 @@ res_3d = warpAffine(img = img,
                     verbose = TRUE)
 ```
 
-    ## time to complete : 0.0248 secs
+    ## time to complete : 0.0377 secs
 
 ``` r
 

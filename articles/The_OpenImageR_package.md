@@ -397,7 +397,7 @@ augm = Augmentation(im, flip_mode = 'horizontal', crop_width = 20:460, crop_heig
 ```
 
     ## 
-    ## time to complete : 0.01455665 secs
+    ## time to complete : 0.02049994 secs
 
 ``` r
 
@@ -555,7 +555,7 @@ res = HOG_apply(tmp_arr, cells = 2, orientations = 3)
 ```
 
     ## 
-    ## time to complete : 0.003665686 secs
+    ## time to complete : 0.004778147 secs
 
 ``` r
 
@@ -843,7 +843,7 @@ hapl_hash = hash_apply(path, hash_size = 6, method = "dhash", mode = "hash", thr
 ```
 
     ## 
-    ## time to complete : 0.002857208 secs
+    ## time to complete : 0.003446102 secs
 
 ``` r
 
@@ -866,7 +866,7 @@ hapl_bin = hash_apply(path, hash_size = 6, method = "dhash", mode = "binary", th
 ```
 
     ## 
-    ## time to complete : 0.007982492 secs
+    ## time to complete : 0.009110689 secs
 
 ``` r
 

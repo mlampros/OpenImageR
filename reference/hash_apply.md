@@ -87,6 +87,6 @@ path = paste0(system.file("tmp_images", "same_type", package = "OpenImageR"), '/
 
 res_phash = hash_apply(path, method = 'phash', mode = 'binary')
 #> 
-#> time to complete : 0.0005927086 secs 
+#> time to complete : 0.0007410049 secs 
 #> 
 ```
