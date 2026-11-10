@@ -30,7 +30,7 @@ testthat::test_that("if the input is a not a valid path it returns an error", {
 
 testthat::test_that("if the input is a not a valid path it returns an error", {
 
-  testthat::expect_error( readImage('/home/lampros') )
+  testthat::expect_error( readImage(tempdir()) )
 })
 
 
