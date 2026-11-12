@@ -1,4 +1,5 @@
 
+[![R-CMD-check](https://github.com/mlampros/OpenImageR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mlampros/OpenImageR/actions/workflows/R-CMD-check.yaml)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/OpenImageR)](https://CRAN.R-project.org/package=OpenImageR)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/OpenImageR?color=blue)](https://www.r-pkg.org/pkg/OpenImageR)
 [![](https://img.shields.io/docker/automated/mlampros/openimager.svg)](https://hub.docker.com/r/mlampros/openimager)
